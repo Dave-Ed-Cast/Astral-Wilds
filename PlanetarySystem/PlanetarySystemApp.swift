@@ -10,7 +10,7 @@ import SwiftUI
 @main
 struct PlanetarySystemApp: App {
     var body: some Scene {
-        WindowGroup {
+        WindowGroup(id: "main"){
             ContentView()
         }
         
