@@ -9,29 +9,24 @@ import SwiftUI
 import RealityKit
 import RealityKitContent
 
+//first things first, we declare the container of the immersive space
 struct ContentView: View {
     
     @Environment(\.openImmersiveSpace) var openImmersiveSpace
     var body: some View {
-        NavigationSplitView {
-            List {
-                Text("Item")
-            }
-            .navigationTitle("Sidebar")
-        } detail: {
-            VStack {
-                Text("Hello, world!")
-                Button {
-                    Task {
-                        await openImmersiveSpace(id: "saturn")
-                    }
-                } label: {
-                    Text("Open saturn")
+        
+        VStack {
+            Button {
+                Task {
+                    //this is an async call (call when ready)
+                    await openImmersiveSpace(id: "saturn")
                 }
+            } label: {
+                Text("Open planetary system")
             }
-            .padding()
-            .navigationTitle("Content")
         }
+        .padding()
+        .navigationTitle("Content")
         
     }
 }

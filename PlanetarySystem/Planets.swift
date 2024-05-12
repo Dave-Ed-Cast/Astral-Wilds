@@ -9,130 +9,92 @@ import SwiftUI
 import RealityKit
 import RealityKitContent
 
+//now there are many ways to do this. My first attempt will be hard coding.
+
 struct Planets: View {
     
+    //declare the environment to dismiss everything useless
     @Environment(\.dismissWindow) var dismissWindow
     
+    //define the names of to load from the Package of Reality Composer
     let planetDictionary: [String] = ["Mercury", "Venus", "Earth", "Mars", "Jupiter", "Saturn", "Uranus", "Neptune"]
-    // Define orbital parameters for each planet
-    let orbitalParameters: [OrbitalParameters] = [
-        OrbitalParameters(radius: 1.0, period: 3.0),
-        OrbitalParameters(radius: 3.0, period: 5.0),
-        OrbitalParameters(radius: 5.0, period: 7.0),
-        OrbitalParameters(radius: 7.0, period: 9.0),
-        OrbitalParameters(radius: 10.0, period: 10.0),
-        OrbitalParameters(radius: 12.0, period: 12.0),
-        OrbitalParameters(radius: 14.0, period: 14.0),
-        OrbitalParameters(radius: 16.0, period: 16.0)
-        // Add parameters for other planets as needed
-    ]
     
-    // State variables to store current angles of rotation
+    //define the velocity parameter, we are going to use earth's. Let's say it's 5. However, the period is the time taken to complete one revolution around the sun. Therefore the higher it is the slower the planet speed. More on that later
+    
+    //working with numbers is boring so let's define some references in the other file
+    
+    //this is an array initialized
     @State private var angles: [Float] = Array(repeating: 0.0, count: 8)
     
     var body: some View {
+        //create the reality view
         RealityView { content in
             
+            //define the scene
             if let scene = try? await Entity(named: "Planets", in: realityKitContentBundle) {
                 content.add(scene)
                 
-                // Spawn planets and rotate them around the sun
-                if let sun = scene.children.first(
-                    where: { $0.name == "Sun" }) {
-                    sun.position = .zero
-                }
-                
-                
-                // Start animation loop
+                //and let the solar system go!
                 startAnimationLoop(scene: scene)
             }
         }
         .onAppear {
-            // Dismiss main window
+            //but before that let's get rid of everything else
             dismissWindow(id: "main")
         }
     }
     
-    // Function to start animation loop
+    //start animation loop
     private func startAnimationLoop(scene: Entity) {
-        // Update positions of planets periodically
-        Timer.scheduledTimer(withTimeInterval: 0.03, repeats: true) { _ in
-            // Apply orbiting motion to each planet
+
+        //this is like the function update in game engines
+        Timer.scheduledTimer(withTimeInterval: 0.001, repeats: true) { _ in
+
+            //now the fun part. For every element we have to define the orbit
+            //to do so define an index to keep track of the position, and an angle that defines the value of the array we declared
             for (index, angle) in angles.enumerated() {
+                
+                //define parameters regarding the other file (at the index)
                 let parameters = orbitalParameters[index]
+                
+                //well, this is just some math, the definition of x and z (which in this case would be our famous y if we were in a 2D world)
                 let x = parameters.radius * cos(angle)
-                let y = parameters.radius * sin(angle)
+                let z = parameters.radius * sin(angle)
                 
-                let newPosition = SIMD3(x, y, 0)
+                //define the new position regarding these new parameters and with y = 1 due to the fact that in reality composer i put everything at y = 1
+                let newPosition = SIMD3(x, 1, z)
                 
-                // Update position of the planet
+                //then since for some reason by doing $0.name, it would get the entity name as root, i created a function that returns the planet's name, and if those match, it gives it the new position
                 if let planet = findPlanet(scene: scene, name: planetDictionary[index]) {
                     planet.position = newPosition
                 }
                 
-                // Update angle for next frame
-                angles[index] += 0.01 * Float(parameters.period)
+                //then this is basic phyisics, if we didn't define the angular velocity, the period would be completely messed up, in fact without this the higher the period, the faster it would revolve (which is completely wrong)
+                let angularVelocity = 2 * .pi / parameters.period
+                
+                //and everytime it's called, just sum this value
+                angles[index] += 0.001 * Float(angularVelocity)
             }
         }
     }
-
-    // Function to recursively find a planet by name in the scene hierarchy
+    
+    //this is just finding the planet given the entities with the DFS method (depth first search)
+    //basically it's the data structure of a tree, I don't believe it's the best, but it's a very simple task and not the aim of the project
     private func findPlanet(scene: Entity, name: String) -> Entity? {
-        if let planet = scene.children.first(where: { $0.name == name }) {
-            return planet
-        } else {
-            for child in scene.children {
-                if let foundPlanet = findPlanet(scene: child, name: name) {
-                    return foundPlanet
-                }
+        var tempStack = [scene]
+
+        while !tempStack.isEmpty {
+            let current = tempStack.removeLast()
+            if current.name == name {
+                return current
             }
-            return nil
+
+            tempStack.append(contentsOf: current.children)
         }
+
+        return nil
     }
 
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    // Function to start animation loop
-//    private func startAnimationLoop(scene: Entity) {
-//        
-//        print("Entities in scene:")
-//            for child in scene.children {
-//                print(child.name ?? "Unnamed Entity")
-//            }
-//        // Update positions of planets periodically
-//        Timer.scheduledTimer(withTimeInterval: 0.03, repeats: true) { _ in
-//            // Apply orbiting motion to each planet
-//            for (index, angle) in angles.enumerated() {
-//                let parameters = orbitalParameters[index]
-//                let x = parameters.radius * cos(angle)
-//                let y = parameters.radius * sin(angle)
-//                
-//                let newPosition = SIMD3(x, y, 0)
-//                
-//                // Update position of the planet
-//                if let planet = scene.children.first(where: { $0.name == "\(planetDictionary[index])" }) {
-//                    planet.position = newPosition
-//                }
-//                
-//                print("Planet \(planetDictionary[index]) angle: \(angle)")
-//                // Update angle for next frame
-//                angles[index] += 0.01 * Float(parameters.period)
-//            }
-//        }
-//    }
-}
-
-// Struct to hold orbital parameters for each planet
-struct OrbitalParameters {
-    let radius: Float // Orbital radius
-    let period: Float // Orbital period (time taken to complete one revolution)
 }
 
 #Preview {

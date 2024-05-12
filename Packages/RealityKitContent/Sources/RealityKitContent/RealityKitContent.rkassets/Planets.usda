@@ -289,8 +289,8 @@ def Xform "Root"
     )
     {
         quatf xformOp:orient = (0.65755767, 0.004418506, 0.0050623524, 0.7533743)
-        float3 xformOp:scale = (1, 1, 1)
-        float3 xformOp:translate = (0, 1, -7.5)
+        float3 xformOp:scale = (2.8, 2.8, 2.8)
+        float3 xformOp:translate = (0, 1, -8)
         uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
 
         def RealityKitComponent "Collider"
@@ -327,8 +327,8 @@ def Xform "Root"
     )
     {
         quatf xformOp:orient = (0.9695007, 0.014976261, 0.003778454, 0.24460135)
-        float3 xformOp:scale = (1, 1, 1)
-        float3 xformOp:translate = (0, 1, -8)
+        float3 xformOp:scale = (2.5, 2.5, 2.5)
+        float3 xformOp:translate = (0, 1, -9)
         uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
 
         def RealityKitComponent "Collider"
