@@ -13,5 +13,9 @@ struct PlanetarySystemApp: App {
         WindowGroup {
             ContentView()
         }
+        
+        ImmersiveSpace(id: "saturn") {
+            Planets()
+        }
     }
 }
