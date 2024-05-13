@@ -16,16 +16,18 @@ struct Planets: View {
     //declare the environment to dismiss everything useless
     @Environment(\.dismissWindow) var dismissWindow
     
-    //define the names of to load from the Package of Reality Composer
-    let planetDictionary: [String] = ["Mercury", "Venus", "Earth", "Mars", "Jupiter", "Saturn", "Uranus", "Neptune"]
+    //working with numbers is boring so let's define some references in the other file (Parameters)
     
-    //define the velocity parameter, we are going to use earth's. Let's say it's 5. However, the period is the time taken to complete one revolution around the sun. Therefore the higher it is the slower the planet speed. More on that later
-    
-    //working with numbers is boring so let's define some references in the other file
-    
-    //this is an array initialized
-    @State private var angles: [Float] = Array(repeating: 0.0, count: 8)
-    
+    //this is an array initialized in a random way so that
+    @State private var angles: [Float] = {
+        var anglesArray: [Float] = []
+        for _ in 0..<8 {
+            let randomValue = Float.random(in: 1...10)
+            anglesArray.append(.pi * randomValue)
+        }
+        return anglesArray
+    }()
+
     var body: some View {
         //create the reality view
         RealityView { content in
@@ -46,10 +48,10 @@ struct Planets: View {
     
     //start animation loop
     private func startAnimationLoop(scene: Entity) {
-
+        
         //this is like the function update in game engines
         Timer.scheduledTimer(withTimeInterval: 0.001, repeats: true) { _ in
-
+            
             //now the fun part. For every element we have to define the orbit
             //to do so define an index to keep track of the position, and an angle that defines the value of the array we declared
             for (index, angle) in angles.enumerated() {
@@ -82,19 +84,19 @@ struct Planets: View {
     //basically it's the data structure of a tree, I don't believe it's the best, but it's a very simple task and not the aim of the project
     private func findPlanet(scene: Entity, name: String) -> Entity? {
         var tempStack = [scene]
-
+        
         while !tempStack.isEmpty {
             let current = tempStack.removeLast()
             if current.name == name {
                 return current
             }
-
+            
             tempStack.append(contentsOf: current.children)
         }
-
+        
         return nil
     }
-
+    
 }
 
 #Preview {

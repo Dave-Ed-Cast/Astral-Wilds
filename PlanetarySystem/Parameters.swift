@@ -12,6 +12,11 @@ struct OrbitalParameters {
     let period: Float //orbit period (time for one revolution)
 }
 
+//define a random float value
+let randomValue: Float = Float.random(in: 1...10)
+//define the names of to load from the Package of Reality Composer
+let planetDictionary: [String] = ["Mercury", "Venus", "Earth", "Mars", "Jupiter", "Saturn", "Uranus", "Neptune"]
+
 //define the reference so that we can simply adjust if needed
 let velocityFactor: Float = 20
 
