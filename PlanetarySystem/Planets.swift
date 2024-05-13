@@ -9,8 +9,6 @@ import SwiftUI
 import RealityKit
 import RealityKitContent
 
-//now there are many ways to do this. My first attempt will be hard coding.
-
 struct Planets: View {
     
     //declare the environment to dismiss everything useless
