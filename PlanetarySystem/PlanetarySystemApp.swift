@@ -20,5 +20,9 @@ struct PlanetarySystemApp: App {
             Planets()
         }
         
+        ImmersiveSpace(id: "DIY") {
+            PlanetsDIY()
+        }
+        
     }
 }

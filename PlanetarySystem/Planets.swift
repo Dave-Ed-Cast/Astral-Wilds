@@ -54,6 +54,7 @@ struct Planets: View {
             //to do so define an index to keep track of the position, and an angle that defines the value of the array we declared
             for (index, angle) in angles.enumerated() {
                 
+                print(angle)
                 //define parameters regarding the other file (at the index)
                 let parameters = orbitalParameters[index]
                 
@@ -65,7 +66,7 @@ struct Planets: View {
                 let newPosition = SIMD3(x, 1, z)
                 
                 //then since for some reason by doing $0.name, it would get the entity name as root, i created a function that returns the planet's name, and if those match, it gives it the new position
-                if let planet = findPlanet(scene: scene, name: planetDictionary[index]) {
+                if let planet = planetName(scene: scene, name: planetDictionary[index]) {
                     planet.position = newPosition
                 }
                 
@@ -80,7 +81,7 @@ struct Planets: View {
     
     //this is just finding the planet given the entities with the DFS method (depth first search)
     //basically it's the data structure of a tree, I don't believe it's the best, but it's a very simple task and not the aim of the project
-    private func findPlanet(scene: Entity, name: String) -> Entity? {
+    private func planetName(scene: Entity, name: String) -> Entity? {
         var tempStack = [scene]
         
         while !tempStack.isEmpty {
