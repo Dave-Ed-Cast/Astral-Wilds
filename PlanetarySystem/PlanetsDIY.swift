@@ -20,7 +20,7 @@ struct PlanetsDIY: View {
     @State private var angles: [Float] = {
         var anglesArray: [Float] = []
         for _ in 0..<8 {
-            let randomValue = Float.random(in: 1...10)
+            let randomValue = Float.random(in: 1...1)
             anglesArray.append(.pi * randomValue)
         }
         return anglesArray
@@ -50,7 +50,7 @@ struct PlanetsDIY: View {
     
     private func movePlanet(entity: Entity) {
         
-        guard var parameters = orbitalParameters.first(where: { $0.planet == entity.name }) else {
+        guard let parameters = orbitalParameters.first(where: { $0.planet == entity.name }) else {
             return
         }
         
@@ -58,11 +58,12 @@ struct PlanetsDIY: View {
             return
         }
         
-        var angle = angles[index]
+        var angle = atan2(entity.position.z, entity.position.x)
+        print(angle)
         
 //        parameters.revolving.toggle()
         
-        Timer.scheduledTimer(withTimeInterval: 0.001, repeats: parameters.revolving) { _ in
+        Timer.scheduledTimer(withTimeInterval: 0.001, repeats: true) { _ in
             let angularVelocity = 2 * .pi / parameters.period
             angle += 0.001 * Float(angularVelocity)
             
