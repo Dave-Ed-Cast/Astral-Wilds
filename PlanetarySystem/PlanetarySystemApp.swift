@@ -16,7 +16,7 @@ struct PlanetarySystemApp: App {
         }
         
         //same thing here
-        ImmersiveSpace(id: "saturn") {
+        ImmersiveSpace(id: "planets") {
             Planets()
         }
         

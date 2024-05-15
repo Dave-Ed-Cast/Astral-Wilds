@@ -19,7 +19,7 @@ struct ContentView: View {
             Button {
                 Task {
                     //this is an async call (call when ready)
-                    await openImmersiveSpace(id: "saturn")
+                    await openImmersiveSpace(id: "planets")
                 }
             } label: {
                 Text("View the solar system")
