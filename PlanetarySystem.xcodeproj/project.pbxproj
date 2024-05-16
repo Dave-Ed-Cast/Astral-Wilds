@@ -14,6 +14,7 @@
 		3E06367F2BF0BAA500F7ED6E /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3E06367E2BF0BAA500F7ED6E /* Preview Assets.xcassets */; };
 		3E0BE18F2BF157DE00C5B7C8 /* Parameters.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E0BE18E2BF157DE00C5B7C8 /* Parameters.swift */; };
 		3E7D10DD2BF2652500B8CC9C /* Planets.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E7D10DC2BF2652500B8CC9C /* Planets.swift */; };
+		3ED824C42BF4FB710091E5F5 /* ImmersiveView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3ED824C32BF4FB710091E5F5 /* ImmersiveView.swift */; };
 		3EF670E22BF282E700F916CF /* PlanetsDIY.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EF670E12BF282E700F916CF /* PlanetsDIY.swift */; };
 /* End PBXBuildFile section */
 
@@ -27,6 +28,7 @@
 		3E0636802BF0BAA500F7ED6E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		3E0BE18E2BF157DE00C5B7C8 /* Parameters.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Parameters.swift; sourceTree = "<group>"; };
 		3E7D10DC2BF2652500B8CC9C /* Planets.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Planets.swift; sourceTree = "<group>"; };
+		3ED824C32BF4FB710091E5F5 /* ImmersiveView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImmersiveView.swift; sourceTree = "<group>"; };
 		3EF670E12BF282E700F916CF /* PlanetsDIY.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlanetsDIY.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -65,6 +67,7 @@
 				3E0636772BF0BAA400F7ED6E /* PlanetarySystemApp.swift */,
 				3E7D10DC2BF2652500B8CC9C /* Planets.swift */,
 				3EF670E12BF282E700F916CF /* PlanetsDIY.swift */,
+				3ED824C32BF4FB710091E5F5 /* ImmersiveView.swift */,
 				3E0BE18E2BF157DE00C5B7C8 /* Parameters.swift */,
 				3E0636792BF0BAA400F7ED6E /* ContentView.swift */,
 				3E06367B2BF0BAA500F7ED6E /* Assets.xcassets */,
@@ -168,6 +171,7 @@
 				3E0636782BF0BAA400F7ED6E /* PlanetarySystemApp.swift in Sources */,
 				3EF670E22BF282E700F916CF /* PlanetsDIY.swift in Sources */,
 				3E0BE18F2BF157DE00C5B7C8 /* Parameters.swift in Sources */,
+				3ED824C42BF4FB710091E5F5 /* ImmersiveView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

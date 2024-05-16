@@ -32,16 +32,12 @@ struct PlanetsDIY: View {
             //and move it
             movePlanet(entity: planet!)
         }))
-        .onAppear {
-            //but before that let's get rid of everything else
-            dismissWindow(id: "main")
-        }
     }
     
     private func movePlanet(entity: Entity) {
         
         //locally define the parameters from the chosen planet
-        guard var parameters = orbitalParameters.first(where: { $0.planet == entity.name }) else {
+        guard let parameters = orbitalParameters.first(where: { $0.planet == entity.name }) else {
             return
         }
         

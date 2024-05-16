@@ -42,4 +42,3 @@ var orbitalParameters: [OrbitalParameters] = [
     OrbitalParameters(planet: "Uranus", radius: posValue * 7, period: time * 5, position: 7),
     OrbitalParameters(planet: "Neptune", radius: posValue * 8, period: time * 5.9, position: 8)
 ]
-

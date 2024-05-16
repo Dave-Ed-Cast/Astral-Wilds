@@ -1,7 +1,8 @@
 {
-  "advancedEditorSelectedIdentifier" : "StatisticsPluginID",
+  "advancedEditorSelectedIdentifier" : "ProjectBrowser",
   "openSceneRelativePaths" : [
-    "Planets.usda"
+    "Planets.usda",
+    "TravelToMars.usda"
   ],
   "recentIdentifiers" : {
     "26DBAE76-5DD8-47B6-A085-1B4ADA111097" : [
@@ -233,6 +234,52 @@
           0.37761047,
           1.1094786,
           1.0890572,
+          1
+        ]
+      }
+    ],
+    "654A1BA5-90D3-4635-ADC4-8083566F93AB" : [
+      {
+        "date" : 737475772.590759,
+        "title" : "Untitled",
+        "transform" : [
+          0.9999931,
+          0,
+          0.003723136,
+          0,
+          0.001861568,
+          0.8660254,
+          -0.49999654,
+          0,
+          -0.0032243303,
+          0.5,
+          0.8660194,
+          0,
+          -0.0054803323,
+          0.8498404,
+          1.4719567,
+          1
+        ]
+      },
+      {
+        "date" : 737475556.359598,
+        "title" : "Untitled",
+        "transform" : [
+          1,
+          0,
+          -0,
+          0,
+          -0,
+          0.8660254,
+          -0.5,
+          0,
+          0,
+          0.5,
+          0.8660254,
+          0,
+          0,
+          0.2150388,
+          0.37245816,
           1
         ]
       }
@@ -506,5 +553,5 @@
       }
     ]
   },
-  "selectedSceneRelativePath" : "Planets.usda"
+  "selectedSceneRelativePath" : "TravelToMars.usda"
 }
