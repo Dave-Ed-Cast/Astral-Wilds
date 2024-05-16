@@ -34,12 +34,10 @@ struct ImmersiveView: View {
                 return
             }
             
-            if let planet = try? await Entity(named: "TravelToMars", in: realityKitContentBundle), let environment = try? await EnvironmentResource(named: "studio") {
-                
-            }
+            let planet = try? await Entity(named: "TravelToMars", in: realityKitContentBundle)
             
             content.add(skyBoxEntity)
-            content.add(planet)
+            content.add(planet!)
         }
         .onAppear {
             //but before that let's get rid of everything else
