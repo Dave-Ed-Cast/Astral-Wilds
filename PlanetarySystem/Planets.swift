@@ -41,8 +41,9 @@ struct Planets: View {
         RealityView { content in
             
             //define the scene
-            if let scene = try? await Entity(named: "Planets", in: realityKitContentBundle) {
+            if let scene = try? await Entity(named: "Planets", in: realityKitContentBundle), let environment = try? await EnvironmentResource(named: "studio") {
                 content.add(scene)
+                
                 
                 //and let the solar system go!
                 startAnimationLoop(scene: scene)

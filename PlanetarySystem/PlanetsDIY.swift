@@ -9,12 +9,13 @@ import SwiftUI
 import RealityKit
 import RealityKitContent
 
+var planets = Entity()
+
 struct PlanetsDIY: View {
     
     //declare the environment to dismiss everything useless
     @Environment(\.dismissWindow) var dismissWindow
     @Environment(\.dismissImmersiveSpace) var dismissImmersiveSpace
-
     @State private var timer: Timer? = nil
     //working with numbers is boring so let's define some references in the other file (Parameters)
     var body: some View {
@@ -24,17 +25,24 @@ struct PlanetsDIY: View {
                 await dismissImmersiveSpace()
             }
         } label: {
-           Text("Go back to the menu")
+            Text("Go back to the menu")
         }
         
         //create the reality view
         RealityView { content in
             
             //define the scene
-            if let scene = try? await Entity(named: "Planets", in: realityKitContentBundle) {
-                content.add(scene)
+            if let scene = try? await Entity(named: "Planets", in: realityKitContentBundle), let environment = try? await EnvironmentResource(named: "studio") {
+                print("ciao")
+                planets = scene
+                planets.components.set(ImageBasedLightComponent(source: .single(environment)))
+                planets.components.set(ImageBasedLightReceiverComponent(imageBasedLight: planets))
+                planets.components.set(GroundingShadowComponent(castsShadow: true))
+                
+                content.add(planets)
                 
             }
+            
         }
         //declare the tap gesture to move a selected planet
         .gesture(TapGesture().targetedToAnyEntity().onEnded({ value in
@@ -57,15 +65,15 @@ struct PlanetsDIY: View {
         }
         
         orbitalParameters[index].revolving.toggle()
-    
+        
         //we need the angle, so straight outta calculus 1
         var angle = atan2(entity.position.z, entity.position.x)
         
         if !orbitalParameters[index].revolving {
-                timer?.invalidate()
-                timer = nil // Set the timer to nil to indicate it's not running
-                return
-            }
+            timer?.invalidate()
+            timer = nil // Set the timer to nil to indicate it's not running
+            return
+        }
         //this is like the function update in game engines, but we move it as long as "var" is true
         if timer == nil {
             
@@ -81,7 +89,7 @@ struct PlanetsDIY: View {
             }
         }
     }
-
+    
     
     private func findPlanet(scene: Entity, name: String) -> Entity? {
         var tempStack = [scene]

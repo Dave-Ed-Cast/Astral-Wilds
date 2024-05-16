@@ -21,14 +21,20 @@ struct PlanetarySystemApp: App {
         ImmersiveSpace(id: "planets") {
             Planets()
         }
+        .immersionStyle(selection: $immersionMode, in: .progressive)
+        .immersiveContentBrightness(.bright)
         
         ImmersiveSpace(id: "DIY") {
             PlanetsDIY()
         }
+        .immersiveContentBrightness(.bright)
+        .immersionStyle(selection: $immersionMode, in: .progressive)
+        
         
         ImmersiveSpace(id: "ImmersiveView") {
             ImmersiveView()
         }
         .immersionStyle(selection: $immersionMode, in: .full)
+        .immersiveContentBrightness(.bright)
     }
 }
