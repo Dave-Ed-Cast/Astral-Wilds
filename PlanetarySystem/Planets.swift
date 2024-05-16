@@ -35,8 +35,9 @@ struct Planets: View {
                 await dismissImmersiveSpace()
             }
         } label: {
-           Text("Go back to the menu")
+            Text("Go back to the menu")
         }
+        .frame(depth: 200)
         
         RealityView { content in
             
@@ -44,22 +45,29 @@ struct Planets: View {
                 print("error")
                 return
             }
-            
-            content.add(skyBoxEntity)
+            withAnimation(.linear(duration: 2)) {
+                content.add(skyBoxEntity)
+            }
             
             //define the scene
             if let scene = try? await Entity(named: "Planets", in: realityKitContentBundle), let environment = try? await EnvironmentResource(named: "studio") {
-
+                
                 scene.components.set(ImageBasedLightComponent(source: .single(environment)))
                 scene.components.set(ImageBasedLightReceiverComponent(imageBasedLight: scene))
                 scene.components.set(GroundingShadowComponent(castsShadow: true))
-                
-                content.add(scene)
+                withAnimation(.linear(duration: 2)) {
+                    content.add(scene)
+                }
                 
                 //and let the solar system go!
                 startAnimationLoop(scene: scene)
             }
             
+        }
+        .onAppear {
+            withAnimation(.linear) {
+                dismissWindow(id: "main")
+            }
         }
     }
     
@@ -73,7 +81,6 @@ struct Planets: View {
             //to do so define an index to keep track of the position, and an angle that defines the value of the array we declared
             for (index, angle) in angles.enumerated() {
                 
-                print(angle)
                 //define parameters regarding the other file (at the index)
                 let parameters = orbitalParameters[index]
                 

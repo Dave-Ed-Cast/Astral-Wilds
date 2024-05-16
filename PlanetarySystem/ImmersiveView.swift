@@ -47,8 +47,9 @@ struct ImmersiveView: View {
             
         }
         .onAppear {
-            //but before that let's get rid of everything else
-            dismissWindow(id: "main")
+            withAnimation(.linear) {
+                dismissWindow(id: "main")
+            }
         }
     }
 }

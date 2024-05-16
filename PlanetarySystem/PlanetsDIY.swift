@@ -43,8 +43,9 @@ struct PlanetsDIY: View {
             movePlanet(entity: planet!)
         }))
         .onAppear {
-            // But before that let's get rid of everything else
-            dismissWindow(id: "main")
+            withAnimation(.linear) {
+                dismissWindow(id: "main")
+            }
         }
     }
     
