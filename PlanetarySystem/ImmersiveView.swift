@@ -34,6 +34,8 @@ struct ImmersiveView: View {
                 return
             }
             
+            content.add(skyBoxEntity)
+            
             if let planet = try? await Entity(named: "TravelToMars", in: realityKitContentBundle), let environment = try? await EnvironmentResource(named: "studio") {
 
                 planet.components.set(ImageBasedLightComponent(source: .single(environment)))
@@ -43,7 +45,6 @@ struct ImmersiveView: View {
                 content.add(planet)
             }
             
-            content.add(skyBoxEntity)
         }
         .onAppear {
             //but before that let's get rid of everything else

@@ -19,6 +19,13 @@ struct PlanetsDIY: View {
         // Create the reality view
         RealityView { content in
             
+            guard let skyBoxEntity = createSkyBox() else {
+                print("error")
+                return
+            }
+            
+            content.add(skyBoxEntity)
+            
             if let scene = try? await Entity(named: "Planets", in: realityKitContentBundle), let environment = try? await EnvironmentResource(named: "studio") {
 
                 scene.components.set(ImageBasedLightComponent(source: .single(environment)))

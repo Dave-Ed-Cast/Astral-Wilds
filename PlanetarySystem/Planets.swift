@@ -40,6 +40,13 @@ struct Planets: View {
         
         RealityView { content in
             
+            guard let skyBoxEntity = createSkyBox() else {
+                print("error")
+                return
+            }
+            
+            content.add(skyBoxEntity)
+            
             //define the scene
             if let scene = try? await Entity(named: "Planets", in: realityKitContentBundle), let environment = try? await EnvironmentResource(named: "studio") {
 
@@ -52,6 +59,7 @@ struct Planets: View {
                 //and let the solar system go!
                 startAnimationLoop(scene: scene)
             }
+            
         }
     }
     

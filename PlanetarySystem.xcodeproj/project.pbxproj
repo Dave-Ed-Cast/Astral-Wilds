@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 56;
+	objectVersion = 60;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -20,7 +20,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		3E0636702BF0BAA400F7ED6E /* PlanetarySystem.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PlanetarySystem.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		3E0636702BF0BAA400F7ED6E /* PlanetarySystem.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; name = PlanetarySystem.app; path = "/Users/davidecastaldi/Documents/GitHub/Planetary-System/build/Debug-xros/PlanetarySystem.app"; sourceTree = "<absolute>"; };
 		3E0636742BF0BAA400F7ED6E /* RealityKitContent */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = RealityKitContent; sourceTree = "<group>"; };
 		3E0636772BF0BAA400F7ED6E /* PlanetarySystemApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlanetarySystemApp.swift; sourceTree = "<group>"; };
 		3E0636792BF0BAA400F7ED6E /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -30,6 +30,7 @@
 		3E0BE18E2BF157DE00C5B7C8 /* Parameters.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Parameters.swift; sourceTree = "<group>"; };
 		3E7D10DC2BF2652500B8CC9C /* Planets.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Planets.swift; sourceTree = "<group>"; };
 		3E979FBF2BF6A7C80011999B /* studio.skybox */ = {isa = PBXFileReference; lastKnownFileType = file.skybox; path = studio.skybox; sourceTree = "<group>"; };
+		3EA475602BF6BA75005A3573 /* RealityKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RealityKit.framework; path = System/Library/Frameworks/RealityKit.framework; sourceTree = SDKROOT; };
 		3ED824C32BF4FB710091E5F5 /* ImmersiveView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImmersiveView.swift; sourceTree = "<group>"; };
 		3EF670E12BF282E700F916CF /* PlanetsDIY.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlanetsDIY.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -51,16 +52,8 @@
 			children = (
 				3E0636722BF0BAA400F7ED6E /* PlanetarySystem */,
 				3E0636732BF0BAA400F7ED6E /* Packages */,
-				3E0636712BF0BAA400F7ED6E /* Products */,
+				3EA4755F2BF6BA75005A3573 /* Frameworks */,
 			);
-			sourceTree = "<group>";
-		};
-		3E0636712BF0BAA400F7ED6E /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				3E0636702BF0BAA400F7ED6E /* PlanetarySystem.app */,
-			);
-			name = Products;
 			sourceTree = "<group>";
 		};
 		3E0636722BF0BAA400F7ED6E /* PlanetarySystem */ = {
@@ -94,6 +87,14 @@
 				3E06367E2BF0BAA500F7ED6E /* Preview Assets.xcassets */,
 			);
 			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		3EA4755F2BF6BA75005A3573 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				3EA475602BF6BA75005A3573 /* RealityKit.framework */,
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -135,7 +136,7 @@
 				};
 			};
 			buildConfigurationList = 3E06366B2BF0BAA400F7ED6E /* Build configuration list for PBXProject "PlanetarySystem" */;
-			compatibilityVersion = "Xcode 14.0";
+			compatibilityVersion = "Xcode 15.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
@@ -143,7 +144,7 @@
 				Base,
 			);
 			mainGroup = 3E0636672BF0BAA400F7ED6E;
-			productRefGroup = 3E0636712BF0BAA400F7ED6E /* Products */;
+			productRefGroup = 3E0636672BF0BAA400F7ED6E;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (

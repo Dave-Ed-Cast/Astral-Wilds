@@ -22,12 +22,10 @@ struct PlanetarySystemApp: App {
             Planets()
         }
         .immersionStyle(selection: $immersionMode, in: .full)
-        .immersiveContentBrightness(.bright)
         
         ImmersiveSpace(id: "DIY") {
             PlanetsDIY()
         }
-        .immersiveContentBrightness(.bright)
         .immersionStyle(selection: $immersionMode, in: .full)
         
         
@@ -35,6 +33,5 @@ struct PlanetarySystemApp: App {
             ImmersiveView()
         }
         .immersionStyle(selection: $immersionMode, in: .full)
-        .immersiveContentBrightness(.bright)
     }
 }
