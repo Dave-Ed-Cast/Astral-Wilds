@@ -34,9 +34,13 @@ struct ImmersiveView: View {
                 return
             }
             
-            if let planet = try? await Entity(named: "Metronome", in: realityKitContentBundle), let environment = try? await EnvironmentResource(named: "studio") {
-                content.add(planet)
+            if let planet = try? await Entity(named: "TravelToMars", in: realityKitContentBundle), let environment = try? await EnvironmentResource(named: "studio") {
 
+                planet.components.set(ImageBasedLightComponent(source: .single(environment)))
+                planet.components.set(ImageBasedLightReceiverComponent(imageBasedLight: planet))
+                planet.components.set(GroundingShadowComponent(castsShadow: true))
+                
+                content.add(planet)
             }
             
             content.add(skyBoxEntity)
