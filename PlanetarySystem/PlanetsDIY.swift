@@ -13,9 +13,20 @@ struct PlanetsDIY: View {
     
     //declare the environment to dismiss everything useless
     @Environment(\.dismissWindow) var dismissWindow
+    @Environment(\.dismissImmersiveSpace) var dismissImmersiveSpace
+
     @State private var timer: Timer? = nil
     //working with numbers is boring so let's define some references in the other file (Parameters)
     var body: some View {
+        
+        Button {
+            Task {
+                await dismissImmersiveSpace()
+            }
+        } label: {
+           Text("Go back to the menu")
+        }
+        
         //create the reality view
         RealityView { content in
             

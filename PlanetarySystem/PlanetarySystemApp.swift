@@ -27,7 +27,7 @@ struct PlanetarySystemApp: App {
         }
         
         ImmersiveSpace(id: "ImmersiveView") {
-//            ImmersiveView()
+            ImmersiveView()
         }
         .immersionStyle(selection: $immersionMode, in: .full)
     }

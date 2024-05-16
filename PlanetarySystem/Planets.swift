@@ -13,7 +13,8 @@ struct Planets: View {
     
     //declare the environment to dismiss everything useless
     @Environment(\.dismissWindow) var dismissWindow
-    
+    @Environment(\.dismissImmersiveSpace) var dismissImmersiveSpace
+
     //working with numbers is boring so let's define some references in the other file (Parameters)
     
     //this is an array initialized in a random way so that
@@ -28,6 +29,15 @@ struct Planets: View {
 
     var body: some View {
         //create the reality view
+        
+        Button {
+            Task {
+                await dismissImmersiveSpace()
+            }
+        } label: {
+           Text("Go back to the menu")
+        }
+        
         RealityView { content in
             
             //define the scene

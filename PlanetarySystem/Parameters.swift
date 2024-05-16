@@ -6,6 +6,8 @@
 //
 
 import Foundation
+import RealityKit
+import RealityKitContent
 
 struct OrbitalParameters {
     let planet: String?
@@ -42,3 +44,31 @@ var orbitalParameters: [OrbitalParameters] = [
     OrbitalParameters(planet: "Uranus", radius: posValue * 7, period: time * 5, position: 7),
     OrbitalParameters(planet: "Neptune", radius: posValue * 8, period: time * 5.9, position: 8)
 ]
+
+func createSkyBox() -> Entity? {
+    //mesh
+    let largeSphere = MeshResource.generateSphere(radius: 1000)
+    
+    //material
+    var skyBoxMaterial = UnlitMaterial()
+    
+    do {
+        let texture = try TextureResource.load(named: "StarryNight")
+        skyBoxMaterial.color = .init(texture: .init(texture))
+    } catch {
+        print(error)
+    }
+    
+    //skybox
+    let skyBoxEntity = Entity()
+    skyBoxEntity.components.set(
+        ModelComponent(
+            mesh: largeSphere,
+            materials: [skyBoxMaterial]
+        )
+    )
+    
+    skyBoxEntity.scale *= .init(x: -1, y: 1, z: 1)
+    
+    return skyBoxEntity
+}

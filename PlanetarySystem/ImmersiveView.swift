@@ -10,12 +10,23 @@ import RealityKit
 import RealityKitContent
 
 struct ImmersiveView: View {
-
+    
     @Environment(\.dismissWindow) var dismissWindow
     @Environment(\.dismissImmersiveSpace) var dismissImmersiveSpace
     @Environment(\.openImmersiveSpace) var openImmersiveSpace
-        
+    
     var body: some View {
+        
+        Button {
+            Task {
+                await dismissImmersiveSpace()
+            }
+            
+        } label: {
+            Text("Go back to the menu")
+        }
+        .padding()
+        
         RealityView { content in
             
             guard let skyBoxEntity = createSkyBox() else {
@@ -23,40 +34,17 @@ struct ImmersiveView: View {
                 return
             }
             
+            if let planet = try? await Entity(named: "TravelToMars", in: realityKitContentBundle), let environment = try? await EnvironmentResource(named: "studio") {
+                
+            }
+            
             content.add(skyBoxEntity)
+            content.add(planet)
         }
         .onAppear {
             //but before that let's get rid of everything else
             dismissWindow(id: "main")
         }
-    }
-    
-    private func createSkyBox() -> Entity? {
-        //mesh
-        let largeSphere = MeshResource.generateSphere(radius: 1000)
-        
-        //material
-        var skyBoxMaterial = UnlitMaterial()
-        
-        do {
-            let texture = try TextureResource.load(named: "StarryNight")
-            skyBoxMaterial.color = .init(texture: .init(texture))
-        } catch {
-            print(error)
-        }
-        
-        //skybox
-        let skyBoxEntity = Entity()
-        skyBoxEntity.components.set(
-            ModelComponent(
-                mesh: largeSphere,
-                materials: [skyBoxMaterial]
-            )
-        )
-        
-        skyBoxEntity.scale *= .init(x: -1, y: 1, z: 1)
-        
-        return skyBoxEntity
     }
 }
 
