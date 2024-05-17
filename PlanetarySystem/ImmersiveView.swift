@@ -18,7 +18,7 @@ struct ImmersiveView: View {
     @State var currentStep: Int = 0
     @State var meditationArray: [String] = [
         "click me",
-        "ciao2",
+        "ciao2 ciao2 ciao2 ciao2 ciao2 ciao2 ciao2 ciao2 ciao2 ciao2 ciao2 ciao2 ciao2 ciao2 ciao2 ciao2 ciao2 ciao2 ciao2 ciao2 ciao2 ciao2 ciao2 ciao2 ciao2 ciao2 ciao2 ciao2 ciao2 ciao2 ciao2 ciao2 ciao2 ciao2 ",
         "ciao3",
         "ciao4",
         "ciao5",
@@ -28,31 +28,28 @@ struct ImmersiveView: View {
         "ciao9",
     ]
     
-    
     var body: some View {
-        
-        Button {
-            Task {
-                await dismissImmersiveSpace()
-            }
-        } label: {
-            Text("Go back to the menu")
-                .font(.title3)
-        }
-        .padding()
-        
-        VStack {
-            Button {
-                currentStep = (currentStep == 10) ? currentStep : currentStep + 1
-            } label: {
-                withAnimation(.smooth.delay(5)) {
-                    Text("\(meditationArray[currentStep])")
+        NavigationStack {
+            VStack {
+                Text("\(meditationArray[currentStep])")
+                    .font(.system(size: 100))
+                Button("next") {
+                    currentStep = (currentStep == 10) ? currentStep : currentStep + 1
                 }
+
+                Button {
+                    Task {
+                        await dismissImmersiveSpace()
+                    }
+                } label: {
+                    Text("Go back to the reality")
+                        .font(.title3)
+                }
+                .padding()
             }
         }
-        
+        .opacity(0.3)
         RealityView { content in
-            
             
             guard let skyBoxEntity = createSkyBox() else {
                 print("error")
@@ -70,13 +67,13 @@ struct ImmersiveView: View {
                 content.add(planet)
             }
             
-            
         }
         .onAppear {
             withAnimation(.linear) {
                 dismissWindow(id: "Before")
             }
         }
+        
     }
 }
 

@@ -8,6 +8,7 @@
 import Foundation
 import RealityKit
 import RealityKitContent
+import SwiftUI
 
 struct OrbitalParameters {
     let planet: String?
