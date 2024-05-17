@@ -53,7 +53,7 @@ func createSkyBox() -> Entity? {
     var skyBoxMaterial = UnlitMaterial()
     
     do {
-        let texture = try TextureResource.load(named: "StarryNight")
+        let texture = try TextureResource.load(named: "Image")
         skyBoxMaterial.color = .init(texture: .init(texture))
     } catch {
         print(error)

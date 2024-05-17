@@ -34,6 +34,9 @@ struct PlanetsDIY: View {
                 
                 content.add(scene)
             }
+            
+            
+            
         }
         // Declare the tap gesture to move a selected planet
         .gesture(TapGesture().targetedToAnyEntity().onEnded({ value in
@@ -66,12 +69,14 @@ struct PlanetsDIY: View {
         // Start or stop the movement of the tapped planet
         if orbitalParameters[index].revolving {
             startMovement(for: entity, with: parameters)
+            
         } else {
             stopMovement(for: entity)
         }
     }
 
     private func startMovement(for entity: Entity, with parameters: OrbitalParameters) {
+        
         // Calculate angle for initial position
         var angle = atan2(entity.position.z, entity.position.x)
         

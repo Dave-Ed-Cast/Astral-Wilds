@@ -17,6 +17,10 @@ struct PlanetarySystemApp: App {
             ContentView()
         }
         
+        WindowGroup(id: "Before") {
+            BeforeImmersiveView()
+        }
+        
         //same thing here
         ImmersiveSpace(id: "planets") {
             Planets()
@@ -26,7 +30,7 @@ struct PlanetarySystemApp: App {
         ImmersiveSpace(id: "DIY") {
             PlanetsDIY()
         }
-        .immersionStyle(selection: $immersionMode, in: .full)
+        .immersionStyle(selection: $immersionMode, in: .progressive)
         
         
         ImmersiveSpace(id: "ImmersiveView") {

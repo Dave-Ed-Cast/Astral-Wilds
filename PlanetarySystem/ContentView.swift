@@ -13,11 +13,14 @@ import RealityKitContent
 struct ContentView: View {
     
     @Environment(\.openImmersiveSpace) var openImmersiveSpace
+    @Environment(\.openWindow) var openWindow
     @Environment(\.dismissImmersiveSpace) var dismissImmersiveSpace
     @State private var immersiveSpaceID: String? = nil
     var body: some View {
         
         VStack {
+            Text("Welcome! Choose what do you want to explore")
+                .font(.largeTitle)
             Button {
                 Task {
                     //this is an async call (call when ready)
@@ -25,6 +28,8 @@ struct ContentView: View {
                 }
             } label: {
                 Text("View the solar system")
+                    .font(.title2)
+                    
             }
             
             Button {
@@ -33,23 +38,20 @@ struct ContentView: View {
                     await openImmersiveSpace(id: "DIY")
                 }
             } label: {
-                Text("Move the solar system how you want")
+                Text("Explore the power of moving the chosing which planet to move")
+                    .font(.title2)
             }
             
             Button {
-                Task {
-                    await openImmersiveSpace(id: "ImmersiveView")
-                }
+                openWindow(id: "Before")
             } label: {
-                HStack {
-                    Text("Travel to mars")
-                    Image(systemName: "visionpro")
-                    
-                }
+                Text("Engage in a meditation journey to mars")
+                    .font(.title2)
             }
+            
         }
         .padding()
-        .navigationTitle("Content")
+        .navigationTitle("Space travelling app")
         
     }
 }
