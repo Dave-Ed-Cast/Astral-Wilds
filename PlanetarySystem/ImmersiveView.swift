@@ -29,26 +29,31 @@ struct ImmersiveView: View {
     ]
     
     var body: some View {
-        NavigationStack {
-            VStack {
-                Text("\(meditationArray[currentStep])")
-                    .font(.system(size: 100))
-                Button("next") {
-                    currentStep = (currentStep == 10) ? currentStep : currentStep + 1
-                }
-
-                Button {
-                    Task {
-                        await dismissImmersiveSpace()
+        ZStack {
+            Color.white
+                .opacity(0.3)
+        
+            NavigationStack {
+                VStack {
+                    Text("\(meditationArray[currentStep])")
+                        .font(.system(size: 100))
+                    Button("next") {
+                        currentStep = (currentStep == 10) ? currentStep : currentStep + 1
                     }
-                } label: {
-                    Text("Go back to the reality")
-                        .font(.title3)
+                    
+                    Button {
+                        Task {
+                            await dismissImmersiveSpace()
+                        }
+                    } label: {
+                        Text("Go back to the reality")
+                            .font(.title3)
+                    }
+                    .padding()
                 }
-                .padding()
             }
         }
-        .opacity(0.3)
+
         RealityView { content in
             
             guard let skyBoxEntity = createSkyBox() else {
