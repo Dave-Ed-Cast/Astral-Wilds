@@ -11,6 +11,7 @@ import SwiftUI
 struct PlanetarySystemApp: App {
     
     @State var immersionMode: ImmersionStyle = .full
+    @State private var selectedDuration: Int = 60
     var body: some Scene {
         //to dismiss the view, we declare an id so we can refer to this view
         WindowGroup(id: "main"){
@@ -34,7 +35,7 @@ struct PlanetarySystemApp: App {
         
         
         ImmersiveSpace(id: "ImmersiveView") {
-            ImmersiveView()
+            ImmersiveView(duration: $selectedDuration)
         }
         .immersionStyle(selection: $immersionMode, in: .full)
     }

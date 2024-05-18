@@ -9,7 +9,7 @@ import SwiftUI
 
 struct BeforeImmersiveView: View {
     
-    @State var durationSelection: [Int] = [60, 180]
+    @State var durationSelection: Int = 60
     @Environment(\.dismissWindow) var dismissWindow
     @Environment(\.openImmersiveSpace) var openImmersiveSpace
 
@@ -21,9 +21,9 @@ struct BeforeImmersiveView: View {
             
             Picker("Choose: ", selection: $durationSelection) {
                 Text("1 minute")
-                    .tag(durationSelection[0])
+                    .tag(60)
                 Text("3 minutes")
-                    .tag(durationSelection[1])
+                    .tag(180)
             }
             .pickerStyle(.inline)
             
