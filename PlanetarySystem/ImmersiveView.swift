@@ -16,11 +16,20 @@ struct ImmersiveView: View {
     
     @State private var textEntity: ModelEntity?
     @State private var timer: Timer?
+    @State private var planetTimer: Timer?
     @Binding var duration: Int
     @State private var currentStep: Int = 0
     @State private var minuteArray: [String] = [
-        "ciao", "ciao2", "ciao3"
-        // Add other meditation steps here
+        "Sit and relax...",
+        "Let us enjoy the journey to mars",
+        "Without weight... embrace silence",
+        "Through the stars, possibilities are infinite",
+        "Breath in and breath out",
+        "Connect to the cosmo with the echo of your heartbeat",
+        "Time slows down and the mind transcends space...",
+        "The universe... ",
+        "Gravity fades away, and we become one...",
+        "Here we are..."
     ]
     
     @State private var threeMinutesArray: [String] = [
@@ -38,7 +47,11 @@ struct ImmersiveView: View {
             Text("Go back to reality")
                 .font(.title3)
         }
+        .frame(depth: 100)
         .padding()
+        .padding(.bottom, 800)
+        .padding(.horizontal, -850)
+        
         RealityView { content in
             guard let skyBoxEntity = createSkyBox() else {
                 print("Error: Unable to create skybox entity")
@@ -56,6 +69,8 @@ struct ImmersiveView: View {
                 let initialText = duration == 60 ? minuteArray[currentStep] : threeMinutesArray[currentStep]
                 let newTextEntity = createTextEntity(text: initialText)
                 
+                let largeSphere = MeshResource.generateSphere(radius: 30)
+                newTextEntity.position = SIMD3(x: -1.5, y: 1.1, z: -2)
                 newTextEntity.components.set(ImageBasedLightComponent(source: .single(environment)))
                 newTextEntity.components.set(ImageBasedLightReceiverComponent(imageBasedLight: planet))
                 newTextEntity.components.set(GroundingShadowComponent(castsShadow: true))
@@ -67,7 +82,7 @@ struct ImmersiveView: View {
                 textEntity = newTextEntity
                 
                 // Start timer for updating text
-                startTimer()
+                startTimer(entity: planet)
             }
         }
         .onAppear {
@@ -80,22 +95,39 @@ struct ImmersiveView: View {
         }
     }
     
-    private func startTimer() {
-        timer = Timer.scheduledTimer(withTimeInterval: 6.0, repeats: true) { _ in
-            updateStep()
-        }
+    private func startTimer(entity: Entity) {
+            timer = Timer.scheduledTimer(withTimeInterval: 6.0, repeats: true) { _ in
+                
+                updateStep()
+            }
+            
+            planetTimer = Timer.scheduledTimer(withTimeInterval: 0.001, repeats: true, block: { timer in
+                
+                entity.position.z += (duration == 60) ? 0.0001 : 0.00002;
+
+            })
+        
+        
     }
     
     private func stopTimer() {
         timer?.invalidate()
         timer = nil
+        planetTimer?.invalidate()
+        planetTimer = nil
     }
     
     private func updateStep() {
         if duration == 60 {
             currentStep = (currentStep + 1) % minuteArray.count
+            if currentStep == minuteArray.count - 1 {
+                stopTimer()
+            }
         } else {
             currentStep = (currentStep + 1) % threeMinutesArray.count
+            if currentStep == threeMinutesArray.count - 1 {
+                stopTimer()
+            }
         }
         
         // Get the updated text
@@ -104,6 +136,7 @@ struct ImmersiveView: View {
         // Update text entity
         updateTextEntity(newText)
     }
+
     
     private func updateTextEntity(_ text: String) {
         guard let textEntity = textEntity else {
@@ -112,14 +145,14 @@ struct ImmersiveView: View {
         }
         
         // Create mesh for the new text
-        let mesh = MeshResource.generateText(text, extrusionDepth: 0.1, font: .systemFont(ofSize: 0.5), containerFrame: .zero, alignment: .center, lineBreakMode: .byWordWrapping)
+        let mesh = MeshResource.generateText(text, extrusionDepth: 0.1, font: .systemFont(ofSize: 0.2), containerFrame: .zero, alignment: .center, lineBreakMode: .byWordWrapping)
         
         // Set the new mesh for the text entity
         textEntity.model?.mesh = mesh
     }
     
     private func createTextEntity(text: String) -> ModelEntity {
-        let mesh = MeshResource.generateText(text, extrusionDepth: 0.1, font: .systemFont(ofSize: 0.5), containerFrame: .zero, alignment: .center, lineBreakMode: .byWordWrapping)
+        let mesh = MeshResource.generateText(text, extrusionDepth: 0.1, font: .systemFont(ofSize: 0.2), containerFrame: .zero, alignment: .center, lineBreakMode: .byWordWrapping)
         let material = SimpleMaterial(color: .white, isMetallic: false)
         return ModelEntity(mesh: mesh, materials: [material])
     }

@@ -15,8 +15,8 @@ def Xform "Root"
         prepend references = @Mars 1.usdz@
     )
     {
-        float3 xformOp:scale = (1, 1, 1)
-        float3 xformOp:translate = (0, 1, -5)
+        float3 xformOp:scale = (10, 10, 10)
+        float3 xformOp:translate = (0, 1, -50)
         uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
     }
 }
