@@ -33,6 +33,7 @@
 		3E7D10DC2BF2652500B8CC9C /* Planets.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Planets.swift; sourceTree = "<group>"; };
 		3E979FBF2BF6A7C80011999B /* studio.skybox */ = {isa = PBXFileReference; lastKnownFileType = file.skybox; path = studio.skybox; sourceTree = "<group>"; };
 		3EA475602BF6BA75005A3573 /* RealityKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RealityKit.framework; path = System/Library/Frameworks/RealityKit.framework; sourceTree = SDKROOT; };
+		3ED365C62BFA20D70009123D /* space.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = space.mp3; sourceTree = "<group>"; };
 		3ED824C32BF4FB710091E5F5 /* ImmersiveView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImmersiveView.swift; sourceTree = "<group>"; };
 		3EF670E12BF282E700F916CF /* PlanetsDIY.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlanetsDIY.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -62,14 +63,11 @@
 		3E0636722BF0BAA400F7ED6E /* PlanetarySystem */ = {
 			isa = PBXGroup;
 			children = (
-				3E979FBF2BF6A7C80011999B /* studio.skybox */,
 				3E0636772BF0BAA400F7ED6E /* PlanetarySystemApp.swift */,
-				3E7D10DC2BF2652500B8CC9C /* Planets.swift */,
-				3EF670E12BF282E700F916CF /* PlanetsDIY.swift */,
-				3ED824C32BF4FB710091E5F5 /* ImmersiveView.swift */,
-				3E5C21702BF75EFA0015AC20 /* BeforeImmersiveView.swift */,
-				3E0BE18E2BF157DE00C5B7C8 /* Parameters.swift */,
-				3E0636792BF0BAA400F7ED6E /* ContentView.swift */,
+				3ED365C72BFA21550009123D /* Sounds */,
+				3E979FBF2BF6A7C80011999B /* studio.skybox */,
+				3ED365C82BFA21780009123D /* Views */,
+				3ED365C92BFA21820009123D /* Support Files */,
 				3E06367B2BF0BAA500F7ED6E /* Assets.xcassets */,
 				3E0636802BF0BAA500F7ED6E /* Info.plist */,
 				3E06367D2BF0BAA500F7ED6E /* Preview Content */,
@@ -99,6 +97,34 @@
 				3EA475602BF6BA75005A3573 /* RealityKit.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		3ED365C72BFA21550009123D /* Sounds */ = {
+			isa = PBXGroup;
+			children = (
+				3ED365C62BFA20D70009123D /* space.mp3 */,
+			);
+			path = Sounds;
+			sourceTree = "<group>";
+		};
+		3ED365C82BFA21780009123D /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				3E7D10DC2BF2652500B8CC9C /* Planets.swift */,
+				3EF670E12BF282E700F916CF /* PlanetsDIY.swift */,
+				3ED824C32BF4FB710091E5F5 /* ImmersiveView.swift */,
+				3E5C21702BF75EFA0015AC20 /* BeforeImmersiveView.swift */,
+				3E0636792BF0BAA400F7ED6E /* ContentView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		3ED365C92BFA21820009123D /* Support Files */ = {
+			isa = PBXGroup;
+			children = (
+				3E0BE18E2BF157DE00C5B7C8 /* Parameters.swift */,
+			);
+			path = "Support Files";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
