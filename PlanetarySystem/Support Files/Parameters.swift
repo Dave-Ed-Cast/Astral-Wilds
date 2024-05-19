@@ -54,7 +54,7 @@ func createSkyBox() -> Entity? {
     var skyBoxMaterial = UnlitMaterial()
     
     do {
-        let texture = try TextureResource.load(named: "Image")
+        let texture = try TextureResource.load(named: "OpenSpace")
         skyBoxMaterial.color = .init(texture: .init(texture))
     } catch {
         print(error)
@@ -69,7 +69,7 @@ func createSkyBox() -> Entity? {
         )
     )
     
-    skyBoxEntity.scale *= .init(x: 1, y: 1, z: 1)
+    skyBoxEntity.scale *= .init(x: -1, y: 1, z: 1)
     
     return skyBoxEntity
 }

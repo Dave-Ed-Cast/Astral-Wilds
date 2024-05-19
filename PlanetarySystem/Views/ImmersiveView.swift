@@ -16,7 +16,8 @@ struct ImmersiveView: View {
     @Environment(\.openImmersiveSpace) var openImmersiveSpace
     
     @Binding var duration: Int
-
+    
+    @State private var timerStarted: Bool = false
     @State private var textEntities: [ModelEntity] = []
     @State private var timer: Timer?
     @State private var planetTimer: Timer?
@@ -65,6 +66,7 @@ struct ImmersiveView: View {
                 print("Error: Unable to create skybox entity")
                 return
             }
+            print(skyBoxEntity.name)
             content.add(skyBoxEntity)
             
             if let planet = try? await Entity(named: "TravelToMars", in: realityKitContentBundle),
@@ -73,19 +75,14 @@ struct ImmersiveView: View {
                 planet.components.set(ImageBasedLightReceiverComponent(imageBasedLight: planet))
                 planet.components.set(GroundingShadowComponent(castsShadow: true))
                 
-                // Create initial text entities
-                let initialText = duration == 60 ? minuteArray[currentStep] : threeMinutesArray[currentStep]
-                textEntities = createCurvedTextEntities(text: initialText, environment: environment, referenceEntity: planet)
-                
-                for entity in textEntities {
-                    content.add(entity)
-                }
                 content.add(planet)
                 
-                // Start timer for updating text
-                startTimer(entity: planet, environment: environment)
+                startTimer(entity: planet, environment: environment, content: content)
+                
             }
+            
         }
+        
         .onAppear(perform: {
             withAnimation(.linear) {
                 dismissWindow(id: "Before")
@@ -112,9 +109,15 @@ struct ImmersiveView: View {
     
     //MARK: Functions
     
-    private func startTimer(entity: Entity, environment: EnvironmentResource) {
+    private func startTimer(entity: Entity, environment: EnvironmentResource, content: RealityViewContent) {
         timer = Timer.scheduledTimer(withTimeInterval: 6.0, repeats: true) { _ in
             updateStep(planet: entity, environment: environment)
+            let text = duration == 60 ? minuteArray[currentStep] : threeMinutesArray[currentStep]
+            textEntities = createCurvedTextEntities(text: text, environment: environment, referenceEntity: entity)
+            print(textEntities)
+            for entity in textEntities {
+                content.add(entity)
+            }
         }
         
         planetTimer = Timer.scheduledTimer(withTimeInterval: 0.001, repeats: true, block: { timer in
@@ -166,35 +169,35 @@ struct ImmersiveView: View {
         let yPosition: Float = 1.2 // Fixed y-position
         let zOffset: Float = -radius // Place text in front of the user by adjusting the z-offset
         let xOffset: Float = 2 // Shift text to the left
-        let rotationSpeed: Float = 0.5
-
+        let rotationSpeed: Float = 0.9
+        
         var entities: [ModelEntity] = []
-
+        
         for (index, char) in text.enumerated() {
             let angle = angleIncrement * Float(index) - Float.pi // Angle for each character
-
+            
             // Calculate positions to ensure text is in front of the user and shifted to the left
             let x = radius * cos(angle) - xOffset // Subtract xOffset to shift left
             let z = radius * sin(angle) + zOffset
-
+            
             let charEntity = createTextEntity(text: String(char))
             charEntity.position = SIMD3(x, yPosition, z)
-
+            
             // Rotate the character to face inward towards the user
-            let rotationAngle = -0.2 * rotationSpeed // Adjust to face the user inward
+            let rotationAngle = 0.5 * rotationSpeed // Adjust to face the user inward
             charEntity.orientation = simd_quatf(angle: Float(-rotationAngle), axis: SIMD3(0, 1, 0))
-
+            
             // Apply environment-based lighting and shadow components
             charEntity.components.set(ImageBasedLightComponent(source: .single(environment)))
             charEntity.components.set(ImageBasedLightReceiverComponent(imageBasedLight: referenceEntity))
             charEntity.components.set(GroundingShadowComponent(castsShadow: true))
-
+            
             entities.append(charEntity)
         }
-
+        
         return entities
     }
-
+    
     
     private func createTextEntity(text: String) -> ModelEntity {
         let mesh = MeshResource.generateText(text, extrusionDepth: 0.1, font: .systemFont(ofSize: 0.2), containerFrame: .zero, alignment: .center, lineBreakMode: .byWordWrapping)
