@@ -66,7 +66,7 @@ struct ImmersiveView: View {
                 print("Error: Unable to create skybox entity")
                 return
             }
-            print(skyBoxEntity.name)
+            
             content.add(skyBoxEntity)
             
             if let planet = try? await Entity(named: "TravelToMars", in: realityKitContentBundle),
@@ -75,12 +75,10 @@ struct ImmersiveView: View {
                 planet.components.set(ImageBasedLightReceiverComponent(imageBasedLight: planet))
                 planet.components.set(GroundingShadowComponent(castsShadow: true))
                 
-                content.add(planet)
-                
                 startTimer(entity: planet, environment: environment, content: content)
                 
+                content.add(planet)
             }
-            
         }
         
         .onAppear(perform: {
@@ -111,13 +109,14 @@ struct ImmersiveView: View {
     
     private func startTimer(entity: Entity, environment: EnvironmentResource, content: RealityViewContent) {
         timer = Timer.scheduledTimer(withTimeInterval: 6.0, repeats: true) { _ in
-            updateStep(planet: entity, environment: environment)
             let text = duration == 60 ? minuteArray[currentStep] : threeMinutesArray[currentStep]
+            updateStep(planet: entity, environment: environment)
             textEntities = createCurvedTextEntities(text: text, environment: environment, referenceEntity: entity)
-            print(textEntities)
+
             for entity in textEntities {
                 content.add(entity)
             }
+            
         }
         
         planetTimer = Timer.scheduledTimer(withTimeInterval: 0.001, repeats: true, block: { timer in
