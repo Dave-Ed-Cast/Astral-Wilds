@@ -21,16 +21,16 @@ struct ImmersiveView: View {
     @Binding var duration: Int
     @State private var currentStep: Int = 0
     @State private var minuteArray: [String] = [
-        "Sit and relax...",
-        "Let us enjoy the journey to mars",
+        "Welcome, sit and relax...",
+        "Let us enjoy the journey to mars...",
         "Without weight... embrace silence",
         "Through the stars, possibilities are infinite",
-        "Breath in and breath out",
+        "Breath in and breath out...",
         "Connect to the cosmo with the echo of your heartbeat",
         "Time slows down and the mind transcends space...",
-        "The universe... ",
+        "The universe... it feels cold yet calm",
         "Gravity fades away, and we become one...",
-        "Here we are..."
+        "Here we are... we reached Mars..."
     ]
     
     class AudioPlayer {
@@ -53,10 +53,11 @@ struct ImmersiveView: View {
             Text("Go back to reality")
                 .font(.title3)
         }
-        .frame(depth: 100)
+        .frame(width: 250, height: 100)
         .padding()
-        .padding(.bottom, 800)
-        .padding(.horizontal, -850)
+        .padding(.bottom, 750)
+        .padding(.horizontal, 950)
+        .opacity(0.5)
         
         RealityView { content in
             guard let skyBoxEntity = createSkyBox() else {
@@ -75,7 +76,7 @@ struct ImmersiveView: View {
                 let initialText = duration == 60 ? minuteArray[currentStep] : threeMinutesArray[currentStep]
                 let newTextEntity = createTextEntity(text: initialText)
                 
-                let largeSphere = MeshResource.generateSphere(radius: 30)
+                
                 newTextEntity.position = SIMD3(x: -1.5, y: 1.1, z: -2)
                 newTextEntity.components.set(ImageBasedLightComponent(source: .single(environment)))
                 newTextEntity.components.set(ImageBasedLightReceiverComponent(imageBasedLight: planet))
@@ -100,7 +101,7 @@ struct ImmersiveView: View {
                 if let path = Bundle.main.url(forResource: "space", withExtension: "mp3") {
                     AudioPlayer.shared = try AVAudioPlayer(contentsOf: path)
                     AudioPlayer.shared.numberOfLoops = 0
-                    AudioPlayer.shared.volume = 0.5
+                    AudioPlayer.shared.volume = 0.25
                     AudioPlayer.shared.play()
                 } else {
                     print("File not found.")
@@ -125,7 +126,7 @@ struct ImmersiveView: View {
         
         planetTimer = Timer.scheduledTimer(withTimeInterval: 0.001, repeats: true, block: { timer in
             
-            entity.position.z += (duration == 60) ? 0.0001 : 0.00002;
+            entity.position.z += (duration == 60) ? 0.001 : 0.0002;
             
         })
         

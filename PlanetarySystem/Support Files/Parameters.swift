@@ -69,7 +69,7 @@ func createSkyBox() -> Entity? {
         )
     )
     
-    skyBoxEntity.scale *= .init(x: -1, y: 1, z: 1)
+    skyBoxEntity.scale *= .init(x: 1, y: 1, z: 1)
     
     return skyBoxEntity
 }
