@@ -33,7 +33,9 @@ struct ImmersiveView: View {
         "Here we are..."
     ]
     
-    static var shared: AVAudioPlayer = AVAudioPlayer()
+    class AudioPlayer {
+        static var shared: AVAudioPlayer = AVAudioPlayer()
+    }
     
     
     @State private var threeMinutesArray: [String] = [
@@ -95,14 +97,16 @@ struct ImmersiveView: View {
             }
             
             do {
-                let path = Bundle.main.url(forResource: "space", withExtension: "mp3")
-                AudioPlayer.shared = try AVAudioPlayer(contentsOf: path!)
-                AudioPlayer.shared.numberOfLoops = 0
-                AudioPlayer.shared.volume = 0.5
-                AudioPlayer.shared.play()
-            }
-            catch {
-                print("error music")
+                if let path = Bundle.main.url(forResource: "space", withExtension: "mp3") {
+                    AudioPlayer.shared = try AVAudioPlayer(contentsOf: path)
+                    AudioPlayer.shared.numberOfLoops = 0
+                    AudioPlayer.shared.volume = 0.5
+                    AudioPlayer.shared.play()
+                } else {
+                    print("File not found.")
+                }
+            } catch {
+                print("Error initializing AVAudioPlayer: \(error)")
             }
         })
         .onDisappear {

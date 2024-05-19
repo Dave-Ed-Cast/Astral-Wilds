@@ -16,6 +16,7 @@
 		3E5C21712BF75EFA0015AC20 /* BeforeImmersiveView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E5C21702BF75EFA0015AC20 /* BeforeImmersiveView.swift */; };
 		3E7D10DD2BF2652500B8CC9C /* Planets.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E7D10DC2BF2652500B8CC9C /* Planets.swift */; };
 		3E979FC02BF6A7C80011999B /* studio.skybox in Resources */ = {isa = PBXBuildFile; fileRef = 3E979FBF2BF6A7C80011999B /* studio.skybox */; };
+		3EA2FC752BFA251400DB151E /* space.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 3EA2FC742BFA251400DB151E /* space.mp3 */; };
 		3ED824C42BF4FB710091E5F5 /* ImmersiveView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3ED824C32BF4FB710091E5F5 /* ImmersiveView.swift */; };
 		3EF670E22BF282E700F916CF /* PlanetsDIY.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EF670E12BF282E700F916CF /* PlanetsDIY.swift */; };
 /* End PBXBuildFile section */
@@ -32,8 +33,8 @@
 		3E5C21702BF75EFA0015AC20 /* BeforeImmersiveView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BeforeImmersiveView.swift; sourceTree = "<group>"; };
 		3E7D10DC2BF2652500B8CC9C /* Planets.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Planets.swift; sourceTree = "<group>"; };
 		3E979FBF2BF6A7C80011999B /* studio.skybox */ = {isa = PBXFileReference; lastKnownFileType = file.skybox; path = studio.skybox; sourceTree = "<group>"; };
+		3EA2FC742BFA251400DB151E /* space.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = space.mp3; sourceTree = "<group>"; };
 		3EA475602BF6BA75005A3573 /* RealityKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RealityKit.framework; path = System/Library/Frameworks/RealityKit.framework; sourceTree = SDKROOT; };
-		3ED365C62BFA20D70009123D /* space.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = space.mp3; sourceTree = "<group>"; };
 		3ED824C32BF4FB710091E5F5 /* ImmersiveView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImmersiveView.swift; sourceTree = "<group>"; };
 		3EF670E12BF282E700F916CF /* PlanetsDIY.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlanetsDIY.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -102,7 +103,7 @@
 		3ED365C72BFA21550009123D /* Sounds */ = {
 			isa = PBXGroup;
 			children = (
-				3ED365C62BFA20D70009123D /* space.mp3 */,
+				3EA2FC742BFA251400DB151E /* space.mp3 */,
 			);
 			path = Sounds;
 			sourceTree = "<group>";
@@ -191,6 +192,7 @@
 				3E06367F2BF0BAA500F7ED6E /* Preview Assets.xcassets in Resources */,
 				3E979FC02BF6A7C80011999B /* studio.skybox in Resources */,
 				3E06367C2BF0BAA500F7ED6E /* Assets.xcassets in Resources */,
+				3EA2FC752BFA251400DB151E /* space.mp3 in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

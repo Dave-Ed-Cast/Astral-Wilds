@@ -17,7 +17,7 @@ struct BeforeImmersiveView: View {
         
         VStack {
             Text("Welcome, please sit back and relax.")
-            Text("Before moving on, please select the duration of your journey.")
+            Text("Before moving on, please select the duration of your journey. and ")
             
             Picker("Choose: ", selection: $durationSelection) {
                 Text("1 minute")
