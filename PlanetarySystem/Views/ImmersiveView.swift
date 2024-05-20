@@ -109,7 +109,7 @@ struct ImmersiveView: View {
     
     private func startTimer(entity: Entity, environment: EnvironmentResource, content: RealityViewContent) {
         
-        timer = Timer.scheduledTimer(withTimeInterval: 3.0, repeats: true) { _ in
+        timer = Timer.scheduledTimer(withTimeInterval: 5.0, repeats: true) { _ in
             let text = duration == 60 ? minuteArray[currentStep] : threeMinutesArray[currentStep]
             updateStep(planet: entity, environment: environment)
             textEntities = createCurvedTextEntities(text: text, environment: environment, referenceEntity: entity)
@@ -169,8 +169,6 @@ struct ImmersiveView: View {
         let angleIncrement = (Float.pi / Float(text.count)) * 0.35
         //fixed position for letters on y
         let yPosition: Float = 1.2
-        //this makes each letter rotate
-        let rotationSpeed: Float = 0.5
         
         var entities: [ModelEntity] = []
         
