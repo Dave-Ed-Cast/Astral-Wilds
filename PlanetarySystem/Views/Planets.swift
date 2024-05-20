@@ -103,7 +103,7 @@ struct Planets: View {
                 let angularVelocity = 2 * .pi / parameters.period
                 
                 //and everytime it's called, just sum this value
-                angles[index] += 0.001 * Float(angularVelocity)
+                angles[index] -= 0.001 * Float(angularVelocity)
             }
         }
     }

@@ -14,12 +14,14 @@ struct ImmersiveView: View {
     @Environment(\.dismissWindow) var dismissWindow
     @Environment(\.dismissImmersiveSpace) var dismissImmersiveSpace
     @Environment(\.openImmersiveSpace) var openImmersiveSpace
+    @Environment(\.openWindow) var openWindow
     
     @Binding var duration: Int
     
-    @State private var timerStarted: Bool = false
     @State private var textEntities: [ModelEntity] = []
     @State private var timer: Timer?
+    @State private var particleTimer: Timer?
+    @State private var moveParticleTimer: Timer?
     @State private var planetTimer: Timer?
     @State private var currentStep: Int = 0
     @State private var minuteArray: [String] = [
@@ -42,7 +44,34 @@ struct ImmersiveView: View {
     
     
     @State private var threeMinutesArray: [String] = [
-        "Ciao",
+        "Welcome, sit and relax...",
+        "Let us enjoy the journey to mars...",
+        "Without weight... embrace silence",
+        "Through the stars, possibilities are infinite",
+        "Breath in and breath out...",
+        "Connect to the cosmo with the echo of your heartbeat",
+        "Time slows down and the mind transcends space...",
+        "The universe... it feels cold yet calm",
+        "Gravity fades away, and we become one...",
+        "Here we are... we reached Mars...",
+        "Drift into the celestial ballet...",
+        "Comets dance and planets waltz in silence",
+        "Stardust sprinkles your soul, illuminating darkness",
+        "Each heartbeat echoes through the void",
+        "Deeper into the cosmic embrace",
+        "Light years whisper in the vast expanse",
+        "A symphony of colors paints the night sky",
+        "Embrace the serenity of eternal night",
+        "Constellations tell timeless tales",
+        "Your spirit intertwines with the universe",
+        "Floating beyond reality",
+        "Where dreams and stars collide",
+        "Unveil mysteries within the galaxies",
+        "You are a voyager of the infinite",
+        "Endless odyssey through space wonders",
+        "Become one with the universe... boundless and free.",
+        "Here we are... we reached Mars...",
+        ""
         //other
     ]
     
@@ -51,6 +80,7 @@ struct ImmersiveView: View {
         Button {
             Task {
                 await dismissImmersiveSpace()
+                openWindow(id: "main")
             }
         } label: {
             Text("Go back to reality")
@@ -69,6 +99,8 @@ struct ImmersiveView: View {
             }
             
             content.add(skyBoxEntity)
+            
+            
             
             if let planet = try? await Entity(named: "TravelToMars", in: realityKitContentBundle),
                let environment = try? await EnvironmentResource(named: "studio") {
@@ -111,6 +143,21 @@ struct ImmersiveView: View {
     private func startTimer(entity: Entity, environment: EnvironmentResource, content: RealityViewContent) {
         
         timer = Timer.scheduledTimer(withTimeInterval: 5.0, repeats: true) { _ in
+            
+            particleTimer = Timer.scheduledTimer(withTimeInterval: 0.5, repeats: true) { _ in
+                let particleEntity = createParticle()
+                particleEntity.components.set(ImageBasedLightComponent(source: .single(environment)))
+                particleEntity.components.set(ImageBasedLightReceiverComponent(imageBasedLight: entity))
+                particleEntity.components.set(GroundingShadowComponent(castsShadow: true))
+                content.add(particleEntity)
+                moveParticleTimer = Timer.scheduledTimer(withTimeInterval: 0.001, repeats: true) { _ in
+                    particleEntity.position.z += 0.0025
+                    if particleEntity.position.z > 60 {
+                        content.remove(particleEntity)
+                    }
+                }
+            }
+            
             let text = duration == 60 ? minuteArray[currentStep] : threeMinutesArray[currentStep]
             updateStep(planet: entity, environment: environment)
             textEntities = createCurvedTextEntities(text: text, environment: environment, referenceEntity: entity)
@@ -122,7 +169,7 @@ struct ImmersiveView: View {
         }
         
         planetTimer = Timer.scheduledTimer(withTimeInterval: 0.001, repeats: true, block: { timer in
-            entity.position.z += (duration == 60) ? 0.00085 : 0.0002;
+            entity.position.z += (duration == 60) ? 0.00085 : 0.000425
         })
     }
     

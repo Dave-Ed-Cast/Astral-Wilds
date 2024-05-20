@@ -84,7 +84,7 @@ struct PlanetsDIY: View {
         let timer = Timer.scheduledTimer(withTimeInterval: 0.001, repeats: true) { _ in
 
             let angularVelocity = 2 * .pi / parameters.period
-            angle += 0.001 * Float(angularVelocity)
+            angle -= 0.001 * Float(angularVelocity)
             
             let x = parameters.radius * cos(angle)
             let z = parameters.radius * sin(angle)
