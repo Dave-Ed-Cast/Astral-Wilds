@@ -122,7 +122,7 @@ struct ImmersiveView: View {
         }
         
         planetTimer = Timer.scheduledTimer(withTimeInterval: 0.001, repeats: true, block: { timer in
-            entity.position.z += (duration == 60) ? 0.0009 : 0.0002;
+            entity.position.z += (duration == 60) ? 0.00085 : 0.0002;
         })
     }
     
