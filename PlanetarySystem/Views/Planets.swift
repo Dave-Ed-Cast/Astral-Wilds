@@ -53,17 +53,18 @@ struct Planets: View {
             }
             
             //define the scene
-            if let scene = try? await Entity(named: "Planets", in: realityKitContentBundle), let environment = try? await EnvironmentResource(named: "studio") {
+            if let scene = try? await Entity(named: "Planets", in: realityKitContentBundle) {
+//                let environment = try? await EnvironmentResource(named: "studio") {
                 
-                scene.components.set(ImageBasedLightComponent(source: .single(environment)))
-                scene.components.set(ImageBasedLightReceiverComponent(imageBasedLight: scene))
-                scene.components.set(GroundingShadowComponent(castsShadow: true))
+//                scene.components.set(ImageBasedLightComponent(source: .single(environment)))
+//                scene.components.set(ImageBasedLightReceiverComponent(imageBasedLight: scene))
+//                scene.components.set(GroundingShadowComponent(castsShadow: true))
                 withAnimation(.linear(duration: 2)) {
                     content.add(scene)
                 }
                 
                 //and let the solar system go!
-                startAnimationLoop(scene: scene)
+                startAnimationLoop(entity: scene)
             }
             
         }
@@ -75,7 +76,7 @@ struct Planets: View {
     }
     
     //start animation loop
-    private func startAnimationLoop(scene: Entity) {
+    private func startAnimationLoop(entity: Entity) {
         
         //this is like the function update in game engines
         Timer.scheduledTimer(withTimeInterval: 0.001, repeats: true) { _ in
@@ -95,7 +96,7 @@ struct Planets: View {
                 let newPosition = SIMD3(x, 1.5, z)
                 
                 //then since for some reason by doing $0.name, it would get the entity name as root, i created a function that returns the planet's name, and if those match, it gives it the new position
-                if let planet = planetName(scene: scene, name: planetDictionary[index]) {
+                if let planet = planetName(scene: entity, name: planetDictionary[index]) {
                     planet.position = newPosition
                 }
                 
@@ -104,6 +105,11 @@ struct Planets: View {
                 
                 //and everytime it's called, just sum this value
                 angles[index] -= 0.001 * Float(angularVelocity)
+                let rotationAngle = (Float(0.005 / parameters.radius))
+                entity.transform.rotation *= simd_quatf(
+                    angle: (entity.name == "Venus" || entity.name == "Uranus") ? rotationAngle : -rotationAngle,
+                    axis: [0, entity.position.y, 0]
+                )
             }
         }
     }

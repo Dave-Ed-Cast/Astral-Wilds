@@ -31,7 +31,7 @@ let planetDictionary: [String] = ["Mercury", "Venus", "Earth", "Mars", "Jupiter"
 
 //define the reference so that we can simply adjust if needed
 let time: Float = 20
-//this is the value that is the minimum distance from the planet in the RealityComposer scene
+//a value that defines the distance from the planet in the RealityComposer scene
 let posValue: Float = 1.5
 //and let's just shoot some numbers
 var orbitalParameters: [OrbitalParameters] = [

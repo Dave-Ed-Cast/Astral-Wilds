@@ -90,7 +90,14 @@ struct PlanetsDIY: View {
             let z = parameters.radius * sin(angle)
             
             let newPosition = SIMD3(x, entity.position.y, z)
+            
             entity.position = newPosition
+            
+            let rotationAngle = (Float(0.005 / parameters.radius))
+            entity.transform.rotation *= simd_quatf(
+                angle: (entity.name == "Venus" || entity.name == "Uranus") ? rotationAngle : -rotationAngle,
+                axis: [0, entity.position.y, 0]
+            )
         }
         
         // Store the timer associated with the entity

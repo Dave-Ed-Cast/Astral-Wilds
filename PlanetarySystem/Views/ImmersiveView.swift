@@ -107,7 +107,6 @@ struct ImmersiveView: View {
                 planet.components.set(ImageBasedLightComponent(source: .single(environment)))
                 planet.components.set(ImageBasedLightReceiverComponent(imageBasedLight: planet))
                 planet.components.set(GroundingShadowComponent(castsShadow: true))
-                
                 startTimer(entity: planet, environment: environment, content: content)
                 
                 content.add(planet)
@@ -153,7 +152,7 @@ struct ImmersiveView: View {
                 moveParticleTimer = Timer.scheduledTimer(withTimeInterval: 0.001, repeats: true) { _ in
                     particleEntity.position.z += 0.0025
                     if particleEntity.position.z > 60 {
-                        content.remove(particleEntity)
+                        particleEntity.removeFromParent()
                     }
                 }
             }
@@ -170,6 +169,7 @@ struct ImmersiveView: View {
         
         planetTimer = Timer.scheduledTimer(withTimeInterval: 0.001, repeats: true, block: { timer in
             entity.position.z += (duration == 60) ? 0.00085 : 0.000425
+            entity.transform.rotation = simd_quatf(angle: entity.transform.rotation.angle + 0.01, axis: [0, entity.position.y, 0])
         })
     }
     
