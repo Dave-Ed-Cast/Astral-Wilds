@@ -33,6 +33,7 @@ struct ImmersiveView: View {
         "The universe... it feels cold yet calm",
         "Gravity fades away, and we become one...",
         "Here we are... we reached Mars...",
+        ""
     ]
     
     class AudioPlayer {
@@ -42,7 +43,7 @@ struct ImmersiveView: View {
     
     @State private var threeMinutesArray: [String] = [
         "Ciao",
-        // Add other meditation steps here
+        //other
     ]
     
     var body: some View {
@@ -58,7 +59,7 @@ struct ImmersiveView: View {
         .frame(width: 250, height: 100)
         .padding()
         .padding(.bottom, 750)
-        .padding(.horizontal, 950)
+        .padding(.horizontal, 1000)
         .opacity(0.5)
         
         RealityView { content in
@@ -121,7 +122,7 @@ struct ImmersiveView: View {
         }
         
         planetTimer = Timer.scheduledTimer(withTimeInterval: 0.001, repeats: true, block: { timer in
-            entity.position.z += (duration == 60) ? 0.001 : 0.0002;
+            entity.position.z += (duration == 60) ? 0.0009 : 0.0002;
         })
     }
     
@@ -166,7 +167,7 @@ struct ImmersiveView: View {
         //the higher, the more the curve is pronounced
         let radius: Float = 6.0
         //this is the distance of the letters
-        let angleIncrement = (Float.pi / Float(text.count)) * 0.35
+        let angleIncrement = (Float.pi / Float(text.count - 1)) * 0.35
         //fixed position for letters on y
         let yPosition: Float = 1.2
         
