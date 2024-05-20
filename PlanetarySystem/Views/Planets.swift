@@ -48,23 +48,18 @@ struct Planets: View {
                 print("error")
                 return
             }
-            withAnimation(.linear(duration: 2)) {
                 content.add(skyBoxEntity)
-            }
             
             //define the scene
-            if let scene = try? await Entity(named: "Planets", in: realityKitContentBundle) {
-//                let environment = try? await EnvironmentResource(named: "studio") {
+            if let scene = try? await Entity(named: "Planets", in: realityKitContentBundle), let environment = try? await EnvironmentResource(named: "studio") {
                 
-//                scene.components.set(ImageBasedLightComponent(source: .single(environment)))
-//                scene.components.set(ImageBasedLightReceiverComponent(imageBasedLight: scene))
-//                scene.components.set(GroundingShadowComponent(castsShadow: true))
-                withAnimation(.linear(duration: 2)) {
+                    scene.components.set(ImageBasedLightComponent(source: .single(environment)))
+                    scene.components.set(ImageBasedLightReceiverComponent(imageBasedLight: scene))
+                    scene.components.set(GroundingShadowComponent(castsShadow: true))
                     content.add(scene)
-                }
-                
-                //and let the solar system go!
-                startAnimationLoop(entity: scene)
+                    
+                    //and let the solar system go!
+                    startAnimationLoop(entity: scene)
             }
             
         }
