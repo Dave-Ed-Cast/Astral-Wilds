@@ -32,7 +32,7 @@ struct ImmersiveView: View {
         "Time slows down and the mind transcends space...",
         "The universe... it feels cold yet calm",
         "Gravity fades away, and we become one...",
-        "Here we are... we reached Mars..."
+        "Here we are... we reached Mars...",
     ]
     
     class AudioPlayer {
@@ -163,30 +163,34 @@ struct ImmersiveView: View {
     }
     
     private func createCurvedTextEntities(text: String, environment: EnvironmentResource, referenceEntity: Entity) -> [ModelEntity] {
-        let radius: Float = 6.0 // Radius to make the curve more pronounced
-        let angleIncrement = (Float.pi / Float(text.count - 1)) * 0.4 // this is for the distance of letters
-        let yPosition: Float = 1.2 // Fixed y-position
-        let zOffset: Float = -radius // Place text in front of the user by adjusting the z-offset
-        let xOffset: Float = radius // Shift text to the left
-        let rotationSpeed: Float = 0.9
+        //the higher, the more the curve is pronounced
+        let radius: Float = 6.0
+        //this is the distance of the letters
+        let angleIncrement = (Float.pi / Float(text.count)) * 0.35
+        //fixed position for letters on y
+        let yPosition: Float = 1.2
+        //this makes each letter rotate
+        let rotationSpeed: Float = 0.5
         
         var entities: [ModelEntity] = []
         
         for (index, char) in text.enumerated() {
-            let angle = angleIncrement * Float(index) - Float.pi // Angle for each character
+            //the angle on the curve of characters
+            let angle = angleIncrement * Float(index) - Float.pi + 1.1
             
-            // Calculate positions to ensure text is in front of the user and shifted to the left
-            let x = radius * cos(angle) + radius // xOffset to shift left
-            let z = radius * sin(angle) - (radius * 2)
+            //calculate the position for the user
+            let x = radius * cos(angle) + radius - 6.3
+            let z = radius * sin(angle) - (radius * 0.5) + 4
             
+            //create the character
             let charEntity = createTextEntity(text: String(char))
             charEntity.position = SIMD3(x, yPosition, z)
 
-            // Rotate the character to face inward towards the user
-            let rotationAngle = 0.6 * rotationSpeed // Adjust to face the user inward
+            //rotate the letters to give a feeling of curve
+            let rotationAngle = -(angle + Float.pi / 2)
             charEntity.orientation = simd_quatf(angle: Float(rotationAngle), axis: SIMD3(0, 1, 0))
             
-            // Apply environment-based lighting and shadow components
+            //brightness of letters
             charEntity.components.set(ImageBasedLightComponent(source: .single(environment)))
             charEntity.components.set(ImageBasedLightReceiverComponent(imageBasedLight: referenceEntity))
             charEntity.components.set(GroundingShadowComponent(castsShadow: true))
