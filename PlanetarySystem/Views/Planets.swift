@@ -37,7 +37,10 @@ struct Planets: View {
         } label: {
             Text("Go back to the menu")
         }
-        .frame(depth: 200)
+        .frame(width: 250, height: 100)
+        .padding()
+        .padding(.bottom, 3000)
+        .padding(.horizontal, 1000)
         
         RealityView { content in
             
@@ -89,7 +92,7 @@ struct Planets: View {
                 let z = parameters.radius * sin(angle)
                 
                 //define the new position regarding these new parameters and with y = 1 due to the fact that in reality composer i put everything at y = 1
-                let newPosition = SIMD3(x, 1, z)
+                let newPosition = SIMD3(x, 1.5, z)
                 
                 //then since for some reason by doing $0.name, it would get the entity name as root, i created a function that returns the planet's name, and if those match, it gives it the new position
                 if let planet = planetName(scene: scene, name: planetDictionary[index]) {

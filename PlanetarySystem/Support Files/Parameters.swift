@@ -46,6 +46,8 @@ var orbitalParameters: [OrbitalParameters] = [
     OrbitalParameters(planet: "Neptune", radius: posValue * 8, period: time * 5.9, position: 8)
 ]
 
+/// This is a function that creates a skybox in which it encapsulates the player
+/// - Returns: the skybox entity
 func createSkyBox() -> Entity? {
     //mesh
     let largeSphere = MeshResource.generateSphere(radius: 1000)
@@ -53,6 +55,7 @@ func createSkyBox() -> Entity? {
     //material
     var skyBoxMaterial = UnlitMaterial()
     
+    //it's a loading so it can throw errors
     do {
         let texture = try TextureResource.load(named: "OpenSpace")
         skyBoxMaterial.color = .init(texture: .init(texture))
@@ -60,7 +63,7 @@ func createSkyBox() -> Entity? {
         print(error)
     }
     
-    //skybox
+    //define the skybox
     let skyBoxEntity = Entity()
     skyBoxEntity.components.set(
         ModelComponent(
