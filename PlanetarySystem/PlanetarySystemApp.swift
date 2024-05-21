@@ -10,10 +10,13 @@ import SwiftUI
 @main
 struct PlanetarySystemApp: App {
     
+    // this are the variables needed for the immersive space
     @State var immersionMode: ImmersionStyle = .full
     @State private var selectedDuration: Int = 60
+    
     var body: some Scene {
-        //to dismiss the view, we declare an id so we can refer to this view
+        //MARK: we define the views to call and dismiss on command with id
+        
         WindowGroup(id: "main"){
             ContentView()
         }

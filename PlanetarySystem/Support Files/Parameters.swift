@@ -5,6 +5,7 @@
 //  Created by Davide Castaldi on 12/05/24.
 //
 
+// all the required libraries
 import Foundation
 import RealityKit
 import RealityKitContent

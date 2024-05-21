@@ -9,6 +9,7 @@ import SwiftUI
 
 struct BeforeImmersiveView: View {
     
+    //this is the window before the immersive view
     @State var durationSelection: Int = 60
     @Environment(\.dismissWindow) var dismissWindow
     @Environment(\.openImmersiveSpace) var openImmersiveSpace
@@ -17,8 +18,11 @@ struct BeforeImmersiveView: View {
         
         VStack {
             Text("Welcome, please sit back and relax.")
+                .font(.largeTitle)
             Text("Before moving on, please select the duration of your journey. and ")
-            
+                .font(.largeTitle)
+
+            //this is the user selection
             Picker("Choose: ", selection: $durationSelection) {
                 Text("1 minute")
                     .tag(60)
@@ -27,6 +31,7 @@ struct BeforeImmersiveView: View {
             }
             .pickerStyle(.inline)
             
+            //the button to launch the immersive view
             Button {
                 Task {
                     await openImmersiveSpace(id: "ImmersiveView")

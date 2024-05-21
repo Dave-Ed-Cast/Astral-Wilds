@@ -11,7 +11,7 @@ import RealityKitContent
 
 struct PlanetsDIY: View {
     
-    // Declare the environment to dismiss everything useless
+    //declare the environment variables
     @Environment(\.dismissWindow) var dismissWindow
     @Environment(\.dismissImmersiveSpace) var dismissImmersiveSpace
     @Environment(\.openWindow) var openWindow
@@ -20,6 +20,7 @@ struct PlanetsDIY: View {
     
     var body: some View {
         
+        //button with positions
         Button {
             Task {
                 await dismissImmersiveSpace()
@@ -33,9 +34,10 @@ struct PlanetsDIY: View {
         .padding()
         .offset(x: 0, y: -1600)
         
-        // Create the reality view
+        //the reality view
         RealityView { content in
             
+            //skybox creation
             guard let skyBoxEntity = createSkyBox() else {
                 print("error")
                 return
@@ -43,6 +45,7 @@ struct PlanetsDIY: View {
             
             content.add(skyBoxEntity)
             
+            //scene with planets and light
             if let scene = try? await Entity(named: "Planets", in: realityKitContentBundle), let environment = try? await EnvironmentResource(named: "studio") {
 
                 scene.components.set(ImageBasedLightComponent(source: .single(environment)))
@@ -51,9 +54,6 @@ struct PlanetsDIY: View {
                 
                 content.add(scene)
             }
-            
-            
-            
         }
         
         //define the gesture to target one entity randomly
@@ -123,13 +123,14 @@ struct PlanetsDIY: View {
         timers[entity.name] = timer
     }
 
+    //stop movement for the  planet
     private func stopMovement(for entity: Entity) {
-        //stop movement for the  planet
         guard let timer = timers[entity.name] else { return }
         timer.invalidate()
         timers[entity.name] = nil
     }
     
+    //same as in the other file
     private func findPlanet(scene: Entity, name: String) -> Entity? {
         var tempStack = [scene]
         

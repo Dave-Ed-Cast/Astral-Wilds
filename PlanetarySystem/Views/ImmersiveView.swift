@@ -11,13 +11,17 @@ import RealityKitContent
 import AVFoundation
 
 struct ImmersiveView: View {
+    
+    //environment views
     @Environment(\.dismissWindow) var dismissWindow
     @Environment(\.dismissImmersiveSpace) var dismissImmersiveSpace
     @Environment(\.openImmersiveSpace) var openImmersiveSpace
     @Environment(\.openWindow) var openWindow
     
+    //duration taken from the user input
     @Binding var duration: Int
     
+    //define the variables needed to work for logic
     @State private var spawnParticle: Bool = true
     @State private var textEntities: [ModelEntity] = []
     @State private var timer: Timer?
@@ -39,6 +43,7 @@ struct ImmersiveView: View {
         ""
     ]
     
+    //this is for music
     class AudioPlayer {
         static var shared: AVAudioPlayer = AVAudioPlayer()
     }
@@ -73,11 +78,11 @@ struct ImmersiveView: View {
         "Become one with the universe... boundless and free.",
         "Here we are... we reached Mars...",
         ""
-        //other
     ]
     
     var body: some View {
         
+        //button with position
         Button {
             Task {
                 await dismissImmersiveSpace()
@@ -93,15 +98,13 @@ struct ImmersiveView: View {
         .padding(.horizontal, 1000)
         .opacity(0.5)
         
+        //reality view
         RealityView { content in
             guard let skyBoxEntity = createSkyBox() else {
                 print("Error: Unable to create skybox entity")
                 return
             }
-            
             content.add(skyBoxEntity)
-            
-            
             
             if let planet = try? await Entity(named: "TravelToMars", in: realityKitContentBundle),
                let environment = try? await EnvironmentResource(named: "studio") {
@@ -119,6 +122,7 @@ struct ImmersiveView: View {
                 dismissWindow(id: "Before")
             }
             
+            //instantiate the music that can throw errors
             do {
                 if let path = Bundle.main.url(forResource: "space", withExtension: "mp3") {
                     AudioPlayer.shared = try AVAudioPlayer(contentsOf: path)
@@ -140,39 +144,51 @@ struct ImmersiveView: View {
     
     //MARK: Functions
     
+    //this starts the timer for the journey
     private func startTimer(entity: Entity, environment: EnvironmentResource, content: RealityViewContent) {
         
         timer = Timer.scheduledTimer(withTimeInterval: 5.0, repeats: true) { _ in
             
             particleTimer = Timer.scheduledTimer(withTimeInterval: 0.5, repeats: true) { _ in
                 if spawnParticle {
+                    
+                    //create the particles with lighting
                     let particleEntity = createParticle()
                     particleEntity.components.set(ImageBasedLightComponent(source: .single(environment)))
                     particleEntity.components.set(ImageBasedLightReceiverComponent(imageBasedLight: entity))
                     particleEntity.components.set(GroundingShadowComponent(castsShadow: true))
                     content.add(particleEntity)
+                    //move each particle
                     moveParticleTimer = Timer.scheduledTimer(withTimeInterval: 0.001, repeats: true) { _ in
                         particleEntity.position.z += 0.0025
+                        //and erase to avoid stuttering and memory overload
                         if particleEntity.position.z > 25 {
                             particleEntity.removeFromParent()
                         }
                     }
                 }
             }
-            
+            //grab the text given the duration selected
             let text = duration == 60 ? minuteArray[currentStep] : threeMinutesArray[currentStep]
+            
+            //update the index (we give parameters because it could be done here but to improve readability i created functions
             updateStep(planet: entity, environment: environment)
+            
+            //create the curved text entity
             textEntities = createCurvedTextEntities(text: text, environment: environment, referenceEntity: entity)
             
+            //then add it to the view
             for entity in textEntities {
                 content.add(entity)
             }
             
         }
         
+        //also start the planet timer to make it go towards the user
         planetTimer = Timer.scheduledTimer(withTimeInterval: 0.001, repeats: true) { timer in
             entity.position.z += (duration == 60) ? 0.00089 : 0.000425
             let rotationAngle = (Float(0.005 / Float.pi))
+            //also make it rotate
             entity.transform.rotation *= simd_quatf(
                 angle: rotationAngle,
                 axis: [0, entity.position.y, 0]
@@ -180,6 +196,7 @@ struct ImmersiveView: View {
         }
     }
     
+    //when the journey is over stop everything
     private func stopTimer() {
         timer?.invalidate()
         timer = nil
@@ -188,6 +205,7 @@ struct ImmersiveView: View {
         
     }
     
+    //this is the continuous for the start timer
     private func updateStep(planet: Entity, environment: EnvironmentResource) {
         if duration == 60 {
             currentStep = (currentStep + 1) % minuteArray.count
@@ -206,19 +224,19 @@ struct ImmersiveView: View {
             }
         }
         
-        // Get the updated text
+        //get the updated text and update it
         let newText = duration == 60 ? minuteArray[currentStep] : threeMinutesArray[currentStep]
-        
         updateTextEntities(newText, environment: environment, referenceEntity: planet)
     }
     
+    //this is the update
     private func updateTextEntities(_ text: String, environment: EnvironmentResource, referenceEntity: Entity) {
-        // Remove old entities from the content
+        //remove old entities from the content
         for entity in textEntities {
             entity.removeFromParent()
         }
         
-        // Create new text entities
+        //create new text entities
         let newTextEntities = createCurvedTextEntities(text: text, environment: environment, referenceEntity: referenceEntity)
         textEntities = newTextEntities
     }
@@ -260,7 +278,7 @@ struct ImmersiveView: View {
         return entities
     }
     
-    
+    //this creates the text entity
     private func createTextEntity(text: String) -> ModelEntity {
         let mesh = MeshResource.generateText(text, extrusionDepth: 0.1, font: .systemFont(ofSize: 0.2), containerFrame: .zero, alignment: .center, lineBreakMode: .byWordWrapping)
         let material = SimpleMaterial(color: .white, isMetallic: false)
