@@ -18,6 +18,7 @@ struct ImmersiveView: View {
     
     @Binding var duration: Int
     
+    @State private var spawnParticle: Bool = true
     @State private var textEntities: [ModelEntity] = []
     @State private var timer: Timer?
     @State private var particleTimer: Timer?
@@ -144,15 +145,17 @@ struct ImmersiveView: View {
         timer = Timer.scheduledTimer(withTimeInterval: 5.0, repeats: true) { _ in
             
             particleTimer = Timer.scheduledTimer(withTimeInterval: 0.5, repeats: true) { _ in
-                let particleEntity = createParticle()
-                particleEntity.components.set(ImageBasedLightComponent(source: .single(environment)))
-                particleEntity.components.set(ImageBasedLightReceiverComponent(imageBasedLight: entity))
-                particleEntity.components.set(GroundingShadowComponent(castsShadow: true))
-                content.add(particleEntity)
-                moveParticleTimer = Timer.scheduledTimer(withTimeInterval: 0.001, repeats: true) { _ in
-                    particleEntity.position.z += 0.0025
-                    if particleEntity.position.z > 60 {
-                        particleEntity.removeFromParent()
+                if spawnParticle {
+                    let particleEntity = createParticle()
+                    particleEntity.components.set(ImageBasedLightComponent(source: .single(environment)))
+                    particleEntity.components.set(ImageBasedLightReceiverComponent(imageBasedLight: entity))
+                    particleEntity.components.set(GroundingShadowComponent(castsShadow: true))
+                    content.add(particleEntity)
+                    moveParticleTimer = Timer.scheduledTimer(withTimeInterval: 0.001, repeats: true) { _ in
+                        particleEntity.position.z += 0.0025
+                        if particleEntity.position.z > 25 {
+                            particleEntity.removeFromParent()
+                        }
                     }
                 }
             }
@@ -167,10 +170,14 @@ struct ImmersiveView: View {
             
         }
         
-        planetTimer = Timer.scheduledTimer(withTimeInterval: 0.001, repeats: true, block: { timer in
-            entity.position.z += (duration == 60) ? 0.00085 : 0.000425
-            entity.transform.rotation = simd_quatf(angle: entity.transform.rotation.angle + 0.01, axis: [0, entity.position.y, 0])
-        })
+        planetTimer = Timer.scheduledTimer(withTimeInterval: 0.001, repeats: true) { timer in
+            entity.position.z += (duration == 60) ? 0.00089 : 0.000425
+            let rotationAngle = (Float(0.005 / Float.pi))
+            entity.transform.rotation *= simd_quatf(
+                angle: rotationAngle,
+                axis: [0, entity.position.y, 0]
+            )
+        }
     }
     
     private func stopTimer() {
@@ -178,6 +185,7 @@ struct ImmersiveView: View {
         timer = nil
         planetTimer?.invalidate()
         planetTimer = nil
+        
     }
     
     private func updateStep(planet: Entity, environment: EnvironmentResource) {
@@ -185,6 +193,11 @@ struct ImmersiveView: View {
             currentStep = (currentStep + 1) % minuteArray.count
             if currentStep == minuteArray.count - 1 {
                 stopTimer()
+            }
+            else if currentStep == minuteArray.count - 2 {
+                particleTimer?.invalidate()
+                particleTimer = nil
+                spawnParticle = false
             }
         } else {
             currentStep = (currentStep + 1) % threeMinutesArray.count

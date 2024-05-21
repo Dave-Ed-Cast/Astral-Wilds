@@ -13,9 +13,26 @@ struct PlanetsDIY: View {
     
     // Declare the environment to dismiss everything useless
     @Environment(\.dismissWindow) var dismissWindow
+    @Environment(\.dismissImmersiveSpace) var dismissImmersiveSpace
+    @Environment(\.openWindow) var openWindow
+    
     @State private var timers: [String: Timer] = [:]
     
     var body: some View {
+        
+        Button {
+            Task {
+                await dismissImmersiveSpace()
+                openWindow(id: "main")
+            }
+        } label: {
+            Text("Go back to reality")
+                .font(.title3)
+        }
+        .frame(width: 250, height: 100)
+        .padding()
+        .offset(x: 0, y: -1600)
+        
         // Create the reality view
         RealityView { content in
             
@@ -38,11 +55,12 @@ struct PlanetsDIY: View {
             
             
         }
-        // Declare the tap gesture to move a selected planet
+        
+        //define the gesture to target one entity randomly
         .gesture(TapGesture().targetedToAnyEntity().onEnded({ value in
-            // When the touch is over, find the planet that has been touched
+            //discover which entity was touched
             let planet = findPlanet(scene: value.entity, name: value.entity.name)
-            // And move it
+            //and move it
             movePlanet(entity: planet!)
         }))
         .onAppear {
@@ -54,7 +72,7 @@ struct PlanetsDIY: View {
     
     private func movePlanet(entity: Entity) {
         
-        // Locally define the parameters from the chosen planet
+        //define the two elements we need
         guard let parameters = orbitalParameters.first(where: { $0.planet == entity.name }) else {
             return
         }
@@ -63,10 +81,10 @@ struct PlanetsDIY: View {
             return
         }
         
-        // Toggle the revolving property for the tapped planet
+        //change the value in the struct so that it's known if it's rotating
         orbitalParameters[index].revolving.toggle()
         
-        // Start or stop the movement of the tapped planet
+        //and understand what to do according to that
         if orbitalParameters[index].revolving {
             startMovement(for: entity, with: parameters)
             
@@ -77,12 +95,13 @@ struct PlanetsDIY: View {
 
     private func startMovement(for entity: Entity, with parameters: OrbitalParameters) {
         
-        // Calculate angle for initial position
+        //define the phase, the angle in calculus
         var angle = atan2(entity.position.z, entity.position.x)
         
-        // Create a timer to continuously update the position
+        //define a timer that updates the position
         let timer = Timer.scheduledTimer(withTimeInterval: 0.001, repeats: true) { _ in
-
+            
+            //same as before
             let angularVelocity = 2 * .pi / parameters.period
             angle -= 0.001 * Float(angularVelocity)
             
@@ -93,19 +112,19 @@ struct PlanetsDIY: View {
             
             entity.position = newPosition
             
-            let rotationAngle = (Float(0.005 / parameters.radius))
+            let rotationAngle =  (Float(0.005 / Float.random(in: 4...12)))
             entity.transform.rotation *= simd_quatf(
                 angle: (entity.name == "Venus" || entity.name == "Uranus") ? rotationAngle : -rotationAngle,
                 axis: [0, entity.position.y, 0]
             )
         }
         
-        // Store the timer associated with the entity
+        //store the timer associated with the entity
         timers[entity.name] = timer
     }
 
     private func stopMovement(for entity: Entity) {
-        // Stop movement for the given planet
+        //stop movement for the  planet
         guard let timer = timers[entity.name] else { return }
         timer.invalidate()
         timers[entity.name] = nil
@@ -125,11 +144,6 @@ struct PlanetsDIY: View {
         
         return nil
     }
-}
-
-
-#Preview {
-    PlanetsDIY()
 }
 
 #Preview {

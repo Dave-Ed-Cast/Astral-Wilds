@@ -30,12 +30,12 @@ struct OrbitalParameters {
 let planetDictionary: [String] = ["Mercury", "Venus", "Earth", "Mars", "Jupiter", "Saturn", "Uranus", "Neptune"]
 
 //define the reference so that we can simply adjust if needed
-let time: Float = 20
+let time: Float = 15
 //a value that defines the distance from the planet in the RealityComposer scene
 let posValue: Float = 1.5
 //and let's just shoot some numbers
 var orbitalParameters: [OrbitalParameters] = [
-    OrbitalParameters(planet: "Mercury", radius: posValue * 1, period: time * 0.9),
+    OrbitalParameters(planet: "Mercury", radius: posValue * 1, period: time * 1.2),
     OrbitalParameters(planet: "Venus", radius: posValue * 2, period: time * 1.8),
     OrbitalParameters(planet: "Earth", radius: posValue * 3, period: time * 3.4),
     OrbitalParameters(planet: "Mars", radius: posValue * 4, period: time * 4.34),
@@ -76,16 +76,16 @@ func createSkyBox() -> Entity? {
     return skyBoxEntity
 }
 
+let mesh = MeshResource.generateSphere(radius: 0.02)
+
+let normalizationValue = 255.0
+let color = UIColor(
+    red: 205 / normalizationValue,
+    green: 209 / normalizationValue,
+    blue: 228 / normalizationValue,
+    alpha: 0.05)
+
 func createParticle() -> AnchorEntity {
-    let mesh = MeshResource.generateSphere(radius: 0.02)
-//    let material = SimpleMaterial(color: .white, isMetallic: false)
-    
-    let normalizationValue = 255.0
-    let color = UIColor(
-        red: 205 / normalizationValue,
-        green: 209 / normalizationValue,
-        blue: 228 / normalizationValue,
-        alpha: 1.0)
     
     let material = SimpleMaterial(color: color, isMetallic: false)
         
@@ -93,10 +93,12 @@ func createParticle() -> AnchorEntity {
         mesh: mesh,
         materials: [material]
     )
-    let randomX = Float.random(in: -2...2)
-    let randomY = Float.random(in: -0.5...1.8)
-    let randomZ = Float.random(in: -50 ... -10)
-    let anchor = AnchorEntity(world: [randomX, randomY, randomZ]) // Set the initial position of the particle
+    
+    let randomX = Float.random(in: -4...4)
+    let randomY = Bool.random() ? Float.random(in: -2 ... -0.5) : Float.random(in: 0.5...2)
+
+    let anchor = AnchorEntity(world: [randomX, randomY, -20.0])
     anchor.addChild(particleEntity)
     return anchor
 }
+
