@@ -50,7 +50,7 @@ var orbitalParameters: [OrbitalParameters] = [
 /// - Returns: the skybox entity
 func createSkyBox() -> Entity? {
     //create the mesh
-    let largeSphere = MeshResource.generateSphere(radius: 1000)
+    let largeSphere = MeshResource.generateSphere(radius: 600)
     
     //material for the skybox
     var skyBoxMaterial = UnlitMaterial()

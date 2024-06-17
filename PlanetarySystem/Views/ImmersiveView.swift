@@ -112,7 +112,6 @@ struct ImmersiveView: View {
                 planet.components.set(ImageBasedLightReceiverComponent(imageBasedLight: planet))
                 planet.components.set(GroundingShadowComponent(castsShadow: true))
                 startTimer(entity: planet, environment: environment, content: content)
-                
                 content.add(planet)
             }
         }
@@ -187,10 +186,11 @@ struct ImmersiveView: View {
         //also start the planet timer to make it go towards the user
         planetTimer = Timer.scheduledTimer(withTimeInterval: 0.001, repeats: true) { timer in
             entity.position.z += (duration == 60) ? 0.00089 : 0.000425
-            let rotationAngle = (Float(0.005 / Float.pi))
+            let rotationAngle = (Float(0.00005))
+            let rotationDirection = -1.0
             //also make it rotate
             entity.transform.rotation *= simd_quatf(
-                angle: rotationAngle,
+                angle: Float(rotationDirection) * rotationAngle,
                 axis: [0, entity.position.y, 0]
             )
         }

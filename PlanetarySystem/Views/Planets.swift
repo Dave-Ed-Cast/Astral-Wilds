@@ -92,7 +92,7 @@ struct Planets: View {
                     //update rotation
                     planet.transform.rotation *= simd_quatf(
                         angle: rotationDirection * rotationAngle,
-                        axis: [0, planet.position.y, 0] // Use a fixed axis for rotation, or customize as needed
+                        axis: [0, planet.position.y, 0] 
                     )
                 }
 
