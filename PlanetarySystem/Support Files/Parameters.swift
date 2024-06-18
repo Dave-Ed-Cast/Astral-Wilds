@@ -11,7 +11,6 @@ import RealityKit
 import RealityKitContent
 import SwiftUI
 import AVFoundation
-import SceneKit
 
 /// This is a struct that contains all the
 struct OrbitalParameters {
