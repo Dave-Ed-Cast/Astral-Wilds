@@ -6,10 +6,15 @@
 //
 
 import SwiftUI
+import RealityKitContent
 
 @main
 struct PlanetarySystemApp: App {
     
+    init() {
+        RealityKitContent.GestureComponent
+            .registerComponent()
+    }
     // this are the variables needed for the immersive space
     @State var immersionMode: ImmersionStyle = .full
     @State private var selectedDuration: Int = 60

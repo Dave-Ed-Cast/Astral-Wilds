@@ -30,15 +30,15 @@ struct ImmersiveView: View {
     @State private var planetTimer: Timer?
     @State private var currentStep: Int = 0
     @State private var minuteArray: [String] = [
-        "Welcome, sit and relax...",
-        "Let us enjoy the journey to mars...",
-        "Without weight... embrace silence",
-        "Through the stars, possibilities are infinite",
-        "Breath in and breath out...",
-        "Connect to the cosmo with the echo of your heartbeat",
-        "Time slows down and the mind transcends space...",
-        "The universe... it feels cold yet calm",
-        "Gravity fades away, and we become one...",
+        "Hello traveler. Please sit and relax",
+        "Now let us enjoy the journey to mars",
+        "Without weight, embrace the silence",
+        "Among stars, infinite possibilities",
+        "Breath in, breath out, let it go...",
+        "Connect the cosmo and your heartbeat",
+        "Time slows down, you transcend space",
+        "The universe, it feels cold yet calm",
+        "Gravity fades, and we become one...",
         "Here we are... we reached Mars...",
         ""
     ]
@@ -50,33 +50,33 @@ struct ImmersiveView: View {
     
     
     @State private var threeMinutesArray: [String] = [
-        "Welcome, sit and relax...",
-        "Let us enjoy the journey to mars...",
-        "Without weight... embrace silence",
-        "Through the stars, possibilities are infinite",
-        "Breath in and breath out...",
-        "Connect to the cosmo with the echo of your heartbeat",
-        "Time slows down and the mind transcends space...",
+        "Welcome. Please sit and relax...",
+        "Let us enjoy the journey to mars",
+        "Without weight, embrace the silence",
+        "Through stars, countless possibilities",
+        "Breath in, breath out, let it go...",
+        "Connect the cosmo and your heartbeat",
+        "Time slows down, you transcend space",
         "The universe... it feels cold yet calm",
-        "Gravity fades away, and we become one...",
-        "Here we are... we reached Mars...",
+        "Gravity fades away, and we become one",
         "Drift into the celestial ballet...",
-        "Comets dance and planets waltz in silence",
-        "Stardust sprinkles your soul, illuminating darkness",
+        "Comets dance, planets waltz in silence",
+        "Stardust sprinkles, illuminating darkness",
         "Each heartbeat echoes through the void",
-        "Deeper into the cosmic embrace",
+        "Deeper into the cosmic embrace...",
         "Light years whisper in the vast expanse",
         "A symphony of colors paints the night sky",
         "Embrace the serenity of eternal night",
         "Constellations tell timeless tales",
         "Your spirit intertwines with the universe",
-        "Floating beyond reality",
-        "Where dreams and stars collide",
+        "Floating beyond reality and whatnot",
+        "Where dreams and stars collide...",
         "Unveil mysteries within the galaxies",
         "You are a voyager of the infinite",
         "Endless odyssey through space wonders",
-        "Become one with the universe... boundless and free.",
+        "Become boundless and free with the universe",
         "Here we are... we reached Mars...",
+        "",
         ""
     ]
     
@@ -93,9 +93,7 @@ struct ImmersiveView: View {
                 .font(.title3)
         }
         .frame(width: 250, height: 100)
-        .padding()
-        .padding(.bottom, 750)
-        .padding(.horizontal, 1000)
+        .offset(x: 0, y: -20)
         .opacity(0.5)
         
         //reality view
@@ -243,20 +241,20 @@ struct ImmersiveView: View {
     
     private func createCurvedTextEntities(text: String, environment: EnvironmentResource, referenceEntity: Entity) -> [ModelEntity] {
         //the higher, the more the curve is pronounced
-        let radius: Float = 6.0
+        let radius: Float = 5.9
         //this is the distance of the letters
-        let angleIncrement = (Float.pi / Float(text.count - 1)) * 0.35
+        let angleIncrement = Float(0.025)
         //fixed position for letters on y
-        let yPosition: Float = 1.2
+        let yPosition: Float = 1.35
         
         var entities: [ModelEntity] = []
         
         for (index, char) in text.enumerated() {
             //the angle on the curve of characters
-            let angle = angleIncrement * Float(index) - Float.pi + 1.1
+            let angle = angleIncrement * Float(index) - Float.pi + 1.2
             
             //calculate the position for the user
-            let x = radius * cos(angle) + radius - 6.3
+            let x = radius * cos(angle) + radius - 6.1
             let z = radius * sin(angle) - (radius * 0.5) + 4
             
             //create the character
@@ -280,7 +278,7 @@ struct ImmersiveView: View {
     
     //this creates the text entity
     private func createTextEntity(text: String) -> ModelEntity {
-        let mesh = MeshResource.generateText(text, extrusionDepth: 0.1, font: .systemFont(ofSize: 0.2), containerFrame: .zero, alignment: .center, lineBreakMode: .byWordWrapping)
+        let mesh = MeshResource.generateText(text, extrusionDepth: 0.1, font: .systemFont(ofSize: 0.17), containerFrame: .zero, alignment: .center, lineBreakMode: .byWordWrapping)
         let material = SimpleMaterial(color: .white, isMetallic: false)
         return ModelEntity(mesh: mesh, materials: [material])
     }

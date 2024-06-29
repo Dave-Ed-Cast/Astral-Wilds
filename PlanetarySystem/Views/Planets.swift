@@ -38,7 +38,7 @@ struct Planets: View {
         }
         .frame(width: 250, height: 100)
         .padding()
-        .offset(x: 0, y: -1600)
+        .offset(x: 0, y: -800)
         
         RealityView { content in
             //define the skybox

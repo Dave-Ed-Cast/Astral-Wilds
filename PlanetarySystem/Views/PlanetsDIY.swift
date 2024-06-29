@@ -32,7 +32,7 @@ struct PlanetsDIY: View {
         }
         .frame(width: 250, height: 100)
         .padding()
-        .offset(x: 0, y: -1600)
+        .offset(x: 0, y: -800)
         
         //the reality view
         RealityView { content in
@@ -54,10 +54,12 @@ struct PlanetsDIY: View {
                 
                 content.add(scene)
             }
+        } update: { content in
+            
         }
-        
+        .installGestures()
         //define the gesture to target one entity randomly
-        .gesture(TapGesture().targetedToAnyEntity().onEnded({ value in
+        .gesture(SpatialTapGesture(coordinateSpace: .local).targetedToAnyEntity().onEnded({ value in
             //discover which entity was touched
             let planet = findPlanet(scene: value.entity, name: value.entity.name)
             //and move it
