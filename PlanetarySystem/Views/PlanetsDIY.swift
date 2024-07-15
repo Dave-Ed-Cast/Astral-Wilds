@@ -17,6 +17,7 @@ struct PlanetsDIY: View {
     @Environment(\.openWindow) var openWindow
     
     @State private var timers: [String: Timer] = [:]
+    @State private var planetName: Entity? = nil
     
     var body: some View {
         
@@ -62,14 +63,33 @@ struct PlanetsDIY: View {
         .gesture(SpatialTapGesture(coordinateSpace: .local).targetedToAnyEntity().onEnded({ value in
             //discover which entity was touched
             let planet = findPlanet(scene: value.entity, name: value.entity.name)
+            planetName = planet
             //and move it
             movePlanet(entity: planet!)
+        }))
+        .gesture(RotateGesture3D().onEnded({ value in
+            
+            if let planet = planetName {
+                rotatePlanetGesture(entity: planet, rotation: value.rotation)
+            }
         }))
         .onAppear {
             withAnimation(.linear) {
                 dismissWindow(id: "main")
             }
         }
+    }
+    
+    private func rotatePlanetGesture(entity: Entity, rotation: Rotation3D) {
+        let angle = rotation.angle
+        let axis = rotation.axis
+        let simdRotation = simd_quatf(angle: Float(angle.radians), axis: [Float(axis.x), Float(axis.y), Float(axis.z)])
+        entity.transform.rotation *= simdRotation
+    }
+    
+    private func rotatePlanet(entity: Entity, angle: Angle) {
+        let rotation = simd_quatf(angle: Float(angle.radians), axis: [0, 1, 0])
+        entity.transform.rotation *= rotation
     }
     
     private func movePlanet(entity: Entity) {
