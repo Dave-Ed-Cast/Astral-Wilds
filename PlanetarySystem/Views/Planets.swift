@@ -12,9 +12,7 @@ import RealityKitContent
 struct Planets: View {
     
     //declare the environment to dismiss everything useless
-    @Environment(\.dismissWindow) var dismissWindow
-    @Environment(\.dismissImmersiveSpace) var dismissImmersiveSpace
-    @Environment(\.openWindow) var openWindow
+    @Environment(\.setMode) var setMode
     
     //this is an array initialized in a random way so that
     @State private var angles: [Float] = {
@@ -25,20 +23,23 @@ struct Planets: View {
         }
         return anglesArray
     }()
+    
+    //define the names of to load from the Package of Reality Composer
+    let planetDictionary: [String] = ["Mercury", "Venus", "Earth", "Mars", "Jupiter", "Saturn", "Uranus", "Neptune"]
 
     var body: some View {
         
-        Button {
-            Task {
-                await dismissImmersiveSpace()
-                openWindow(id: "main")
+        ZStack {
+            Button {
+                Task { await setMode(.mainScreen) }
+            } label: {
+                Text("Go back to the menu")
             }
-        } label: {
-            Text("Go back to the menu")
+            .frame(width: 250, height: 100)
+            .fixedSize()
+            .padding()
         }
-        .frame(width: 250, height: 100)
-        .padding()
-        .offset(x: 0, y: -800)
+        
         
         RealityView { content in
             //define the skybox
@@ -58,11 +59,6 @@ struct Planets: View {
                     
                     //and now it's time to move the planets
                     startAnimationLoop(entity: scene)
-            }
-        }
-        .onAppear {
-            withAnimation(.linear) {
-                dismissWindow(id: "main")
             }
         }
     }

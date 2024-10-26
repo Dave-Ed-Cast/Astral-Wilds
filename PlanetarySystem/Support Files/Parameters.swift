@@ -26,9 +26,6 @@ struct OrbitalParameters {
     }
 }
 
-//define the names of to load from the Package of Reality Composer
-let planetDictionary: [String] = ["Mercury", "Venus", "Earth", "Mars", "Jupiter", "Saturn", "Uranus", "Neptune"]
-
 //define the reference so that we can simply adjust if needed
 let time: Float = 15
 //a value that defines the distance from the planet in the RealityComposer scene

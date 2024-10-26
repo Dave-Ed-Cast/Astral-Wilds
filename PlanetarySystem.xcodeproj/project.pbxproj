@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 60;
+	objectVersion = 77;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -18,6 +18,8 @@
 		3E979FC02BF6A7C80011999B /* studio.skybox in Resources */ = {isa = PBXBuildFile; fileRef = 3E979FBF2BF6A7C80011999B /* studio.skybox */; };
 		3EA2FC752BFA251400DB151E /* space.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 3EA2FC742BFA251400DB151E /* space.mp3 */; };
 		3ED824C42BF4FB710091E5F5 /* ImmersiveView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3ED824C32BF4FB710091E5F5 /* ImmersiveView.swift */; };
+		3EE96C372CCBC04D007BE4E2 /* ImageButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EE96C362CCBC04D007BE4E2 /* ImageButton.swift */; };
+		3EE96C392CCD07C6007BE4E2 /* OrbitalParameters.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EE96C382CCD07C6007BE4E2 /* OrbitalParameters.swift */; };
 		3EF670E22BF282E700F916CF /* PlanetsDIY.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EF670E12BF282E700F916CF /* PlanetsDIY.swift */; };
 /* End PBXBuildFile section */
 
@@ -36,6 +38,8 @@
 		3EA2FC742BFA251400DB151E /* space.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = space.mp3; sourceTree = "<group>"; };
 		3EA475602BF6BA75005A3573 /* RealityKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RealityKit.framework; path = System/Library/Frameworks/RealityKit.framework; sourceTree = SDKROOT; };
 		3ED824C32BF4FB710091E5F5 /* ImmersiveView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImmersiveView.swift; sourceTree = "<group>"; };
+		3EE96C362CCBC04D007BE4E2 /* ImageButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageButton.swift; sourceTree = "<group>"; };
+		3EE96C382CCD07C6007BE4E2 /* OrbitalParameters.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrbitalParameters.swift; sourceTree = "<group>"; };
 		3EF670E12BF282E700F916CF /* PlanetsDIY.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlanetsDIY.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -116,6 +120,7 @@
 				3ED824C32BF4FB710091E5F5 /* ImmersiveView.swift */,
 				3E5C21702BF75EFA0015AC20 /* BeforeImmersiveView.swift */,
 				3E0636792BF0BAA400F7ED6E /* ContentView.swift */,
+				3EE96C362CCBC04D007BE4E2 /* ImageButton.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -124,6 +129,7 @@
 			isa = PBXGroup;
 			children = (
 				3E0BE18E2BF157DE00C5B7C8 /* Parameters.swift */,
+				3EE96C382CCD07C6007BE4E2 /* OrbitalParameters.swift */,
 			);
 			path = "Support Files";
 			sourceTree = "<group>";
@@ -167,7 +173,6 @@
 				};
 			};
 			buildConfigurationList = 3E06366B2BF0BAA400F7ED6E /* Build configuration list for PBXProject "PlanetarySystem" */;
-			compatibilityVersion = "Xcode 15.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
@@ -175,6 +180,7 @@
 				Base,
 			);
 			mainGroup = 3E0636672BF0BAA400F7ED6E;
+			preferredProjectObjectVersion = 77;
 			productRefGroup = 3E0636672BF0BAA400F7ED6E;
 			projectDirPath = "";
 			projectRoot = "";
@@ -206,9 +212,11 @@
 				3E06367A2BF0BAA400F7ED6E /* ContentView.swift in Sources */,
 				3E7D10DD2BF2652500B8CC9C /* Planets.swift in Sources */,
 				3E5C21712BF75EFA0015AC20 /* BeforeImmersiveView.swift in Sources */,
+				3EE96C372CCBC04D007BE4E2 /* ImageButton.swift in Sources */,
 				3E0636782BF0BAA400F7ED6E /* PlanetarySystemApp.swift in Sources */,
 				3EF670E22BF282E700F916CF /* PlanetsDIY.swift in Sources */,
 				3E0BE18F2BF157DE00C5B7C8 /* Parameters.swift in Sources */,
+				3EE96C392CCD07C6007BE4E2 /* OrbitalParameters.swift in Sources */,
 				3ED824C42BF4FB710091E5F5 /* ImmersiveView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -360,7 +368,7 @@
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2,7";
-				XROS_DEPLOYMENT_TARGET = 1.0;
+				XROS_DEPLOYMENT_TARGET = 2.0;
 			};
 			name = Debug;
 		};
@@ -389,7 +397,7 @@
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2,7";
-				XROS_DEPLOYMENT_TARGET = 1.0;
+				XROS_DEPLOYMENT_TARGET = 2.0;
 			};
 			name = Release;
 		};

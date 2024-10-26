@@ -11,29 +11,12 @@ import RealityKitContent
 
 struct PlanetsDIY: View {
     
-    //declare the environment variables
-    @Environment(\.dismissWindow) var dismissWindow
-    @Environment(\.dismissImmersiveSpace) var dismissImmersiveSpace
-    @Environment(\.openWindow) var openWindow
+    @Environment(\.setMode) var setMode
     
     @State private var timers: [String: Timer] = [:]
     @State private var planetName: Entity? = nil
     
     var body: some View {
-        
-        //button with positions
-        Button {
-            Task {
-                await dismissImmersiveSpace()
-                openWindow(id: "main")
-            }
-        } label: {
-            Text("Go back to reality")
-                .font(.title3)
-        }
-        .frame(width: 250, height: 100)
-        .padding()
-        .offset(x: 0, y: -800)
         
         //the reality view
         RealityView { content in
@@ -73,11 +56,6 @@ struct PlanetsDIY: View {
                 rotatePlanetGesture(entity: planet, rotation: value.rotation)
             }
         }))
-        .onAppear {
-            withAnimation(.linear) {
-                dismissWindow(id: "main")
-            }
-        }
     }
     
     private func rotatePlanetGesture(entity: Entity, rotation: Rotation3D) {

@@ -12,11 +12,7 @@ import AVFoundation
 
 struct ImmersiveView: View {
     
-    //environment views
-    @Environment(\.dismissWindow) var dismissWindow
-    @Environment(\.dismissImmersiveSpace) var dismissImmersiveSpace
-    @Environment(\.openImmersiveSpace) var openImmersiveSpace
-    @Environment(\.openWindow) var openWindow
+    @Environment(\.setMode) var setMode
     
     //duration taken from the user input
     @Binding var duration: Int
@@ -82,20 +78,6 @@ struct ImmersiveView: View {
     
     var body: some View {
         
-        //button with position
-        Button {
-            Task {
-                await dismissImmersiveSpace()
-                openWindow(id: "main")
-            }
-        } label: {
-            Text("Go back to reality")
-                .font(.title3)
-        }
-        .frame(width: 250, height: 100)
-        .offset(x: 0, y: -20)
-        .opacity(0.5)
-        
         //reality view
         RealityView { content in
             guard let skyBoxEntity = createSkyBox() else {
@@ -115,10 +97,6 @@ struct ImmersiveView: View {
         }
         
         .onAppear(perform: {
-            withAnimation(.linear) {
-                dismissWindow(id: "Before")
-            }
-            
             //instantiate the music that can throw errors
             do {
                 if let path = Bundle.main.url(forResource: "space", withExtension: "mp3") {

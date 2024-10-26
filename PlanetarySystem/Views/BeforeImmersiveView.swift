@@ -11,8 +11,7 @@ struct BeforeImmersiveView: View {
     
     //this is the window before the immersive view
     @State var durationSelection: Int = 60
-    @Environment(\.dismissWindow) var dismissWindow
-    @Environment(\.openImmersiveSpace) var openImmersiveSpace
+    @Environment(\.setMode) var setMode
 
     var body: some View {
         
@@ -33,16 +32,11 @@ struct BeforeImmersiveView: View {
             
             //the button to launch the immersive view
             Button {
-                Task {
-                    await openImmersiveSpace(id: "ImmersiveView")
-                }
+                Task { await setMode(.immersiveSpace) }
             } label: {
                 Text("Launch immersive view")
             }
             
-        }
-        .onAppear {
-            dismissWindow(id: "main")
         }
     }
 }
