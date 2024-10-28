@@ -78,21 +78,28 @@ struct ImmersiveView: View {
     
     var body: some View {
         
-        //reality view
-        RealityView { content in
-            guard let skyBoxEntity = createSkyBox() else {
-                print("Error: Unable to create skybox entity")
-                return
-            }
-            content.add(skyBoxEntity)
+        ZStack {
+            BackToRealityButtonView()
+                .fixedSize(horizontal: true, vertical: false)
+                .environment(\.setMode, setMode)
+                .padding()
             
-            if let planet = try? await Entity(named: "TravelToMars", in: realityKitContentBundle),
-               let environment = try? await EnvironmentResource(named: "studio") {
-                planet.components.set(ImageBasedLightComponent(source: .single(environment)))
-                planet.components.set(ImageBasedLightReceiverComponent(imageBasedLight: planet))
-                planet.components.set(GroundingShadowComponent(castsShadow: true))
-                startTimer(entity: planet, environment: environment, content: content)
-                content.add(planet)
+            //reality view
+            RealityView { content in
+                guard let skyBoxEntity = content.createSkyBox() else {
+                    print("Error: Unable to create skybox entity")
+                    return
+                }
+                content.add(skyBoxEntity)
+                
+                if let planet = try? await Entity(named: "TravelToMars", in: realityKitContentBundle),
+                   let environment = try? await EnvironmentResource(named: "studio") {
+                    planet.components.set(ImageBasedLightComponent(source: .single(environment)))
+                    planet.components.set(ImageBasedLightReceiverComponent(imageBasedLight: planet))
+                    planet.components.set(GroundingShadowComponent(castsShadow: true))
+                    startTimer(entity: planet, environment: environment, content: content)
+                    content.add(planet)
+                }
             }
         }
         
@@ -128,7 +135,7 @@ struct ImmersiveView: View {
                 if spawnParticle {
                     
                     //create the particles with lighting
-                    let particleEntity = createParticle()
+                    let particleEntity = content.createParticle()
                     particleEntity.components.set(ImageBasedLightComponent(source: .single(environment)))
                     particleEntity.components.set(ImageBasedLightReceiverComponent(imageBasedLight: entity))
                     particleEntity.components.set(GroundingShadowComponent(castsShadow: true))

@@ -11,10 +11,8 @@ import RealityKitContent
 
 struct Planets: View {
     
-    //declare the environment to dismiss everything useless
     @Environment(\.setMode) var setMode
     
-    //this is an array initialized in a random way so that
     @State private var angles: [Float] = {
         var anglesArray: [Float] = []
         for _ in 0..<8 {
@@ -24,34 +22,28 @@ struct Planets: View {
         return anglesArray
     }()
     
-    //define the names of to load from the Package of Reality Composer
-    let planetDictionary: [String] = ["Mercury", "Venus", "Earth", "Mars", "Jupiter", "Saturn", "Uranus", "Neptune"]
-
+    private let planetDictionary: [String] = ["Mercury", "Venus", "Earth", "Mars", "Jupiter", "Saturn", "Uranus", "Neptune"]
+    private let orbitalParameters = PlanetParameters.list
+    
     var body: some View {
         
         ZStack {
-            Button {
-                Task { await setMode(.mainScreen) }
-            } label: {
-                Text("Go back to the menu")
-            }
-            .frame(width: 250, height: 100)
-            .fixedSize()
-            .padding()
-        }
-        
-        
-        RealityView { content in
-            //define the skybox
-            guard let skyBoxEntity = createSkyBox() else {
-                return
-            }
-            content.add(skyBoxEntity)
+            BackToRealityButtonView()
+                .fixedSize(horizontal: true, vertical: false)
+                .environment(\.setMode, setMode)
+                .padding()
             
-            //define the scene
-            if let scene = try? await Entity(named: "Planets", in: realityKitContentBundle), let environment = try? await EnvironmentResource(named: "studio") {
+            RealityView { content in
+                //define the skybox
+                guard let skyBoxEntity = content.createSkyBox() else {
+                    return
+                }
+                content.add(skyBoxEntity)
                 
-                //define the environment
+                //define the scene
+                if let scene = try? await Entity(named: "Planets", in: realityKitContentBundle), let environment = try? await EnvironmentResource(named: "studio") {
+                    
+                    //define the environment
                     scene.components.set(ImageBasedLightComponent(source: .single(environment)))
                     scene.components.set(ImageBasedLightReceiverComponent(imageBasedLight: scene))
                     scene.components.set(GroundingShadowComponent(castsShadow: true))
@@ -59,6 +51,7 @@ struct Planets: View {
                     
                     //and now it's time to move the planets
                     startAnimationLoop(entity: scene)
+                }
             }
         }
     }

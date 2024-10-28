@@ -12,6 +12,7 @@ import RealityKitContent
 struct PlanetarySystemApp: App {
     
     private static let mainScreenWindowID: String = "main"
+    private static let buttonWindowID: String = "Button"
     private static let planetsWindowID: String = "planets"
     private static let planetsDoItYourselfWindowID: String = "DIY"
     private static let chooseTimeWindowID: String = "Before"
@@ -67,7 +68,6 @@ struct PlanetarySystemApp: App {
         guard newMode != oldMode else { return }
         
         let immersiveSpaceNotNeeded = (oldMode.needsImmersiveSpace || !newMode.needsImmersiveSpace)
-        let oldModeNoImmersiveSpaceNeeded = (oldMode == .mainScreen || oldMode == .chooseTime)
 
         if immersiveSpacePresented && immersiveSpaceNotNeeded {
             immersiveSpacePresented = false
@@ -104,6 +104,18 @@ struct PlanetarySystemApp: App {
                     .environment(\.setMode, setMode)
             }
             
+            WindowGroup(id: Self.buttonWindowID) {
+                ZStack {
+                    BackToRealityButtonView()
+                        .frame(width: 250, height: 100)
+                        .fixedSize(horizontal: true, vertical: false)
+                        .environment(\.setMode, setMode)
+                        .padding()
+                    
+                }
+            }
+            .windowResizability(.contentSize)
+            
             //same thing here
             ImmersiveSpace(id: Self.planetsWindowID) {
                 Planets()
@@ -112,36 +124,14 @@ struct PlanetarySystemApp: App {
             .immersionStyle(selection: $immersionMode, in: .full)
             
             ImmersiveSpace(id: Self.planetsDoItYourselfWindowID) {
-                ZStack {
-                    PlanetsDIY()
-                        .environment(\.setMode, setMode)
-                    
-                    Button {
-                        Task { await setMode(.mainScreen) }
-                    } label: {
-                        Text("Go back to reality")
-                            .font(.title3)
-                    }
-                    .frame(width: 250, height: 100)
-                    .opacity(0.5)
-                }
+                PlanetsDIY()
+                    .environment(\.setMode, setMode)
             }
             .immersionStyle(selection: $immersionMode, in: .full)
             
             ImmersiveSpace(id: Self.immersiveSpaceWindowId) {
-                ZStack {
-                    ImmersiveView(duration: $selectedDuration)
-                        .environment(\.setMode, setMode)
-                    Button {
-                        Task { await setMode(.mainScreen) }
-                    } label: {
-                        Text("Go back to reality")
-                            .font(.title3)
-                    }
-                    .frame(width: 250, height: 100)
-                    .fixedSize(horizontal: true, vertical: false)
-                    .padding()
-                }
+                ImmersiveView(duration: $selectedDuration)
+                    .environment(\.setMode, setMode)
             }
             .immersionStyle(selection: $immersionMode, in: .full)
         }
