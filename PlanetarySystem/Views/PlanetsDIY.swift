@@ -17,50 +17,45 @@ struct PlanetsDIY: View {
     @State private var planetName: Entity? = nil
     
     @State private var orbitalParameters = PlanetParameters.list
-
+    
     var body: some View {
         
-        ZStack {
-            BackToRealityButtonView()
-                .fixedSize(horizontal: true, vertical: false)
-                .environment(\.setMode, setMode)
-                .padding()
-            //the reality view
-            RealityView { content in
-                
-                //skybox creation
-                guard let skyBoxEntity = content.createSkyBox() else {
-                    print("error")
-                    return
-                }
-                
-                content.add(skyBoxEntity)
-                
-                //scene with planets and light
-                if let scene = try? await Entity(named: "Planets", in: realityKitContentBundle), let environment = try? await EnvironmentResource(named: "studio") {
-                    
-                    scene.components.set(ImageBasedLightComponent(source: .single(environment)))
-                    scene.components.set(ImageBasedLightReceiverComponent(imageBasedLight: scene))
-                    scene.components.set(GroundingShadowComponent(castsShadow: true))
-                    
-                    content.add(scene)
-                }
+        
+        //the reality view
+        RealityView { content in
+            
+            //skybox creation
+            guard let skyBoxEntity = content.createSkyBox() else {
+                print("error")
+                return
             }
-            //define the gesture to target one entity randomly
-            .gesture(SpatialTapGesture(coordinateSpace: .local).targetedToAnyEntity().onEnded({ value in
-                //discover which entity was touched
-                let planet = findPlanet(scene: value.entity, name: value.entity.name)
-                planetName = planet
-                //and move it
-                movePlanet(entity: planet!)
-            }))
-            .gesture(RotateGesture3D().onEnded({ value in
+            
+            content.add(skyBoxEntity)
+            
+            //scene with planets and light
+            if let scene = try? await Entity(named: "Planets", in: realityKitContentBundle), let environment = try? await EnvironmentResource(named: "studio") {
                 
-                if let planet = planetName {
-                    rotatePlanetGesture(entity: planet, rotation: value.rotation)
-                }
-            }))
+                scene.components.set(ImageBasedLightComponent(source: .single(environment)))
+                scene.components.set(ImageBasedLightReceiverComponent(imageBasedLight: scene))
+                scene.components.set(GroundingShadowComponent(castsShadow: true))
+                
+                content.add(scene)
+            }
         }
+        //define the gesture to target one entity randomly
+        .gesture(SpatialTapGesture(coordinateSpace: .local).targetedToAnyEntity().onEnded({ value in
+            //discover which entity was touched
+            let planet = findPlanet(scene: value.entity, name: value.entity.name)
+            planetName = planet
+            //and move it
+            movePlanet(entity: planet!)
+        }))
+        .gesture(RotateGesture3D().onEnded({ value in
+            
+            if let planet = planetName {
+                rotatePlanetGesture(entity: planet, rotation: value.rotation)
+            }
+        }))
     }
     
     private func rotatePlanetGesture(entity: Entity, rotation: Rotation3D) {
@@ -97,7 +92,7 @@ struct PlanetsDIY: View {
             stopMovement(for: entity)
         }
     }
-
+    
     private func startMovement(for entity: Entity, with parameters: PlanetCharacteristic) {
         //define the phase, the angle in calculus
         var angle = atan2(entity.position.z, entity.position.x)
@@ -126,7 +121,7 @@ struct PlanetsDIY: View {
         //store the timer associated with the entity
         timers[entity.name] = timer
     }
-
+    
     //stop movement for the  planet
     private func stopMovement(for entity: Entity) {
         guard let timer = timers[entity.name] else { return }

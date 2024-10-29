@@ -27,31 +27,26 @@ struct Planets: View {
     
     var body: some View {
         
-        ZStack {
-            BackToRealityButtonView()
-                .fixedSize(horizontal: true, vertical: false)
-                .environment(\.setMode, setMode)
-                .padding()
+        
+        
+        RealityView { content in
+            //define the skybox
+            guard let skyBoxEntity = content.createSkyBox() else {
+                return
+            }
+            content.add(skyBoxEntity)
             
-            RealityView { content in
-                //define the skybox
-                guard let skyBoxEntity = content.createSkyBox() else {
-                    return
-                }
-                content.add(skyBoxEntity)
+            //define the scene
+            if let scene = try? await Entity(named: "Planets", in: realityKitContentBundle), let environment = try? await EnvironmentResource(named: "studio") {
                 
-                //define the scene
-                if let scene = try? await Entity(named: "Planets", in: realityKitContentBundle), let environment = try? await EnvironmentResource(named: "studio") {
-                    
-                    //define the environment
-                    scene.components.set(ImageBasedLightComponent(source: .single(environment)))
-                    scene.components.set(ImageBasedLightReceiverComponent(imageBasedLight: scene))
-                    scene.components.set(GroundingShadowComponent(castsShadow: true))
-                    content.add(scene)
-                    
-                    //and now it's time to move the planets
-                    startAnimationLoop(entity: scene)
-                }
+                //define the environment
+                scene.components.set(ImageBasedLightComponent(source: .single(environment)))
+                scene.components.set(ImageBasedLightReceiverComponent(imageBasedLight: scene))
+                scene.components.set(GroundingShadowComponent(castsShadow: true))
+                content.add(scene)
+                
+                //and now it's time to move the planets
+                startAnimationLoop(entity: scene)
             }
         }
     }
@@ -81,10 +76,10 @@ struct Planets: View {
                     //update rotation
                     planet.transform.rotation *= simd_quatf(
                         angle: rotationDirection * rotationAngle,
-                        axis: [0, planet.position.y, 0] 
+                        axis: [0, planet.position.y, 0]
                     )
                 }
-
+                
                 
                 //define the revolving action
                 let angularVelocity = 2 * .pi / parameters.period

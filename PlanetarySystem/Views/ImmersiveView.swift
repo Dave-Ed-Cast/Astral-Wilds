@@ -78,28 +78,22 @@ struct ImmersiveView: View {
     
     var body: some View {
         
-        ZStack {
-            BackToRealityButtonView()
-                .fixedSize(horizontal: true, vertical: false)
-                .environment(\.setMode, setMode)
-                .padding()
+        
+        //reality view
+        RealityView { content in
+            guard let skyBoxEntity = content.createSkyBox() else {
+                print("Error: Unable to create skybox entity")
+                return
+            }
+            content.add(skyBoxEntity)
             
-            //reality view
-            RealityView { content in
-                guard let skyBoxEntity = content.createSkyBox() else {
-                    print("Error: Unable to create skybox entity")
-                    return
-                }
-                content.add(skyBoxEntity)
-                
-                if let planet = try? await Entity(named: "TravelToMars", in: realityKitContentBundle),
-                   let environment = try? await EnvironmentResource(named: "studio") {
-                    planet.components.set(ImageBasedLightComponent(source: .single(environment)))
-                    planet.components.set(ImageBasedLightReceiverComponent(imageBasedLight: planet))
-                    planet.components.set(GroundingShadowComponent(castsShadow: true))
-                    startTimer(entity: planet, environment: environment, content: content)
-                    content.add(planet)
-                }
+            if let planet = try? await Entity(named: "TravelToMars", in: realityKitContentBundle),
+               let environment = try? await EnvironmentResource(named: "studio") {
+                planet.components.set(ImageBasedLightComponent(source: .single(environment)))
+                planet.components.set(ImageBasedLightReceiverComponent(imageBasedLight: planet))
+                planet.components.set(GroundingShadowComponent(castsShadow: true))
+                startTimer(entity: planet, environment: environment, content: content)
+                content.add(planet)
             }
         }
         
@@ -245,7 +239,7 @@ struct ImmersiveView: View {
             //create the character
             let charEntity = createTextEntity(text: String(char))
             charEntity.position = SIMD3(x, yPosition, z)
-
+            
             //rotate the letters to give a feeling of curve
             let rotationAngle = -(angle + Float.pi / 2)
             charEntity.orientation = simd_quatf(angle: Float(rotationAngle), axis: SIMD3(0, 1, 0))

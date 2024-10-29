@@ -21,7 +21,6 @@
 		3EE96C372CCBC04D007BE4E2 /* ImageButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EE96C362CCBC04D007BE4E2 /* ImageButton.swift */; };
 		3EE96C392CCD07C6007BE4E2 /* PlanetParameters.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EE96C382CCD07C6007BE4E2 /* PlanetParameters.swift */; };
 		3EE96C3B2CCEAF7F007BE4E2 /* RealityViewExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EE96C3A2CCEAF7F007BE4E2 /* RealityViewExtension.swift */; };
-		3EE96C3D2CCF9A20007BE4E2 /* BackToRealityButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EE96C3C2CCF9A20007BE4E2 /* BackToRealityButtonView.swift */; };
 		3EF670E22BF282E700F916CF /* PlanetsDIY.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EF670E12BF282E700F916CF /* PlanetsDIY.swift */; };
 /* End PBXBuildFile section */
 
@@ -43,7 +42,6 @@
 		3EE96C362CCBC04D007BE4E2 /* ImageButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageButton.swift; sourceTree = "<group>"; };
 		3EE96C382CCD07C6007BE4E2 /* PlanetParameters.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlanetParameters.swift; sourceTree = "<group>"; };
 		3EE96C3A2CCEAF7F007BE4E2 /* RealityViewExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealityViewExtension.swift; sourceTree = "<group>"; };
-		3EE96C3C2CCF9A20007BE4E2 /* BackToRealityButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackToRealityButtonView.swift; sourceTree = "<group>"; };
 		3EF670E12BF282E700F916CF /* PlanetsDIY.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlanetsDIY.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -125,7 +123,6 @@
 				3E5C21702BF75EFA0015AC20 /* BeforeImmersiveView.swift */,
 				3E0636792BF0BAA400F7ED6E /* ContentView.swift */,
 				3EE96C362CCBC04D007BE4E2 /* ImageButton.swift */,
-				3EE96C3C2CCF9A20007BE4E2 /* BackToRealityButtonView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -221,7 +218,6 @@
 				3EE96C372CCBC04D007BE4E2 /* ImageButton.swift in Sources */,
 				3E0636782BF0BAA400F7ED6E /* PlanetarySystemApp.swift in Sources */,
 				3EE96C3B2CCEAF7F007BE4E2 /* RealityViewExtension.swift in Sources */,
-				3EE96C3D2CCF9A20007BE4E2 /* BackToRealityButtonView.swift in Sources */,
 				3EF670E22BF282E700F916CF /* PlanetsDIY.swift in Sources */,
 				3E0BE18F2BF157DE00C5B7C8 /* PlanetCharacteristic.swift in Sources */,
 				3EE96C392CCD07C6007BE4E2 /* PlanetParameters.swift in Sources */,

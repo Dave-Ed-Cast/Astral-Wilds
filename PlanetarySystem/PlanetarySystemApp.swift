@@ -73,11 +73,13 @@ struct PlanetarySystemApp: App {
             immersiveSpacePresented = false
             await dismissImmersiveSpace()
             print("dismiss immersive space with id: \(oldMode.windowId)")
+            dismissWindow(id: "Button")
         }
         
         if newMode.needsImmersiveSpace {
             immersiveSpacePresented = true
             await openImmersiveSpace(id: newMode.windowId)
+            openWindow(id: "Button")
             print("opening immersive space with id: \(newMode.windowId)")
         } else {
             openWindow(id: newMode.windowId)
@@ -105,35 +107,51 @@ struct PlanetarySystemApp: App {
             }
             
             WindowGroup(id: Self.buttonWindowID) {
-                ZStack {
-                    BackToRealityButtonView()
-                        .frame(width: 250, height: 100)
-                        .fixedSize(horizontal: true, vertical: false)
-                        .environment(\.setMode, setMode)
-                        .padding()
+                VStack {
+                    Text("Feeling overwhelmed? \nThis is the button to go back.")
+                        .font(.title3)
+                        .multilineTextAlignment(.center)
                     
+                    Button {
+                        Task { await setMode(.mainScreen) }
+                    } label: {
+                        Text("Go back to reality")
+                    }
+                    .frame(width: 300, height: 100)
+                    .frame(alignment: .front)
                 }
+                .fixedSize(horizontal: true, vertical: true)
+                .environment(\.setMode, setMode)
+                .padding()
             }
             .windowResizability(.contentSize)
             
             //same thing here
-            ImmersiveSpace(id: Self.planetsWindowID) {
-                Planets()
-                    .environment(\.setMode, setMode)
+            Group {
+                ImmersiveSpace(id: Self.planetsWindowID) {
+                    withAnimation(.easeInOut) {
+                        Planets()
+                            .environment(\.setMode, setMode)
+                    }
+                }
+                .immersionStyle(selection: $immersionMode, in: .full)
+                
+                ImmersiveSpace(id: Self.planetsDoItYourselfWindowID) {
+                    withAnimation(.easeInOut) {
+                        PlanetsDIY()
+                            .environment(\.setMode, setMode)
+                    }
+                }
+                .immersionStyle(selection: $immersionMode, in: .full)
+                
+                ImmersiveSpace(id: Self.immersiveSpaceWindowId) {
+                    withAnimation(.easeInOut) {
+                        ImmersiveView(duration: $selectedDuration)
+                            .environment(\.setMode, setMode)
+                    }
+                }
+                .immersionStyle(selection: $immersionMode, in: .full)
             }
-            .immersionStyle(selection: $immersionMode, in: .full)
-            
-            ImmersiveSpace(id: Self.planetsDoItYourselfWindowID) {
-                PlanetsDIY()
-                    .environment(\.setMode, setMode)
-            }
-            .immersionStyle(selection: $immersionMode, in: .full)
-            
-            ImmersiveSpace(id: Self.immersiveSpaceWindowId) {
-                ImmersiveView(duration: $selectedDuration)
-                    .environment(\.setMode, setMode)
-            }
-            .immersionStyle(selection: $immersionMode, in: .full)
         }
     }
 }

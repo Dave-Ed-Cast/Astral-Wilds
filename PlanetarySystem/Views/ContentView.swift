@@ -9,7 +9,6 @@ import SwiftUI
 import RealityKit
 import RealityKitContent
 
-//first things first, we declare the container of the immersive space
 struct ContentView: View {
     
     @Environment(\.setMode) var setMode
