@@ -9,6 +9,8 @@ import SwiftUI
 import RealityKit
 import RealityKitContent
 
+/// Like in the other immersive spaces, we need to first create the skybox.
+/// Then, we need to load the associated scene with the lights.
 struct Planets: View {
     
     @Environment(\.setMode) var setMode
@@ -27,19 +29,15 @@ struct Planets: View {
     
     var body: some View {
         
-        
-        
         RealityView { content in
-            //define the skybox
+
             guard let skyBoxEntity = content.createSkyBox() else {
                 return
             }
             content.add(skyBoxEntity)
             
-            //define the scene
             if let scene = try? await Entity(named: "Planets", in: realityKitContentBundle), let environment = try? await EnvironmentResource(named: "studio") {
                 
-                //define the environment
                 scene.components.set(ImageBasedLightComponent(source: .single(environment)))
                 scene.components.set(ImageBasedLightReceiverComponent(imageBasedLight: scene))
                 scene.components.set(GroundingShadowComponent(castsShadow: true))
@@ -51,37 +49,39 @@ struct Planets: View {
         }
     }
     
-    /// Given the entity as an input, the function will make it move according to math formulas
+    /// Will make the entity move (revolve and rotate) according to math formulas.
+    /// Since the rotation happens continuosly, we need a timer that does the rotation every time.
+    /// For the definition of video, we are going to repeat everything each millisecond.
+    ///
+    /// For each angle and index define the parameters, then find the planet associated and modify it.
+    /// Most of the formula is trial and error
     /// - Parameter entity: the entity that will be rotated and will revolve around the sun
     private func startAnimationLoop(entity: Entity) {
         
-        //this will be repeated every millisecond
         Timer.scheduledTimer(withTimeInterval: 0.001, repeats: true) { _ in
-            //loop through each angle and its corresponding index in the angles array
+
             for (index, angle) in angles.enumerated() {
-                
-                //define the parameters for that planet according to the index
                 let parameters = orbitalParameters[index]
                 let x = parameters.radius * cos(angle)
                 let z = parameters.radius * sin(angle)
-                let newPosition = SIMD3(x, 1.5, z)
+                let newPosition = SIMD3(x, 0, z)
                 
-                //then if we found it in the dictionary we can move it
-                if let planet = planetName(scene: entity, name: planetDictionary[index]) {
-                    planet.position = newPosition
-                    let rotationAngle = (Float(0.005 / Float.random(in: 4...12)))
-                    let rotateClockwise = (planet.name == "Venus" || planet.name == "Uranus")
-                    let rotationDirection: Float = rotateClockwise ? 1.0 : -1.0
-                    
-                    //update rotation
-                    planet.transform.rotation *= simd_quatf(
-                        angle: rotationDirection * rotationAngle,
-                        axis: [0, planet.position.y, 0]
-                    )
-                }
+                //this is a dictionary created from developers, safe to unwrap
+                let planet = planetName(scene: entity, name: planetDictionary[index])!
+                let rotationAngle = (Float(0.005 / Float.random(in: 4...12)))
+                let rotateClockwise = (planet.name == "Venus" || planet.name == "Uranus")
+                let rotationDirection: Float = rotateClockwise ? 1.0 : -1.0
+                
+                planet.position = newPosition
+                
+                planet.transform.rotation *= simd_quatf(
+                    angle: rotationDirection * rotationAngle,
+                    axis: [0, planet.position.y, 0]
+                )
                 
                 
-                //define the revolving action
+                
+                //angular velocity is 2pi / period
                 let angularVelocity = 2 * .pi / parameters.period
                 angles[index] -= 0.001 * Float(angularVelocity)
             }

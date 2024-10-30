@@ -7,10 +7,13 @@
 
 import Foundation
 
+/// The parameters that interest the rotation and the revolution
+/// Modify `time` to change rotation (higher time = slower speed)
+/// Modify `posValue` to change distance from user
 struct PlanetParameters {
     
     static let time: Float = 25
-    static let posValue: Float = 1.5
+    static let posValue: Float = 3
     
     static var list = [
         PlanetCharacteristic(planet: "Mercury", radius: posValue * 1, period: time * 1.2),

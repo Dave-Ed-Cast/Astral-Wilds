@@ -14,6 +14,7 @@ struct ContentView: View {
     @Environment(\.setMode) var setMode
     
     @State private var immersiveSpaceID: String? = nil
+    
     var body: some View {
         VStack(spacing: 20) {
             Text("Welcome!")
@@ -30,8 +31,8 @@ struct ContentView: View {
         }
         .padding()
         .navigationBarTitleDisplayMode(.automatic)
+        
     }
-
 }
 
 
