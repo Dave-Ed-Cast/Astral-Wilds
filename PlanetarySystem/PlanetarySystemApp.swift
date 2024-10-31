@@ -134,7 +134,7 @@ struct PlanetarySystemApp: App {
         
         ImmersiveSpace(id: Self.planetsWindowID) {
             withAnimation(.easeInOut) {
-                Planets()
+                MovePlanets()
                     .environment(\.setMode, setMode)
             }
         }
@@ -142,7 +142,7 @@ struct PlanetarySystemApp: App {
         
         ImmersiveSpace(id: Self.planetsDoItYourselfWindowID) {
             withAnimation(.easeInOut) {
-                PlanetsDIY()
+                MovePlanetsYouChoose()
                     .environment(\.setMode, setMode)
             }
         }

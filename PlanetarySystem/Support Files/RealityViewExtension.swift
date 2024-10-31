@@ -15,7 +15,7 @@ extension RealityViewContent {
     /// - Returns: the skybox entity
     func createSkyBox() -> Entity? {
         //create the mesh
-        let largeSphere = MeshResource.generateSphere(radius: 20)
+        let largeSphere = MeshResource.generateSphere(radius: 35)
         
         //material for the skybox
         var skyBoxMaterial = UnlitMaterial()

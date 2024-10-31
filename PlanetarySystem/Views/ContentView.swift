@@ -32,6 +32,28 @@ struct ContentView: View {
         .padding()
         .navigationBarTitleDisplayMode(.automatic)
         
+        
+//        RealityView { content in
+//            let mesh = MeshResource.generateText(
+//                "Ciao belli",
+//                extrusionDepth: 0.5,
+//                font: .systemFont(ofSize: 50),
+//                containerFrame: .zero,
+//                alignment: .center,
+//                lineBreakMode: .byWordWrapping
+//            )
+//
+//            let material = SimpleMaterial(color: .red, isMetallic: true)
+//            let textEntity = ModelEntity(mesh: mesh, materials: [material])
+//            textEntity.position = [0, 0, -1]
+//
+//            let anchorEntity = AnchorEntity(plane: .horizontal)
+//            anchorEntity.name = "anchor"
+//            anchorEntity.addChild(textEntity)
+//            content.add(anchorEntity)
+//            anchorEntity.generateCollisionShapes(recursive: true)
+//
+//        }
     }
 }
 

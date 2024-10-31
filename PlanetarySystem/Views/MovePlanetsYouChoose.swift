@@ -9,7 +9,7 @@ import SwiftUI
 import RealityKit
 import RealityKitContent
 
-struct PlanetsDIY: View {
+struct MovePlanetsYouChoose: View {
     
     @Environment(\.setMode) var setMode
     
@@ -45,7 +45,7 @@ struct PlanetsDIY: View {
         //define the gesture to target one entity randomly
         .gesture(SpatialTapGesture(coordinateSpace: .local).targetedToAnyEntity().onEnded({ value in
             //discover which entity was touched
-            let planet = findPlanet(scene: value.entity, name: value.entity.name)
+            let planet = planetName(for: value.entity, in: value.entity.name)
             planetName = planet
             //and move it
             movePlanet(entity: planet!)
@@ -129,23 +129,24 @@ struct PlanetsDIY: View {
         timers[entity.name] = nil
     }
     
-    //same as in the other file
-    private func findPlanet(scene: Entity, name: String) -> Entity? {
-        var tempStack = [scene]
+    /// Finds the planet name through Depth First Search method
+    ///
+    /// - Parameters:
+    ///   - scene: for the particular entity
+    ///   - name: in the dictionary
+    /// - Returns: return that entity with the associated name in the dictionary
+    private func planetName(for entity: Entity, in name: String) -> Entity? {
+        var tempEntityArray = [entity]
         
-        while !tempStack.isEmpty {
-            let current = tempStack.removeLast()
+        while !tempEntityArray.isEmpty {
+            let current = tempEntityArray.removeLast()
             if current.name == name {
                 return current
             }
             
-            tempStack.append(contentsOf: current.children)
+            tempEntityArray.append(contentsOf: current.children)
         }
         
         return nil
     }
-}
-
-#Preview {
-    PlanetsDIY()
 }
