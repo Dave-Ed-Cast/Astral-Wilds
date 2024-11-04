@@ -15,14 +15,9 @@ struct MovePlanets: View {
     
     @Environment(\.setMode) var setMode
     
-    @State private var angles: [Float] = {
-        var anglesArray: [Float] = []
-        for _ in 0..<8 {
-            let randomValue = Float.random(in: 1...10)
-            anglesArray.append(.pi * randomValue)
-        }
-        return anglesArray
-    }()
+    @State private var angles: [Float] = (0..<8).map { _ in
+        Float.pi * Float.random(in: 1...10)
+    }
     
     private let planetDictionary: [String] = [
         "Mercury",
@@ -67,9 +62,14 @@ struct MovePlanets: View {
     /// - Parameter entity: the entity that will be rotated and will revolve around the sun
     private func movePlanetsInLoop(inside entity: Entity) {
         
-        Timer.scheduledTimer(withTimeInterval: 0.001, repeats: true) { _ in
+        let updateInterval: Double = 1.0 / 90.0
+        let angularSpace = 2 * Float.pi
+        let rotationAngle: Float = 0.005
 
+        Timer.scheduledTimer(withTimeInterval: updateInterval, repeats: true) { _ in
+            
             for (index, angle) in angles.enumerated() {
+                
                 let parameters = orbitalParameters[index]
                 let x = parameters.radius * cos(angle)
                 let z = parameters.radius * sin(angle)
@@ -77,7 +77,7 @@ struct MovePlanets: View {
                 
                 //dictionary created from developer, safe to unwrap
                 let planet = planetName(for: entity, in: planetDictionary[index])!
-                let rotationAngle = (Float(0.005 / Float.random(in: 4...12)))
+                
                 let rotateClockwise = (planet.name == "Venus" || planet.name == "Uranus")
                 let rotationDirection: Float = rotateClockwise ? 1.0 : -1.0
                 
@@ -85,14 +85,13 @@ struct MovePlanets: View {
                 
                 planet.transform.rotation *= simd_quatf(
                     angle: rotationDirection * rotationAngle,
-                    axis: [0, planet.position.y, 0]
+                    axis: [0, 0.8, 0]
                 )
                 
                 //angular velocity is 2pi / period
-                let angularVelocity = 2 * .pi / parameters.period
+                let angularVelocity = angularSpace / parameters.period
                 angles[index] -= 0.001 * Float(angularVelocity)
             }
-            
         }
     }
     

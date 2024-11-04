@@ -14,13 +14,10 @@ extension RealityViewContent {
     /// This is a function that creates a skybox in which it encapsulates the player
     /// - Returns: the skybox entity
     func createSkyBox() -> Entity? {
-        //create the mesh
+
         let largeSphere = MeshResource.generateSphere(radius: 35)
-        
-        //material for the skybox
         var skyBoxMaterial = UnlitMaterial()
         
-        //lodaing the image can throw errors due to lack of the asset
         do {
             let texture = try TextureResource.load(named: "OpenSpace")
             skyBoxMaterial.color = .init(texture: .init(texture))
@@ -28,7 +25,6 @@ extension RealityViewContent {
             print(error)
         }
         
-        //define the skybox
         let skyBoxEntity = Entity()
         skyBoxEntity.components.set(
             ModelComponent(
@@ -37,14 +33,16 @@ extension RealityViewContent {
             )
         )
         
-        //scale the skybox for mesh reasons
+        // x = -1 because it has to be seen from the inside
         skyBoxEntity.scale *= .init(x: -1, y: 1, z: 1)
         return skyBoxEntity
     }
     
+    /// This creates particles for the immersive travel. They are thrown at the player to simulate the voyage
+    /// - Returns: the anchor entity point of where the range of particles should spawn
     func createParticle() -> AnchorEntity {
         
-        let material = SimpleMaterial(color: UIColor(Color("particleColor").opacity(0.05)), isMetallic: false)
+        let material = SimpleMaterial(color: UIColor(Color("particleColor").opacity(0.1)), isMetallic: false)
         let mesh = MeshResource.generateSphere(radius: 0.02)
         
         let particleEntity = ModelEntity(
@@ -52,11 +50,20 @@ extension RealityViewContent {
             materials: [material]
         )
         
-        let randomX = Float.random(in: -4...4)
-        let randomY = Bool.random() ? Float.random(in: -2 ... -0.5) : Float.random(in: 0.5...2)
+        var randomX: Float
+        var randomY: Float
+        
+        repeat {
+            randomX = Float.random(in: -4...4)
+        } while randomX >= -0.3 && randomX <= 0.3
+        
+        repeat {
+            randomY = Float.random(in: -2...2)
+        } while randomY >= 0.7 && randomY <= 1
         
         let anchor = AnchorEntity(world: [randomX, randomY, -20.0])
         anchor.addChild(particleEntity)
+        
         return anchor
     }
 }

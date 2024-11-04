@@ -222,7 +222,7 @@ struct ImmersiveView: View {
         //the higher, the more the curve is pronounced
         let radius: Float = 5.9
         //this is the distance of the letters
-        let angleIncrement = Float(0.025)
+        let angleIncrement = Float(0.016)
         //fixed position for letters on y
         let yPosition: Float = 1.35
         
@@ -233,8 +233,8 @@ struct ImmersiveView: View {
             let angle = angleIncrement * Float(index) - Float.pi + 1.2
             
             //calculate the position for the user
-            let x = radius * cos(angle) + radius - 6.1
-            let z = radius * sin(angle) - (radius * 0.5) + 4
+            let x = radius * cos(angle) + radius - 5.2
+            let z = radius * sin(angle) - (radius * 0.5) + 2.7
             
             //create the character
             let charEntity = createTextEntity(text: String(char))
@@ -257,12 +257,8 @@ struct ImmersiveView: View {
     
     //this creates the text entity
     private func createTextEntity(text: String) -> ModelEntity {
-        let mesh = MeshResource.generateText(text, extrusionDepth: 0.1, font: .systemFont(ofSize: 0.17), containerFrame: .zero, alignment: .center, lineBreakMode: .byWordWrapping)
+        let mesh = MeshResource.generateText(text, extrusionDepth: 0.03, font: .systemFont(ofSize: 0.13), containerFrame: .zero, alignment: .center, lineBreakMode: .byWordWrapping)
         let material = SimpleMaterial(color: .white, isMetallic: false)
         return ModelEntity(mesh: mesh, materials: [material])
     }
-}
-
-#Preview {
-    ImmersiveView(duration: .constant(60))
 }
