@@ -81,12 +81,10 @@ struct ImmersiveView: View {
         
         //reality view
         RealityView { content in
-            guard let skyBoxEntity = content.createSkyBox() else {
-                print("Error: Unable to create skybox entity")
-                return
-            }
+            let skyBoxEntity = content.createSkyBox()
             content.add(skyBoxEntity)
             
+            //This is safe to unwrap, it's for readability to write like this
             if let planet = try? await Entity(named: "TravelToMars", in: realityKitContentBundle),
                let environment = try? await EnvironmentResource(named: "studio") {
                 planet.components.set(ImageBasedLightComponent(source: .single(environment)))
@@ -100,14 +98,12 @@ struct ImmersiveView: View {
         .onAppear(perform: {
             //instantiate the music that can throw errors
             do {
-                if let path = Bundle.main.url(forResource: "space", withExtension: "mp3") {
-                    AudioPlayer.shared = try AVAudioPlayer(contentsOf: path)
-                    AudioPlayer.shared.numberOfLoops = 0
-                    AudioPlayer.shared.volume = 0.25
-                    AudioPlayer.shared.play()
-                } else {
-                    print("File not found.")
-                }
+                //file is in folder, safe to unwrap
+                let path = Bundle.main.url(forResource: "space", withExtension: "mp3")!
+                AudioPlayer.shared = try AVAudioPlayer(contentsOf: path)
+                AudioPlayer.shared.numberOfLoops = 0
+                AudioPlayer.shared.volume = 0.25
+                AudioPlayer.shared.play()
             } catch {
                 print("Error initializing AVAudioPlayer: \(error)")
             }
@@ -257,7 +253,14 @@ struct ImmersiveView: View {
     
     //this creates the text entity
     private func createTextEntity(text: String) -> ModelEntity {
-        let mesh = MeshResource.generateText(text, extrusionDepth: 0.03, font: .systemFont(ofSize: 0.13), containerFrame: .zero, alignment: .center, lineBreakMode: .byWordWrapping)
+        let mesh = MeshResource.generateText(
+            text,
+            extrusionDepth: 0.03,
+            font: .systemFont(ofSize: 0.13),
+            containerFrame: .zero,
+            alignment: .center,
+            lineBreakMode: .byWordWrapping
+        )
         let material = SimpleMaterial(color: .white, isMetallic: false)
         return ModelEntity(mesh: mesh, materials: [material])
     }

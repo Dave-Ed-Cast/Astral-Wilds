@@ -13,7 +13,7 @@ extension RealityViewContent {
     
     /// This is a function that creates a skybox in which it encapsulates the player
     /// - Returns: the skybox entity
-    func createSkyBox() -> Entity? {
+    func createSkyBox() -> Entity {
 
         let largeSphere = MeshResource.generateSphere(radius: 35)
         var skyBoxMaterial = UnlitMaterial()

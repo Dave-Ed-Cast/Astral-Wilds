@@ -35,9 +35,7 @@ struct MovePlanets: View {
         
         RealityView { content in
 
-            guard let skyBoxEntity = content.createSkyBox() else {
-                return
-            }
+            let skyBoxEntity = content.createSkyBox()
             content.add(skyBoxEntity)
             
             //This is safe to unwrap, it's for readability to write like this
@@ -63,8 +61,8 @@ struct MovePlanets: View {
     private func movePlanetsInLoop(inside entity: Entity) {
         
         let updateInterval: Double = 1.0 / 90.0
-        let angularSpace = 2 * Float.pi
-        let rotationAngle: Float = 0.005
+        let angularSpace = 2.0 * Float.pi
+        let rotationAngle: Float = 0.003
 
         Timer.scheduledTimer(withTimeInterval: updateInterval, repeats: true) { _ in
             
@@ -85,35 +83,13 @@ struct MovePlanets: View {
                 
                 planet.transform.rotation *= simd_quatf(
                     angle: rotationDirection * rotationAngle,
-                    axis: [0, 0.8, 0]
+                    axis: [0, planet.position.y, 0]
                 )
                 
                 //angular velocity is 2pi / period
                 let angularVelocity = angularSpace / parameters.period
-                angles[index] -= 0.001 * Float(angularVelocity)
+                angles[index] -= 0.002 * Float(angularVelocity)
             }
         }
     }
-    
-    /// Finds the planet name through Depth First Search method
-    ///
-    /// - Parameters:
-    ///   - entity: the particular entity
-    ///   - name: associated name in the dictionary
-    /// - Returns: return that entity with the associated name in the dictionary
-    private func planetName(for entity: Entity, in name: String) -> Entity? {
-        var tempEntityArray = [entity]
-        
-        while !tempEntityArray.isEmpty {
-            let current = tempEntityArray.removeLast()
-            if current.name == name {
-                return current
-            }
-            
-            tempEntityArray.append(contentsOf: current.children)
-        }
-        
-        return nil
-    }
-    
 }

@@ -15,24 +15,16 @@ struct MovePlanetsYouChoose: View {
     
     @State private var timers: [String: Timer] = [:]
     @State private var planetName: Entity? = nil
-    
     @State private var orbitalParameters = PlanetParameters.list
     
     var body: some View {
-        
-        
-        //the reality view
+                
         RealityView { content in
             
-            //skybox creation
-            guard let skyBoxEntity = content.createSkyBox() else {
-                print("error")
-                return
-            }
-            
+            let skyBoxEntity = content.createSkyBox()
             content.add(skyBoxEntity)
             
-            //scene with planets and light
+            //This is safe to unwrap, it's for readability to write like this
             if let scene = try? await Entity(named: "Planets", in: realityKitContentBundle), let environment = try? await EnvironmentResource(named: "studio") {
                 
                 scene.components.set(ImageBasedLightComponent(source: .single(environment)))
@@ -127,26 +119,5 @@ struct MovePlanetsYouChoose: View {
         guard let timer = timers[entity.name] else { return }
         timer.invalidate()
         timers[entity.name] = nil
-    }
-    
-    /// Finds the planet name through Depth First Search method
-    ///
-    /// - Parameters:
-    ///   - scene: for the particular entity
-    ///   - name: in the dictionary
-    /// - Returns: return that entity with the associated name in the dictionary
-    private func planetName(for entity: Entity, in name: String) -> Entity? {
-        var tempEntityArray = [entity]
-        
-        while !tempEntityArray.isEmpty {
-            let current = tempEntityArray.removeLast()
-            if current.name == name {
-                return current
-            }
-            
-            tempEntityArray.append(contentsOf: current.children)
-        }
-        
-        return nil
     }
 }

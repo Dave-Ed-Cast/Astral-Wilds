@@ -66,6 +66,8 @@ struct PlanetarySystemApp: App {
         let oldMode = mode
         mode = newMode
         
+        print(mode)
+        
         guard newMode != oldMode else { return }
         
         let immersiveSpaceNotNeeded = (oldMode.needsImmersiveSpace || !newMode.needsImmersiveSpace)
@@ -81,7 +83,7 @@ struct PlanetarySystemApp: App {
             immersiveSpacePresented = true
             await openImmersiveSpace(id: newMode.windowId)
             
-            //the button window needs to be appear when the immersive space appears
+            //the button window needs to appear when the immersive space appears
             openWindow(id: Self.buttonWindowID)
             
         } else {
@@ -110,10 +112,15 @@ struct PlanetarySystemApp: App {
         .windowResizability(.contentSize)
         
         WindowGroup(id: Self.buttonWindowID) {
-            VStack {
+            VStack(spacing: 10) {
                 Text("Feeling overwhelmed? \nThis is the button to go back.")
-                    .font(.title3)
-                    .multilineTextAlignment(.center)
+                    .font(.headline)
+                
+                if mode == .immersiveSpace {
+                    Text("Spatial audio is playing. \nConsider positioning this window above or underneath your head.")
+                        .font(.callout)
+                        .multilineTextAlignment(.center)
+                }
                 
                 Button {
                     Task { await setMode(.mainScreen) }
@@ -122,11 +129,12 @@ struct PlanetarySystemApp: App {
                     dismissWindow(id: Self.buttonWindowID)
                 } label: {
                     Text("Go back to reality")
+                        .font(.headline)
                 }
-                .frame(width: 300, height: 100)
-                .frame(alignment: .front)
             }
+            .multilineTextAlignment(.center)
             .fixedSize(horizontal: true, vertical: true)
+            .frame(width: 250, height: 120)
             .environment(\.setMode, setMode)
             .padding()
         }

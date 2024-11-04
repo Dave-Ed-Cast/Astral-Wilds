@@ -20,8 +20,11 @@ struct BeforeImmersiveView: View {
         
         VStack(spacing: 50) {
             
-            Text("Welcome, please sit back and relax.\n\nBefore moving on, please select the duration of your journey.")
+            Text("Welcome, please sit back and relax.")
                 .font(.title)
+            
+            Text("Before moving on, please select the duration of your journey.")
+                .font(.headline)
 
             Picker("Choose: ", selection: $durationSelection) {
                 Text("1 minute").tag(60)

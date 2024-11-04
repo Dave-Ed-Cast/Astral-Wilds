@@ -12,7 +12,7 @@ import Foundation
 /// Modify `posValue` to change distance from user
 struct PlanetParameters {
     
-    static let time: Float = 25
+    static let time: Float = 6
     static let posValue: Float = 3
     
     static var list = [

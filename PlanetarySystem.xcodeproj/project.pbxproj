@@ -16,6 +16,7 @@
 		3E5C21712BF75EFA0015AC20 /* BeforeImmersiveView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E5C21702BF75EFA0015AC20 /* BeforeImmersiveView.swift */; };
 		3E7D10DD2BF2652500B8CC9C /* MovePlanets.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E7D10DC2BF2652500B8CC9C /* MovePlanets.swift */; };
 		3E979FC02BF6A7C80011999B /* studio.skybox in Resources */ = {isa = PBXBuildFile; fileRef = 3E979FBF2BF6A7C80011999B /* studio.skybox */; };
+		3EA224612CD917EA00A94EAC /* ViewExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EA224602CD917EA00A94EAC /* ViewExtension.swift */; };
 		3EA2FC752BFA251400DB151E /* space.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 3EA2FC742BFA251400DB151E /* space.mp3 */; };
 		3ED824C42BF4FB710091E5F5 /* ImmersiveView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3ED824C32BF4FB710091E5F5 /* ImmersiveView.swift */; };
 		3EE96C372CCBC04D007BE4E2 /* ImageButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EE96C362CCBC04D007BE4E2 /* ImageButton.swift */; };
@@ -36,6 +37,7 @@
 		3E5C21702BF75EFA0015AC20 /* BeforeImmersiveView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BeforeImmersiveView.swift; sourceTree = "<group>"; };
 		3E7D10DC2BF2652500B8CC9C /* MovePlanets.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MovePlanets.swift; sourceTree = "<group>"; };
 		3E979FBF2BF6A7C80011999B /* studio.skybox */ = {isa = PBXFileReference; lastKnownFileType = file.skybox; path = studio.skybox; sourceTree = "<group>"; };
+		3EA224602CD917EA00A94EAC /* ViewExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewExtension.swift; sourceTree = "<group>"; };
 		3EA2FC742BFA251400DB151E /* space.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = space.mp3; sourceTree = "<group>"; };
 		3EA475602BF6BA75005A3573 /* RealityKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RealityKit.framework; path = System/Library/Frameworks/RealityKit.framework; sourceTree = SDKROOT; };
 		3ED824C32BF4FB710091E5F5 /* ImmersiveView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImmersiveView.swift; sourceTree = "<group>"; };
@@ -133,6 +135,7 @@
 				3E0BE18E2BF157DE00C5B7C8 /* PlanetCharacteristic.swift */,
 				3EE96C382CCD07C6007BE4E2 /* PlanetParameters.swift */,
 				3EE96C3A2CCEAF7F007BE4E2 /* RealityViewExtension.swift */,
+				3EA224602CD917EA00A94EAC /* ViewExtension.swift */,
 			);
 			path = "Support Files";
 			sourceTree = "<group>";
@@ -218,6 +221,7 @@
 				3EE96C372CCBC04D007BE4E2 /* ImageButton.swift in Sources */,
 				3E0636782BF0BAA400F7ED6E /* PlanetarySystemApp.swift in Sources */,
 				3EE96C3B2CCEAF7F007BE4E2 /* RealityViewExtension.swift in Sources */,
+				3EA224612CD917EA00A94EAC /* ViewExtension.swift in Sources */,
 				3EF670E22BF282E700F916CF /* MovePlanetsYouChoose.swift in Sources */,
 				3E0BE18F2BF157DE00C5B7C8 /* PlanetCharacteristic.swift in Sources */,
 				3EE96C392CCD07C6007BE4E2 /* PlanetParameters.swift in Sources */,

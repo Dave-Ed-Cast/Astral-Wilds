@@ -5,14 +5,9 @@
 //  Created by Davide Castaldi on 12/05/24.
 //
 
-// all the required libraries
 import Foundation
-import RealityKit
-import RealityKitContent
-import SwiftUI
-import AVFoundation
 
-/// This is a struct that contains all the
+/// This is contains all the characteristic of a planet
 struct PlanetCharacteristic {
     let planet: String
     let radius: Float
