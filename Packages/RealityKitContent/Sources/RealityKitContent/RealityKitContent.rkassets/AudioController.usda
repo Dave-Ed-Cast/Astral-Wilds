@@ -1,0 +1,28 @@
+#usda 1.0
+(
+    customLayerData = {
+        string creator = "Reality Composer Pro Version 2.0 (448.0.16.0.3)"
+    }
+    defaultPrim = "Root"
+    metersPerUnit = 1
+    upAxis = "Y"
+)
+
+def Xform "Root"
+{
+    reorder nameChildren = ["AmbientAudio", "space"]
+    def Xform "AmbientAudio"
+    {
+        def RealityKitComponent "AmbientAudio"
+        {
+            uniform token info:id = "RealityKit.AmbientAudio"
+        }
+    }
+
+    def RealityKitAudioFile "space"
+    {
+        uniform asset file = @space.caf@
+        uniform bool shouldLoop = 0
+    }
+}
+

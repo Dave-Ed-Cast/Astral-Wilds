@@ -93,6 +93,19 @@ struct ImmersiveView: View {
                 startTimer(entity: planet, environment: environment, content: content)
                 content.add(planet)
             }
+            
+//            if let ambientAudio = try? await Entity(named: "AudioController", in: realityKitContentBundle) {
+//                
+//                let ambientAudioEntityController = ambientAudio.findEntity(named: "AmbientAudio")
+//                let audioFileName = "/Root/space"
+//                
+//                guard let resource = try? await AudioFileResource(named: audioFileName, from: "AudioController.usda", in: realityKitContentBundle) else {
+//                    fatalError("Unable to load audio resource")
+//                }
+//                let audioController = ambientAudioEntityController?.prepareAudio(resource)
+//                audioController?.play()
+//                content.add(ambientAudio)
+//            }
         }
         
         .onAppear(perform: {
@@ -215,53 +228,75 @@ struct ImmersiveView: View {
     }
     
     private func createCurvedTextEntities(text: String, environment: EnvironmentResource, referenceEntity: Entity) -> [ModelEntity] {
-        //the higher, the more the curve is pronounced
-        let radius: Float = 5.9
-        //this is the distance of the letters
-        let angleIncrement = Float(0.016)
-        //fixed position for letters on y
+        // The higher the radius, the more pronounced the curve
+        let radius: Float = 3.0
+        // Fixed position for letters on the Y-axis
         let yPosition: Float = 1.35
+        // Padding to add some space between characters
+        let letterPadding: Float = 0.02
         
+        var totalAngularSpan: Float = 0.0
         var entities: [ModelEntity] = []
         
-        for (index, char) in text.enumerated() {
-            //the angle on the curve of characters
-            let angle = angleIncrement * Float(index) - Float.pi + 1.2
-            
-            //calculate the position for the user
-            let x = radius * cos(angle) + radius - 5.2
-            let z = radius * sin(angle) - (radius * 0.5) + 2.7
-            
-            //create the character
+        // First pass: Calculate the total angular span
+        for char in text {
             let charEntity = createTextEntity(text: String(char))
-            charEntity.position = SIMD3(x, yPosition, z)
+            if let boundingBox = charEntity.model?.mesh.bounds {
+                let characterWidth = boundingBox.extents.x
+                let angleIncrement = (characterWidth + letterPadding) / radius
+                totalAngularSpan += angleIncrement
+            }
+        }
+        
+        // Adjust the starting angle to center the text
+        print("Total angular span: \(totalAngularSpan)")
+        var currentAngle: Float = -1.9
+        
+        // Second pass: Create and position each character
+        for char in text {
+            let charEntity = createTextEntity(text: String(char))
             
-            //rotate the letters to give a feeling of curve
-            let rotationAngle = -(angle + Float.pi / 2)
-            charEntity.orientation = simd_quatf(angle: Float(rotationAngle), axis: SIMD3(0, 1, 0))
-            
-            //brightness of letters
-            charEntity.components.set(ImageBasedLightComponent(source: .single(environment)))
-            charEntity.components.set(ImageBasedLightReceiverComponent(imageBasedLight: referenceEntity))
-            charEntity.components.set(GroundingShadowComponent(castsShadow: true))
-            
-            entities.append(charEntity)
+            if let boundingBox = charEntity.model?.mesh.bounds {
+                let characterWidth = boundingBox.extents.x
+                let angleIncrement = (characterWidth + letterPadding) / radius
+                
+                // Calculate the position on the curve
+                let x = radius * cos(currentAngle)
+                let z = radius * sin(currentAngle) - 2.0
+                charEntity.position = SIMD3(x, yPosition, z)
+                
+                // Rotate the character to face inward along the curve
+                // Direction of the character's rotation (look towards the center of the curve)
+                let lookAtDirection = SIMD3(-x, 0, -z) // The vector pointing towards the origin (0, 0, 0)
+                
+                // Use the look-at approach to orient the character
+                charEntity.orientation = simd_quatf(from: SIMD3(0, 0, 1), to: lookAtDirection)
+                
+                // Move to the next angle
+                currentAngle += angleIncrement
+                
+                // Add brightness and shadow components
+                charEntity.components.set(ImageBasedLightComponent(source: .single(environment)))
+                charEntity.components.set(ImageBasedLightReceiverComponent(imageBasedLight: referenceEntity))
+                charEntity.components.set(GroundingShadowComponent(castsShadow: true))
+                
+                entities.append(charEntity)
+            }
         }
         
         return entities
     }
-    
     //this creates the text entity
     private func createTextEntity(text: String) -> ModelEntity {
         let mesh = MeshResource.generateText(
             text,
             extrusionDepth: 0.03,
-            font: .systemFont(ofSize: 0.13),
+            font: .systemFont(ofSize: 0.12),
             containerFrame: .zero,
             alignment: .center,
             lineBreakMode: .byWordWrapping
         )
-        let material = SimpleMaterial(color: .white, isMetallic: false)
+        let material = SimpleMaterial(color: UIColor(Color(.white).opacity(0.5)), isMetallic: false)
         return ModelEntity(mesh: mesh, materials: [material])
     }
 }
