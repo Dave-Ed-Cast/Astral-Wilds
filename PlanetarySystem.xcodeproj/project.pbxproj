@@ -128,7 +128,6 @@
 				3E7D10DC2BF2652500B8CC9C /* MovePlanets.swift */,
 				3EF670E12BF282E700F916CF /* MovePlanetsYouChoose.swift */,
 				3ED824C32BF4FB710091E5F5 /* ImmersiveView.swift */,
-				3E72DCCD2CDBEEBF0050C344 /* TextArray.swift */,
 				3E5C21702BF75EFA0015AC20 /* BeforeImmersiveView.swift */,
 				3E0636792BF0BAA400F7ED6E /* ContentView.swift */,
 				3EE96C362CCBC04D007BE4E2 /* ImageButton.swift */,
@@ -141,6 +140,7 @@
 			children = (
 				3E72DCCB2CDBED0F0050C344 /* AudioPlayer.swift */,
 				3E0BE18E2BF157DE00C5B7C8 /* PlanetCharacteristic.swift */,
+				3E72DCCD2CDBEEBF0050C344 /* TextArray.swift */,
 				3EE96C382CCD07C6007BE4E2 /* PlanetParameters.swift */,
 				3EE96C3A2CCEAF7F007BE4E2 /* RealityViewExtension.swift */,
 				3E23C70F2CDBFBAE00DCC482 /* ModelEntityExtension.swift */,

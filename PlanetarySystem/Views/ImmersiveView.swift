@@ -20,6 +20,7 @@ struct ImmersiveView: View {
     
     @State private var spawnParticle: Bool = true
     @State private var textEntities: [ModelEntity] = []
+    @State private var particles: [Entity] = []
     @State private var timer: Timer?
     @State private var particleTimer: Timer?
     @State private var moveParticleTimer: Timer?
@@ -70,27 +71,12 @@ struct ImmersiveView: View {
     //this starts the timer for the journey
     private func startTimer(entity: Entity, environment: EnvironmentResource, content: RealityViewContent) {
         
-        timer = Timer.scheduledTimer(withTimeInterval: 5.0, repeats: true) { _ in
-            
-            particleTimer = Timer.scheduledTimer(withTimeInterval: 0.5, repeats: true) { _ in
-                if spawnParticle {
-                    
-                    //create the particles with lighting
-                    let particleEntity = content.createParticle()
-                    particleEntity.components.set(ImageBasedLightComponent(source: .single(environment)))
-                    particleEntity.components.set(ImageBasedLightReceiverComponent(imageBasedLight: entity))
-                    particleEntity.components.set(GroundingShadowComponent(castsShadow: true))
-                    content.add(particleEntity)
-                    //move each particle
-                    moveParticleTimer = Timer.scheduledTimer(withTimeInterval: 0.001, repeats: true) { _ in
-                        particleEntity.position.z += 0.0025
-                        //and erase to avoid stuttering and memory overload
-                        if particleEntity.position.z > 25 {
-                            particleEntity.removeFromParent()
-                        }
-                    }
-                }
-            }
+        let updateInterval: TimeInterval = 10 / 90.0
+        let updateTextInterval: TimeInterval = 5.0
+        let newParticleInterval: TimeInterval = 0.2
+
+        
+        timer = Timer.scheduledTimer(withTimeInterval: updateTextInterval, repeats: true) { _ in
             
             //grab the text given the duration selected
             let text = duration == 60 ? textArray.minuteArray[currentStep] : textArray.threeMinutesArray[currentStep]
@@ -106,6 +92,37 @@ struct ImmersiveView: View {
                 content.add(entity)
             }
             
+        }
+        
+        particleTimer = Timer.scheduledTimer(withTimeInterval: newParticleInterval, repeats: true) { _ in
+            
+            guard spawnParticle else { return }
+            
+            //create the particles with lighting
+            let particleEntity = content.createParticle()
+            particleEntity.components.set(ImageBasedLightComponent(source: .single(environment)))
+            particleEntity.components.set(ImageBasedLightReceiverComponent(imageBasedLight: entity))
+            particleEntity.components.set(GroundingShadowComponent(castsShadow: true))
+            particles.append(particleEntity)
+            content.add(particleEntity)
+            
+        }
+        
+        let particleSpeed: Float = 0.015
+        moveParticleTimer = Timer.scheduledTimer(withTimeInterval: 0.01, repeats: true) { _ in
+
+            for particleEntity in particles {
+                particleEntity.position.z += particleSpeed
+                
+                if particleEntity.position.z > 23 {
+                    particleEntity.removeFromParent()
+                    
+                    // Remove particle from the list to prevent memory overload
+                    if let index = particles.firstIndex(of: particleEntity) {
+                        particles.remove(at: index)
+                    }
+                }
+            }
         }
         
         //also start the planet timer to make it go towards the user
@@ -188,7 +205,6 @@ struct ImmersiveView: View {
         }
         
         // Adjust the starting angle to center the text
-        print("Total angular span: \(totalAngularSpan)")
         var currentAngle: Float = -1.9
         
         // Second pass: Create and position each character
