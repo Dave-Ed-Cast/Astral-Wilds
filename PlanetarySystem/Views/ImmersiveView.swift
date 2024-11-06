@@ -10,14 +10,14 @@ import RealityKit
 import RealityKitContent
 import AVFoundation
 
+/// Like in the other immersive spaces, we need to first create the skybox.
+/// Then, we need to load the associated scene with the lights.
 struct ImmersiveView: View {
     
     @Environment(\.setMode) var setMode
     
-    //duration taken from the user input
     @Binding var duration: Int
     
-    //define the variables needed to work for logic
     @State private var spawnParticle: Bool = true
     @State private var textEntities: [ModelEntity] = []
     @State private var timer: Timer?
@@ -25,89 +25,27 @@ struct ImmersiveView: View {
     @State private var moveParticleTimer: Timer?
     @State private var planetTimer: Timer?
     @State private var currentStep: Int = 0
-    @State private var minuteArray: [String] = [
-        "Hello traveler. Please sit and relax",
-        "Now let us enjoy the journey to mars",
-        "Without weight, embrace the silence",
-        "Among stars, infinite possibilities",
-        "Breath in, breath out, let it go...",
-        "Connect the cosmo and your heartbeat",
-        "Time slows down, you transcend space",
-        "The universe, it feels cold yet calm",
-        "Gravity fades, and we become one...",
-        "Here we are... we reached Mars...",
-        ""
-    ]
-    
-    //this is for music
-    class AudioPlayer {
-        static var shared: AVAudioPlayer = AVAudioPlayer()
-    }
-    
-    
-    @State private var threeMinutesArray: [String] = [
-        "Welcome. Please sit and relax...",
-        "Let us enjoy the journey to mars",
-        "Without weight, embrace the silence",
-        "Through stars, countless possibilities",
-        "Breath in, breath out, let it go...",
-        "Connect the cosmo and your heartbeat",
-        "Time slows down, you transcend space",
-        "The universe... it feels cold yet calm",
-        "Gravity fades away, and we become one",
-        "Drift into the celestial ballet...",
-        "Comets dance, planets waltz in silence",
-        "Stardust sprinkles, illuminating darkness",
-        "Each heartbeat echoes through the void",
-        "Deeper into the cosmic embrace...",
-        "Light years whisper in the vast expanse",
-        "A symphony of colors paints the night sky",
-        "Embrace the serenity of eternal night",
-        "Constellations tell timeless tales",
-        "Your spirit intertwines with the universe",
-        "Floating beyond reality and whatnot",
-        "Where dreams and stars collide...",
-        "Unveil mysteries within the galaxies",
-        "You are a voyager of the infinite",
-        "Endless odyssey through space wonders",
-        "Become boundless and free with the universe",
-        "Here we are... we reached Mars...",
-        "",
-        ""
-    ]
+    @State private var audioPlayer: AudioPlayer = AudioPlayer()
+    @State private var textArray: TextArray = TextArray()
     
     var body: some View {
         
-        
-        //reality view
         RealityView { content in
             let skyBoxEntity = content.createSkyBox()
             content.add(skyBoxEntity)
             
             //This is safe to unwrap, it's for readability to write like this
-            if let planet = try? await Entity(named: "TravelToMars", in: realityKitContentBundle),
-               let environment = try? await EnvironmentResource(named: "studio") {
-                planet.components.set(ImageBasedLightComponent(source: .single(environment)))
+            if let planet = try? await Entity(named: "TravelToMars", in: realityKitContentBundle) {
+                let environment = try? await EnvironmentResource(named: "studio")
+                planet.components.set(ImageBasedLightComponent(source: .single(environment!)))
                 planet.components.set(ImageBasedLightReceiverComponent(imageBasedLight: planet))
                 planet.components.set(GroundingShadowComponent(castsShadow: true))
-                startTimer(entity: planet, environment: environment, content: content)
+                startTimer(entity: planet, environment: environment!, content: content)
                 content.add(planet)
+                
             }
-            
-//            if let ambientAudio = try? await Entity(named: "AudioController", in: realityKitContentBundle) {
-//                
-//                let ambientAudioEntityController = ambientAudio.findEntity(named: "AmbientAudio")
-//                let audioFileName = "/Root/space"
-//                
-//                guard let resource = try? await AudioFileResource(named: audioFileName, from: "AudioController.usda", in: realityKitContentBundle) else {
-//                    fatalError("Unable to load audio resource")
-//                }
-//                let audioController = ambientAudioEntityController?.prepareAudio(resource)
-//                audioController?.play()
-//                content.add(ambientAudio)
-//            }
         }
-        
+            
         .onAppear(perform: {
             //instantiate the music that can throw errors
             do {
@@ -153,8 +91,9 @@ struct ImmersiveView: View {
                     }
                 }
             }
+            
             //grab the text given the duration selected
-            let text = duration == 60 ? minuteArray[currentStep] : threeMinutesArray[currentStep]
+            let text = duration == 60 ? textArray.minuteArray[currentStep] : textArray.threeMinutesArray[currentStep]
             
             //update the index (we give parameters because it could be done here but to improve readability i created functions
             updateStep(planet: entity, environment: environment)
@@ -194,24 +133,24 @@ struct ImmersiveView: View {
     //this is the continuous for the start timer
     private func updateStep(planet: Entity, environment: EnvironmentResource) {
         if duration == 60 {
-            currentStep = (currentStep + 1) % minuteArray.count
-            if currentStep == minuteArray.count - 1 {
+            currentStep = (currentStep + 1) % textArray.minuteArray.count
+            if currentStep == textArray.minuteArray.count - 1 {
                 stopTimer()
             }
-            else if currentStep == minuteArray.count - 2 {
+            else if currentStep == textArray.minuteArray.count - 2 {
                 particleTimer?.invalidate()
                 particleTimer = nil
                 spawnParticle = false
             }
         } else {
-            currentStep = (currentStep + 1) % threeMinutesArray.count
-            if currentStep == threeMinutesArray.count - 1 {
+            currentStep = (currentStep + 1) % textArray.minuteArray.count
+            if currentStep == textArray.threeMinutesArray.count - 1 {
                 stopTimer()
             }
         }
         
         //get the updated text and update it
-        let newText = duration == 60 ? minuteArray[currentStep] : threeMinutesArray[currentStep]
+        let newText = duration == 60 ? textArray.minuteArray[currentStep] : textArray.threeMinutesArray[currentStep]
         updateTextEntities(newText, environment: environment, referenceEntity: planet)
     }
     
@@ -296,7 +235,20 @@ struct ImmersiveView: View {
             alignment: .center,
             lineBreakMode: .byWordWrapping
         )
-        let material = SimpleMaterial(color: UIColor(Color(.white).opacity(0.5)), isMetallic: false)
+        let material = SimpleMaterial(color: UIColor(Color(.white).opacity(0.6)), isMetallic: false)
         return ModelEntity(mesh: mesh, materials: [material])
     }
 }
+
+//            if let ambientAudio = try? await Entity(named: "AudioController", in: realityKitContentBundle) {
+//
+//                let ambientAudioEntityController = ambientAudio.findEntity(named: "AmbientAudio")
+//                let audioFileName = "/Root/space"
+//
+//                guard let resource = try? await AudioFileResource(named: audioFileName, from: "AudioController.usda", in: realityKitContentBundle) else {
+//                    fatalError("Unable to load audio resource")
+//                }
+//                let audioController = ambientAudioEntityController?.prepareAudio(resource)
+//                audioController?.play()
+//                content.add(ambientAudio)
+//            }

@@ -12,48 +12,25 @@ import RealityKitContent
 struct ContentView: View {
     
     @Environment(\.setMode) var setMode
-    
-    @State private var immersiveSpaceID: String? = nil
-    
+        
     var body: some View {
-        VStack(spacing: 20) {
-            Text("Welcome!")
-                .font(.extraLargeTitle)
-            Text("Choose what do you want to explore")
-                .font(.title2)
-                .padding(.bottom, 100)
+        VStack(spacing: 80) {
+            VStack(spacing: 10) {
+                Text("Welcome!")
+                    .font(.extraLargeTitle)
+                Text("Choose what do you want to explore")
+                    .font(.title2)
+            }
             HStack {
                 ImageButton(name: "SolarSystem", title: "View the solar system", chosenMode: .planets)
-                ImageButton(name: "Touch", title: "Choose which planet to move", chosenMode: .choosePlanetsToMove)
-                ImageButton(name: "Mars", title: "Travel journey to mars", chosenMode: .chooseTime)
+                ImageButton(name: "Touch", title: "Move your preferred planets", chosenMode: .choosePlanetsToMove)
+                ImageButton(name: "Mars", title: "Travel to mars", chosenMode: .chooseTime)
             }
             .environment(\.setMode, setMode)
         }
+        
         .padding()
         .navigationBarTitleDisplayMode(.automatic)
-        
-        
-//        RealityView { content in
-//            let mesh = MeshResource.generateText(
-//                "Ciao belli",
-//                extrusionDepth: 0.5,
-//                font: .systemFont(ofSize: 50),
-//                containerFrame: .zero,
-//                alignment: .center,
-//                lineBreakMode: .byWordWrapping
-//            )
-//
-//            let material = SimpleMaterial(color: .red, isMetallic: true)
-//            let textEntity = ModelEntity(mesh: mesh, materials: [material])
-//            textEntity.position = [0, 0, -1]
-//
-//            let anchorEntity = AnchorEntity(plane: .horizontal)
-//            anchorEntity.name = "anchor"
-//            anchorEntity.addChild(textEntity)
-//            content.add(anchorEntity)
-//            anchorEntity.generateCollisionShapes(recursive: true)
-//
-//        }
     }
 }
 

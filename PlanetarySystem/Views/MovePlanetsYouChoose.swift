@@ -9,6 +9,8 @@ import SwiftUI
 import RealityKit
 import RealityKitContent
 
+/// Like in the other immersive spaces, we need to first create the skybox.
+/// Then, we need to load the associated scene with the lights.
 struct MovePlanetsYouChoose: View {
     
     @Environment(\.setMode) var setMode
@@ -34,42 +36,19 @@ struct MovePlanetsYouChoose: View {
                 content.add(scene)
             }
         }
-        //define the gesture to target one entity randomly
         .gesture(SpatialTapGesture(coordinateSpace: .local).targetedToAnyEntity().onEnded({ value in
-            //discover which entity was touched
             let planet = planetName(for: value.entity, in: value.entity.name)
             planetName = planet
-            //and move it
-            movePlanet(entity: planet!)
-        }))
-        .gesture(RotateGesture3D().onEnded({ value in
             
-            if let planet = planetName {
-                rotatePlanetGesture(entity: planet, rotation: value.rotation)
-            }
+            //safe to unwrap because we find it for sure
+            movePlanet(planet!)
         }))
+
     }
     
-    private func rotatePlanetGesture(entity: Entity, rotation: Rotation3D) {
-        let angle = rotation.angle
-        let axis = rotation.axis
-        let simdRotation = simd_quatf(angle: Float(angle.radians), axis: [Float(axis.x), Float(axis.y), Float(axis.z)])
-        entity.transform.rotation *= simdRotation
-    }
-    
-    private func rotatePlanet(entity: Entity, angle: Angle) {
-        let rotation = simd_quatf(angle: Float(angle.radians), axis: [0, 1, 0])
-        entity.transform.rotation *= rotation
-    }
-    
-    private func movePlanet(entity: Entity) {
+    private func movePlanet(_ entity: Entity) {
         
-        //define the two elements we need
-        guard let parameters = orbitalParameters.first(where: { $0.planet == entity.name }) else {
-            return
-        }
-        
-        guard let index = orbitalParameters.firstIndex(where: { $0.planet == entity.name }) else {
+        guard let (index, parameters) = orbitalParameters.enumerated().first(where: { $0.element.planet == entity.name }).map({ ($0.offset, $0.element) }) else {
             return
         }
         
@@ -88,22 +67,24 @@ struct MovePlanetsYouChoose: View {
     private func startMovement(for entity: Entity, with parameters: PlanetCharacteristic) {
         //define the phase, the angle in calculus
         var angle = atan2(entity.position.z, entity.position.x)
+        let rotationAngle: Float = 0.003
+        
+        let updateInterval: Double = 1.0 / 90.0
+        let angularSpace = 2.0 * Float.pi
+        let angularVelocity = angularSpace / parameters.period
         
         //define a timer that updates the position
-        let timer = Timer.scheduledTimer(withTimeInterval: 0.001, repeats: true) { _ in
+        let timer = Timer.scheduledTimer(withTimeInterval: updateInterval, repeats: true) { _ in
             
-            //same as before
-            let angularVelocity = 2 * .pi / parameters.period
-            angle -= 0.001 * Float(angularVelocity)
+            angle -= rotationAngle * Float(angularVelocity)
             
             let x = parameters.radius * cos(angle)
             let z = parameters.radius * sin(angle)
             
-            let newPosition = SIMD3(x, entity.position.y, z)
+            let newPosition = SIMD3(x, entity.position.y, z)     
             
             entity.position = newPosition
             
-            let rotationAngle = (Float(0.005 / Float.random(in: 4...12)))
             entity.transform.rotation *= simd_quatf(
                 angle: (entity.name == "Venus" || entity.name == "Uranus") ? rotationAngle : -rotationAngle,
                 axis: [0, entity.position.y, 0]
@@ -121,3 +102,26 @@ struct MovePlanetsYouChoose: View {
         timers[entity.name] = nil
     }
 }
+
+
+
+
+
+//        .gesture(RotateGesture3D().onEnded({ value in
+//
+//            if let planet = planetName {
+//                rotatePlanetGesture(entity: planet, rotation: value.rotation)
+//            }
+//        }))
+
+//    private func rotatePlanetGesture(entity: Entity, rotation: Rotation3D) {
+//        let angle = rotation.angle
+//        let axis = rotation.axis
+//        let simdRotation = simd_quatf(angle: Float(angle.radians), axis: [Float(axis.x), Float(axis.y), Float(axis.z)])
+//        entity.transform.rotation *= simdRotation
+//    }
+//
+//    private func rotatePlanet(entity: Entity, angle: Angle) {
+//        let rotation = simd_quatf(angle: Float(angle.radians), axis: [0, 1, 0])
+//        entity.transform.rotation *= rotation
+//    }

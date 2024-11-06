@@ -19,7 +19,7 @@ struct ImageButton: View {
         VStack {
             Image(name)
                 .resizable()
-                .frame(width: 350, height: 175)
+                .frame(width: 340, height: 175)
                 .cornerRadius(20)
                 .padding()
             Button {

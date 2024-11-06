@@ -14,7 +14,7 @@ extension RealityViewContent {
     /// This is a function that creates a skybox in which it encapsulates the player
     /// - Returns: the skybox entity
     func createSkyBox() -> Entity {
-
+        
         let largeSphere = MeshResource.generateSphere(radius: 35)
         var skyBoxMaterial = UnlitMaterial()
         
@@ -65,5 +65,20 @@ extension RealityViewContent {
         anchor.addChild(particleEntity)
         
         return anchor
+    }
+    
+    @MainActor func setUpLightForEntity(
+        resourceName name: String,
+        for entity: Entity,
+        withShadow shadow: Bool
+    ) async {
+        do {
+            let environment = try await EnvironmentResource(named: name)
+            entity.components.set(ImageBasedLightComponent(source: .single(environment)))
+            entity.components.set(ImageBasedLightReceiverComponent(imageBasedLight: entity))
+            entity.components.set(GroundingShadowComponent(castsShadow: shadow))
+        } catch {
+            print("Failed to load environment resource: \(error)")
+        }
     }
 }

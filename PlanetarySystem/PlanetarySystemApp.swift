@@ -93,15 +93,17 @@ struct PlanetarySystemApp: App {
         if !oldMode.needsImmersiveSpace { dismissWindow(id: oldMode.windowId) }
     }
     
-    /// To each view we associate a window group and an immersive space.
+    /// To each view, a window group and an immersive space is associated.
     /// The window group allows dragging around in the mixed/virtual reality.
     /// To each view we associate the environment (immersive or not)
     var body: some Scene {
         
         WindowGroup(id: Self.mainScreenWindowID) {
             ContentView()
+                .fixedSize(horizontal: true, vertical: true)
                 .environment(\.setMode, setMode)
         }
+        .windowResizability(.contentMinSize)
         
         WindowGroup(id: Self.chooseTimeWindowID) {
             BeforeImmersiveView()
@@ -117,7 +119,11 @@ struct PlanetarySystemApp: App {
                     .font(.headline)
                 
                 if mode == .immersiveSpace {
-                    Text("Spatial audio is playing. \nConsider positioning this window above or underneath your head.")
+                    Text("Spatial audio is playing. \nConsider repositioning this window.")
+                        .font(.callout)
+                        .multilineTextAlignment(.center)
+                } else if mode == .choosePlanetsToMove {
+                    Text("Tap on a planet to move it or stop it")
                         .font(.callout)
                         .multilineTextAlignment(.center)
                 }
@@ -137,7 +143,7 @@ struct PlanetarySystemApp: App {
             }
             .multilineTextAlignment(.center)
             .fixedSize(horizontal: true, vertical: true)
-            .frame(width: 250, height: 120)
+            .frame(width: 300, height: 120)
             .environment(\.setMode, setMode)
             .padding()
         }
