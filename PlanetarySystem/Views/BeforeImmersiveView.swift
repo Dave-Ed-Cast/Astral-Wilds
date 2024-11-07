@@ -12,7 +12,7 @@ import SwiftUI
 /// Note that there is a dismiss window because it is not properly handled in the setMode function
 struct BeforeImmersiveView: View {
     
-    @State private var durationSelection: Int = 0
+    @Binding var durationSelection: Int
     @Environment(\.setMode) var setMode
     @Environment(\.dismissWindow) var dismissWindow
 

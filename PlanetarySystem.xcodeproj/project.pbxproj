@@ -13,7 +13,7 @@
 		3E06367C2BF0BAA500F7ED6E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3E06367B2BF0BAA500F7ED6E /* Assets.xcassets */; };
 		3E06367F2BF0BAA500F7ED6E /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3E06367E2BF0BAA500F7ED6E /* Preview Assets.xcassets */; };
 		3E0BE18F2BF157DE00C5B7C8 /* PlanetCharacteristic.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E0BE18E2BF157DE00C5B7C8 /* PlanetCharacteristic.swift */; };
-		3E23C7102CDBFBAE00DCC482 /* ModelEntityExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E23C70F2CDBFBAE00DCC482 /* ModelEntityExtension.swift */; };
+		3E38A9F02CDCCC99000AC9E2 /* LightingConfigurable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E38A9EF2CDCCC99000AC9E2 /* LightingConfigurable.swift */; };
 		3E5C21712BF75EFA0015AC20 /* BeforeImmersiveView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E5C21702BF75EFA0015AC20 /* BeforeImmersiveView.swift */; };
 		3E72DCCC2CDBED0F0050C344 /* AudioPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E72DCCB2CDBED0F0050C344 /* AudioPlayer.swift */; };
 		3E72DCCE2CDBEEBF0050C344 /* TextArray.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E72DCCD2CDBEEBF0050C344 /* TextArray.swift */; };
@@ -36,7 +36,7 @@
 		3E06367E2BF0BAA500F7ED6E /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		3E0636802BF0BAA500F7ED6E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		3E0BE18E2BF157DE00C5B7C8 /* PlanetCharacteristic.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlanetCharacteristic.swift; sourceTree = "<group>"; };
-		3E23C70F2CDBFBAE00DCC482 /* ModelEntityExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelEntityExtension.swift; sourceTree = "<group>"; };
+		3E38A9EF2CDCCC99000AC9E2 /* LightingConfigurable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LightingConfigurable.swift; sourceTree = "<group>"; };
 		3E5C216F2BF6BD010015AC20 /* PlanetarySystem.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PlanetarySystem.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3E5C21702BF75EFA0015AC20 /* BeforeImmersiveView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BeforeImmersiveView.swift; sourceTree = "<group>"; };
 		3E72DCCB2CDBED0F0050C344 /* AudioPlayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioPlayer.swift; sourceTree = "<group>"; };
@@ -128,10 +128,17 @@
 			isa = PBXGroup;
 			children = (
 				3EE96C3A2CCEAF7F007BE4E2 /* RealityViewExtension.swift */,
-				3E23C70F2CDBFBAE00DCC482 /* ModelEntityExtension.swift */,
 				3EA224602CD917EA00A94EAC /* ViewExtension.swift */,
 			);
 			path = Extensions;
+			sourceTree = "<group>";
+		};
+		3E38A9EC2CDCCC6E000AC9E2 /* Protocols */ = {
+			isa = PBXGroup;
+			children = (
+				3E38A9EF2CDCCC99000AC9E2 /* LightingConfigurable.swift */,
+			);
+			path = Protocols;
 			sourceTree = "<group>";
 		};
 		3EA4755F2BF6BA75005A3573 /* Frameworks */ = {
@@ -168,6 +175,7 @@
 				3E0BE18E2BF157DE00C5B7C8 /* PlanetCharacteristic.swift */,
 				3E72DCCD2CDBEEBF0050C344 /* TextArray.swift */,
 				3EE96C382CCD07C6007BE4E2 /* PlanetParameters.swift */,
+				3E38A9EC2CDCCC6E000AC9E2 /* Protocols */,
 				3E38A9EB2CDCBB08000AC9E2 /* Extensions */,
 			);
 			path = "Support Files";
@@ -252,13 +260,13 @@
 				3E7D10DD2BF2652500B8CC9C /* MovePlanets.swift in Sources */,
 				3E5C21712BF75EFA0015AC20 /* BeforeImmersiveView.swift in Sources */,
 				3EE96C372CCBC04D007BE4E2 /* ImageButton.swift in Sources */,
+				3E38A9F02CDCCC99000AC9E2 /* LightingConfigurable.swift in Sources */,
 				3E0636782BF0BAA400F7ED6E /* PlanetarySystemApp.swift in Sources */,
 				3EE96C3B2CCEAF7F007BE4E2 /* RealityViewExtension.swift in Sources */,
 				3EA224612CD917EA00A94EAC /* ViewExtension.swift in Sources */,
 				3EF670E22BF282E700F916CF /* MovePlanetsYouChoose.swift in Sources */,
 				3E72DCCE2CDBEEBF0050C344 /* TextArray.swift in Sources */,
 				3E0BE18F2BF157DE00C5B7C8 /* PlanetCharacteristic.swift in Sources */,
-				3E23C7102CDBFBAE00DCC482 /* ModelEntityExtension.swift in Sources */,
 				3EE96C392CCD07C6007BE4E2 /* PlanetParameters.swift in Sources */,
 				3ED824C42BF4FB710091E5F5 /* ImmersiveView.swift in Sources */,
 				3E72DCCC2CDBED0F0050C344 /* AudioPlayer.swift in Sources */,

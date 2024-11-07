@@ -51,7 +51,7 @@ struct PlanetarySystemApp: App {
     @State private var mode: Mode = .mainScreen
     @State private var immersiveSpacePresented: Bool = false
     @State private var immersionMode: ImmersionStyle = .full
-    @State private var selectedDuration: Int = 60
+    @State private var selectedDuration: Int = 0
     
     @Environment(\.openWindow) private var openWindow
     @Environment(\.dismissWindow) private var dismissWindow
@@ -106,7 +106,7 @@ struct PlanetarySystemApp: App {
         .windowResizability(.contentMinSize)
         
         WindowGroup(id: Self.chooseTimeWindowID) {
-            BeforeImmersiveView()
+            BeforeImmersiveView(durationSelection: $selectedDuration)
                 .frame(width: 600, height: 380)
                 .frame(alignment: .front)
                 .environment(\.setMode, setMode)

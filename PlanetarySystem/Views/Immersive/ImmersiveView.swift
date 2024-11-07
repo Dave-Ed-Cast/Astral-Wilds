@@ -38,19 +38,18 @@ struct ImmersiveView: View {
             //This is safe to unwrap, it's for readability to write like this
             if let planet = try? await Entity(named: "TravelToMars", in: realityKitContentBundle) {
                 let environment = try? await EnvironmentResource(named: "studio")
-                planet.components.set(ImageBasedLightComponent(source: .single(environment!)))
-                planet.components.set(ImageBasedLightReceiverComponent(imageBasedLight: planet))
-                planet.components.set(GroundingShadowComponent(castsShadow: true))
+                planet.configureLighting(resource: environment!, withShadow: true)
+                
+                //this is so that it spawns where intended given async loading
+                planet.position = SIMD3(x: planet.position.x, y: planet.position.y, z: -51)
                 startTimers(entity: planet, environment: environment!, content: content)
                 content.add(planet)
-                
             }
         }
             
         .onAppear {
             audioPlayer.playSong(
-                "space",
-                dot: "mp3",
+                "space", dot: "mp3",
                 numberOfLoops: 0,
                 withVolume: 0.25
             )
@@ -66,46 +65,37 @@ struct ImmersiveView: View {
     //this starts the timer for the journey
     private func startTimers(entity: Entity, environment: EnvironmentResource, content: RealityViewContent) {
         
-        let updateInterval: TimeInterval = 10 / 90.0
+        let updateInterval: TimeInterval = 1.0 / 90.0
         let updateTextInterval: TimeInterval = 5.0
         let newParticleInterval: TimeInterval = 0.2
-
+        let particleSpeed: Float = 0.015
         
+        let selectedDuration = (duration == 0 ? 60 : 180)
+                
         timer = Timer.scheduledTimer(withTimeInterval: updateTextInterval, repeats: true) { _ in
             
-            //grab the text given the duration selected
-            let text = duration == 60 ? textArray.minuteArray[currentStep] : textArray.threeMinutesArray[currentStep]
+            let text = selectedDuration == 60 ? (textArray.minuteArray[currentStep]) : textArray.threeMinutesArray[currentStep]
             
-            //update the index (we give parameters because it could be done here but to improve readability i created functions
             updateStep(duration: duration)
-            updateTextEntities(text, environment: environment, referenceEntity: entity)
-            
-            //create the curved text entity
+            updateTextEntities()
             textEntities = createCurvedTextEntities(text: text, environment: environment, referenceEntity: entity)
             
-            //then add it to the view
-            for entity in textEntities {
-                content.add(entity)
+            for text3D in textEntities {
+                content.add(text3D)
             }
-            
         }
         
         particleTimer = Timer.scheduledTimer(withTimeInterval: newParticleInterval, repeats: true) { _ in
             
             guard spawnParticle else { return }
-            
-            //create the particles with lighting
             let particleEntity = content.createParticle()
-            particleEntity.components.set(ImageBasedLightComponent(source: .single(environment)))
-            particleEntity.components.set(ImageBasedLightReceiverComponent(imageBasedLight: entity))
-            particleEntity.components.set(GroundingShadowComponent(castsShadow: true))
+            
+            particleEntity.configureLighting(resource: environment, withShadow: true, for: entity)
             particles.append(particleEntity)
             content.add(particleEntity)
-            
         }
         
-        let particleSpeed: Float = 0.015
-        moveParticleTimer = Timer.scheduledTimer(withTimeInterval: 0.01, repeats: true) { _ in
+        moveParticleTimer = Timer.scheduledTimer(withTimeInterval: updateInterval, repeats: true) { _ in
 
             for particleEntity in particles {
                 particleEntity.position.z += particleSpeed
@@ -113,7 +103,6 @@ struct ImmersiveView: View {
                 if particleEntity.position.z > 23 {
                     particleEntity.removeFromParent()
                     
-                    // Remove particle from the list to prevent memory overload
                     if let index = particles.firstIndex(of: particleEntity) {
                         particles.remove(at: index)
                     }
@@ -121,14 +110,24 @@ struct ImmersiveView: View {
             }
         }
         
-        //also start the planet timer to make it go towards the user
-        planetTimer = Timer.scheduledTimer(withTimeInterval: 0.001, repeats: true) { timer in
-            entity.position.z += (duration == 60) ? 0.00089 : 0.000425
-            let rotationAngle = (Float(0.00005))
-            let rotationDirection = -1.0
-            //also make it rotate
+        let distanceInPixels = 120
+        let velocity = Float(selectedDuration) == 60 ? 2.0 : 0.8
+        let updateForMovement: TimeInterval = 1.0 / 60.0
+        let frameMovement = velocity * updateForMovement
+                
+        print("distance in pixels: \(distanceInPixels)")
+        print("velocity: \(velocity)")
+        print("frame movement: \(frameMovement)")
+        
+        planetTimer = Timer.scheduledTimer(withTimeInterval: updateForMovement, repeats: true) { timer in
+            
+            entity.position.z += Float(frameMovement)
+            print(entity.position.z)
+            
+            let rotationAngle = Float(0.005)
+            let rotationDirection = Float(-1.0)
             entity.transform.rotation *= simd_quatf(
-                angle: Float(rotationDirection) * rotationAngle,
+                angle: rotationDirection * rotationAngle,
                 axis: [0, entity.position.y, 0]
             )
         }
@@ -165,16 +164,10 @@ struct ImmersiveView: View {
         }
     }
     
-    //this is the update
-    private func updateTextEntities(_ text: String, environment: EnvironmentResource, referenceEntity: Entity) {
-        //remove old entities from the content
+    private func updateTextEntities() {
         for entity in textEntities {
             entity.removeFromParent()
         }
-        
-        //create new text entities
-        let newTextEntities = createCurvedTextEntities(text: text, environment: environment, referenceEntity: referenceEntity)
-        textEntities = newTextEntities
     }
     
     private func createCurvedTextEntities(text: String, environment: EnvironmentResource, referenceEntity: Entity) -> [ModelEntity] {
@@ -199,7 +192,7 @@ struct ImmersiveView: View {
         }
         
         // Adjust the starting angle to center the text
-        var currentAngle: Float = -1.9
+        var currentAngle: Float = -1.8
         
         // Second pass: Create and position each character
         for char in text {
@@ -211,7 +204,8 @@ struct ImmersiveView: View {
                 
                 // Calculate the position on the curve
                 let x = radius * cos(currentAngle)
-                let z = radius * sin(currentAngle) - 2.0
+                let z = radius * sin(currentAngle)
+                
                 charEntity.position = SIMD3(x, yPosition, z)
                 
                 // Rotate the character to face inward along the curve
@@ -224,10 +218,7 @@ struct ImmersiveView: View {
                 // Move to the next angle
                 currentAngle += angleIncrement
                 
-                // Add brightness and shadow components
-                charEntity.components.set(ImageBasedLightComponent(source: .single(environment)))
-                charEntity.components.set(ImageBasedLightReceiverComponent(imageBasedLight: referenceEntity))
-                charEntity.components.set(GroundingShadowComponent(castsShadow: true))
+                charEntity.configureLighting(resource: environment, withShadow: true, for: referenceEntity)
                 
                 entities.append(charEntity)
             }
