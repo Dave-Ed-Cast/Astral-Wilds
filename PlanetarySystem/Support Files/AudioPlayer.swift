@@ -8,33 +8,32 @@
 import Foundation
 import AVFAudio
 
-//this is for music
-class AudioPlayer {
+@MainActor class AudioPlayer {
     
-    //static var shared: AVAudioPlayer = AVAudioPlayer()
-    
-    @MainActor static let shared: AudioPlayer = .init()
-    
+    static let shared: AudioPlayer = .init()
     private var player: AVAudioPlayer?
     
+    private init() {}
+    
     func playSong(_ name: String, dot ext: String, numberOfLoops number: Int, withVolume volume: Float) {
-        let path = Bundle.main.url(forResource: "\(name)", withExtension: "\(ext)")!
+        guard let path = Bundle.main.url(forResource: name, withExtension: ext) else {
+            fatalError("Cannot find path for resource: \(name).\(ext)")
+        }
+        
         do {
             player = try AVAudioPlayer(contentsOf: path)
         } catch {
-            fatalError("cannot find path")
+            fatalError("Failed to initialize AVAudioPlayer: \(error)")
         }
         
-        guard let player else { return }
+        guard let player = player else { return }
         
         player.numberOfLoops = number
         player.volume = volume
         player.play()
     }
     
-    func stopSong() {
-        player?.stop()
-    }
+    func stopSong() { player?.stop() }
     
-    @MainActor private init() {}
+    
 }

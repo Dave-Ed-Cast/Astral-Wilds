@@ -41,16 +41,20 @@ struct ImmersiveView: View {
                 planet.components.set(ImageBasedLightComponent(source: .single(environment!)))
                 planet.components.set(ImageBasedLightReceiverComponent(imageBasedLight: planet))
                 planet.components.set(GroundingShadowComponent(castsShadow: true))
-                startTimer(entity: planet, environment: environment!, content: content)
+                startTimers(entity: planet, environment: environment!, content: content)
                 content.add(planet)
                 
             }
         }
             
-        .onAppear(perform: {
-            //instantiate the music that can throw errors
-            audioPlayer.playSong("space", dot: "mp3", numberOfLoops: 0, withVolume: 0.25)
-        })
+        .onAppear {
+            audioPlayer.playSong(
+                "space",
+                dot: "mp3",
+                numberOfLoops: 0,
+                withVolume: 0.25
+            )
+        }
         .onDisappear {
             stopTimer()
             audioPlayer.stopSong()
@@ -60,7 +64,7 @@ struct ImmersiveView: View {
     //MARK: Functions
     
     //this starts the timer for the journey
-    private func startTimer(entity: Entity, environment: EnvironmentResource, content: RealityViewContent) {
+    private func startTimers(entity: Entity, environment: EnvironmentResource, content: RealityViewContent) {
         
         let updateInterval: TimeInterval = 10 / 90.0
         let updateTextInterval: TimeInterval = 5.0
@@ -73,7 +77,8 @@ struct ImmersiveView: View {
             let text = duration == 60 ? textArray.minuteArray[currentStep] : textArray.threeMinutesArray[currentStep]
             
             //update the index (we give parameters because it could be done here but to improve readability i created functions
-            updateStep(planet: entity, environment: environment)
+            updateStep(duration: duration)
+            updateTextEntities(text, environment: environment, referenceEntity: entity)
             
             //create the curved text entity
             textEntities = createCurvedTextEntities(text: text, environment: environment, referenceEntity: entity)
@@ -137,29 +142,27 @@ struct ImmersiveView: View {
         planetTimer = nil
         
     }
-    
-    //this is the continuous for the start timer
-    private func updateStep(planet: Entity, environment: EnvironmentResource) {
-        if duration == 60 {
-            currentStep = (currentStep + 1) % textArray.minuteArray.count
-            if currentStep == textArray.minuteArray.count - 1 {
-                stopTimer()
-            }
-            else if currentStep == textArray.minuteArray.count - 2 {
-                particleTimer?.invalidate()
-                particleTimer = nil
-                spawnParticle = false
-            }
-        } else {
-            currentStep = (currentStep + 1) % textArray.minuteArray.count
-            if currentStep == textArray.threeMinutesArray.count - 1 {
-                stopTimer()
-            }
-        }
         
-        //get the updated text and update it
-        let newText = duration == 60 ? textArray.minuteArray[currentStep] : textArray.threeMinutesArray[currentStep]
-        updateTextEntities(newText, environment: environment, referenceEntity: planet)
+    private func stopParticles() {
+        particleTimer?.invalidate()
+        particleTimer = nil
+        spawnParticle = false
+    }
+    
+    private func updateStep(duration: Int) {
+        
+        let currentArray = (duration == 0) ? textArray.minuteArray : textArray.threeMinutesArray
+        
+        currentStep = (currentStep + 1) % currentArray.count
+        
+        let lastStep = (currentStep == currentArray.count - 1)
+        let secondToLast = (currentStep == currentArray.count - 2)
+        
+        if lastStep {
+            stopTimer()
+        } else if secondToLast {
+            stopParticles()
+        }
     }
     
     //this is the update
@@ -232,7 +235,7 @@ struct ImmersiveView: View {
         
         return entities
     }
-    //this creates the text entity
+
     private func createTextEntity(text: String) -> ModelEntity {
         let mesh = MeshResource.generateText(
             text,

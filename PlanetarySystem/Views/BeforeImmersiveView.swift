@@ -12,7 +12,7 @@ import SwiftUI
 /// Note that there is a dismiss window because it is not properly handled in the setMode function
 struct BeforeImmersiveView: View {
     
-    @State var durationSelection: Int = 60
+    @State private var durationSelection: Int = 0
     @Environment(\.setMode) var setMode
     @Environment(\.dismissWindow) var dismissWindow
 
@@ -27,8 +27,8 @@ struct BeforeImmersiveView: View {
                 .font(.headline)
 
             Picker("Choose: ", selection: $durationSelection) {
-                Text("1 minute").tag(60)
-                Text("3 minutes").tag(180)
+                Text("1 minute").tag(0)
+                Text("3 minutes").tag(1)
             }
             .frame(width: 400)
             .pickerStyle(.palette)
