@@ -26,8 +26,8 @@ struct ImmersiveView: View {
     @State private var moveParticleTimer: Timer?
     @State private var planetTimer: Timer?
     @State private var currentStep: Int = 0
-    @State private var audioPlayer: AudioPlayer = AudioPlayer()
     @State private var textArray: TextArray = TextArray()
+    @State private var audioPlayer: AudioPlayer = AudioPlayer.shared
     
     var body: some View {
         
@@ -49,20 +49,11 @@ struct ImmersiveView: View {
             
         .onAppear(perform: {
             //instantiate the music that can throw errors
-            do {
-                //file is in folder, safe to unwrap
-                let path = Bundle.main.url(forResource: "space", withExtension: "mp3")!
-                AudioPlayer.shared = try AVAudioPlayer(contentsOf: path)
-                AudioPlayer.shared.numberOfLoops = 0
-                AudioPlayer.shared.volume = 0.25
-                AudioPlayer.shared.play()
-            } catch {
-                print("Error initializing AVAudioPlayer: \(error)")
-            }
+            audioPlayer.playSong("space", dot: "mp3", numberOfLoops: 0, withVolume: 0.25)
         })
         .onDisappear {
             stopTimer()
-            AudioPlayer.shared.stop()
+            audioPlayer.stopSong()
         }
     }
     
