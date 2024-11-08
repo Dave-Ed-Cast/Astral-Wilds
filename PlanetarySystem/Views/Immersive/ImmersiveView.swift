@@ -14,7 +14,7 @@ import AVFoundation
 /// Then, we need to load the associated scene with the lights.
 struct ImmersiveView: View {
 
-    @Environment(\.setMode) var setMode
+    @Environment(\.setMode) private var setMode
     
     @Binding var duration: Int
     
@@ -28,7 +28,7 @@ struct ImmersiveView: View {
     @State var currentStep: Int = 0
     @State var textArray: TextArray = TextArray()
     @State private var audioPlayer: AudioPlayer = AudioPlayer.shared
-        
+    
     var body: some View {
         
         RealityView { content in
@@ -77,7 +77,7 @@ struct ImmersiveView: View {
         
     }
     
-    func updateStep(duration: Int) {
+    func updateStep() {
         
         let currentArray = (duration == 0) ? textArray.minuteArray : textArray.threeMinutesArray
         
@@ -88,7 +88,9 @@ struct ImmersiveView: View {
         
         if lastStep {
             stopTimer()
-        } else if secondToLast {
+        }
+        
+        if secondToLast {
             stopParticles()
         }
     }

@@ -13,7 +13,7 @@ import RealityKitContent
 /// Then, we need to load the associated scene with the lights.
 struct MovePlanetsYouChoose: View {
     
-    @Environment(\.setMode) var setMode
+    @Environment(\.setMode) private var setMode
     
     @State private var timers: [String: Timer] = [:]
     @State private var planetName: Entity? = nil
@@ -67,26 +67,30 @@ struct MovePlanetsYouChoose: View {
     private func startMovement(for entity: Entity, with parameters: PlanetCharacteristic) {
         //define the phase, the angle in calculus
         var angle = atan2(entity.position.z, entity.position.x)
-        let rotationAngle: Float = 0.003
+        let rotationAngle: Float = 0.0025
         
         let updateInterval: Double = 1.0 / 90.0
         let angularSpace = 2.0 * Float.pi
         let angularVelocity = angularSpace / parameters.period
+        
+        let radius = parameters.radius
+        
+        let rotation = (entity.name == "Venus" || entity.name == "Uranus") ? rotationAngle : -rotationAngle
         
         //define a timer that updates the position
         let timer = Timer.scheduledTimer(withTimeInterval: updateInterval, repeats: true) { _ in
             
             angle -= rotationAngle * Float(angularVelocity)
             
-            let x = parameters.radius * cos(angle)
-            let z = parameters.radius * sin(angle)
+            let x = radius * cos(angle)
+            let z = radius * sin(angle)
             
             let newPosition = SIMD3(x, entity.position.y, z)     
             
             entity.position = newPosition
             
             entity.transform.rotation *= simd_quatf(
-                angle: (entity.name == "Venus" || entity.name == "Uranus") ? rotationAngle : -rotationAngle,
+                angle: rotation,
                 axis: [0, entity.position.y, 0]
             )
         }

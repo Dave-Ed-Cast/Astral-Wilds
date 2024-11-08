@@ -13,8 +13,8 @@ import SwiftUI
 struct BeforeImmersiveView: View {
     
     @Binding var durationSelection: Int
-    @Environment(\.setMode) var setMode
-    @Environment(\.dismissWindow) var dismissWindow
+    @Environment(\.setMode) private var setMode
+    @Environment(\.dismissWindow) private var dismissWindow
 
     var body: some View {
         

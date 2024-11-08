@@ -53,7 +53,7 @@ struct PlanetarySystemApp: App {
     @State private var immersionMode: ImmersionStyle = .full
     @State private var selectedDuration: Int = 0
     @State private var tapLocation: CGPoint = .zero
-    
+        
     @Environment(\.openWindow) private var openWindow
     @Environment(\.dismissWindow) private var dismissWindow
     
@@ -67,10 +67,7 @@ struct PlanetarySystemApp: App {
         let oldMode = mode
         mode = newMode
         
-        print(mode)
-        
         guard newMode != oldMode else { return }
-        
         let immersiveSpaceNotNeeded = (oldMode.needsImmersiveSpace || !newMode.needsImmersiveSpace)
         
         if immersiveSpacePresented && immersiveSpaceNotNeeded {
@@ -134,6 +131,7 @@ struct PlanetarySystemApp: App {
                     
                     //the button window needs to be go when the immersive space disappears
                     dismissWindow(id: Self.buttonWindowID)
+                    
                 } label: {
                     Text("Go back to reality")
                         .font(.headline)

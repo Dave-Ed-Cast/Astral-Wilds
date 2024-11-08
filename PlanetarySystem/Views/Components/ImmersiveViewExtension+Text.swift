@@ -12,18 +12,14 @@ import SwiftUI
 extension ImmersiveView {
     
     func textTimer(entity: Entity, environment: EnvironmentResource, content: RealityViewContent) {
-        
-        let oneMinute: Float = 60.0
-        let threeMinutes: Float = 180.0
-        let selectedDuration = (duration == 0 ? oneMinute : threeMinutes)
-        
+                
         let updateTextInterval: TimeInterval = 5.0
         
         timer = Timer.scheduledTimer(withTimeInterval: updateTextInterval, repeats: true) { _ in
             
-            let text = selectedDuration == 60 ? (textArray.minuteArray[currentStep]) : textArray.threeMinutesArray[currentStep]
+            let text = (duration == 0) ? (textArray.minuteArray[currentStep]) : textArray.threeMinutesArray[currentStep]
             
-            updateStep(duration: duration)
+            updateStep()
             withAnimation {
                 updateTextEntities()
             }

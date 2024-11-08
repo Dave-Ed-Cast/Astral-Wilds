@@ -5,10 +5,10 @@
 //  Created by Davide Castaldi on 07/11/24.
 //
 
-import Foundation
 import SwiftUI
 import RealityKit
 
+/// This has been created for the purpose of not reusing the same code everytime
 protocol LightConfigurable {
     func configureLighting(
         resource environment: EnvironmentResource,

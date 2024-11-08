@@ -13,7 +13,7 @@ import RealityKitContent
 /// Then, we need to load the associated scene with the lights.
 struct MovePlanets: View {
     
-    @Environment(\.setMode) var setMode
+    @Environment(\.setMode) private var setMode
     
     @State private var angles: [Float] = (0..<8).map { _ in
         Float.pi * Float.random(in: 1...10)

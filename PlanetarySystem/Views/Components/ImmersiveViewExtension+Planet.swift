@@ -11,16 +11,11 @@ import RealityKit
 extension ImmersiveView {
     
     func movePlanet(entity: Entity) {
-        
-        let oneMinute = 60
+                
         let oneMinuteSpeed: Float = 2.0
-        
-        let threeMinutes = 180
         let threeMinutesSpeed: Float = 0.8
-        
-        let selectedDuration = (duration == 0 ? oneMinute : threeMinutes)
-        
-        let velocity = (selectedDuration == oneMinute) ? oneMinuteSpeed : threeMinutesSpeed
+                
+        let velocity = (duration == 0) ? oneMinuteSpeed : threeMinutesSpeed
         
         let updateForMovement: TimeInterval = 1.0 / 60.0
         let frameMovement = TimeInterval(velocity) * updateForMovement
@@ -30,10 +25,10 @@ extension ImmersiveView {
             entity.position.z += Float(frameMovement)
             print(entity.position.z)
             
-            let rotationAngle = Float(0.005)
+            let rotationAngle = Float(0.5)
             let rotationDirection = Float(-1.0)
             entity.transform.rotation *= simd_quatf(
-                angle: rotationDirection * rotationAngle,
+                angle: (rotationDirection * rotationAngle) + 0.01,
                 axis: [0, entity.position.y, 0]
             )
         }

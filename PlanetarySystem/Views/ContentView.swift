@@ -11,7 +11,7 @@ import RealityKitContent
 
 struct ContentView: View {
     
-    @Environment(\.setMode) var setMode
+    @Environment(\.setMode) private var setMode
         
     var body: some View {
         VStack(spacing: 80) {
