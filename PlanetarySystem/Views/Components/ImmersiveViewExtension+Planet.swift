@@ -23,7 +23,6 @@ extension ImmersiveView {
         planetTimer = Timer.scheduledTimer(withTimeInterval: updateForMovement, repeats: true) { timer in
             
             entity.position.z += Float(frameMovement)
-            print(entity.position.z)
             
             let rotationAngle = Float(0.5)
             let rotationDirection = Float(-1.0)
