@@ -52,6 +52,7 @@ struct PlanetarySystemApp: App {
     @State private var immersiveSpacePresented: Bool = false
     @State private var immersionMode: ImmersionStyle = .full
     @State private var selectedDuration: Int = 0
+    @State private var tapLocation: CGPoint = .zero
     
     @Environment(\.openWindow) private var openWindow
     @Environment(\.dismissWindow) private var dismissWindow
