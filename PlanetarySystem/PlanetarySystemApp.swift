@@ -84,7 +84,6 @@ struct PlanetarySystemApp: App {
             
             //the button window needs to appear when the immersive space appears
             openWindow(id: Self.buttonWindowID)
-            print("opened!")
         } else {
             openWindow(id: newMode.windowId)
         }
