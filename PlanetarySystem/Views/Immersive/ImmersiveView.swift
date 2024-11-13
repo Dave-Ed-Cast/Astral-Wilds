@@ -41,7 +41,7 @@ struct ImmersiveView: View {
                 planet.configureLighting(resource: environment!, withShadow: true)
                 
                 //this is so that it spawns where intended given async loading
-                planet.position = SIMD3(x: planet.position.x, y: planet.position.y - 0.3, z: -51)
+                planet.position = SIMD3(x: planet.position.x, y: -planet.position.y, z: -51)
                 startTimers(entity: planet, environment: environment!, content: content)
                 content.add(planet)
             }

@@ -20,7 +20,7 @@ struct ImageButton: View {
         VStack {
             Image(name)
                 .resizable()
-                .frame(width: 340, height: 175)
+                .frame(width: 320, height: 175)
                 .cornerRadius(20)
                 .padding()
             Button {
@@ -28,7 +28,7 @@ struct ImageButton: View {
             } label: {
                 Text(title)
                     .font(.title2)
-                    .frame(width: 300, height: 60)
+                    .frame(width: 280, height: 60)
             }
         }
         .padding()

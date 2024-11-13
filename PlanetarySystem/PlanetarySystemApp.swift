@@ -48,7 +48,6 @@ struct PlanetarySystemApp: App {
             .registerComponent()
     }
     
-    private let meterInPxForUI: CGFloat = 1360.0
     @State private var mode: Mode = .mainScreen
     @State private var immersiveSpacePresented: Bool = false
     @State private var immersionMode: ImmersionStyle = .full
@@ -98,8 +97,7 @@ struct PlanetarySystemApp: App {
         
         WindowGroup(id: Self.mainScreenWindowID) {
             ContentView()
-                .frame(width: meterInPxForUI * 0.75, height: meterInPxForUI * 0.5)
-                .fixedSize(horizontal: true, vertical: true)
+                .fixedSize()
                 .environment(\.setMode, setMode)
         }
         .windowResizability(.contentMinSize)

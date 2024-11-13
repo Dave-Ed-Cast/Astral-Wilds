@@ -17,7 +17,7 @@ extension ImmersiveView {
     ///   - content: The reality view
     func createNewParticle(environment: EnvironmentResource, content: RealityViewContent) {
         
-        let newParticleInterval: TimeInterval = 0.1
+        let newParticleInterval: TimeInterval = 0.2
         
         particleTimer = Timer.scheduledTimer(withTimeInterval: newParticleInterval, repeats: true) { _ in
             
@@ -34,7 +34,7 @@ extension ImmersiveView {
     func moveParticles() {
         
         let updateInterval: TimeInterval = 1.0 / 90.0
-        let particleSpeed: Float = 0.001
+        let particleSpeed: Float = 0.015
         
         moveParticleTimer = Timer.scheduledTimer(withTimeInterval: updateInterval, repeats: true) { _ in
             
@@ -43,6 +43,7 @@ extension ImmersiveView {
                 
                 if particleEntity.position.z > 23 {
                     particleEntity.removeFromParent()
+                    
                     
                     if let index = particles.firstIndex(of: particleEntity) {
                         particles.remove(at: index)

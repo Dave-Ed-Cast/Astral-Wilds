@@ -14,8 +14,8 @@ extension ImmersiveView {
     /// - Parameter entity: The entity to be moved (the planet)
     func movePlanet(_ entity: Entity) {
                 
-        let oneMinuteSpeed: Float = 2.25
-        let threeMinutesSpeed: Float = 0.8
+        let oneMinuteSpeed: Float = 2.39
+        let threeMinutesSpeed: Float = oneMinuteSpeed / 3.0
                 
         let velocity = (duration == 0) ? oneMinuteSpeed : threeMinutesSpeed
         

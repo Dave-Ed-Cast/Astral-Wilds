@@ -14,13 +14,13 @@ struct TextArray {
         "Hello traveler. Please sit and relax",
         "Now let us enjoy the journey to mars",
         "Without weight, embrace the silence",
-        "Among stars, infinite possibilities",
+        "Among stars, are infinite possibilities",
         "Breathe in and breathe out. Let it go.",
         "Connect the cosmo and your heartbeat",
         "Time slows down, you transcend space",
         "The universe, it feels cold yet calm",
-        "Gravity fades, and we so become one.",
-        "And here we are... we reached Mars...",
+        "Gravity fades, and so we become one.",
+        "Finally, here we are... we reached Mars.",
         ""
     ]
     

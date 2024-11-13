@@ -24,8 +24,8 @@ struct ContentView: View {
             }
             HStack {
                 ImageButton(name: "SolarSystem", title: "View the solar system", chosenMode: .planets)
-                ImageButton(name: "Touch", title: "Move your preferred planets", chosenMode: .choosePlanetsToMove)
-                ImageButton(name: "Mars", title: "Travel to mars", chosenMode: .chooseTime)
+                ImageButton(name: "Touch", title: "Move preferred planets", chosenMode: .choosePlanetsToMove)
+                ImageButton(name: "Mars", title: "Travel to Mars", chosenMode: .chooseTime)
             }
             .environment(\.setMode, setMode)
         }

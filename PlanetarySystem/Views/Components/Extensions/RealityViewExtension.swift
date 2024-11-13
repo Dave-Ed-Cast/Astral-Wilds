@@ -43,7 +43,7 @@ extension RealityViewContent {
     func createParticle() -> AnchorEntity {
         
         let material = SimpleMaterial(color: UIColor(Color("particleColor").opacity(0.1)), isMetallic: false)
-        let mesh = MeshResource.generateSphere(radius: 0.01)
+        let mesh = MeshResource.generateSphere(radius: 0.02)
         
         let particleEntity = ModelEntity(
             mesh: mesh,
