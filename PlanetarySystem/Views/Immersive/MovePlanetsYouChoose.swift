@@ -36,14 +36,18 @@ struct MovePlanetsYouChoose: View {
                 content.add(scene)
             }
         }
-        .gesture(SpatialTapGesture(coordinateSpace: .local).targetedToAnyEntity().onEnded({ value in
+        .gesture(
+            SpatialTapGesture(coordinateSpace: .local)
+                .targetedToAnyEntity()
+                .onEnded({ value in
+                    
             let planet = planetName(for: value.entity, in: value.entity.name)
             planetName = planet
             
             //safe to unwrap because we find it for sure
             movePlanet(planet!)
         }))
-
+        
     }
     
     /// Moves the corresponding planet identified by its own parameters
@@ -54,10 +58,8 @@ struct MovePlanetsYouChoose: View {
             return
         }
         
-        //change the value in the struct so that it's known if it's rotating
         orbitalParameters[index].revolving.toggle()
         
-        //and understand what to do according to that
         if orbitalParameters[index].revolving {
             startMovement(for: entity, with: parameters)
             
@@ -120,7 +122,7 @@ struct MovePlanetsYouChoose: View {
 //                rotatePlanetGesture(entity: planet, rotation: value.rotation)
 //            }
 //        }))
-
+//
 //    private func rotatePlanetGesture(entity: Entity, rotation: Rotation3D) {
 //        let angle = rotation.angle
 //        let axis = rotation.axis

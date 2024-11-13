@@ -17,8 +17,7 @@
       },
       [
         "0A9B4653-B11E-4D6A-850E-C6FCB621626C",
-        "Root",
-        "Sphere"
+        "Root"
       ],
       {
         "isExpanded" : true,
@@ -26,7 +25,8 @@
       },
       [
         "0A9B4653-B11E-4D6A-850E-C6FCB621626C",
-        "Root"
+        "Root",
+        "Sphere"
       ],
       {
         "isExpanded" : true,
@@ -84,7 +84,61 @@
     "objectMetadataList" : [
       [
         "654A1BA5-90D3-4635-ADC4-8083566F93AB",
+        "Root",
+        "Mars_1",
+        "geom",
+        "realistic",
+        "materials"
+      ],
+      {
+        "isExpanded" : true,
+        "isLocked" : false
+      },
+      [
+        "654A1BA5-90D3-4635-ADC4-8083566F93AB",
+        "Root",
+        "Mars_1"
+      ],
+      {
+        "isExpanded" : true,
+        "isLocked" : false
+      },
+      [
+        "654A1BA5-90D3-4635-ADC4-8083566F93AB",
+        "Root",
+        "Mars_1",
+        "geom",
+        "realistic",
+        "geo"
+      ],
+      {
+        "isExpanded" : true,
+        "isLocked" : false
+      },
+      [
+        "654A1BA5-90D3-4635-ADC4-8083566F93AB",
+        "Root",
+        "Mars_1",
+        "geom"
+      ],
+      {
+        "isExpanded" : true,
+        "isLocked" : false
+      },
+      [
+        "654A1BA5-90D3-4635-ADC4-8083566F93AB",
         "Root"
+      ],
+      {
+        "isExpanded" : true,
+        "isLocked" : false
+      },
+      [
+        "654A1BA5-90D3-4635-ADC4-8083566F93AB",
+        "Root",
+        "Mars_1",
+        "geom",
+        "realistic"
       ],
       {
         "isExpanded" : true,

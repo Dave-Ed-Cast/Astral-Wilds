@@ -16,8 +16,20 @@ def Xform "Root"
     )
     {
         float3 xformOp:scale = (10, 10, 10)
-        float3 xformOp:translate = (0, 0, -50)
+        float3 xformOp:translate = (0, -0.507, -50)
         uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+
+        def RealityKitComponent "InputTarget"
+        {
+            uniform token info:id = "RealityKit.InputTarget"
+        }
+
+        def RealityKitCustomComponent "RealityKitContent_GestureComponent"
+        {
+            uniform token info:id = "RealityKitContent.GestureComponent"
+            bool pivotOnDrag = 0
+            bool preserveOrientationOnPivotDrag = 0
+        }
     }
 }
 

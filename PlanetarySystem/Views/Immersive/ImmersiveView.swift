@@ -15,6 +15,8 @@ import AVFoundation
 struct ImmersiveView: View {
 
     @Environment(\.setMode) private var setMode
+    @Environment(\.openWindow) private var openWindow
+    @Environment(\.dismissWindow) private var dismissWindow
     
     @Binding var duration: Int
     
@@ -40,14 +42,15 @@ struct ImmersiveView: View {
                 let environment = try? await EnvironmentResource(named: "studio")
                 planet.configureLighting(resource: environment!, withShadow: true)
                 
-                //this is so that it spawns where intended given async loading
-                planet.position = SIMD3(x: planet.position.x, y: -planet.position.y, z: -51)
+                planet.position = SIMD3(x: planet.position.x, y: planet.position.y, z: -51)
                 startTimers(entity: planet, environment: environment!, content: content)
                 content.add(planet)
             }
         }
-            
+        .installGestures()
+                
         .onAppear {
+            print()
             audioPlayer.playSong(
                 "space", dot: "mp3",
                 numberOfLoops: 0,
@@ -94,7 +97,7 @@ struct ImmersiveView: View {
         currentStep = (currentStep + 1) % currentArray.count
         
         let lastStep = (currentStep == currentArray.count - 1)
-        let secondToLast = (currentStep == currentArray.count - 2)
+        let secondToLast = (currentStep == currentArray.count - 3)
         
         if lastStep {
             stopTimer()
