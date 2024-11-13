@@ -8,8 +8,6 @@
 import SwiftUI
 
 /// This is the window that lets the user select how long should the immersive travel be.
-///
-/// Note that there is a dismiss window because it is not properly handled in the setMode function
 struct BeforeImmersiveView: View {
     
     @Binding var durationSelection: Int

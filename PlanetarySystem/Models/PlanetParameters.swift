@@ -8,8 +8,8 @@
 import Foundation
 
 /// The parameters that interest the rotation and the revolution
-/// Modify `time` to change rotation (higher time = slower speed)
-/// Modify `posValue` to change distance from user
+/// - Parameter time: changes rotation (higher time = slower speed)
+/// - Parameter posValue: changes distance from user (to update also in reality composer)
 struct PlanetParameters {
     
     static let time: Float = 5

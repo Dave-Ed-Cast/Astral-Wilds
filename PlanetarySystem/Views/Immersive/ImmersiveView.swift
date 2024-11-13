@@ -41,7 +41,7 @@ struct ImmersiveView: View {
                 planet.configureLighting(resource: environment!, withShadow: true)
                 
                 //this is so that it spawns where intended given async loading
-                planet.position = SIMD3(x: planet.position.x, y: planet.position.y, z: -51)
+                planet.position = SIMD3(x: planet.position.x, y: planet.position.y - 0.3, z: -51)
                 startTimers(entity: planet, environment: environment!, content: content)
                 content.add(planet)
             }
@@ -60,15 +60,24 @@ struct ImmersiveView: View {
         }
     }
     
-    private func startTimers(entity: Entity, environment: EnvironmentResource, content: RealityViewContent) {
+    /// This is the function tha handles all the timers
+    /// - Parameters:
+    ///   - entity: entity variable for certain timers
+    ///   - environment: environment variable for certain timers
+    ///   - content: reality view variable for certain timers
+    private func startTimers(
+        entity: Entity,
+        environment: EnvironmentResource,
+        content: RealityViewContent
+    ) {
         
-        textTimer(entity: entity, environment: environment, content: content)
-        createNewParticle(entity: entity, environment: environment, content: content)
-        movePlanet(entity: entity)
+        textTimer(environment: environment, content: content)
+        createNewParticle(environment: environment, content: content)
+        movePlanet(entity)
         moveParticles()
-        
     }
     
+    /// Stops all timers
     func stopTimer() {
         timer?.invalidate()
         timer = nil
@@ -77,6 +86,7 @@ struct ImmersiveView: View {
         
     }
     
+    /// Counts the travel steps, and handles the start and finish
     func updateStep() {
         
         let currentArray = (duration == 0) ? textArray.minuteArray : textArray.threeMinutesArray
@@ -95,16 +105,3 @@ struct ImmersiveView: View {
         }
     }
 }
-
-//            if let ambientAudio = try? await Entity(named: "AudioController", in: realityKitContentBundle) {
-//
-//                let ambientAudioEntityController = ambientAudio.findEntity(named: "AmbientAudio")
-//                let audioFileName = "/Root/space"
-//
-//                guard let resource = try? await AudioFileResource(named: audioFileName, from: "AudioController.usda", in: realityKitContentBundle) else {
-//                    fatalError("Unable to load audio resource")
-//                }
-//                let audioController = ambientAudioEntityController?.prepareAudio(resource)
-//                audioController?.play()
-//                content.add(ambientAudio)
-//            }

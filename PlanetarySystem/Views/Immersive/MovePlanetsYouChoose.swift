@@ -26,7 +26,7 @@ struct MovePlanetsYouChoose: View {
             let skyBoxEntity = content.createSkyBox()
             content.add(skyBoxEntity)
             
-            //This is safe to unwrap, it's for readability to write like this
+            //this is safe to unwrap, it's for readability to write like this
             if let scene = try? await Entity(named: "Planets", in: realityKitContentBundle), let environment = try? await EnvironmentResource(named: "studio") {
                 
                 scene.components.set(ImageBasedLightComponent(source: .single(environment)))
@@ -46,6 +46,8 @@ struct MovePlanetsYouChoose: View {
 
     }
     
+    /// Moves the corresponding planet identified by its own parameters
+    /// - Parameter entity: The planet to move
     private func movePlanet(_ entity: Entity) {
         
         guard let (index, parameters) = orbitalParameters.enumerated().first(where: { $0.element.planet == entity.name }).map({ ($0.offset, $0.element) }) else {
@@ -64,6 +66,10 @@ struct MovePlanetsYouChoose: View {
         }
     }
     
+    /// This is an helper function that moves the actual planet
+    /// - Parameters:
+    ///   - entity: The planet to move
+    ///   - parameters: The parameters of the planet entity
     private func startMovement(for entity: Entity, with parameters: PlanetCharacteristic) {
         //define the phase, the angle in calculus
         var angle = atan2(entity.position.z, entity.position.x)
@@ -99,17 +105,14 @@ struct MovePlanetsYouChoose: View {
         timers[entity.name] = timer
     }
     
-    //stop movement for the  planet
+    /// Stops the movement for the specific planet
+    /// - Parameter entity: The planet to sotp
     private func stopMovement(for entity: Entity) {
         guard let timer = timers[entity.name] else { return }
         timer.invalidate()
         timers[entity.name] = nil
     }
 }
-
-
-
-
 
 //        .gesture(RotateGesture3D().onEnded({ value in
 //

@@ -9,6 +9,7 @@ import SwiftUI
 import RealityKit
 import RealityKitContent
 
+/// View that handles all the main flow of the app
 struct ContentView: View {
     
     @Environment(\.setMode) private var setMode

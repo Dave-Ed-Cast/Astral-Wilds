@@ -50,13 +50,8 @@ struct MovePlanets: View {
             }
         }
     }
-    
-    /// Will make the entity revolve and rotate according to math formulas.
-    /// Rotation has to happen continuosly, so a timer is needed.
-    /// It has to be smooth, therefore we are repeat everything each millisecond.
-    ///
-    /// For each angle and index define the parameters, then find the planet associated and modify it.
-    /// Most of the formula is trial and error
+    /// Rotates and revolves the entity using a timer.
+    /// Parameters are set within the function for the corresponding planet.
     /// - Parameter entity: the entity that will be rotated and will revolve around the sun
     private func movePlanetsInLoop(inside entity: Entity) {
         

@@ -8,6 +8,7 @@
 import SwiftUI
 import RealityKitContent
 
+/// Reusable button component to open the immersive spaces
 struct ImageButton: View {
     
     @Environment(\.setMode) private var setMode

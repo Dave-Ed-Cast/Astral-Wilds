@@ -8,7 +8,7 @@
 import SwiftUI
 import RealityKit
 
-/// This has been created for the purpose of not reusing the same code everytime
+/// Protocol for not reusing the same code everytime
 protocol LightConfigurable {
     func configureLighting(
         resource environment: EnvironmentResource,

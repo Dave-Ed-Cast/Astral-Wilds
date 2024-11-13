@@ -48,6 +48,7 @@ struct PlanetarySystemApp: App {
             .registerComponent()
     }
     
+    private let meterInPxForUI: CGFloat = 1360.0
     @State private var mode: Mode = .mainScreen
     @State private var immersiveSpacePresented: Bool = false
     @State private var immersionMode: ImmersionStyle = .full
@@ -98,6 +99,7 @@ struct PlanetarySystemApp: App {
         
         WindowGroup(id: Self.mainScreenWindowID) {
             ContentView()
+                .frame(width: meterInPxForUI * 0.75, height: meterInPxForUI * 0.5)
                 .fixedSize(horizontal: true, vertical: true)
                 .environment(\.setMode, setMode)
         }
@@ -112,39 +114,10 @@ struct PlanetarySystemApp: App {
         .windowResizability(.contentSize)
         
         WindowGroup(id: Self.buttonWindowID) {
-            VStack(spacing: 10) {
-                Text("Feeling overwhelmed? \nThis is the button to go back.")
-                    .font(.headline)
-                
-                if mode == .immersiveSpace {
-                    Text("Spatial audio is playing. \nConsider repositioning this window.")
-                        .font(.callout)
-                        .multilineTextAlignment(.center)
-                } else if mode == .choosePlanetsToMove {
-                    Text("Tap on a planet to move it or stop it")
-                        .font(.callout)
-                        .multilineTextAlignment(.center)
-                }
-                
-                Button {
-                    Task { await setMode(.mainScreen) }
-                    
-                    //the button window needs to be go when the immersive space disappears
-                    dismissWindow(id: Self.buttonWindowID)
-                    
-                } label: {
-                    Text("Go back to reality")
-                        .font(.headline)
-                }
-            }
-            .onAppear {
-                print("rendered!")
-            }
-            .multilineTextAlignment(.center)
-            .fixedSize(horizontal: true, vertical: true)
-            .frame(width: 300, height: 120)
-            .environment(\.setMode, setMode)
-            .padding()
+            ExitImmersiveSpace(mode: $mode)
+                .fixedSize(horizontal: true, vertical: true)
+                .frame(width: 300, height: 120)
+                .environment(\.setMode, setMode)
         }
         .windowResizability(.contentSize)
         

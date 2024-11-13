@@ -11,7 +11,11 @@ import SwiftUI
 
 extension ImmersiveView {
     
-    func textTimer(entity: Entity, environment: EnvironmentResource, content: RealityViewContent) {
+    /// Handles the timer to generate new text according to the duration of the travel
+    /// - Parameters:
+    ///   - environment: The lighting resource used for an inner helper function
+    ///   - content: The reality view
+    func textTimer(environment: EnvironmentResource, content: RealityViewContent) {
                 
         let updateTextInterval: TimeInterval = 5.0
         
@@ -23,7 +27,7 @@ extension ImmersiveView {
             withAnimation {
                 updateTextEntities()
             }
-            textEntities = createCurvedTextEntities(text: text, environment: environment, referenceEntity: entity)
+            textEntities = createCurvedText(text: text, environment: environment)
             
             for text3D in textEntities {
                 content.add(text3D)
@@ -37,21 +41,16 @@ extension ImmersiveView {
         }
     }
     
-    /// This uses the generateText function for 3D text
+    /// Generates 3D curved text using the `generateText` function.
     ///
-    /// The intended way to use this is to have a string, then extract every character.
-    /// After that calculate the space of each character to have an even spacing
-    /// When creating the text, the curve is calculated with an angle.
-    /// Each and every character is rotated in a way to look at the user.
-    ///
-    /// Parameters suchs as `radius` are fundamental for the curve.
-    /// The higher the radius, the more the curve is pronounced
+    /// Provide a string, and the function will calculate spacing for each character along a curved path.
+    /// Each character is angled to face the user, creating a curved effect.
+    /// Adjust `radius` to control the curve: a larger radius creates a gentler curve, while a smaller radius makes it more pronounced.
     /// - Parameters:
     ///   - text: The text to cut in single characters
     ///   - environment: The lighting resource
-    ///   - referenceEntity: The reference for the lighting
     /// - Returns: Returns a model entity to use
-    func createCurvedTextEntities(text: String, environment: EnvironmentResource, referenceEntity: Entity) -> [ModelEntity] {
+    func createCurvedText(text: String, environment: EnvironmentResource) -> [ModelEntity] {
         
         let radius: Float = 3.0
         let yPosition: Float = 1.35
@@ -60,7 +59,7 @@ extension ImmersiveView {
         var totalAngularSpan: Float = 0.0
         var entities: [ModelEntity] = []
         //angle to center text later
-        var currentAngle: Float = -1.8
+        var currentAngle: Float = -1.93
         
         //extract characters
         for char in text {
@@ -82,14 +81,14 @@ extension ImmersiveView {
                 
                 //define the curve
                 let x = radius * cos(currentAngle)
-                let z = radius * sin(currentAngle)
+                let z = radius * sin(currentAngle) - 0.3
                 
                 //make the character look at user
                 let lookAtUser = SIMD3(-x, 0, -z)
                 
                 charEntity.position = SIMD3(x, yPosition, z)
                 charEntity.orientation = simd_quatf(from: SIMD3(0, 0, 1), to: lookAtUser)
-                charEntity.configureLighting(resource: environment, withShadow: true, for: referenceEntity)
+                charEntity.configureLighting(resource: environment, withShadow: true)
                 
                 currentAngle += angleIncrement
                 

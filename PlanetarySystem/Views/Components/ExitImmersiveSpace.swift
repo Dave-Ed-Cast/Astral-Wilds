@@ -1,0 +1,48 @@
+//
+//  ExitImmersiveSpace.swift
+//  PlanetarySystem
+//
+//  Created by Davide Castaldi on 13/11/24.
+//
+
+import SwiftUI
+import RealityKitContent
+
+/// Reusable button that handles the exiting of the immersive spaces
+struct ExitImmersiveSpace: View {
+    
+    @Environment(\.dismissWindow) private var dismissWindow
+    @Environment(\.setMode) private var setMode
+    
+    @Binding var mode: PlanetarySystemApp.Mode
+    
+    var body: some View {
+        VStack(spacing: 10) {
+            Text("Feeling overwhelmed? \nThis is the button to go back.")
+                .font(.headline)
+            
+            if mode == .immersiveSpace {
+                Text("Spatial audio is playing. \nConsider repositioning this window.")
+                    .font(.callout)
+                    .multilineTextAlignment(.center)
+            } else if mode == .choosePlanetsToMove {
+                Text("Tap on a planet to move it or stop it")
+                    .font(.callout)
+                    .multilineTextAlignment(.center)
+            }
+            
+            Button {
+                Task { await setMode(.mainScreen) }
+                
+                //the button window needs to be go when the immersive space disappears
+                dismissWindow(id: "Button")
+                
+            } label: {
+                Text("Go back to reality")
+                    .font(.headline)
+            }
+        }
+        .multilineTextAlignment(.center)
+        .padding()
+    }
+}

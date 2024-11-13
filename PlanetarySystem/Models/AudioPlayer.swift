@@ -8,6 +8,7 @@
 import Foundation
 import AVFAudio
 
+/// Handles the audio by playing or stopping the song
 class AudioPlayer {
     
     static let shared: AudioPlayer = .init()

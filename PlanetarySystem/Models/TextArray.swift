@@ -7,6 +7,7 @@
 
 import Foundation
 
+/// Text array depending on the selection of the travel of the user
 struct TextArray {
     
     let minuteArray: [String] = [
