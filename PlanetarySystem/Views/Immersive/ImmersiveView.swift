@@ -97,13 +97,13 @@ struct ImmersiveView: View {
         currentStep = (currentStep + 1) % currentArray.count
         
         let lastStep = (currentStep == currentArray.count - 1)
-        let secondToLast = (currentStep == currentArray.count - 3)
+        let thirdToLast = (currentStep == currentArray.count - 3)
         
         if lastStep {
             stopTimer()
         }
         
-        if secondToLast {
+        if thirdToLast {
             stopParticles()
         }
     }
