@@ -22,16 +22,11 @@ struct MovePlanetsYouChoose: View {
     var body: some View {
                 
         RealityView { content in
-            
-            let skyBoxEntity = content.createSkyBox()
-            content.add(skyBoxEntity)
-            
+                        
             //this is safe to unwrap, it's for readability to write like this
             if let scene = try? await Entity(named: "Planets", in: realityKitContentBundle), let environment = try? await EnvironmentResource(named: "studio") {
                 
-                scene.components.set(ImageBasedLightComponent(source: .single(environment)))
-                scene.components.set(ImageBasedLightReceiverComponent(imageBasedLight: scene))
-                scene.components.set(GroundingShadowComponent(castsShadow: true))
+                scene.configureLighting(resource: environment, withShadow: true, for: scene)
                 
                 content.add(scene)
             }

@@ -35,25 +35,20 @@ struct MovePlanets: View {
         
         RealityView { content in
 
-            let skyBoxEntity = content.createSkyBox()
-            content.add(skyBoxEntity)
-            
             //This is safe to unwrap, it's for readability to write like this
-            if let scene = try? await Entity(named: "Planets", in: realityKitContentBundle), let environment = try? await EnvironmentResource(named: "studio") {
+            if let planets = try? await Entity(named: "Planets", in: realityKitContentBundle), let environment = try? await EnvironmentResource(named: "studio") {
                 
-                scene.components.set(ImageBasedLightComponent(source: .single(environment)))
-                scene.components.set(ImageBasedLightReceiverComponent(imageBasedLight: scene))
-                scene.components.set(GroundingShadowComponent(castsShadow: true))
-                content.add(scene)
+                planets.configureLighting(resource: environment, withShadow: true)
+                content.add(planets)
                 
-                movePlanetsInLoop(inside: scene)
+                movePlanetsInLoop(planets)
             }
         }
     }
     /// Rotates and revolves the entity using a timer.
     /// Parameters are set within the function for the corresponding planet.
     /// - Parameter entity: the entity that will be rotated and will revolve around the sun
-    private func movePlanetsInLoop(inside entity: Entity) {
+    private func movePlanetsInLoop(_ entity: Entity) {
         
         let updateInterval: Double = 1.0 / 90.0
         let angularSpace = 2.0 * Float.pi

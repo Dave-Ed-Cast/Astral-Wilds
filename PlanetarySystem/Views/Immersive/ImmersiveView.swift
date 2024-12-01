@@ -43,21 +43,19 @@ struct ImmersiveView: View {
     var body: some View {
         
         RealityView { content in
-            let skyBoxEntity = content.createSkyBox()
-            content.add(skyBoxEntity)
             
             //This is safe to unwrap, it's for readability to write like this
             if let planet = try? await Entity(named: "TravelToMars", in: realityKitContentBundle) {
                 let environment = try? await EnvironmentResource(named: "studio")
-                planet.configureLighting(resource: environment!, withShadow: true)
                 
+                planet.configureLighting(resource: environment!, withShadow: true)
                 planet.position = SIMD3(x: planet.position.x, y: planet.position.y, z: -51)
+                
                 startTimers(entity: planet, environment: environment!, content: content)
                 content.add(planet)
             }
         }
-        .installGestures()
-                
+        
         .onAppear {
             print()
             audioPlayer.playSong(

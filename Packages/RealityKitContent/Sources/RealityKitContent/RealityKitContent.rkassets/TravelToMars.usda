@@ -10,9 +10,10 @@
 
 def Xform "Root"
 {
+    reorder nameChildren = ["Mars_1", "SkySphere", "SpaceMaterial"]
     def "Mars_1" (
         active = true
-        prepend references = @Mars 1.usdz@
+        references = @Mars 1.usdz@
     )
     {
         float3 xformOp:scale = (10, 10, 10)
@@ -29,6 +30,45 @@ def Xform "Root"
             uniform token info:id = "RealityKitContent.GestureComponent"
             bool pivotOnDrag = 0
             bool preserveOrientationOnPivotDrag = 0
+        }
+    }
+
+    def "SkySphere" (
+        active = true
+        prepend apiSchemas = ["MaterialBindingAPI"]
+        references = @SkySphere.usdz@
+    )
+    {
+        rel material:binding = </Root/SpaceMaterial> (
+            bindMaterialAs = "weakerThanDescendants"
+        )
+        float3 xformOp:scale = (1, 1, 1)
+    }
+
+    def Material "SpaceMaterial"
+    {
+        token outputs:mtlx:surface.connect = </Root/SpaceMaterial/PreviewSurface.outputs:out>
+        token outputs:realitykit:vertex
+        float2 ui:nodegraph:realitykit:subgraphOutputs:pos = (335.25, 100.5)
+
+        def Shader "PreviewSurface"
+        {
+            uniform token info:id = "ND_UsdPreviewSurface_surfaceshader"
+            color3f inputs:diffuseColor.connect = </Root/SpaceMaterial/Image.outputs:out>
+            float inputs:metallic
+            float inputs:roughness = 1
+            token outputs:out
+            float2 ui:nodegraph:node:pos = (93.5, 100.5)
+            int ui:nodegraph:node:stackingOrder = 7
+        }
+
+        def Shader "Image"
+        {
+            uniform token info:id = "ND_image_color3"
+            asset inputs:file = @SpaceImage.png@
+            color3f outputs:out
+            float2 ui:nodegraph:node:pos = (-138.59766, 67.98828)
+            int ui:nodegraph:node:stackingOrder = 6
         }
     }
 }

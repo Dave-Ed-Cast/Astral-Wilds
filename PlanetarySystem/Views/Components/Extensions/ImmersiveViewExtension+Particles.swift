@@ -10,6 +10,35 @@ import RealityKit
 
 extension ImmersiveView {
     
+    /// This creates particles for the immersive travel. They are thrown at the player to simulate the voyage
+    /// - Returns: the anchor entity point of where the range of particles should spawn
+    func createParticle() -> AnchorEntity {
+        
+        let material = SimpleMaterial(color: UIColor(Color("particleColor").opacity(0.1)), isMetallic: false)
+        let mesh = MeshResource.generateSphere(radius: 0.02)
+        
+        let particleEntity = ModelEntity(
+            mesh: mesh,
+            materials: [material]
+        )
+        
+        var randomX: Float
+        var randomY: Float
+        
+        repeat {
+            randomX = Float.random(in: -4...4)
+        } while randomX >= -0.3 && randomX <= 0.3
+        
+        repeat {
+            randomY = Float.random(in: -2...2)
+        } while randomY >= 0.7 && randomY <= 1
+        
+        let anchor = AnchorEntity(world: [randomX, randomY, -20.0])
+        anchor.addChild(particleEntity)
+        
+        return anchor
+    }
+    
     /// Create new particle element for the immersive travel
     ///
     /// - Parameters:
@@ -22,7 +51,7 @@ extension ImmersiveView {
         particleTimer = Timer.scheduledTimer(withTimeInterval: newParticleInterval, repeats: true) { _ in
             
             guard currentStep >= 1 else { return }
-            let particleEntity = content.createParticle()
+            let particleEntity = createParticle()
             
             particleEntity.configureLighting(resource: environment, withShadow: true)
             particles.append(particleEntity)
