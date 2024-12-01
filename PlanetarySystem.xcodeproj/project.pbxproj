@@ -25,6 +25,7 @@
 		3EA1F00C2CE4955200E8F1FE /* ExitImmersiveSpace.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EA1F00B2CE4955200E8F1FE /* ExitImmersiveSpace.swift */; };
 		3EA224612CD917EA00A94EAC /* ViewExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EA224602CD917EA00A94EAC /* ViewExtension.swift */; };
 		3EA2FC752BFA251400DB151E /* space.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 3EA2FC742BFA251400DB151E /* space.mp3 */; };
+		3ED4A6B22CFB1BE600A899A3 /* VisionTextArc in Frameworks */ = {isa = PBXBuildFile; productRef = 3ED4A6B12CFB1BE600A899A3 /* VisionTextArc */; };
 		3ED824C42BF4FB710091E5F5 /* ImmersiveView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3ED824C32BF4FB710091E5F5 /* ImmersiveView.swift */; };
 		3EE96C372CCBC04D007BE4E2 /* ImageButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EE96C362CCBC04D007BE4E2 /* ImageButton.swift */; };
 		3EE96C392CCD07C6007BE4E2 /* PlanetParameters.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EE96C382CCD07C6007BE4E2 /* PlanetParameters.swift */; };
@@ -77,6 +78,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3ED4A6B22CFB1BE600A899A3 /* VisionTextArc in Frameworks */,
 				3E0636762BF0BAA400F7ED6E /* RealityKitContent in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -230,6 +232,7 @@
 			name = PlanetarySystem;
 			packageProductDependencies = (
 				3E0636752BF0BAA400F7ED6E /* RealityKitContent */,
+				3ED4A6B12CFB1BE600A899A3 /* VisionTextArc */,
 			);
 			productName = PlanetarySystem;
 			productReference = 3E5C216F2BF6BD010015AC20 /* PlanetarySystem.app */;
@@ -282,6 +285,9 @@
 				Base,
 			);
 			mainGroup = 3E0636672BF0BAA400F7ED6E;
+			packageReferences = (
+				3ED4A6B02CFB1BE600A899A3 /* XCLocalSwiftPackageReference "../VisionTextArc/VisionTextArc/VisionTextArc" */,
+			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 3E0636672BF0BAA400F7ED6E;
 			projectDirPath = "";
@@ -613,10 +619,21 @@
 		};
 /* End XCConfigurationList section */
 
+/* Begin XCLocalSwiftPackageReference section */
+		3ED4A6B02CFB1BE600A899A3 /* XCLocalSwiftPackageReference "../VisionTextArc/VisionTextArc/VisionTextArc" */ = {
+			isa = XCLocalSwiftPackageReference;
+			relativePath = ../VisionTextArc/VisionTextArc/VisionTextArc;
+		};
+/* End XCLocalSwiftPackageReference section */
+
 /* Begin XCSwiftPackageProductDependency section */
 		3E0636752BF0BAA400F7ED6E /* RealityKitContent */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = RealityKitContent;
+		};
+		3ED4A6B12CFB1BE600A899A3 /* VisionTextArc */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = VisionTextArc;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

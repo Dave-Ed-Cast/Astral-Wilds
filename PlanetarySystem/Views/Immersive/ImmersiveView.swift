@@ -9,6 +9,7 @@ import SwiftUI
 import RealityKit
 import RealityKitContent
 import AVFoundation
+import VisionTextArc
 
 /// Like in the other immersive spaces, we need to first create the skybox.
 /// Then, we need to load the associated scene with the lights.
@@ -20,16 +21,24 @@ struct ImmersiveView: View {
     
     @Binding var duration: Int
     
-    @State var spawnParticle: Bool = true
-    @State var textEntities: [ModelEntity] = []
-    @State var particles: [Entity] = []
+    @State private var audioPlayer: AudioPlayer = AudioPlayer.shared
+    
+    @State var textEntity: Entity?
+    
     @State var timer: Timer?
     @State var particleTimer: Timer?
     @State var moveParticleTimer: Timer?
     @State var planetTimer: Timer?
+    
+    @State var textEntities: [ModelEntity] = []
+    @State var particles: [Entity] = []
+    
+    @State var spawnParticle: Bool = true
     @State var currentStep: Int = 0
+    
     @State var textArray: TextArray = TextArray()
-    @State private var audioPlayer: AudioPlayer = AudioPlayer.shared
+    
+    let textCurver = TextCurver.self
     
     var body: some View {
         

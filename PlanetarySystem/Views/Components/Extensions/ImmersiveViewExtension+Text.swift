@@ -5,8 +5,8 @@
 //  Created by Davide Castaldi on 08/11/24.
 //
 
-import Foundation
 import RealityKit
+import RealityKitContent
 import SwiftUI
 
 extension ImmersiveView {
@@ -24,21 +24,32 @@ extension ImmersiveView {
             let text = (duration == 0) ? (textArray.minuteArray[currentStep]) : textArray.threeMinutesArray[currentStep]
             
             updateStep()
-            withAnimation {
-                updateTextEntities()
-            }
-            textEntities = createCurvedText(text: text, environment: environment)
             
-            for text3D in textEntities {
-                content.add(text3D)
+            Task { @MainActor in
+                
+                let text3D = textCurver.curveText(
+                    text,
+                    configuration: .init(radius: 3.0, yPosition: 1.0)
+                )
+                
+                if let environment = try? await EnvironmentResource(named: "studio") {
+                    text3D.configureLighting(resource: environment, withShadow: false)
+                    content.add(text3D)
+
+                    withAnimation {
+                        updateTextEntities(text3D)
+                    }
+                }
+                
+                try? await Task.sleep(nanoseconds: 150_000_000)
             }
         }
     }
     
-    func updateTextEntities() {
-        for entity in textEntities {
-            entity.removeFromParent()
-        }
+    func updateTextEntities(_ entity: Entity) {
+        
+        textEntity?.removeFromParent()
+        textEntity = entity
     }
     
     /// Generates 3D curved text using the `generateText` function.
