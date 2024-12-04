@@ -19,9 +19,11 @@ extension ImmersiveView {
                 
         let updateTextInterval: TimeInterval = 5.0
         
+        let configuration = textCurver.Configuration(radius: 3.5, yPosition: 1.1)
+        
         timer = Timer.scheduledTimer(withTimeInterval: updateTextInterval, repeats: true) { _ in
             
-            let text = (duration == 0) ? (textArray.minuteArray[currentStep]) : textArray.threeMinutesArray[currentStep]
+            let text = textArray[currentStep]
             
             updateStep()
             
@@ -29,7 +31,7 @@ extension ImmersiveView {
                 
                 let text3D = textCurver.curveText(
                     text,
-                    configuration: .init(radius: 3.0, yPosition: 1.0)
+                    configuration: configuration
                 )
                 
                 if let environment = try? await EnvironmentResource(named: "studio") {

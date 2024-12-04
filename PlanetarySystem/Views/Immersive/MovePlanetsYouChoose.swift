@@ -24,10 +24,7 @@ struct MovePlanetsYouChoose: View {
         RealityView { content in
                         
             //this is safe to unwrap, it's for readability to write like this
-            if let scene = try? await Entity(named: "Planets", in: realityKitContentBundle), let environment = try? await EnvironmentResource(named: "studio") {
-                
-                scene.configureLighting(resource: environment, withShadow: true, for: scene)
-                
+            if let scene = try? await Entity(named: "Planets", in: realityKitContentBundle) {
                 content.add(scene)
             }
         }
@@ -49,7 +46,9 @@ struct MovePlanetsYouChoose: View {
     /// - Parameter entity: The planet to move
     private func movePlanet(_ entity: Entity) {
         
-        guard let (index, parameters) = orbitalParameters.enumerated().first(where: { $0.element.planet == entity.name }).map({ ($0.offset, $0.element) }) else {
+        guard let (index, parameters) = orbitalParameters
+            .enumerated()
+            .first(where: { $0.element.planet == entity.name }).map({ ($0.offset, $0.element) }) else {
             return
         }
         

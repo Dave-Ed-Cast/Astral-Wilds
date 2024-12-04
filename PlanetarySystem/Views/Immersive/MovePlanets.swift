@@ -36,9 +36,8 @@ struct MovePlanets: View {
         RealityView { content in
 
             //This is safe to unwrap, it's for readability to write like this
-            if let planets = try? await Entity(named: "Planets", in: realityKitContentBundle), let environment = try? await EnvironmentResource(named: "studio") {
+            if let planets = try? await Entity(named: "Planets", in: realityKitContentBundle) {
                 
-                planets.configureLighting(resource: environment, withShadow: true)
                 content.add(planets)
                 
                 movePlanetsInLoop(planets)

@@ -12,7 +12,7 @@ reorder rootPrims = ["Root", "Saturn"]
 
 def Xform "Root"
 {
-    reorder nameChildren = ["Saturn", "Mercury", "Sun", "Venus", "Earth", "Mars"]
+    reorder nameChildren = ["Saturn", "Uranus", "Neptune", "SkySphere", "SpaceMaterial", "PlanetMaterial", "Mercury", "Sun", "Venus", "Earth", "Mars", "Jupiter"]
     def "Mercury" (
         active = true
         customData = {
@@ -21,6 +21,7 @@ def Xform "Root"
         references = @Mercury.usdz@
     )
     {
+        reorder nameChildren = ["geom", "Collider", "InputTarget", "RealityKitContent_GestureComponent", "PlanetMaterial"]
         quatf xformOp:orient = (0.99813473, 0.06104857, 0.000015982481, 0.0002613111)
         float3 xformOp:scale = (2, 2, 2)
         float3 xformOp:translate = (0, 0.6, -3)
@@ -36,7 +37,8 @@ def Xform "Root"
             def RealityKitStruct "Shape"
             {
                 float3 extent = (0.19999999, 0.2, 0.2)
-                token shapeType = "Box"
+                float radius = 0.1
+                token shapeType = "Sphere"
 
                 def RealityKitStruct "pose"
                 {
@@ -54,17 +56,99 @@ def Xform "Root"
         {
             uniform token info:id = "RealityKitContent.GestureComponent"
         }
+
+        over "geom"
+        {
+            over "realistic"
+            {
+                over "materials"
+                {
+                    over "usdpreviewsurface3sg1"
+                    {
+                        string inputs:mercury_realistic_ao:varname (
+                            customData = {
+                                dictionary realitykit = {
+                                    float2 positionInSubgraph = (465.25, 639.5)
+                                }
+                            }
+                        )
+                        string inputs:mercury_realistic_bc:varname (
+                            customData = {
+                                dictionary realitykit = {
+                                    float2 positionInSubgraph = (752.25, 639.5)
+                                }
+                            }
+                        )
+                        string inputs:mercury_realistic_n:varname (
+                            customData = {
+                                dictionary realitykit = {
+                                    float2 positionInSubgraph = (1039.25, 639.5)
+                                }
+                            }
+                        )
+                        token outputs:realitykit:vertex
+                        float2 ui:nodegraph:realitykit:subgraphOutputs:pos = (1416.25, 261)
+
+                        over "mercury_realistic_bc_mtlx"
+                        {
+                            float2 ui:nodegraph:node:pos = (623, 451.5)
+                        }
+
+                        over "mercury_realistic_01_mat_mtlx"
+                        {
+                            float2 ui:nodegraph:node:pos = (1163, 261)
+                            int ui:nodegraph:node:stackingOrder = 1
+                        }
+
+                        over "mercury_realistic_n_mtlx"
+                        {
+                            float2 ui:nodegraph:node:pos = (350, 273)
+                        }
+
+                        over "mercury_realistic_n_mtlx_offset"
+                        {
+                            float2 ui:nodegraph:node:pos = (893, 279)
+                        }
+
+                        over "mercury_realistic_ao_mtlx"
+                        {
+                            float2 ui:nodegraph:node:pos = (893, 100.5)
+                        }
+
+                        over "mercury_realistic_n_mtlx_scale"
+                        {
+                            float2 ui:nodegraph:node:pos = (623, 273)
+                        }
+
+                        over "Lookup_st"
+                        {
+                            float2 ui:nodegraph:node:pos = (91, 172.5)
+                        }
+                    }
+                }
+            }
+        }
+
+        def RealityKitComponent "ImageBasedLightReceiver" (
+            active = false
+        )
+        {
+            uniform token info:id = "RealityKit.ImageBasedLightReceiver"
+        }
     }
 
     def "Sun" (
         active = true
+        prepend apiSchemas = ["MaterialBindingAPI"]
         customData = {
             float3 rotationEulerHint = (0, 0.12653638, 0)
         }
         references = @Sun.usdz@
     )
     {
-        quatf xformOp:orient = (0.9979992, 0, 0.063225985, 0)
+        reorder nameChildren = ["geom", "InputTarget", "Collider", "DirectionalLight", "EnvironmentLightingConfiguration", "SpotLight"]
+        quatf xformOp:orient = (0.9979992, 0, 0.06322671, 0)
+        float3 xformOp:scale = (0.9999999, 1, 0.9999999)
         float3 xformOp:translate = (0, 0.6, 0)
         uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
 
@@ -94,6 +178,14 @@ def Xform "Root"
                     float3 position = (3.7252903e-8, 0, 4.8428774e-8)
                 }
             }
+        }
+
+        def RealityKitComponent "PointLight"
+        {
+            float attenuationFalloffExponent = 0.5
+            float attenuationRadius = 250
+            uniform token info:id = "RealityKit.PointLight"
+            float intensity = 100000
         }
     }
 
@@ -138,6 +230,14 @@ def Xform "Root"
         {
             uniform token info:id = "RealityKitContent.GestureComponent"
         }
+
+        def RealityKitComponent "ImageBasedLightReceiver" (
+            active = false
+        )
+        {
+            rel iblEntity = </Root/Sun>
+            uniform token info:id = "RealityKit.ImageBasedLightReceiver"
+        }
     }
 
     def "Earth" (
@@ -181,6 +281,11 @@ def Xform "Root"
         {
             uniform token info:id = "RealityKitContent.GestureComponent"
         }
+
+        def RealityKitComponent "ImageBasedLightReceiver"
+        {
+            uniform token info:id = "RealityKit.ImageBasedLightReceiver"
+        }
     }
 
     def "Mars" (
@@ -207,7 +312,8 @@ def Xform "Root"
             def RealityKitStruct "Shape"
             {
                 float3 extent = (0.19999999, 0.19999999, 0.19999999)
-                token shapeType = "Box"
+                float radius = 0.099999994
+                token shapeType = "Sphere"
 
                 def RealityKitStruct "pose"
                 {
@@ -225,6 +331,14 @@ def Xform "Root"
         {
             uniform token info:id = "RealityKitContent.GestureComponent"
         }
+
+        def RealityKitComponent "ImageBasedLightReceiver" (
+            active = false
+        )
+        {
+            rel iblEntity = </Root/Sun>
+            uniform token info:id = "RealityKit.ImageBasedLightReceiver"
+        }
     }
 
     def "Jupiter" (
@@ -232,7 +346,7 @@ def Xform "Root"
         customData = {
             float3 rotationEulerHint = (0.022863815, 0, 0.054628797)
         }
-        prepend references = @Jupiter.usdz@
+        references = @Jupiter.usdz@
     )
     {
         quatf xformOp:orient = (0.99956167, 0.011427394, 0.00031221006, 0.027309218)
@@ -250,7 +364,8 @@ def Xform "Root"
             def RealityKitStruct "Shape"
             {
                 float3 extent = (0.19999999, 0.2, 0.20000002)
-                token shapeType = "Box"
+                float radius = 0.10000001
+                token shapeType = "Sphere"
 
                 def RealityKitStruct "pose"
                 {
@@ -268,6 +383,14 @@ def Xform "Root"
         {
             uniform token info:id = "RealityKitContent.GestureComponent"
         }
+
+        def RealityKitComponent "ImageBasedLightReceiver" (
+            active = false
+        )
+        {
+            rel iblEntity = </Root/Sun>
+            uniform token info:id = "RealityKit.ImageBasedLightReceiver"
+        }
     }
 
     def "Saturn" (
@@ -275,7 +398,7 @@ def Xform "Root"
         customData = {
             float3 rotationEulerHint = (0.043458663, 9.313226e-10, 0.4665265)
         }
-        prepend references = @Saturn.usdz@
+        references = @Saturn.usdz@
     )
     {
         quatf xformOp:orient = (0.9726876, 0.02113918, 0.005022419, 0.23109904)
@@ -293,7 +416,8 @@ def Xform "Root"
             def RealityKitStruct "Shape"
             {
                 float3 extent = (0.46763724, 0.20021316, 0.46763742)
-                token shapeType = "Box"
+                float radius = 0.23381871
+                token shapeType = "Sphere"
 
                 def RealityKitStruct "pose"
                 {
@@ -311,6 +435,12 @@ def Xform "Root"
         {
             uniform token info:id = "RealityKitContent.GestureComponent"
         }
+
+        def RealityKitComponent "ImageBasedLightReceiver"
+        {
+            rel iblEntity = </Root/Sun>
+            uniform token info:id = "RealityKit.ImageBasedLightReceiver"
+        }
     }
 
     def "Uranus" (
@@ -318,7 +448,7 @@ def Xform "Root"
         customData = {
             float3 rotationEulerHint = (0.01343894, 0, 1.7064085)
         }
-        prepend references = @Uranus.usdz@
+        references = @Uranus.usdz@
     )
     {
         quatf xformOp:orient = (0.65755767, 0.004418506, 0.0050623524, 0.7533743)
@@ -336,7 +466,8 @@ def Xform "Root"
             def RealityKitStruct "Shape"
             {
                 float3 extent = (0.19999999, 0.2, 0.20000002)
-                token shapeType = "Box"
+                float radius = 0.10000001
+                token shapeType = "Sphere"
 
                 def RealityKitStruct "pose"
                 {
@@ -354,6 +485,14 @@ def Xform "Root"
         {
             uniform token info:id = "RealityKitContent.GestureComponent"
         }
+
+        def RealityKitComponent "ImageBasedLightReceiver" (
+            active = false
+        )
+        {
+            rel iblEntity = </Root/Sun>
+            uniform token info:id = "RealityKit.ImageBasedLightReceiver"
+        }
     }
 
     def "Neptune" (
@@ -361,7 +500,7 @@ def Xform "Root"
         customData = {
             float3 rotationEulerHint = (0.030892335, 0, 0.49427724)
         }
-        prepend references = @Neptune.usdz@
+        references = @Neptune.usdz@
     )
     {
         quatf xformOp:orient = (0.9695007, 0.014976261, 0.003778454, 0.24460135)
@@ -379,7 +518,8 @@ def Xform "Root"
             def RealityKitStruct "Shape"
             {
                 float3 extent = (0.2, 0.2, 0.2)
-                token shapeType = "Box"
+                float radius = 0.1
+                token shapeType = "Sphere"
 
                 def RealityKitStruct "pose"
                 {
@@ -397,11 +537,28 @@ def Xform "Root"
         {
             uniform token info:id = "RealityKitContent.GestureComponent"
         }
+
+        def RealityKitComponent "ImageBasedLightReceiver" (
+            active = false
+        )
+        {
+            rel iblEntity = </Root/Sun>
+            uniform token info:id = "RealityKit.ImageBasedLightReceiver"
+        }
     }
 
     def "SkySphere" (
         active = true
         prepend apiSchemas = ["MaterialBindingAPI"]
+        customData = {
+            dictionary RE = {
+                dictionary mesh = {
+                    dictionary v1 = {
+                        bool reorderVertexCaching = 0
+                    }
+                }
+            }
+        }
         references = @SkySphere.usdz@
     )
     {
@@ -411,6 +568,7 @@ def Xform "Root"
         float2 ui:nodegraph:node:pos = (20, 20)
         int ui:nodegraph:node:stackingOrder = 1
         float3 xformOp:scale = (1, 1, 1)
+        float3 xformOp:translate = (0, 0, 0)
     }
 
     def Material "SpaceMaterial"
@@ -424,12 +582,17 @@ def Xform "Root"
         def Shader "PreviewSurface"
         {
             uniform token info:id = "ND_UsdPreviewSurface_surfaceshader"
+            float inputs:clearcoat = 0
+            float inputs:clearcoatRoughness = 0.01
             color3f inputs:diffuseColor.connect = </Root/SpaceMaterial/Image.outputs:out>
-            float inputs:metallic
+            float inputs:ior = 1.5
+            float inputs:metallic = 0.2
+            float3 inputs:normal = (0, 0, 1)
+            float inputs:occlusion = 0.8
             float inputs:roughness = 1
             token outputs:out
             float2 ui:nodegraph:node:pos = (93.5, 100.5)
-            int ui:nodegraph:node:stackingOrder = 7
+            int ui:nodegraph:node:stackingOrder = 9
         }
 
         def Shader "Image"

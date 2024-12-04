@@ -12,7 +12,7 @@ import Foundation
 /// - Parameter posValue: changes distance from user (to update also in reality composer)
 struct PlanetParameters {
     
-    static let time: Float = 5
+    static let time: Float = 3.5
     static let posValue: Float = 3
     
     static var list = [

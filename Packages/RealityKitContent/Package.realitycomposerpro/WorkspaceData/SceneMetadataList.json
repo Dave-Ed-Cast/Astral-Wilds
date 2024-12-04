@@ -85,6 +85,16 @@
       [
         "654A1BA5-90D3-4635-ADC4-8083566F93AB",
         "Root",
+        "SkySphere"
+      ],
+      {
+        "disallowsFraming" : true,
+        "isExpanded" : false,
+        "isLocked" : false
+      },
+      [
+        "654A1BA5-90D3-4635-ADC4-8083566F93AB",
+        "Root",
         "SpaceMaterial"
       ],
       {
@@ -97,16 +107,6 @@
       ],
       {
         "isExpanded" : true,
-        "isLocked" : false
-      },
-      [
-        "654A1BA5-90D3-4635-ADC4-8083566F93AB",
-        "Root",
-        "SkySphere"
-      ],
-      {
-        "disallowsFraming" : true,
-        "isExpanded" : false,
         "isLocked" : false
       }
     ]
@@ -127,7 +127,38 @@
     "objectMetadataList" : [
       [
         "D4588DAC-986B-442B-97D8-3E8ADFC2BC2A",
+        "Root",
+        "SpaceMaterial"
+      ],
+      {
+        "isExpanded" : true,
+        "isLocked" : false
+      },
+      [
+        "D4588DAC-986B-442B-97D8-3E8ADFC2BC2A",
         "Root"
+      ],
+      {
+        "isExpanded" : true,
+        "isLocked" : false
+      },
+      [
+        "D4588DAC-986B-442B-97D8-3E8ADFC2BC2A",
+        "Root",
+        "Sun"
+      ],
+      {
+        "isExpanded" : true,
+        "isLocked" : false
+      },
+      [
+        "D4588DAC-986B-442B-97D8-3E8ADFC2BC2A",
+        "Root",
+        "Mercury",
+        "geom",
+        "realistic",
+        "materials",
+        "usdpreviewsurface3sg1"
       ],
       {
         "isExpanded" : true,

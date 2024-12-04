@@ -36,9 +36,12 @@ struct ImmersiveView: View {
     @State var spawnParticle: Bool = true
     @State var currentStep: Int = 0
     
-    @State var textArray: TextArray = TextArray()
-    
     let textCurver = TextCurver.self
+    
+    var textArray: [String] {
+        let textData = TextArray()
+        return duration == 0 ? textData.minuteArray : textData.threeMinutesArray
+    }
     
     var body: some View {
         
@@ -48,8 +51,8 @@ struct ImmersiveView: View {
             if let planet = try? await Entity(named: "TravelToMars", in: realityKitContentBundle) {
                 let environment = try? await EnvironmentResource(named: "studio")
                 
-                planet.configureLighting(resource: environment!, withShadow: true)
-                planet.position = SIMD3(x: planet.position.x, y: planet.position.y, z: -51)
+                planet.configureLighting(resource: environment!, withShadow: true, for: planet)
+                planet.position = SIMD3(x: planet.position.x, y: planet.position.y, z: -40.0)
                 
                 startTimers(entity: planet, environment: environment!, content: content)
                 content.add(planet)
@@ -57,7 +60,6 @@ struct ImmersiveView: View {
         }
         
         .onAppear {
-            print()
             audioPlayer.playSong(
                 "space", dot: "mp3",
                 numberOfLoops: 0,
@@ -83,8 +85,8 @@ struct ImmersiveView: View {
         
         textTimer(environment: environment, content: content)
         createNewParticle(environment: environment, content: content)
-        movePlanet(entity)
         moveParticles()
+        movePlanet(entity)
     }
     
     /// Stops all timers
@@ -98,13 +100,11 @@ struct ImmersiveView: View {
     
     /// Counts the travel steps, and handles the start and finish
     func updateStep() {
+                
+        currentStep = (currentStep + 1) % textArray.count
         
-        let currentArray = (duration == 0) ? textArray.minuteArray : textArray.threeMinutesArray
-        
-        currentStep = (currentStep + 1) % currentArray.count
-        
-        let lastStep = (currentStep == currentArray.count - 1)
-        let thirdToLast = (currentStep == currentArray.count - 3)
+        let lastStep = (currentStep == textArray.count - 1)
+        let thirdToLast = (currentStep == textArray.count - 3)
         
         if lastStep {
             stopTimer()
