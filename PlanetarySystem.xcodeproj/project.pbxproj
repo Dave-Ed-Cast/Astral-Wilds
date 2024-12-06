@@ -15,6 +15,7 @@
 		3E0BE18F2BF157DE00C5B7C8 /* PlanetCharacteristic.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E0BE18E2BF157DE00C5B7C8 /* PlanetCharacteristic.swift */; };
 		3E38A9F02CDCCC99000AC9E2 /* LightingConfigurable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E38A9EF2CDCCC99000AC9E2 /* LightingConfigurable.swift */; };
 		3E5C21712BF75EFA0015AC20 /* BeforeImmersiveView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E5C21702BF75EFA0015AC20 /* BeforeImmersiveView.swift */; };
+		3E63AFCE2D02F8940097CFC4 /* VisionTextArc in Frameworks */ = {isa = PBXBuildFile; productRef = 3E63AFCD2D02F8940097CFC4 /* VisionTextArc */; };
 		3E72DCCC2CDBED0F0050C344 /* AudioPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E72DCCB2CDBED0F0050C344 /* AudioPlayer.swift */; };
 		3E72DCCE2CDBEEBF0050C344 /* TextArray.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E72DCCD2CDBEEBF0050C344 /* TextArray.swift */; };
 		3E7D10DD2BF2652500B8CC9C /* MovePlanets.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E7D10DC2BF2652500B8CC9C /* MovePlanets.swift */; };
@@ -78,6 +79,7 @@
 			files = (
 				3ED4A6B22CFB1BE600A899A3 /* VisionTextArc in Frameworks */,
 				3E0636762BF0BAA400F7ED6E /* RealityKitContent in Frameworks */,
+				3E63AFCE2D02F8940097CFC4 /* VisionTextArc in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -230,6 +232,7 @@
 			packageProductDependencies = (
 				3E0636752BF0BAA400F7ED6E /* RealityKitContent */,
 				3ED4A6B12CFB1BE600A899A3 /* VisionTextArc */,
+				3E63AFCD2D02F8940097CFC4 /* VisionTextArc */,
 			);
 			productName = PlanetarySystem;
 			productReference = 3E5C216F2BF6BD010015AC20 /* PlanetarySystem.app */;
@@ -283,7 +286,7 @@
 			);
 			mainGroup = 3E0636672BF0BAA400F7ED6E;
 			packageReferences = (
-				3ED4A6B02CFB1BE600A899A3 /* XCLocalSwiftPackageReference "../VisionTextArc/VisionTextArc/VisionTextArc" */,
+				3E63AFCC2D02F8940097CFC4 /* XCRemoteSwiftPackageReference "VisionTextArc" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 3E0636672BF0BAA400F7ED6E;
@@ -615,17 +618,26 @@
 		};
 /* End XCConfigurationList section */
 
-/* Begin XCLocalSwiftPackageReference section */
-		3ED4A6B02CFB1BE600A899A3 /* XCLocalSwiftPackageReference "../VisionTextArc/VisionTextArc/VisionTextArc" */ = {
-			isa = XCLocalSwiftPackageReference;
-			relativePath = ../VisionTextArc/VisionTextArc/VisionTextArc;
+/* Begin XCRemoteSwiftPackageReference section */
+		3E63AFCC2D02F8940097CFC4 /* XCRemoteSwiftPackageReference "VisionTextArc" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/Dave-Ed-Cast/VisionTextArc";
+			requirement = {
+				branch = main;
+				kind = branch;
+			};
 		};
-/* End XCLocalSwiftPackageReference section */
+/* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
 		3E0636752BF0BAA400F7ED6E /* RealityKitContent */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = RealityKitContent;
+		};
+		3E63AFCD2D02F8940097CFC4 /* VisionTextArc */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 3E63AFCC2D02F8940097CFC4 /* XCRemoteSwiftPackageReference "VisionTextArc" */;
+			productName = VisionTextArc;
 		};
 		3ED4A6B12CFB1BE600A899A3 /* VisionTextArc */ = {
 			isa = XCSwiftPackageProductDependency;
