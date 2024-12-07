@@ -1,0 +1,14 @@
+{
+  "pins" : [
+    {
+      "identity" : "visiontextarc",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/Dave-Ed-Cast/VisionTextArc",
+      "state" : {
+        "branch" : "main",
+        "revision" : "0fc3efb848cfedf83821fd4b12757bdf2b327f79"
+      }
+    }
+  ],
+  "version" : 2
+}

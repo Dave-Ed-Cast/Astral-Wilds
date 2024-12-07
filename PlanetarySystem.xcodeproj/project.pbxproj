@@ -13,6 +13,7 @@
 		3E06367C2BF0BAA500F7ED6E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3E06367B2BF0BAA500F7ED6E /* Assets.xcassets */; };
 		3E06367F2BF0BAA500F7ED6E /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3E06367E2BF0BAA500F7ED6E /* Preview Assets.xcassets */; };
 		3E0BE18F2BF157DE00C5B7C8 /* PlanetCharacteristic.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E0BE18E2BF157DE00C5B7C8 /* PlanetCharacteristic.swift */; };
+		3E2408EA2D045DFB00054E49 /* VisionTextArc in Frameworks */ = {isa = PBXBuildFile; productRef = 3E2408E92D045DFB00054E49 /* VisionTextArc */; };
 		3E38A9F02CDCCC99000AC9E2 /* LightingConfigurable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E38A9EF2CDCCC99000AC9E2 /* LightingConfigurable.swift */; };
 		3E5C21712BF75EFA0015AC20 /* BeforeImmersiveView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E5C21702BF75EFA0015AC20 /* BeforeImmersiveView.swift */; };
 		3E72DCCC2CDBED0F0050C344 /* AudioPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E72DCCB2CDBED0F0050C344 /* AudioPlayer.swift */; };
@@ -78,6 +79,7 @@
 			files = (
 				3ED4A6B22CFB1BE600A899A3 /* VisionTextArc in Frameworks */,
 				3E0636762BF0BAA400F7ED6E /* RealityKitContent in Frameworks */,
+				3E2408EA2D045DFB00054E49 /* VisionTextArc in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -230,6 +232,7 @@
 			packageProductDependencies = (
 				3E0636752BF0BAA400F7ED6E /* RealityKitContent */,
 				3ED4A6B12CFB1BE600A899A3 /* VisionTextArc */,
+				3E2408E92D045DFB00054E49 /* VisionTextArc */,
 			);
 			productName = PlanetarySystem;
 			productReference = 3E5C216F2BF6BD010015AC20 /* PlanetarySystem.app */;
@@ -263,7 +266,7 @@
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
 				LastSwiftUpdateCheck = 1610;
-				LastUpgradeCheck = 1530;
+				LastUpgradeCheck = 1610;
 				TargetAttributes = {
 					3E06366F2BF0BAA400F7ED6E = {
 						CreatedOnToolsVersion = 15.3;
@@ -283,6 +286,7 @@
 			);
 			mainGroup = 3E0636672BF0BAA400F7ED6E;
 			packageReferences = (
+				3E2408E82D045DFB00054E49 /* XCRemoteSwiftPackageReference "VisionTextArc" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 3E0636672BF0BAA400F7ED6E;
@@ -542,6 +546,7 @@
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_TEAM = WLW428B75Y;
 				GENERATE_INFOPLIST_FILE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 18.1;
@@ -565,6 +570,7 @@
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_TEAM = WLW428B75Y;
 				GENERATE_INFOPLIST_FILE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 18.1;
@@ -614,10 +620,26 @@
 		};
 /* End XCConfigurationList section */
 
+/* Begin XCRemoteSwiftPackageReference section */
+		3E2408E82D045DFB00054E49 /* XCRemoteSwiftPackageReference "VisionTextArc" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/Dave-Ed-Cast/VisionTextArc";
+			requirement = {
+				branch = main;
+				kind = branch;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
 /* Begin XCSwiftPackageProductDependency section */
 		3E0636752BF0BAA400F7ED6E /* RealityKitContent */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = RealityKitContent;
+		};
+		3E2408E92D045DFB00054E49 /* VisionTextArc */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 3E2408E82D045DFB00054E49 /* XCRemoteSwiftPackageReference "VisionTextArc" */;
+			productName = VisionTextArc;
 		};
 		3ED4A6B12CFB1BE600A899A3 /* VisionTextArc */ = {
 			isa = XCSwiftPackageProductDependency;
