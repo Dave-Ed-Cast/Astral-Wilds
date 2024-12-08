@@ -23,7 +23,6 @@ struct MovePlanetsYouChoose: View {
                 
         RealityView { content in
                         
-            //this is safe to unwrap, it's for readability to write like this
             if let scene = try? await Entity(named: "Planets", in: realityKitContentBundle) {
                 content.add(scene)
             }
@@ -31,14 +30,15 @@ struct MovePlanetsYouChoose: View {
         .gesture(
             SpatialTapGesture(coordinateSpace: .local)
                 .targetedToAnyEntity()
-                .onEnded({ value in
+                .onEnded { value in
                     
-            let planet = planetName(for: value.entity, in: value.entity.name)
-            planetName = planet
-            
-            //safe to unwrap because we find it for sure
-            movePlanet(planet!)
-        }))
+                    let planet = planetName(for: value.entity, in: value.entity.name)
+                    planetName = planet
+                    
+                    //safe to unwrap because it's in the dictionary
+                    movePlanet(planet!)
+                }
+        )
         
     }
     
@@ -48,7 +48,11 @@ struct MovePlanetsYouChoose: View {
         
         guard let (index, parameters) = orbitalParameters
             .enumerated()
-            .first(where: { $0.element.planet == entity.name }).map({ ($0.offset, $0.element) }) else {
+            .first(where: {
+                $0.element.planet == entity.name
+            }).map({
+                ($0.offset, $0.element)
+            }) else {
             return
         }
         
@@ -56,7 +60,6 @@ struct MovePlanetsYouChoose: View {
         
         if orbitalParameters[index].revolving {
             startMovement(for: entity, with: parameters)
-            
         } else {
             stopMovement(for: entity)
         }
@@ -109,22 +112,3 @@ struct MovePlanetsYouChoose: View {
         timers[entity.name] = nil
     }
 }
-
-//        .gesture(RotateGesture3D().onEnded({ value in
-//
-//            if let planet = planetName {
-//                rotatePlanetGesture(entity: planet, rotation: value.rotation)
-//            }
-//        }))
-//
-//    private func rotatePlanetGesture(entity: Entity, rotation: Rotation3D) {
-//        let angle = rotation.angle
-//        let axis = rotation.axis
-//        let simdRotation = simd_quatf(angle: Float(angle.radians), axis: [Float(axis.x), Float(axis.y), Float(axis.z)])
-//        entity.transform.rotation *= simdRotation
-//    }
-//
-//    private func rotatePlanet(entity: Entity, angle: Angle) {
-//        let rotation = simd_quatf(angle: Float(angle.radians), axis: [0, 1, 0])
-//        entity.transform.rotation *= rotation
-//    }

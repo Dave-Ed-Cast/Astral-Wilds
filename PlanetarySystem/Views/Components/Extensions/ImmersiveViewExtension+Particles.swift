@@ -46,8 +46,7 @@ extension ImmersiveView {
     ///   - content: The reality view
     func createNewParticle(environment: EnvironmentResource, content: RealityViewContent) {
         
-//        let newParticleInterval: TimeInterval = 0.2
-        let newParticleInterval: TimeInterval = 0.1
+        let newParticleInterval: TimeInterval = 0.2
         
         particleTimer = Timer.scheduledTimer(withTimeInterval: newParticleInterval, repeats: true) { _ in
             
