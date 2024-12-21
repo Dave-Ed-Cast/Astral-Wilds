@@ -13,6 +13,7 @@ import RealityKitContent
 /// Then, we need to load the associated scene with the lights.
 struct MovePlanetsYouChoose: View {
     
+    @Environment(GestureModel.self) private var gestureModel
     @Environment(\.setMode) private var setMode
     
     @State private var timers: [String: Timer] = [:]
@@ -23,10 +24,21 @@ struct MovePlanetsYouChoose: View {
                 
         RealityView { content in
                         
+            Task {
+                await gestureModel.start()
+                await gestureModel.publishHandTrackingUpdates()
+            }
+            
+            //This is safe to unwrap, it's for readability to write like this
             if let scene = try? await Entity(named: "Planets", in: realityKitContentBundle) {
                 content.add(scene)
             }
         }
+        
+        .onDisappear {
+            Task { await gestureModel.stop() }
+        }
+        
         .gesture(
             SpatialTapGesture(coordinateSpace: .local)
                 .targetedToAnyEntity()
@@ -40,6 +52,11 @@ struct MovePlanetsYouChoose: View {
                 }
         )
         
+    }
+    
+    /// Handles the change of the scene when the snap is activated
+    private func handleSnapGesture() {
+        Task { await setMode(.mainScreen) }
     }
     
     /// Moves the corresponding planet identified by its own parameters

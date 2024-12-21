@@ -17,9 +17,12 @@ struct ExitImmersiveSpace: View {
     @Binding var mode: PlanetarySystemApp.Mode
     
     var body: some View {
-        VStack(spacing: 10) {
-            Text("Feeling overwhelmed? \nThis is the button to go back.")
-                .font(.headline)
+        VStack(spacing: 20) {
+            let snapText = Text("snap").fontWeight(.bold)
+            VStack {
+                Text("Feeling overwhelmed?").font(.title)
+                Text("Click the button or \(snapText) your fingers to go back.").font(.subheadline)
+            }
             
             if mode == .immersiveSpace {
                 Text("Spatial audio is playing. \nConsider repositioning this window.")
@@ -38,7 +41,7 @@ struct ExitImmersiveSpace: View {
                 dismissWindow(id: "Button")
                 
             } label: {
-                Text("Go back to reality")
+                Text("Back")
                     .font(.headline)
             }
         }

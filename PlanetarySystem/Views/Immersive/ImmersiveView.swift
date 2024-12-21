@@ -15,6 +15,7 @@ import VisionTextArc
 /// Then, we need to load the associated scene with the lights.
 struct ImmersiveView: View {
 
+    @Environment(GestureModel.self) private var gestureModel
     @Environment(\.setMode) private var setMode
     @Environment(\.openWindow) private var openWindow
     @Environment(\.dismissWindow) private var dismissWindow
@@ -47,6 +48,11 @@ struct ImmersiveView: View {
         
         RealityView { content in
             
+            Task {
+                await gestureModel.start()
+                await gestureModel.publishHandTrackingUpdates()
+            }
+            
             //This is safe to unwrap, it's for readability to write like this
             if let planet = try? await Entity(named: "TravelToMars", in: realityKitContentBundle) {
                 let environment = try? await EnvironmentResource(named: "studio")
@@ -58,18 +64,29 @@ struct ImmersiveView: View {
                 content.add(planet)
             }
         }
+        .onChange(of: gestureModel.isSnapGestureActivated) { _, isActivated in
+            if isActivated {
+                handleSnapGesture()
+            }
+        }
         
         .onAppear {
             audioPlayer.playSong(
                 "space", dot: "mp3",
                 numberOfLoops: 0,
-                withVolume: 0.25
+                withVolume: 0.35
             )
         }
         .onDisappear {
             stopTimer()
             audioPlayer.stopSong()
+            Task { await gestureModel.stop() }
         }
+    }
+    
+    /// Handles the change of the scene when the snap is activated
+    private func handleSnapGesture() {
+        Task { await setMode(.mainScreen) }
     }
     
     /// This is the function tha handles all the timers
@@ -90,7 +107,7 @@ struct ImmersiveView: View {
     }
     
     /// Stops all timers
-    func stopTimer() {
+    private func stopTimer() {
         timer?.invalidate()
         timer = nil
         planetTimer?.invalidate()

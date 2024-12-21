@@ -598,10 +598,13 @@ def Xform "Root"
         def Shader "Image"
         {
             uniform token info:id = "ND_image_color3"
-            asset inputs:file = @SpaceImage.png@
+            color3f inputs:default = (0, 0, 0) (
+                colorSpace = "srgb_displayp3"
+            )
+            asset inputs:file = @SpaceImage-gray.png@
             color3f outputs:out
             float2 ui:nodegraph:node:pos = (-138.59766, 67.98828)
-            int ui:nodegraph:node:stackingOrder = 6
+            int ui:nodegraph:node:stackingOrder = 16
         }
     }
 }

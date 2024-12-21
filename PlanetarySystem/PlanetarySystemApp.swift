@@ -53,10 +53,10 @@ struct PlanetarySystemApp: App {
     @State private var immersionMode: ImmersionStyle = .full
     @State private var selectedDuration: Int = 0
     @State private var tapLocation: CGPoint = .zero
-        
+    @State private var gestureModel = GestureModel()
+    
     @Environment(\.openWindow) private var openWindow
     @Environment(\.dismissWindow) private var dismissWindow
-    
     @Environment(\.openImmersiveSpace) private var openImmersiveSpace
     @Environment(\.dismissImmersiveSpace) private var dismissImmersiveSpace
     
@@ -121,6 +121,7 @@ struct PlanetarySystemApp: App {
         ImmersiveSpace(id: Self.planetsWindowID) {
             withAnimation(.easeInOut) {
                 MovePlanets()
+                    .environment(gestureModel)
                     .environment(\.setMode, setMode)
             }
         }
@@ -129,6 +130,7 @@ struct PlanetarySystemApp: App {
         ImmersiveSpace(id: Self.planetsDoItYourselfWindowID) {
             withAnimation(.easeInOut) {
                 MovePlanetsYouChoose()
+                    .environment(gestureModel)
                     .environment(\.setMode, setMode)
             }
         }
@@ -137,6 +139,7 @@ struct PlanetarySystemApp: App {
         ImmersiveSpace(id: Self.immersiveSpaceWindowId) {
             withAnimation(.easeInOut) {
                 ImmersiveView(duration: $selectedDuration)
+                    .environment(gestureModel)
                     .environment(\.setMode, setMode)
             }
         }
