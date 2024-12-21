@@ -13,25 +13,29 @@ import RealityKitContent
 struct ContentView: View {
     
     @Environment(\.setMode) private var setMode
-        
+    
     var body: some View {
-        VStack(spacing: 80) {
-            VStack(spacing: 10) {
-                Text("Welcome!")
-                    .font(.extraLargeTitle)
-                Text("Choose what do you want to explore")
-                    .font(.title2)
+        VStack(spacing: 100) {
+            Text("Welcome to Astral Wilds!")
+                .font(.extraLargeTitle)
+            
+            VStack(spacing: 5) {
+                HStack {
+                    Text("Choose what to explore!")
+                        .font(.title2)
+                    Spacer()
+                }
+                .padding(.leading, 15)
+                HStack(spacing: 10) {
+                    ImageButton(name: "SolarSystem", title: "View the solar system", chosenMode: .planets)
+                    ImageButton(name: "Touch", title: "Move preferred planets", chosenMode: .choosePlanetsToMove)
+                    ImageButton(name: "Mars", title: "Travel to Mars", chosenMode: .chooseTime)
+                }
+                .environment(\.setMode, setMode)
             }
-            HStack {
-                ImageButton(name: "SolarSystem", title: "View the solar system", chosenMode: .planets)
-                ImageButton(name: "Touch", title: "Move preferred planets", chosenMode: .choosePlanetsToMove)
-                ImageButton(name: "Mars", title: "Travel to Mars", chosenMode: .chooseTime)
-            }
-            .environment(\.setMode, setMode)
+            .padding()
         }
-        
-        .padding()
-        .navigationBarTitleDisplayMode(.automatic)
+        .padding(50)
     }
 }
 

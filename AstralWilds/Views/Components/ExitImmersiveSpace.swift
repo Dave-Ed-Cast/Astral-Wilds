@@ -14,20 +14,27 @@ struct ExitImmersiveSpace: View {
     @Environment(\.dismissWindow) private var dismissWindow
     @Environment(\.setMode) private var setMode
     
-    @Binding var mode: PlanetarySystemApp.Mode
+    @Binding var mode: AstralWildsApp.Mode
+    
+    fileprivate let buttonWindowID: String = "Button"
     
     var body: some View {
-        VStack(spacing: 20) {
+        VStack(spacing: 30) {
             let snapText = Text("snap").fontWeight(.bold)
             VStack {
                 Text("Feeling overwhelmed?").font(.title)
-                Text("Click the button or \(snapText) your fingers to go back.").font(.subheadline)
+                Text("Click the button or \(snapText) your fingers.").font(.subheadline)
             }
+            .multilineTextAlignment(.center)
             
             if mode == .immersiveSpace {
-                Text("Spatial audio is playing. \nConsider repositioning this window.")
-                    .font(.callout)
-                    .multilineTextAlignment(.center)
+                VStack {
+                    Text("Spatial audio is playing.")
+                    Text("Consider repositioning this window.")
+                }
+                .font(.callout)
+                .multilineTextAlignment(.center)
+                
             } else if mode == .choosePlanetsToMove {
                 Text("Tap on a planet to move it or stop it")
                     .font(.callout)
@@ -37,8 +44,8 @@ struct ExitImmersiveSpace: View {
             Button {
                 Task { await setMode(.mainScreen) }
                 
-                //the button window needs to be go when the immersive space disappears
-                dismissWindow(id: "Button")
+                //the button window needs to go when the immersive space disappears
+                dismissWindow(id: buttonWindowID)
                 
             } label: {
                 Text("Back")

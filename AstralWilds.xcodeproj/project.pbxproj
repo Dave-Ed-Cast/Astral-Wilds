@@ -9,6 +9,29 @@
 /* Begin PBXBuildFile section */
 		3E0636762BF0BAA400F7ED6E /* RealityKitContent in Frameworks */ = {isa = PBXBuildFile; productRef = 3E0636752BF0BAA400F7ED6E /* RealityKitContent */; };
 		3E2408EA2D045DFB00054E49 /* VisionTextArc in Frameworks */ = {isa = PBXBuildFile; productRef = 3E2408E92D045DFB00054E49 /* VisionTextArc */; };
+		3E4ABE3B2D16E5B400AA3DE3 /* AstralWildsApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E7B722D2D16E48600937F1E /* AstralWildsApp.swift */; };
+		3E4ABE3C2D16E5B400AA3DE3 /* SIMD4.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E7B720E2D16E48600937F1E /* SIMD4.swift */; };
+		3E4ABE3D2D16E5B400AA3DE3 /* AudioPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E7B72102D16E48600937F1E /* AudioPlayer.swift */; };
+		3E4ABE3E2D16E5B400AA3DE3 /* GestureModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E7B72112D16E48600937F1E /* GestureModel.swift */; };
+		3E4ABE3F2D16E5B400AA3DE3 /* PlanetCharacteristic.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E7B72122D16E48600937F1E /* PlanetCharacteristic.swift */; };
+		3E4ABE402D16E5B400AA3DE3 /* PlanetParameters.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E7B72132D16E48600937F1E /* PlanetParameters.swift */; };
+		3E4ABE412D16E5B400AA3DE3 /* TextArray.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E7B72142D16E48600937F1E /* TextArray.swift */; };
+		3E4ABE422D16E5B400AA3DE3 /* LightingConfigurable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E7B72182D16E48600937F1E /* LightingConfigurable.swift */; };
+		3E4ABE432D16E5B400AA3DE3 /* ImmersiveView+Particles.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E7B721C2D16E48600937F1E /* ImmersiveView+Particles.swift */; };
+		3E4ABE442D16E5B400AA3DE3 /* ImmersiveView+Planet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E7B721D2D16E48600937F1E /* ImmersiveView+Planet.swift */; };
+		3E4ABE452D16E5B400AA3DE3 /* ImmersiveView+Text.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E7B721E2D16E48600937F1E /* ImmersiveView+Text.swift */; };
+		3E4ABE462D16E5B400AA3DE3 /* ViewExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E7B721F2D16E48600937F1E /* ViewExtension.swift */; };
+		3E4ABE472D16E5B400AA3DE3 /* ExitImmersiveSpace.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E7B72212D16E48600937F1E /* ExitImmersiveSpace.swift */; };
+		3E4ABE482D16E5B400AA3DE3 /* ImageButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E7B72222D16E48600937F1E /* ImageButton.swift */; };
+		3E4ABE492D16E5B400AA3DE3 /* ImmersiveView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E7B72242D16E48600937F1E /* ImmersiveView.swift */; };
+		3E4ABE4A2D16E5B400AA3DE3 /* MovePlanets.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E7B72252D16E48600937F1E /* MovePlanets.swift */; };
+		3E4ABE4B2D16E5B400AA3DE3 /* MovePlanetsYouChoose.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E7B72262D16E48600937F1E /* MovePlanetsYouChoose.swift */; };
+		3E4ABE4C2D16E5B400AA3DE3 /* BeforeImmersiveView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E7B72282D16E48600937F1E /* BeforeImmersiveView.swift */; };
+		3E4ABE4D2D16E5B400AA3DE3 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E7B72292D16E48600937F1E /* ContentView.swift */; };
+		3E4ABE4E2D16E66400AA3DE3 /* Preview Assets.xcassets in Sources */ = {isa = PBXBuildFile; fileRef = 3E7B72162D16E48600937F1E /* Preview Assets.xcassets */; };
+		3E4ABE4F2D16E66400AA3DE3 /* Assets.xcassets in Sources */ = {isa = PBXBuildFile; fileRef = 3E7B722B2D16E48600937F1E /* Assets.xcassets */; };
+		3E4ABE522D16EB4200AA3DE3 /* space.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 3E7B721A2D16E48600937F1E /* space.mp3 */; };
+		3E4ABE562D16F45400AA3DE3 /* studio.skybox in Resources */ = {isa = PBXBuildFile; fileRef = 3E4ABE552D16F45400AA3DE3 /* studio.skybox */; };
 		3ED4A6B22CFB1BE600A899A3 /* VisionTextArc in Frameworks */ = {isa = PBXBuildFile; productRef = 3ED4A6B12CFB1BE600A899A3 /* VisionTextArc */; };
 /* End PBXBuildFile section */
 
@@ -24,6 +47,7 @@
 
 /* Begin PBXFileReference section */
 		3E0636742BF0BAA400F7ED6E /* RealityKitContent */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = RealityKitContent; sourceTree = "<group>"; };
+		3E4ABE552D16F45400AA3DE3 /* studio.skybox */ = {isa = PBXFileReference; lastKnownFileType = file.skybox; path = studio.skybox; sourceTree = "<group>"; };
 		3E5C216F2BF6BD010015AC20 /* AstralWilds.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AstralWilds.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3E7B720E2D16E48600937F1E /* SIMD4.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SIMD4.swift; sourceTree = "<group>"; };
 		3E7B72102D16E48600937F1E /* AudioPlayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioPlayer.swift; sourceTree = "<group>"; };
@@ -48,8 +72,6 @@
 		3E7B722B2D16E48600937F1E /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		3E7B722C2D16E48600937F1E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		3E7B722D2D16E48600937F1E /* AstralWildsApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AstralWildsApp.swift; sourceTree = "<group>"; };
-		3E7B722E2D16E48600937F1E /* studio.hdr */ = {isa = PBXFileReference; lastKnownFileType = file; path = studio.hdr; sourceTree = "<group>"; };
-		3E7B722F2D16E48600937F1E /* studio.skybox */ = {isa = PBXFileReference; lastKnownFileType = file.skybox; path = studio.skybox; sourceTree = "<group>"; };
 		3EA475602BF6BA75005A3573 /* RealityKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RealityKit.framework; path = System/Library/Frameworks/RealityKit.framework; sourceTree = SDKROOT; };
 		3EBF553A2CE4F49E00216442 /* AstralWildsTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AstralWildsTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -184,16 +206,15 @@
 		3E7B72302D16E48600937F1E /* AstralWilds */ = {
 			isa = PBXGroup;
 			children = (
+				3E7B72172D16E48600937F1E /* Preview Content */,
+				3E4ABE552D16F45400AA3DE3 /* studio.skybox */,
 				3E7B722D2D16E48600937F1E /* AstralWildsApp.swift */,
 				3E7B72152D16E48600937F1E /* Models */,
-				3E7B72172D16E48600937F1E /* Preview Content */,
 				3E7B72192D16E48600937F1E /* Protocols */,
 				3E7B721B2D16E48600937F1E /* Sounds */,
 				3E7B722A2D16E48600937F1E /* Views */,
 				3E7B722B2D16E48600937F1E /* Assets.xcassets */,
 				3E7B722C2D16E48600937F1E /* Info.plist */,
-				3E7B722E2D16E48600937F1E /* studio.hdr */,
-				3E7B722F2D16E48600937F1E /* studio.skybox */,
 			);
 			path = AstralWilds;
 			sourceTree = "<group>";
@@ -297,6 +318,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3E4ABE522D16EB4200AA3DE3 /* space.mp3 in Resources */,
+				3E4ABE562D16F45400AA3DE3 /* studio.skybox in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -314,6 +337,27 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3E4ABE4E2D16E66400AA3DE3 /* Preview Assets.xcassets in Sources */,
+				3E4ABE4F2D16E66400AA3DE3 /* Assets.xcassets in Sources */,
+				3E4ABE3B2D16E5B400AA3DE3 /* AstralWildsApp.swift in Sources */,
+				3E4ABE3C2D16E5B400AA3DE3 /* SIMD4.swift in Sources */,
+				3E4ABE3D2D16E5B400AA3DE3 /* AudioPlayer.swift in Sources */,
+				3E4ABE3E2D16E5B400AA3DE3 /* GestureModel.swift in Sources */,
+				3E4ABE3F2D16E5B400AA3DE3 /* PlanetCharacteristic.swift in Sources */,
+				3E4ABE402D16E5B400AA3DE3 /* PlanetParameters.swift in Sources */,
+				3E4ABE412D16E5B400AA3DE3 /* TextArray.swift in Sources */,
+				3E4ABE422D16E5B400AA3DE3 /* LightingConfigurable.swift in Sources */,
+				3E4ABE432D16E5B400AA3DE3 /* ImmersiveView+Particles.swift in Sources */,
+				3E4ABE442D16E5B400AA3DE3 /* ImmersiveView+Planet.swift in Sources */,
+				3E4ABE452D16E5B400AA3DE3 /* ImmersiveView+Text.swift in Sources */,
+				3E4ABE462D16E5B400AA3DE3 /* ViewExtension.swift in Sources */,
+				3E4ABE472D16E5B400AA3DE3 /* ExitImmersiveSpace.swift in Sources */,
+				3E4ABE482D16E5B400AA3DE3 /* ImageButton.swift in Sources */,
+				3E4ABE492D16E5B400AA3DE3 /* ImmersiveView.swift in Sources */,
+				3E4ABE4A2D16E5B400AA3DE3 /* MovePlanets.swift in Sources */,
+				3E4ABE4B2D16E5B400AA3DE3 /* MovePlanetsYouChoose.swift in Sources */,
+				3E4ABE4C2D16E5B400AA3DE3 /* BeforeImmersiveView.swift in Sources */,
+				3E4ABE4D2D16E5B400AA3DE3 /* ContentView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -461,7 +505,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 2;
-				DEVELOPMENT_ASSET_PATHS = "\"PlanetarySystem/Preview Content\"";
+				DEVELOPMENT_ASSET_PATHS = "\"AstralWilds/Preview Content\"";
 				DEVELOPMENT_TEAM = WLW428B75Y;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -479,7 +523,7 @@
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2,7";
-				XROS_DEPLOYMENT_TARGET = 1.3;
+				XROS_DEPLOYMENT_TARGET = 2.0;
 			};
 			name = Debug;
 		};
@@ -490,7 +534,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 2;
-				DEVELOPMENT_ASSET_PATHS = "\"PlanetarySystem/Preview Content\"";
+				DEVELOPMENT_ASSET_PATHS = "\"AstralWilds/Preview Content\"";
 				DEVELOPMENT_TEAM = WLW428B75Y;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -508,7 +552,7 @@
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2,7";
-				XROS_DEPLOYMENT_TARGET = 1.3;
+				XROS_DEPLOYMENT_TARGET = 2.0;
 			};
 			name = Release;
 		};

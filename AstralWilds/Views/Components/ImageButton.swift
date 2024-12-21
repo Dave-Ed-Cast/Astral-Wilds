@@ -14,23 +14,27 @@ struct ImageButton: View {
     @Environment(\.setMode) private var setMode
     let name: String
     let title: String
-    let chosenMode: PlanetarySystemApp.Mode
+    let chosenMode: AstralWildsApp.Mode
     
     var body: some View {
         VStack {
             Image(name)
                 .resizable()
-                .frame(width: 320, height: 175)
+                .frame(width: 300, height: 175)
                 .cornerRadius(20)
                 .padding()
             Button {
                 Task { await setMode(chosenMode) }
             } label: {
                 Text(title)
-                    .font(.title2)
-                    .frame(width: 280, height: 60)
+                    .font(.title3)
+                    .frame(width: 260, height: 60)
             }
         }
-        .padding()
     }
+}
+
+
+#Preview(windowStyle: .automatic) {
+    ContentView()
 }

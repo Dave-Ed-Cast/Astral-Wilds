@@ -43,11 +43,6 @@ struct AstralWildsApp: App {
         }
     }
     
-    init() {
-        RealityKitContent.GestureComponent
-            .registerComponent()
-    }
-    
     @State private var mode: Mode = .mainScreen
     @State private var immersiveSpacePresented: Bool = false
     @State private var immersionMode: ImmersionStyle = .full
@@ -59,6 +54,7 @@ struct AstralWildsApp: App {
     @Environment(\.dismissWindow) private var dismissWindow
     @Environment(\.openImmersiveSpace) private var openImmersiveSpace
     @Environment(\.dismissImmersiveSpace) private var dismissImmersiveSpace
+    @Environment(\.pushWindow) private var pushWindow
     
     /// This handles the opening and dismissing of either windows and immersive spaces
     /// - Parameter newMode: is the next mode after interacting within the app
@@ -100,7 +96,7 @@ struct AstralWildsApp: App {
                 .fixedSize()
                 .environment(\.setMode, setMode)
         }
-        .windowResizability(.contentMinSize)
+        .windowResizability(.contentSize)
         
         WindowGroup(id: Self.chooseTimeWindowID) {
             BeforeImmersiveView(durationSelection: $selectedDuration)
@@ -109,14 +105,31 @@ struct AstralWildsApp: App {
                 .environment(\.setMode, setMode)
         }
         .windowResizability(.contentSize)
+        .defaultWindowPlacement { content, _ in
+            return WindowPlacement(
+                .utilityPanel,
+                size: content.sizeThatFits(.unspecified)
+            )
+        }
         
         WindowGroup(id: Self.buttonWindowID) {
             ExitImmersiveSpace(mode: $mode)
                 .fixedSize(horizontal: true, vertical: true)
-                .frame(width: 300, height: 120)
                 .environment(\.setMode, setMode)
         }
         .windowResizability(.contentSize)
+        .defaultWindowPlacement { content, context in
+            
+            let size = content.sizeThatFits(.unspecified)
+            if let mainViewWindow = context.windows.first(where: { $0.id == Self.mainScreenWindowID }) {
+                
+                return WindowPlacement(.trailing(mainViewWindow), size: size)
+            } else if let chooseTimeWindow = context.windows.first(where: { $0.id == Self.chooseTimeWindowID }) {
+                
+                return WindowPlacement(.replacing(chooseTimeWindow), size: size)
+            }
+            return WindowPlacement(.none)
+        }
         
         ImmersiveSpace(id: Self.planetsWindowID) {
             withAnimation(.easeInOut) {
@@ -148,7 +161,7 @@ struct AstralWildsApp: App {
 }
 
 struct SetModeKey: EnvironmentKey {
-    typealias Value = (PlanetarySystemApp.Mode) async -> Void
+    typealias Value = (AstralWildsApp.Mode) async -> Void
     static let defaultValue: Value = { _ in }
 }
 
