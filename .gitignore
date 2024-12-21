@@ -5,9 +5,6 @@
 # macOS System Index
 **/.DS_Store
 
-# macOS-specific system files
-.DS_Store
-
 # Visual Studio Code Workspace
 **/.vscode
 

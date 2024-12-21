@@ -56,7 +56,7 @@
 		3E10B53B2D16CB5D004AC3A1 /* GestureModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GestureModel.swift; sourceTree = "<group>"; };
 		3E10B5742D16CD5A004AC3A1 /* SIMD4.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SIMD4.swift; sourceTree = "<group>"; };
 		3E38A9EF2CDCCC99000AC9E2 /* LightingConfigurable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LightingConfigurable.swift; sourceTree = "<group>"; };
-		3E5C216F2BF6BD010015AC20 /* PlanetarySystem.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PlanetarySystem.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		3E5C216F2BF6BD010015AC20 /* AstralWilds.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AstralWilds.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3E5C21702BF75EFA0015AC20 /* BeforeImmersiveView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BeforeImmersiveView.swift; sourceTree = "<group>"; };
 		3E72DCCB2CDBED0F0050C344 /* AudioPlayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioPlayer.swift; sourceTree = "<group>"; };
 		3E72DCCD2CDBEEBF0050C344 /* TextArray.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextArray.swift; sourceTree = "<group>"; };
@@ -69,7 +69,7 @@
 		3EA224602CD917EA00A94EAC /* ViewExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewExtension.swift; sourceTree = "<group>"; };
 		3EA2FC742BFA251400DB151E /* space.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = space.mp3; sourceTree = "<group>"; };
 		3EA475602BF6BA75005A3573 /* RealityKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RealityKit.framework; path = System/Library/Frameworks/RealityKit.framework; sourceTree = SDKROOT; };
-		3EBF553A2CE4F49E00216442 /* PlanetarySystemTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PlanetarySystemTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		3EBF553A2CE4F49E00216442 /* AstralWildsTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AstralWildsTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		3ED824C32BF4FB710091E5F5 /* ImmersiveView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImmersiveView.swift; sourceTree = "<group>"; };
 		3EE96C362CCBC04D007BE4E2 /* ImageButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageButton.swift; sourceTree = "<group>"; };
 		3EE96C382CCD07C6007BE4E2 /* PlanetParameters.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlanetParameters.swift; sourceTree = "<group>"; };
@@ -103,8 +103,8 @@
 				3E0636722BF0BAA400F7ED6E /* PlanetarySystem */,
 				3E0636732BF0BAA400F7ED6E /* Packages */,
 				3EA4755F2BF6BA75005A3573 /* Frameworks */,
-				3E5C216F2BF6BD010015AC20 /* PlanetarySystem.app */,
-				3EBF553A2CE4F49E00216442 /* PlanetarySystemTests.xctest */,
+				3E5C216F2BF6BD010015AC20 /* AstralWilds.app */,
+				3EBF553A2CE4F49E00216442 /* AstralWildsTests.xctest */,
 			);
 			sourceTree = "<group>";
 		};
@@ -230,9 +230,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		3E06366F2BF0BAA400F7ED6E /* PlanetarySystem */ = {
+		3E06366F2BF0BAA400F7ED6E /* AstralWilds */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 3E0636832BF0BAA500F7ED6E /* Build configuration list for PBXNativeTarget "PlanetarySystem" */;
+			buildConfigurationList = 3E0636832BF0BAA500F7ED6E /* Build configuration list for PBXNativeTarget "AstralWilds" */;
 			buildPhases = (
 				3E06366C2BF0BAA400F7ED6E /* Sources */,
 				3E06366D2BF0BAA400F7ED6E /* Frameworks */,
@@ -242,19 +242,19 @@
 			);
 			dependencies = (
 			);
-			name = PlanetarySystem;
+			name = AstralWilds;
 			packageProductDependencies = (
 				3E0636752BF0BAA400F7ED6E /* RealityKitContent */,
 				3ED4A6B12CFB1BE600A899A3 /* VisionTextArc */,
 				3E2408E92D045DFB00054E49 /* VisionTextArc */,
 			);
 			productName = PlanetarySystem;
-			productReference = 3E5C216F2BF6BD010015AC20 /* PlanetarySystem.app */;
+			productReference = 3E5C216F2BF6BD010015AC20 /* AstralWilds.app */;
 			productType = "com.apple.product-type.application";
 		};
-		3E71D8792CDD3C4F00B515ED /* PlanetarySystemTests */ = {
+		3E71D8792CDD3C4F00B515ED /* AstralWildsTests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 3E71D8822CDD3C4F00B515ED /* Build configuration list for PBXNativeTarget "PlanetarySystemTests" */;
+			buildConfigurationList = 3E71D8822CDD3C4F00B515ED /* Build configuration list for PBXNativeTarget "AstralWildsTests" */;
 			buildPhases = (
 				3E71D8762CDD3C4F00B515ED /* Sources */,
 				3E71D8772CDD3C4F00B515ED /* Frameworks */,
@@ -265,11 +265,11 @@
 			dependencies = (
 				3E71D87F2CDD3C4F00B515ED /* PBXTargetDependency */,
 			);
-			name = PlanetarySystemTests;
+			name = AstralWildsTests;
 			packageProductDependencies = (
 			);
 			productName = PlanetarySystemTests;
-			productReference = 3EBF553A2CE4F49E00216442 /* PlanetarySystemTests.xctest */;
+			productReference = 3EBF553A2CE4F49E00216442 /* AstralWildsTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
 /* End PBXNativeTarget section */
@@ -291,7 +291,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 3E06366B2BF0BAA400F7ED6E /* Build configuration list for PBXProject "PlanetarySystem" */;
+			buildConfigurationList = 3E06366B2BF0BAA400F7ED6E /* Build configuration list for PBXProject "AstralWilds" */;
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
@@ -307,8 +307,8 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				3E06366F2BF0BAA400F7ED6E /* PlanetarySystem */,
-				3E71D8792CDD3C4F00B515ED /* PlanetarySystemTests */,
+				3E06366F2BF0BAA400F7ED6E /* AstralWilds */,
+				3E71D8792CDD3C4F00B515ED /* AstralWildsTests */,
 			);
 		};
 /* End PBXProject section */
@@ -373,7 +373,7 @@
 /* Begin PBXTargetDependency section */
 		3E71D87F2CDD3C4F00B515ED /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 3E06366F2BF0BAA400F7ED6E /* PlanetarySystem */;
+			target = 3E06366F2BF0BAA400F7ED6E /* AstralWilds */;
 			targetProxy = 3E71D87E2CDD3C4F00B515ED /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
@@ -575,7 +575,7 @@
 				SWIFT_EMIT_LOC_STRINGS = NO;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2,7";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/PlanetarySystem.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/PlanetarySystem";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/AstralWilds.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/AstralWilds";
 				XROS_DEPLOYMENT_TARGET = 1.0;
 			};
 			name = Debug;
@@ -599,7 +599,7 @@
 				SWIFT_EMIT_LOC_STRINGS = NO;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2,7";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/PlanetarySystem.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/PlanetarySystem";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/AstralWilds.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/AstralWilds";
 				XROS_DEPLOYMENT_TARGET = 1.0;
 			};
 			name = Release;
@@ -607,7 +607,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		3E06366B2BF0BAA400F7ED6E /* Build configuration list for PBXProject "PlanetarySystem" */ = {
+		3E06366B2BF0BAA400F7ED6E /* Build configuration list for PBXProject "AstralWilds" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				3E0636812BF0BAA500F7ED6E /* Debug */,
@@ -616,7 +616,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		3E0636832BF0BAA500F7ED6E /* Build configuration list for PBXNativeTarget "PlanetarySystem" */ = {
+		3E0636832BF0BAA500F7ED6E /* Build configuration list for PBXNativeTarget "AstralWilds" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				3E0636842BF0BAA500F7ED6E /* Debug */,
@@ -625,7 +625,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		3E71D8822CDD3C4F00B515ED /* Build configuration list for PBXNativeTarget "PlanetarySystemTests" */ = {
+		3E71D8822CDD3C4F00B515ED /* Build configuration list for PBXNativeTarget "AstralWildsTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				3E71D8802CDD3C4F00B515ED /* Debug */,
