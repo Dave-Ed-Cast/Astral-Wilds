@@ -8,31 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		3E0636762BF0BAA400F7ED6E /* RealityKitContent in Frameworks */ = {isa = PBXBuildFile; productRef = 3E0636752BF0BAA400F7ED6E /* RealityKitContent */; };
-		3E0636782BF0BAA400F7ED6E /* PlanetarySystemApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E0636772BF0BAA400F7ED6E /* PlanetarySystemApp.swift */; };
-		3E06367A2BF0BAA400F7ED6E /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E0636792BF0BAA400F7ED6E /* ContentView.swift */; };
-		3E06367C2BF0BAA500F7ED6E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3E06367B2BF0BAA500F7ED6E /* Assets.xcassets */; };
-		3E06367F2BF0BAA500F7ED6E /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3E06367E2BF0BAA500F7ED6E /* Preview Assets.xcassets */; };
-		3E0BE18F2BF157DE00C5B7C8 /* PlanetCharacteristic.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E0BE18E2BF157DE00C5B7C8 /* PlanetCharacteristic.swift */; };
-		3E10B53C2D16CB5D004AC3A1 /* GestureModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E10B53B2D16CB5D004AC3A1 /* GestureModel.swift */; };
-		3E10B5752D16CD5A004AC3A1 /* SIMD4.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E10B5742D16CD5A004AC3A1 /* SIMD4.swift */; };
 		3E2408EA2D045DFB00054E49 /* VisionTextArc in Frameworks */ = {isa = PBXBuildFile; productRef = 3E2408E92D045DFB00054E49 /* VisionTextArc */; };
-		3E38A9F02CDCCC99000AC9E2 /* LightingConfigurable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E38A9EF2CDCCC99000AC9E2 /* LightingConfigurable.swift */; };
-		3E5C21712BF75EFA0015AC20 /* BeforeImmersiveView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E5C21702BF75EFA0015AC20 /* BeforeImmersiveView.swift */; };
-		3E72DCCC2CDBED0F0050C344 /* AudioPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E72DCCB2CDBED0F0050C344 /* AudioPlayer.swift */; };
-		3E72DCCE2CDBEEBF0050C344 /* TextArray.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E72DCCD2CDBEEBF0050C344 /* TextArray.swift */; };
-		3E7D10DD2BF2652500B8CC9C /* MovePlanets.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E7D10DC2BF2652500B8CC9C /* MovePlanets.swift */; };
-		3E7D3F422CDE0205008918B8 /* ImmersiveView+Particles.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E7D3F412CDE0205008918B8 /* ImmersiveView+Particles.swift */; };
-		3E7D3F442CDE03CE008918B8 /* ImmersiveView+Planet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E7D3F432CDE03CE008918B8 /* ImmersiveView+Planet.swift */; };
-		3E7D3F462CDE04AE008918B8 /* ImmersiveView+Text.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E7D3F452CDE04AE008918B8 /* ImmersiveView+Text.swift */; };
-		3E979FC02BF6A7C80011999B /* studio.skybox in Resources */ = {isa = PBXBuildFile; fileRef = 3E979FBF2BF6A7C80011999B /* studio.skybox */; };
-		3EA1F00C2CE4955200E8F1FE /* ExitImmersiveSpace.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EA1F00B2CE4955200E8F1FE /* ExitImmersiveSpace.swift */; };
-		3EA224612CD917EA00A94EAC /* ViewExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EA224602CD917EA00A94EAC /* ViewExtension.swift */; };
-		3EA2FC752BFA251400DB151E /* space.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 3EA2FC742BFA251400DB151E /* space.mp3 */; };
 		3ED4A6B22CFB1BE600A899A3 /* VisionTextArc in Frameworks */ = {isa = PBXBuildFile; productRef = 3ED4A6B12CFB1BE600A899A3 /* VisionTextArc */; };
-		3ED824C42BF4FB710091E5F5 /* ImmersiveView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3ED824C32BF4FB710091E5F5 /* ImmersiveView.swift */; };
-		3EE96C372CCBC04D007BE4E2 /* ImageButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EE96C362CCBC04D007BE4E2 /* ImageButton.swift */; };
-		3EE96C392CCD07C6007BE4E2 /* PlanetParameters.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EE96C382CCD07C6007BE4E2 /* PlanetParameters.swift */; };
-		3EF670E22BF282E700F916CF /* MovePlanetsYouChoose.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EF670E12BF282E700F916CF /* MovePlanetsYouChoose.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -47,33 +24,34 @@
 
 /* Begin PBXFileReference section */
 		3E0636742BF0BAA400F7ED6E /* RealityKitContent */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = RealityKitContent; sourceTree = "<group>"; };
-		3E0636772BF0BAA400F7ED6E /* PlanetarySystemApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlanetarySystemApp.swift; sourceTree = "<group>"; };
-		3E0636792BF0BAA400F7ED6E /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
-		3E06367B2BF0BAA500F7ED6E /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		3E06367E2BF0BAA500F7ED6E /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
-		3E0636802BF0BAA500F7ED6E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		3E0BE18E2BF157DE00C5B7C8 /* PlanetCharacteristic.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlanetCharacteristic.swift; sourceTree = "<group>"; };
-		3E10B53B2D16CB5D004AC3A1 /* GestureModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GestureModel.swift; sourceTree = "<group>"; };
-		3E10B5742D16CD5A004AC3A1 /* SIMD4.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SIMD4.swift; sourceTree = "<group>"; };
-		3E38A9EF2CDCCC99000AC9E2 /* LightingConfigurable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LightingConfigurable.swift; sourceTree = "<group>"; };
 		3E5C216F2BF6BD010015AC20 /* AstralWilds.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AstralWilds.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		3E5C21702BF75EFA0015AC20 /* BeforeImmersiveView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BeforeImmersiveView.swift; sourceTree = "<group>"; };
-		3E72DCCB2CDBED0F0050C344 /* AudioPlayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioPlayer.swift; sourceTree = "<group>"; };
-		3E72DCCD2CDBEEBF0050C344 /* TextArray.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextArray.swift; sourceTree = "<group>"; };
-		3E7D10DC2BF2652500B8CC9C /* MovePlanets.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MovePlanets.swift; sourceTree = "<group>"; };
-		3E7D3F412CDE0205008918B8 /* ImmersiveView+Particles.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ImmersiveView+Particles.swift"; sourceTree = "<group>"; };
-		3E7D3F432CDE03CE008918B8 /* ImmersiveView+Planet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ImmersiveView+Planet.swift"; sourceTree = "<group>"; };
-		3E7D3F452CDE04AE008918B8 /* ImmersiveView+Text.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ImmersiveView+Text.swift"; sourceTree = "<group>"; };
-		3E979FBF2BF6A7C80011999B /* studio.skybox */ = {isa = PBXFileReference; lastKnownFileType = file.skybox; path = studio.skybox; sourceTree = "<group>"; };
-		3EA1F00B2CE4955200E8F1FE /* ExitImmersiveSpace.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExitImmersiveSpace.swift; sourceTree = "<group>"; };
-		3EA224602CD917EA00A94EAC /* ViewExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewExtension.swift; sourceTree = "<group>"; };
-		3EA2FC742BFA251400DB151E /* space.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = space.mp3; sourceTree = "<group>"; };
+		3E7B720E2D16E48600937F1E /* SIMD4.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SIMD4.swift; sourceTree = "<group>"; };
+		3E7B72102D16E48600937F1E /* AudioPlayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioPlayer.swift; sourceTree = "<group>"; };
+		3E7B72112D16E48600937F1E /* GestureModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GestureModel.swift; sourceTree = "<group>"; };
+		3E7B72122D16E48600937F1E /* PlanetCharacteristic.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlanetCharacteristic.swift; sourceTree = "<group>"; };
+		3E7B72132D16E48600937F1E /* PlanetParameters.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlanetParameters.swift; sourceTree = "<group>"; };
+		3E7B72142D16E48600937F1E /* TextArray.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextArray.swift; sourceTree = "<group>"; };
+		3E7B72162D16E48600937F1E /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		3E7B72182D16E48600937F1E /* LightingConfigurable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LightingConfigurable.swift; sourceTree = "<group>"; };
+		3E7B721A2D16E48600937F1E /* space.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = space.mp3; sourceTree = "<group>"; };
+		3E7B721C2D16E48600937F1E /* ImmersiveView+Particles.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ImmersiveView+Particles.swift"; sourceTree = "<group>"; };
+		3E7B721D2D16E48600937F1E /* ImmersiveView+Planet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ImmersiveView+Planet.swift"; sourceTree = "<group>"; };
+		3E7B721E2D16E48600937F1E /* ImmersiveView+Text.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ImmersiveView+Text.swift"; sourceTree = "<group>"; };
+		3E7B721F2D16E48600937F1E /* ViewExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewExtension.swift; sourceTree = "<group>"; };
+		3E7B72212D16E48600937F1E /* ExitImmersiveSpace.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExitImmersiveSpace.swift; sourceTree = "<group>"; };
+		3E7B72222D16E48600937F1E /* ImageButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageButton.swift; sourceTree = "<group>"; };
+		3E7B72242D16E48600937F1E /* ImmersiveView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImmersiveView.swift; sourceTree = "<group>"; };
+		3E7B72252D16E48600937F1E /* MovePlanets.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovePlanets.swift; sourceTree = "<group>"; };
+		3E7B72262D16E48600937F1E /* MovePlanetsYouChoose.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovePlanetsYouChoose.swift; sourceTree = "<group>"; };
+		3E7B72282D16E48600937F1E /* BeforeImmersiveView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BeforeImmersiveView.swift; sourceTree = "<group>"; };
+		3E7B72292D16E48600937F1E /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		3E7B722B2D16E48600937F1E /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		3E7B722C2D16E48600937F1E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		3E7B722D2D16E48600937F1E /* AstralWildsApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AstralWildsApp.swift; sourceTree = "<group>"; };
+		3E7B722E2D16E48600937F1E /* studio.hdr */ = {isa = PBXFileReference; lastKnownFileType = file; path = studio.hdr; sourceTree = "<group>"; };
+		3E7B722F2D16E48600937F1E /* studio.skybox */ = {isa = PBXFileReference; lastKnownFileType = file.skybox; path = studio.skybox; sourceTree = "<group>"; };
 		3EA475602BF6BA75005A3573 /* RealityKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RealityKit.framework; path = System/Library/Frameworks/RealityKit.framework; sourceTree = SDKROOT; };
 		3EBF553A2CE4F49E00216442 /* AstralWildsTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AstralWildsTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		3ED824C32BF4FB710091E5F5 /* ImmersiveView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImmersiveView.swift; sourceTree = "<group>"; };
-		3EE96C362CCBC04D007BE4E2 /* ImageButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageButton.swift; sourceTree = "<group>"; };
-		3EE96C382CCD07C6007BE4E2 /* PlanetParameters.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlanetParameters.swift; sourceTree = "<group>"; };
-		3EF670E12BF282E700F916CF /* MovePlanetsYouChoose.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovePlanetsYouChoose.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -100,28 +78,12 @@
 		3E0636672BF0BAA400F7ED6E = {
 			isa = PBXGroup;
 			children = (
-				3E0636722BF0BAA400F7ED6E /* PlanetarySystem */,
+				3E7B72302D16E48600937F1E /* AstralWilds */,
 				3E0636732BF0BAA400F7ED6E /* Packages */,
 				3EA4755F2BF6BA75005A3573 /* Frameworks */,
 				3E5C216F2BF6BD010015AC20 /* AstralWilds.app */,
 				3EBF553A2CE4F49E00216442 /* AstralWildsTests.xctest */,
 			);
-			sourceTree = "<group>";
-		};
-		3E0636722BF0BAA400F7ED6E /* PlanetarySystem */ = {
-			isa = PBXGroup;
-			children = (
-				3E0636772BF0BAA400F7ED6E /* PlanetarySystemApp.swift */,
-				3E06367B2BF0BAA500F7ED6E /* Assets.xcassets */,
-				3ED365C72BFA21550009123D /* Sounds */,
-				3E979FBF2BF6A7C80011999B /* studio.skybox */,
-				3ED365C82BFA21780009123D /* Views */,
-				3ED365C92BFA21820009123D /* Models */,
-				3E38A9EC2CDCCC6E000AC9E2 /* Protocols */,
-				3E0636802BF0BAA500F7ED6E /* Info.plist */,
-				3E06367D2BF0BAA500F7ED6E /* Preview Content */,
-			);
-			path = PlanetarySystem;
 			sourceTree = "<group>";
 		};
 		3E0636732BF0BAA400F7ED6E /* Packages */ = {
@@ -132,59 +94,108 @@
 			path = Packages;
 			sourceTree = "<group>";
 		};
-		3E06367D2BF0BAA500F7ED6E /* Preview Content */ = {
+		3E7B720F2D16E48600937F1E /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
-				3E06367E2BF0BAA500F7ED6E /* Preview Assets.xcassets */,
+				3E7B720E2D16E48600937F1E /* SIMD4.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
+		3E7B72152D16E48600937F1E /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				3E7B720F2D16E48600937F1E /* Extensions */,
+				3E7B72102D16E48600937F1E /* AudioPlayer.swift */,
+				3E7B72112D16E48600937F1E /* GestureModel.swift */,
+				3E7B72122D16E48600937F1E /* PlanetCharacteristic.swift */,
+				3E7B72132D16E48600937F1E /* PlanetParameters.swift */,
+				3E7B72142D16E48600937F1E /* TextArray.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		3E7B72172D16E48600937F1E /* Preview Content */ = {
+			isa = PBXGroup;
+			children = (
+				3E7B72162D16E48600937F1E /* Preview Assets.xcassets */,
 			);
 			path = "Preview Content";
 			sourceTree = "<group>";
 		};
-		3E10B5762D16CD68004AC3A1 /* Extensions */ = {
+		3E7B72192D16E48600937F1E /* Protocols */ = {
 			isa = PBXGroup;
 			children = (
-				3E10B5742D16CD5A004AC3A1 /* SIMD4.swift */,
+				3E7B72182D16E48600937F1E /* LightingConfigurable.swift */,
+			);
+			path = Protocols;
+			sourceTree = "<group>";
+		};
+		3E7B721B2D16E48600937F1E /* Sounds */ = {
+			isa = PBXGroup;
+			children = (
+				3E7B721A2D16E48600937F1E /* space.mp3 */,
+			);
+			path = Sounds;
+			sourceTree = "<group>";
+		};
+		3E7B72202D16E48600937F1E /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				3E7B721C2D16E48600937F1E /* ImmersiveView+Particles.swift */,
+				3E7B721D2D16E48600937F1E /* ImmersiveView+Planet.swift */,
+				3E7B721E2D16E48600937F1E /* ImmersiveView+Text.swift */,
+				3E7B721F2D16E48600937F1E /* ViewExtension.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
 		};
-		3E38A9E92CDCBAD0000AC9E2 /* Immersive */ = {
+		3E7B72232D16E48600937F1E /* Components */ = {
 			isa = PBXGroup;
 			children = (
-				3ED824C32BF4FB710091E5F5 /* ImmersiveView.swift */,
-				3E7D10DC2BF2652500B8CC9C /* MovePlanets.swift */,
-				3EF670E12BF282E700F916CF /* MovePlanetsYouChoose.swift */,
-			);
-			path = Immersive;
-			sourceTree = "<group>";
-		};
-		3E38A9EA2CDCBAEF000AC9E2 /* Components */ = {
-			isa = PBXGroup;
-			children = (
-				3E38A9EB2CDCBB08000AC9E2 /* Extensions */,
-				3EE96C362CCBC04D007BE4E2 /* ImageButton.swift */,
-				3EA1F00B2CE4955200E8F1FE /* ExitImmersiveSpace.swift */,
+				3E7B72202D16E48600937F1E /* Extensions */,
+				3E7B72212D16E48600937F1E /* ExitImmersiveSpace.swift */,
+				3E7B72222D16E48600937F1E /* ImageButton.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
 		};
-		3E38A9EB2CDCBB08000AC9E2 /* Extensions */ = {
+		3E7B72272D16E48600937F1E /* Immersive */ = {
 			isa = PBXGroup;
 			children = (
-				3EA224602CD917EA00A94EAC /* ViewExtension.swift */,
-				3E7D3F412CDE0205008918B8 /* ImmersiveView+Particles.swift */,
-				3E7D3F432CDE03CE008918B8 /* ImmersiveView+Planet.swift */,
-				3E7D3F452CDE04AE008918B8 /* ImmersiveView+Text.swift */,
+				3E7B72242D16E48600937F1E /* ImmersiveView.swift */,
+				3E7B72252D16E48600937F1E /* MovePlanets.swift */,
+				3E7B72262D16E48600937F1E /* MovePlanetsYouChoose.swift */,
 			);
-			path = Extensions;
+			path = Immersive;
 			sourceTree = "<group>";
 		};
-		3E38A9EC2CDCCC6E000AC9E2 /* Protocols */ = {
+		3E7B722A2D16E48600937F1E /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				3E38A9EF2CDCCC99000AC9E2 /* LightingConfigurable.swift */,
+				3E7B72232D16E48600937F1E /* Components */,
+				3E7B72272D16E48600937F1E /* Immersive */,
+				3E7B72282D16E48600937F1E /* BeforeImmersiveView.swift */,
+				3E7B72292D16E48600937F1E /* ContentView.swift */,
 			);
-			path = Protocols;
+			path = Views;
+			sourceTree = "<group>";
+		};
+		3E7B72302D16E48600937F1E /* AstralWilds */ = {
+			isa = PBXGroup;
+			children = (
+				3E7B722D2D16E48600937F1E /* AstralWildsApp.swift */,
+				3E7B72152D16E48600937F1E /* Models */,
+				3E7B72172D16E48600937F1E /* Preview Content */,
+				3E7B72192D16E48600937F1E /* Protocols */,
+				3E7B721B2D16E48600937F1E /* Sounds */,
+				3E7B722A2D16E48600937F1E /* Views */,
+				3E7B722B2D16E48600937F1E /* Assets.xcassets */,
+				3E7B722C2D16E48600937F1E /* Info.plist */,
+				3E7B722E2D16E48600937F1E /* studio.hdr */,
+				3E7B722F2D16E48600937F1E /* studio.skybox */,
+			);
+			path = AstralWilds;
 			sourceTree = "<group>";
 		};
 		3EA4755F2BF6BA75005A3573 /* Frameworks */ = {
@@ -193,38 +204,6 @@
 				3EA475602BF6BA75005A3573 /* RealityKit.framework */,
 			);
 			name = Frameworks;
-			sourceTree = "<group>";
-		};
-		3ED365C72BFA21550009123D /* Sounds */ = {
-			isa = PBXGroup;
-			children = (
-				3EA2FC742BFA251400DB151E /* space.mp3 */,
-			);
-			path = Sounds;
-			sourceTree = "<group>";
-		};
-		3ED365C82BFA21780009123D /* Views */ = {
-			isa = PBXGroup;
-			children = (
-				3E0636792BF0BAA400F7ED6E /* ContentView.swift */,
-				3E5C21702BF75EFA0015AC20 /* BeforeImmersiveView.swift */,
-				3E38A9E92CDCBAD0000AC9E2 /* Immersive */,
-				3E38A9EA2CDCBAEF000AC9E2 /* Components */,
-			);
-			path = Views;
-			sourceTree = "<group>";
-		};
-		3ED365C92BFA21820009123D /* Models */ = {
-			isa = PBXGroup;
-			children = (
-				3E72DCCB2CDBED0F0050C344 /* AudioPlayer.swift */,
-				3E0BE18E2BF157DE00C5B7C8 /* PlanetCharacteristic.swift */,
-				3E10B53B2D16CB5D004AC3A1 /* GestureModel.swift */,
-				3E72DCCD2CDBEEBF0050C344 /* TextArray.swift */,
-				3EE96C382CCD07C6007BE4E2 /* PlanetParameters.swift */,
-				3E10B5762D16CD68004AC3A1 /* Extensions */,
-			);
-			path = Models;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -318,10 +297,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				3E06367F2BF0BAA500F7ED6E /* Preview Assets.xcassets in Resources */,
-				3E979FC02BF6A7C80011999B /* studio.skybox in Resources */,
-				3E06367C2BF0BAA500F7ED6E /* Assets.xcassets in Resources */,
-				3EA2FC752BFA251400DB151E /* space.mp3 in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -339,25 +314,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				3E06367A2BF0BAA400F7ED6E /* ContentView.swift in Sources */,
-				3E7D10DD2BF2652500B8CC9C /* MovePlanets.swift in Sources */,
-				3E5C21712BF75EFA0015AC20 /* BeforeImmersiveView.swift in Sources */,
-				3EE96C372CCBC04D007BE4E2 /* ImageButton.swift in Sources */,
-				3EA1F00C2CE4955200E8F1FE /* ExitImmersiveSpace.swift in Sources */,
-				3E38A9F02CDCCC99000AC9E2 /* LightingConfigurable.swift in Sources */,
-				3E0636782BF0BAA400F7ED6E /* PlanetarySystemApp.swift in Sources */,
-				3E10B5752D16CD5A004AC3A1 /* SIMD4.swift in Sources */,
-				3E7D3F442CDE03CE008918B8 /* ImmersiveView+Planet.swift in Sources */,
-				3E7D3F462CDE04AE008918B8 /* ImmersiveView+Text.swift in Sources */,
-				3EA224612CD917EA00A94EAC /* ViewExtension.swift in Sources */,
-				3E7D3F422CDE0205008918B8 /* ImmersiveView+Particles.swift in Sources */,
-				3EF670E22BF282E700F916CF /* MovePlanetsYouChoose.swift in Sources */,
-				3E72DCCE2CDBEEBF0050C344 /* TextArray.swift in Sources */,
-				3E10B53C2D16CB5D004AC3A1 /* GestureModel.swift in Sources */,
-				3E0BE18F2BF157DE00C5B7C8 /* PlanetCharacteristic.swift in Sources */,
-				3EE96C392CCD07C6007BE4E2 /* PlanetParameters.swift in Sources */,
-				3ED824C42BF4FB710091E5F5 /* ImmersiveView.swift in Sources */,
-				3E72DCCC2CDBED0F0050C344 /* AudioPlayer.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -1,6 +1,6 @@
 //
-//  PlanetarySystemApp.swift
-//  PlanetarySystem
+//  AstralWildsApp.swift
+//  AstralWilds
 //
 //  Created by Davide Castaldi on 12/05/24.
 //
@@ -12,7 +12,7 @@ import RealityKitContent
 /// It uses an enum "Mode" that is defined from cases that return the associated window id, along with 
 /// `needsImmersiveSpace` that defines which one should use an immersive space.
 @main
-struct PlanetarySystemApp: App {
+struct AstralWildsApp: App {
     
     private static let mainScreenWindowID: String = "main"
     private static let buttonWindowID: String = "Button"
