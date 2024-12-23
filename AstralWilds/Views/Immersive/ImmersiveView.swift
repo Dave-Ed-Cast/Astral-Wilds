@@ -52,12 +52,12 @@ struct ImmersiveView: View {
         
         RealityView { content in
             
-//#if !targetEnvironment(simulator)
+#if !targetEnvironment(simulator)
             Task {
                 await gestureModel.start()
                 await gestureModel.updateTracking()
             }
-//#endif
+#endif
             
             //This is safe to unwrap, it's for readability to write like this
             if let planet = try? await Entity(named: selectedMode, in: realityKitContentBundle) {
@@ -70,13 +70,13 @@ struct ImmersiveView: View {
                 content.add(planet)
             }
         }
-//#if !targetEnvironment(simulator)
+#if !targetEnvironment(simulator)
         .onChange(of: gestureModel.isSnapGestureActivated) { _, isActivated in
             if isActivated {
                 handleSnapGesture()
             }
         }
-//#endif
+#endif
         .onAppear {
             audioPlayer.playSong(
                 "space", dot: "mp3",
