@@ -1,0 +1,208 @@
+#usda 1.0
+(
+    customLayerData = {
+        string creator = "Reality Composer Pro Version 1.0 (409.100.15)"
+    }
+    defaultPrim = "Root"
+    metersPerUnit = 1
+    upAxis = "Y"
+)
+
+def Xform "Root"
+{
+    reorder nameChildren = ["Mars_1", "SkySphere", "SpaceMaterial", "TravelToUser", "SkysphereTravel"]
+    def "Mars_1" (
+        active = true
+        references = @Mars 1.usdz@
+    )
+    {
+        float3 xformOp:scale = (10, 10, 10)
+        float3 xformOp:translate = (0, -0.507, -50)
+        uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+
+        def RealityKitComponent "InputTarget"
+        {
+            uniform token info:id = "RealityKit.InputTarget"
+        }
+
+        def RealityKitComponent "RCP_BehaviorsContainer"
+        {
+            rel behaviors = </Root/Mars_1/OnAddedToScene>
+            uniform token info:id = "RCP.BehaviorsContainer"
+        }
+
+        def Preliminary_Behavior "OnAddedToScene"
+        {
+            rel actions = </Root/Mars_1/OnAddedToScene/Action>
+            uniform bool exclusive
+            rel triggers = </Root/Mars_1/OnAddedToScene/Trigger>
+
+            def Preliminary_Trigger "Trigger"
+            {
+                rel affectedObjects = </Root/Mars_1>
+                token info:id = "SceneTransition"
+            }
+
+            def Preliminary_Action "Action"
+            {
+                rel affectedObjects = </Root>
+                rel animationLibraryKey = </Root/TravelToUser>
+                rel animationLibraryKeyOverrideKey = </Root/Mars_1/OnAddedToScene/Trigger>
+                token info:id = "PlayTimeline"
+                int loops = 0
+                int performCount = 1
+                token type = "serial"
+            }
+        }
+    }
+
+    def "SkySphere" (
+        active = true
+        prepend apiSchemas = ["MaterialBindingAPI"]
+        references = @SkySphere.usdz@
+    )
+    {
+        rel material:binding = </Root/SpaceMaterial> (
+            bindMaterialAs = "weakerThanDescendants"
+        )
+        float3 xformOp:scale = (1, 1, 1)
+
+        def RealityKitComponent "RCP_BehaviorsContainer"
+        {
+            rel behaviors = </Root/SkySphere/OnAddedToScene>
+            uniform token info:id = "RCP.BehaviorsContainer"
+        }
+
+        def Preliminary_Behavior "OnAddedToScene"
+        {
+            rel actions = </Root/SkySphere/OnAddedToScene/Action>
+            uniform bool exclusive
+            rel triggers = </Root/SkySphere/OnAddedToScene/Trigger>
+
+            def Preliminary_Trigger "Trigger"
+            {
+                rel affectedObjects = </Root/SkySphere>
+                token info:id = "SceneTransition"
+            }
+
+            def Preliminary_Action "Action"
+            {
+                rel affectedObjects = </Root>
+                rel animationLibraryKey = </Root/SkysphereTravel>
+                rel animationLibraryKeyOverrideKey = </Root/SkySphere/OnAddedToScene/Trigger>
+                token info:id = "PlayTimeline"
+                int loops = 0
+                int performCount = 1
+                token type = "serial"
+            }
+        }
+    }
+
+    def Material "SpaceMaterial"
+    {
+        token outputs:mtlx:surface.connect = </Root/SpaceMaterial/PreviewSurface.outputs:out>
+        token outputs:realitykit:vertex
+        float2 ui:nodegraph:realitykit:subgraphOutputs:pos = (335.25, 100.5)
+
+        def Shader "PreviewSurface"
+        {
+            uniform token info:id = "ND_UsdPreviewSurface_surfaceshader"
+            color3f inputs:diffuseColor.connect = </Root/SpaceMaterial/Image.outputs:out>
+            float inputs:metallic
+            float inputs:roughness = 1
+            token outputs:out
+            float2 ui:nodegraph:node:pos = (93.5, 100.5)
+            int ui:nodegraph:node:stackingOrder = 7
+        }
+
+        def Shader "Image"
+        {
+            uniform token info:id = "ND_image_color3"
+            asset inputs:file = @SpaceImage-gray.png@
+            color3f outputs:out
+            float2 ui:nodegraph:node:pos = (-138.59766, 67.98828)
+            int ui:nodegraph:node:stackingOrder = 9
+        }
+    }
+
+    def RealityKitTimeline "TravelToUser"
+    {
+        reorder nameChildren = ["Track", "Track2"]
+        def RealityKitTrack "Track"
+        {
+            def RealityKitAction "Transform_To"
+            {
+                string actionKind = "moveTo"
+                int blendLayer = 300
+                double duration = 170
+                uniform token info:id = "A0413589-EF75-4476-ADAC-A1CB77896890"
+                float3 position = (0, -0.507, -0.5)
+                quatf rotation = (1, 0, 0, 0)
+                float3 scale = (10, 10, 10)
+                double startTime = 10
+                rel target = </Root/Mars_1>
+
+                def RealityKitStruct "transformMode"
+                {
+                    rel referenceEntity = </Root>
+                    token type = "parent"
+                }
+
+                def RealityKitStruct "timingFunction"
+                {
+                    token type = "easeOut"
+                }
+            }
+        }
+
+        def RealityKitTrack "Track2"
+        {
+            def RealityKitAction "Spin"
+            {
+                string actionKind = "spin"
+                int blendLayer = 400
+                double duration = 210
+                uniform token info:id = "2E95B770-0F02-48D9-83AA-426D4DB65011"
+                float revolutions = 2
+                token spinDirection = "counterclockwise"
+                double startTime = 0
+                rel target = </Root/Mars_1>
+
+                def RealityKitStruct "timingFunction"
+                {
+                }
+            }
+        }
+    }
+
+    def RealityKitTimeline "SkysphereTravel"
+    {
+        def RealityKitTrack "Track"
+        {
+            def RealityKitAction "Transform_To"
+            {
+                string actionKind = "moveTo"
+                int blendLayer = 300
+                double duration = 175
+                uniform token info:id = "0238D712-E080-4197-A36D-8F3E1182480C"
+                float3 position = (0, 0, 49.5)
+                quatf rotation = (1, 0, 0, 0)
+                float3 scale = (1, 1, 1)
+                double startTime = 10
+                rel target = </Root/SkySphere>
+
+                def RealityKitStruct "transformMode"
+                {
+                    rel referenceEntity = </Root>
+                    token type = "parent"
+                }
+
+                def RealityKitStruct "timingFunction"
+                {
+                    token type = "easeInOut"
+                }
+            }
+        }
+    }
+}
+

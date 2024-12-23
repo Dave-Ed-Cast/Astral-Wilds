@@ -16,14 +16,14 @@ struct BeforeImmersiveView: View {
 
     var body: some View {
         
-        VStack(spacing: 50) {
+        VStack(spacing: 35) {
             
-            Text("Please select the duration of your journey.")
+            Text("Select the duration of your journey.")
                 .font(.title2)
             
             VStack {
-                Text("It is advised to be in a quiet and calm environment for this duration.")
-                Text("Furthermore, before starting please bring the window closer to you.")
+                Text("It is recommended to bring some snacks and sit comfortably.")
+                Text("Then, position this window where you want the journey to happen.")
             }
             .font(.callout)
 
@@ -41,6 +41,7 @@ struct BeforeImmersiveView: View {
             }
             
         }
+        .multilineTextAlignment(.center)
         .padding()
         .onAppear {
             dismissWindow(id: "main")

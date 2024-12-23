@@ -12,7 +12,7 @@ reorder rootPrims = ["Root", "Saturn"]
 
 def Xform "Root"
 {
-    reorder nameChildren = ["Saturn", "Uranus", "Neptune", "SkySphere", "SpaceMaterial", "PlanetMaterial", "Mercury", "Sun", "Venus", "Earth", "Mars", "Jupiter"]
+    reorder nameChildren = ["Sun", "Mercury", "Venus", "Earth", "Mars", "Jupiter", "Saturn", "Uranus", "Neptune", "SkySphere", "SpaceMaterial", "MercuryOrbit", "VenusOrbit", "EarthOrbit", "MarsOrbit", "JupiterOrbit", "SaturnOrbit", "UranusOrbit", "NeptuneOrbit"]
     def "Mercury" (
         active = true
         customData = {
@@ -21,10 +21,10 @@ def Xform "Root"
         references = @Mercury.usdz@
     )
     {
-        reorder nameChildren = ["geom", "Collider", "InputTarget", "RealityKitContent_GestureComponent", "PlanetMaterial"]
+        reorder nameChildren = ["geom", "Collider", "InputTarget", "RealityKitContent_GestureComponent", "ImageBasedLightReceiver", "RCP_BehaviorsContainer", "OnAddedToScene"]
         quatf xformOp:orient = (0.99813473, 0.06104857, 0.000015982481, 0.0002613111)
         float3 xformOp:scale = (2, 2, 2)
-        float3 xformOp:translate = (0, 0.6, -3)
+        float3 xformOp:translate = (0, 0.9, -3)
         uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
 
         def RealityKitComponent "Collider"
@@ -37,7 +37,7 @@ def Xform "Root"
             def RealityKitStruct "Shape"
             {
                 float3 extent = (0.19999999, 0.2, 0.2)
-                float radius = 0.1
+                float radius = 1
                 token shapeType = "Sphere"
 
                 def RealityKitStruct "pose"
@@ -50,11 +50,6 @@ def Xform "Root"
         def RealityKitComponent "InputTarget"
         {
             uniform token info:id = "RealityKit.InputTarget"
-        }
-
-        def RealityKitCustomComponent "RealityKitContent_GestureComponent"
-        {
-            uniform token info:id = "RealityKitContent.GestureComponent"
         }
 
         over "geom"
@@ -129,114 +124,39 @@ def Xform "Root"
             }
         }
 
-        def RealityKitComponent "ImageBasedLightReceiver" (
-            active = false
-        )
+        def RealityKitComponent "RCP_BehaviorsContainer"
         {
-            uniform token info:id = "RealityKit.ImageBasedLightReceiver"
-        }
-    }
-
-    def "Sun" (
-        active = true
-        prepend apiSchemas = ["MaterialBindingAPI"]
-        customData = {
-            float3 rotationEulerHint = (0, 0.12653638, 0)
-        }
-        references = @Sun.usdz@
-    )
-    {
-        reorder nameChildren = ["geom", "InputTarget", "Collider", "DirectionalLight", "EnvironmentLightingConfiguration", "SpotLight"]
-        quatf xformOp:orient = (0.9979992, 0, 0.06322671, 0)
-        float3 xformOp:scale = (0.9999999, 1, 0.9999999)
-        float3 xformOp:translate = (0, 0.6, 0)
-        uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
-
-        def RealityKitComponent "InputTarget" (
-            active = false
-        )
-        {
-            uniform token info:id = "RealityKit.InputTarget"
+            rel behaviors = </Root/Mercury/OnTap>
+            uniform token info:id = "RCP.BehaviorsContainer"
         }
 
-        def RealityKitComponent "Collider" (
-            active = false
-        )
+        def RealityKitComponent "AnimationLibrary"
         {
-            uint group = 1
-            uniform token info:id = "RealityKit.Collider"
-            uint mask = 4294967295
-            token type = "Default"
+            uniform token info:id = "RealityKit.AnimationLibrary"
+        }
 
-            def RealityKitStruct "Shape"
+        def Preliminary_Behavior "OnTap"
+        {
+            rel actions = </Root/Mercury/OnTap/Action>
+            uniform bool exclusive
+            rel triggers = </Root/Mercury/OnTap/Trigger>
+
+            def Preliminary_Trigger "Trigger"
             {
-                float3 extent = (0.2, 0.2, 0.19999999)
-                token shapeType = "Box"
-
-                def RealityKitStruct "pose"
-                {
-                    float3 position = (3.7252903e-8, 0, 4.8428774e-8)
-                }
+                rel affectedObjects = </Root/Mercury>
+                token info:id = "TapGesture"
             }
-        }
 
-        def RealityKitComponent "PointLight"
-        {
-            float attenuationFalloffExponent = 0.5
-            float attenuationRadius = 250
-            uniform token info:id = "RealityKit.PointLight"
-            float intensity = 100000
-        }
-    }
-
-    def "Venus" (
-        active = true
-        customData = {
-            float3 rotationEulerHint = (0.059166674, -1.1641532e-10, 3.095516)
-        }
-        references = @Venus.usdz@
-    )
-    {
-        quatf xformOp:orient = (0.023026226, 0.0006813914, 0.029571172, 0.9992972)
-        float3 xformOp:scale = (3, 3, 3)
-        float3 xformOp:translate = (0, 0.6, -6)
-        uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
-
-        def RealityKitComponent "InputTarget"
-        {
-            uniform token info:id = "RealityKit.InputTarget"
-        }
-
-        def RealityKitComponent "Collider"
-        {
-            uint group = 1
-            uniform token info:id = "RealityKit.Collider"
-            uint mask = 4294967295
-            token type = "Default"
-
-            def RealityKitStruct "Shape"
+            def Preliminary_Action "Action"
             {
-                float3 extent = (0.2, 0.2, 0.2)
-                token shapeType = "Box"
-
-                def RealityKitStruct "pose"
-                {
-                    float3 position = (2.682209e-7, 0, 2.682209e-7)
-                }
+                rel affectedObjects = </Root>
+                rel animationLibraryKey = </Root/MercuryOrbit>
+                rel animationLibraryKeyOverrideKey = </Root/Mercury/OnTap/Trigger>
+                token info:id = "PlayTimeline"
+                int loops = 0
+                int performCount = 1
+                token type = "serial"
             }
-        }
-
-        def RealityKitCustomComponent "RealityKitContent_GestureComponent"
-        {
-            uniform token info:id = "RealityKitContent.GestureComponent"
-        }
-
-        def RealityKitComponent "ImageBasedLightReceiver" (
-            active = false
-        )
-        {
-            rel iblEntity = </Root/Sun>
-            uniform token info:id = "RealityKit.ImageBasedLightReceiver"
         }
     }
 
@@ -248,9 +168,10 @@ def Xform "Root"
         references = @Earth.usdz@
     )
     {
+        reorder nameChildren = ["geom", "Collider", "InputTarget", "RealityKitContent_GestureComponent", "ImageBasedLightReceiver", "RCP_BehaviorsContainer", "OnAddedToScene"]
         quatf xformOp:orient = (0.97915196, 0, 0, 0.20312911)
         float3 xformOp:scale = (4, 4, 4)
-        float3 xformOp:translate = (0, 0.6, -9)
+        float3 xformOp:translate = (0, 0.9, -9)
         uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
 
         def RealityKitComponent "Collider"
@@ -263,7 +184,8 @@ def Xform "Root"
             def RealityKitStruct "Shape"
             {
                 float3 extent = (0.20499998, 0.205, 0.20500001)
-                token shapeType = "Box"
+                float radius = 2
+                token shapeType = "Sphere"
 
                 def RealityKitStruct "pose"
                 {
@@ -277,67 +199,34 @@ def Xform "Root"
             uniform token info:id = "RealityKit.InputTarget"
         }
 
-        def RealityKitCustomComponent "RealityKitContent_GestureComponent"
+        def RealityKitComponent "RCP_BehaviorsContainer"
         {
-            uniform token info:id = "RealityKitContent.GestureComponent"
+            rel behaviors = </Root/Earth/OnTap>
+            uniform token info:id = "RCP.BehaviorsContainer"
         }
 
-        def RealityKitComponent "ImageBasedLightReceiver"
+        def Preliminary_Behavior "OnTap"
         {
-            uniform token info:id = "RealityKit.ImageBasedLightReceiver"
-        }
-    }
+            rel actions = </Root/Earth/OnTap/Action>
+            uniform bool exclusive
+            rel triggers = </Root/Earth/OnTap/Trigger>
 
-    def "Mars" (
-        active = true
-        customData = {
-            float3 rotationEulerHint = (0.032288592, 0, 0.43964845)
-        }
-        references = @Mars.usdz@
-    )
-    {
-        reorder nameChildren = ["Saturn", "geom"]
-        quatf xformOp:orient = (0.9758086, 0.015755111, 0.003520241, 0.21802966)
-        float3 xformOp:scale = (3, 3, 3)
-        float3 xformOp:translate = (0, 0.6, -12)
-        uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
-
-        def RealityKitComponent "Collider"
-        {
-            uint group = 1
-            uniform token info:id = "RealityKit.Collider"
-            uint mask = 4294967295
-            token type = "Default"
-
-            def RealityKitStruct "Shape"
+            def Preliminary_Trigger "Trigger"
             {
-                float3 extent = (0.19999999, 0.19999999, 0.19999999)
-                float radius = 0.099999994
-                token shapeType = "Sphere"
-
-                def RealityKitStruct "pose"
-                {
-                    float3 position = (3.3527613e-8, -0.000718683, 2.2351742e-8)
-                }
+                rel affectedObjects = </Root/Earth>
+                token info:id = "TapGesture"
             }
-        }
 
-        def RealityKitComponent "InputTarget"
-        {
-            uniform token info:id = "RealityKit.InputTarget"
-        }
-
-        def RealityKitCustomComponent "RealityKitContent_GestureComponent"
-        {
-            uniform token info:id = "RealityKitContent.GestureComponent"
-        }
-
-        def RealityKitComponent "ImageBasedLightReceiver" (
-            active = false
-        )
-        {
-            rel iblEntity = </Root/Sun>
-            uniform token info:id = "RealityKit.ImageBasedLightReceiver"
+            def Preliminary_Action "Action"
+            {
+                rel affectedObjects = </Root>
+                rel animationLibraryKey = </Root/EarthOrbit>
+                rel animationLibraryKeyOverrideKey = </Root/Earth/OnTap/Trigger>
+                token info:id = "PlayTimeline"
+                int loops = 0
+                int performCount = 1
+                token type = "serial"
+            }
         }
     }
 
@@ -351,7 +240,7 @@ def Xform "Root"
     {
         quatf xformOp:orient = (0.99956167, 0.011427394, 0.00031221006, 0.027309218)
         float3 xformOp:scale = (8, 8, 8)
-        float3 xformOp:translate = (0, 0.6, -15)
+        float3 xformOp:translate = (0, 0.9, -15)
         uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
 
         def RealityKitComponent "Collider"
@@ -364,7 +253,7 @@ def Xform "Root"
             def RealityKitStruct "Shape"
             {
                 float3 extent = (0.19999999, 0.2, 0.20000002)
-                float radius = 0.10000001
+                float radius = 4
                 token shapeType = "Sphere"
 
                 def RealityKitStruct "pose"
@@ -379,17 +268,34 @@ def Xform "Root"
             uniform token info:id = "RealityKit.InputTarget"
         }
 
-        def RealityKitCustomComponent "RealityKitContent_GestureComponent"
+        def RealityKitComponent "RCP_BehaviorsContainer"
         {
-            uniform token info:id = "RealityKitContent.GestureComponent"
+            rel behaviors = </Root/Jupiter/OnTap>
+            uniform token info:id = "RCP.BehaviorsContainer"
         }
 
-        def RealityKitComponent "ImageBasedLightReceiver" (
-            active = false
-        )
+        def Preliminary_Behavior "OnTap"
         {
-            rel iblEntity = </Root/Sun>
-            uniform token info:id = "RealityKit.ImageBasedLightReceiver"
+            rel actions = </Root/Jupiter/OnTap/Action>
+            uniform bool exclusive
+            rel triggers = </Root/Jupiter/OnTap/Trigger>
+
+            def Preliminary_Trigger "Trigger"
+            {
+                rel affectedObjects = </Root/Jupiter>
+                token info:id = "TapGesture"
+            }
+
+            def Preliminary_Action "Action"
+            {
+                rel affectedObjects = </Root>
+                rel animationLibraryKey = </Root/JupiterOrbit>
+                rel animationLibraryKeyOverrideKey = </Root/Jupiter/OnTap/Trigger>
+                token info:id = "PlayTimeline"
+                int loops = 0
+                int performCount = 1
+                token type = "serial"
+            }
         }
     }
 
@@ -403,7 +309,7 @@ def Xform "Root"
     {
         quatf xformOp:orient = (0.9726876, 0.02113918, 0.005022419, 0.23109904)
         float3 xformOp:scale = (7, 7, 7)
-        float3 xformOp:translate = (0, 0.6, -18)
+        float3 xformOp:translate = (0, 0.9, -18)
         uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
 
         def RealityKitComponent "Collider"
@@ -416,7 +322,7 @@ def Xform "Root"
             def RealityKitStruct "Shape"
             {
                 float3 extent = (0.46763724, 0.20021316, 0.46763742)
-                float radius = 0.23381871
+                float radius = 3.5
                 token shapeType = "Sphere"
 
                 def RealityKitStruct "pose"
@@ -431,15 +337,34 @@ def Xform "Root"
             uniform token info:id = "RealityKit.InputTarget"
         }
 
-        def RealityKitCustomComponent "RealityKitContent_GestureComponent"
+        def RealityKitComponent "RCP_BehaviorsContainer"
         {
-            uniform token info:id = "RealityKitContent.GestureComponent"
+            rel behaviors = </Root/Saturn/OnTap>
+            uniform token info:id = "RCP.BehaviorsContainer"
         }
 
-        def RealityKitComponent "ImageBasedLightReceiver"
+        def Preliminary_Behavior "OnTap"
         {
-            rel iblEntity = </Root/Sun>
-            uniform token info:id = "RealityKit.ImageBasedLightReceiver"
+            rel actions = </Root/Saturn/OnTap/Action>
+            uniform bool exclusive
+            rel triggers = </Root/Saturn/OnTap/Trigger>
+
+            def Preliminary_Trigger "Trigger"
+            {
+                rel affectedObjects = </Root/Saturn>
+                token info:id = "TapGesture"
+            }
+
+            def Preliminary_Action "Action"
+            {
+                rel affectedObjects = </Root>
+                rel animationLibraryKey = </Root/SaturnOrbit>
+                rel animationLibraryKeyOverrideKey = </Root/Saturn/OnTap/Trigger>
+                token info:id = "PlayTimeline"
+                int loops = 0
+                int performCount = 1
+                token type = "serial"
+            }
         }
     }
 
@@ -453,7 +378,7 @@ def Xform "Root"
     {
         quatf xformOp:orient = (0.65755767, 0.004418506, 0.0050623524, 0.7533743)
         float3 xformOp:scale = (5, 5, 5)
-        float3 xformOp:translate = (0, 0.6, -21)
+        float3 xformOp:translate = (0, 0.9, -21)
         uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
 
         def RealityKitComponent "Collider"
@@ -466,7 +391,7 @@ def Xform "Root"
             def RealityKitStruct "Shape"
             {
                 float3 extent = (0.19999999, 0.2, 0.20000002)
-                float radius = 0.10000001
+                float radius = 2.5
                 token shapeType = "Sphere"
 
                 def RealityKitStruct "pose"
@@ -481,17 +406,34 @@ def Xform "Root"
             uniform token info:id = "RealityKit.InputTarget"
         }
 
-        def RealityKitCustomComponent "RealityKitContent_GestureComponent"
+        def RealityKitComponent "RCP_BehaviorsContainer"
         {
-            uniform token info:id = "RealityKitContent.GestureComponent"
+            rel behaviors = </Root/Uranus/OnTap>
+            uniform token info:id = "RCP.BehaviorsContainer"
         }
 
-        def RealityKitComponent "ImageBasedLightReceiver" (
-            active = false
-        )
+        def Preliminary_Behavior "OnTap"
         {
-            rel iblEntity = </Root/Sun>
-            uniform token info:id = "RealityKit.ImageBasedLightReceiver"
+            rel actions = </Root/Uranus/OnTap/Action>
+            uniform bool exclusive
+            rel triggers = </Root/Uranus/OnTap/Trigger>
+
+            def Preliminary_Trigger "Trigger"
+            {
+                rel affectedObjects = </Root/Uranus>
+                token info:id = "TapGesture"
+            }
+
+            def Preliminary_Action "Action"
+            {
+                rel affectedObjects = </Root>
+                rel animationLibraryKey = </Root/UranusOrbit>
+                rel animationLibraryKeyOverrideKey = </Root/Uranus/OnTap/Trigger>
+                token info:id = "PlayTimeline"
+                int loops = 0
+                int performCount = 1
+                token type = "serial"
+            }
         }
     }
 
@@ -505,7 +447,7 @@ def Xform "Root"
     {
         quatf xformOp:orient = (0.9695007, 0.014976261, 0.003778454, 0.24460135)
         float3 xformOp:scale = (4.8, 4.8, 4.8)
-        float3 xformOp:translate = (0, 0.6, -24)
+        float3 xformOp:translate = (0, 0.9, -24)
         uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
 
         def RealityKitComponent "Collider"
@@ -518,7 +460,7 @@ def Xform "Root"
             def RealityKitStruct "Shape"
             {
                 float3 extent = (0.2, 0.2, 0.2)
-                float radius = 0.1
+                float radius = 2.4
                 token shapeType = "Sphere"
 
                 def RealityKitStruct "pose"
@@ -533,17 +475,34 @@ def Xform "Root"
             uniform token info:id = "RealityKit.InputTarget"
         }
 
-        def RealityKitCustomComponent "RealityKitContent_GestureComponent"
+        def RealityKitComponent "RCP_BehaviorsContainer"
         {
-            uniform token info:id = "RealityKitContent.GestureComponent"
+            rel behaviors = </Root/Neptune/OnTap>
+            uniform token info:id = "RCP.BehaviorsContainer"
         }
 
-        def RealityKitComponent "ImageBasedLightReceiver" (
-            active = false
-        )
+        def Preliminary_Behavior "OnTap"
         {
-            rel iblEntity = </Root/Sun>
-            uniform token info:id = "RealityKit.ImageBasedLightReceiver"
+            rel actions = </Root/Neptune/OnTap/Action>
+            uniform bool exclusive
+            rel triggers = </Root/Neptune/OnTap/Trigger>
+
+            def Preliminary_Trigger "Trigger"
+            {
+                rel affectedObjects = </Root/Neptune>
+                token info:id = "TapGesture"
+            }
+
+            def Preliminary_Action "Action"
+            {
+                rel affectedObjects = </Root>
+                rel animationLibraryKey = </Root/NeptuneOrbit>
+                rel animationLibraryKeyOverrideKey = </Root/Neptune/OnTap/Trigger>
+                token info:id = "PlayTimeline"
+                int loops = 0
+                int performCount = 1
+                token type = "serial"
+            }
         }
     }
 
@@ -604,7 +563,550 @@ def Xform "Root"
             asset inputs:file = @SpaceImage-gray.png@
             color3f outputs:out
             float2 ui:nodegraph:node:pos = (-138.59766, 67.98828)
-            int ui:nodegraph:node:stackingOrder = 16
+            int ui:nodegraph:node:stackingOrder = 19
+        }
+    }
+
+    def RealityKitTimeline "MercuryOrbit"
+    {
+        reorder nameChildren = ["Track", "Track2", "Track3", "Track4"]
+        def RealityKitTrack "Track"
+        {
+            def RealityKitAction "Orbit"
+            {
+                string actionKind = "orbit"
+                float3 axis = (0, 1, 1)
+                int blendLayer = 300
+                double duration = 300
+                uniform token info:id = "9ED9F4F2-E410-483A-9FBF-7D433253DA7A"
+                token orbitDirection = "counterClockwise"
+                bool orientToPath = 0
+                rel pivotEntity = </Root/Sun>
+                float revolutions = 10
+                double startTime = 0
+                rel target = </Root/Mercury>
+            }
+        }
+
+        def RealityKitTrack "Track4"
+        {
+            def RealityKitAction "Spin"
+            {
+                string actionKind = "spin"
+                int blendLayer = 400
+                double duration = 300
+                uniform token info:id = "D23B6D54-A05A-4AD0-83FA-73B897B14DE5"
+                float revolutions = 4
+                token spinDirection = "counterclockwise"
+                double startTime = 0
+                rel target = </Root/Mercury>
+
+                def RealityKitStruct "timingFunction"
+                {
+                    token type = "linear"
+                }
+            }
+        }
+    }
+
+    def RealityKitTimeline "VenusOrbit"
+    {
+        reorder nameChildren = ["Track", "Track2"]
+        def RealityKitTrack "Track"
+        {
+            def RealityKitAction "Orbit"
+            {
+                string actionKind = "orbit"
+                int blendLayer = 300
+                double duration = 300
+                uniform token info:id = "E814BE21-04E2-4076-AF62-F52DE3052322"
+                token orbitDirection = "counterClockwise"
+                bool orientToPath = 1
+                rel pivotEntity = </Root/Sun>
+                float revolutions = 9
+                double startTime = 0
+                rel target = </Root/Venus>
+            }
+        }
+
+        def RealityKitTrack "Track2"
+        {
+            def RealityKitAction "Spin"
+            {
+                string actionKind = "spin"
+                int blendLayer = 400
+                double duration = 300
+                uniform token info:id = "33577A18-D2C2-49B6-8EE3-F30BF7C85348"
+                float revolutions = 1
+                double startTime = 0
+                rel target = </Root/Venus>
+
+                def RealityKitStruct "timingFunction"
+                {
+                }
+            }
+        }
+    }
+
+    def RealityKitTimeline "EarthOrbit"
+    {
+        reorder nameChildren = ["Track", "Track2"]
+        def RealityKitTrack "Track"
+        {
+            def RealityKitAction "Orbit"
+            {
+                string actionKind = "orbit"
+                int blendLayer = 300
+                double duration = 300
+                uniform token info:id = "9A9851BC-8FBF-4926-9F19-5A2CCC4547E4"
+                token orbitDirection = "counterClockwise"
+                bool orientToPath = 1
+                rel pivotEntity = </Root/Sun>
+                float revolutions = 8
+                double startTime = 0
+                rel target = </Root/Earth>
+            }
+        }
+
+        def RealityKitTrack "Track2"
+        {
+            def RealityKitAction "Spin"
+            {
+                string actionKind = "spin"
+                int blendLayer = 400
+                double duration = 300
+                uniform token info:id = "721C7547-8B61-427E-A9F2-90AF0C6DA039"
+                float revolutions = 11
+                token spinDirection = "counterclockwise"
+                double startTime = 0
+                rel target = </Root/Earth>
+
+                def RealityKitStruct "timingFunction"
+                {
+                }
+            }
+        }
+    }
+
+    def RealityKitTimeline "MarsOrbit"
+    {
+        reorder nameChildren = ["Track", "Track2"]
+        def RealityKitTrack "Track"
+        {
+            def RealityKitAction "Orbit"
+            {
+                string actionKind = "orbit"
+                int blendLayer = 300
+                double duration = 300
+                uniform token info:id = "CCC08E93-6F81-4093-9604-9CD0D8E23610"
+                token orbitDirection = "counterClockwise"
+                bool orientToPath = 1
+                rel pivotEntity = </Root/Sun>
+                float revolutions = 7
+                double startTime = 0
+                rel target = </Root/Mars>
+            }
+        }
+
+        def RealityKitTrack "Track2"
+        {
+            def RealityKitAction "Spin"
+            {
+                string actionKind = "spin"
+                int blendLayer = 400
+                double duration = 300
+                uniform token info:id = "0097E71F-931F-4591-B66C-8E3D043C85BD"
+                float revolutions = 10
+                token spinDirection = "counterclockwise"
+                double startTime = 0
+                rel target = </Root/Mars>
+
+                def RealityKitStruct "timingFunction"
+                {
+                }
+            }
+        }
+    }
+
+    def RealityKitTimeline "JupiterOrbit"
+    {
+        reorder nameChildren = ["Track", "Track2"]
+        def RealityKitTrack "Track"
+        {
+            def RealityKitAction "Orbit"
+            {
+                string actionKind = "orbit"
+                int blendLayer = 300
+                double duration = 300
+                uniform token info:id = "0F951911-F0DB-4D10-AAF4-6973B15A9DB0"
+                token orbitDirection = "counterClockwise"
+                bool orientToPath = 1
+                rel pivotEntity = </Root/Sun>
+                float revolutions = 6
+                double startTime = 0
+                rel target = </Root/Jupiter>
+            }
+        }
+
+        def RealityKitTrack "Track2"
+        {
+            def RealityKitAction "Spin"
+            {
+                string actionKind = "spin"
+                int blendLayer = 400
+                double duration = 300
+                uniform token info:id = "A7512422-6057-4759-937B-E6BF434CFB9F"
+                float revolutions = 25
+                token spinDirection = "counterclockwise"
+                double startTime = 0
+                rel target = </Root/Jupiter>
+
+                def RealityKitStruct "timingFunction"
+                {
+                    token type = "linear"
+                }
+            }
+        }
+    }
+
+    def RealityKitTimeline "SaturnOrbit"
+    {
+        reorder nameChildren = ["Track", "Track2"]
+        def RealityKitTrack "Track"
+        {
+            def RealityKitAction "Orbit"
+            {
+                string actionKind = "orbit"
+                int blendLayer = 300
+                double duration = 300
+                uniform token info:id = "1176D71C-56C6-48C7-9413-5CFADB1F6F04"
+                token orbitDirection = "counterClockwise"
+                bool orientToPath = 1
+                rel pivotEntity = </Root/Sun>
+                float revolutions = 5
+                double startTime = 0
+                rel target = </Root/Saturn>
+            }
+        }
+
+        def RealityKitTrack "Track2"
+        {
+            def RealityKitAction "Spin"
+            {
+                string actionKind = "spin"
+                int blendLayer = 400
+                double duration = 300
+                uniform token info:id = "3A0F1A74-B505-47F4-BFD7-D0CCEB061F2F"
+                float revolutions = 23
+                token spinDirection = "counterclockwise"
+                double startTime = 0
+                rel target = </Root/Saturn>
+
+                def RealityKitStruct "timingFunction"
+                {
+                    token type = "linear"
+                }
+            }
+        }
+    }
+
+    def RealityKitTimeline "UranusOrbit"
+    {
+        reorder nameChildren = ["Track", "Track2"]
+        def RealityKitTrack "Track"
+        {
+            def RealityKitAction "Orbit"
+            {
+                string actionKind = "orbit"
+                int blendLayer = 300
+                double duration = 300
+                uniform token info:id = "5D99E264-BDE8-4A7A-B3AB-8331A687CDF1"
+                token orbitDirection = "counterClockwise"
+                bool orientToPath = 1
+                rel pivotEntity = </Root/Sun>
+                float revolutions = 4
+                double startTime = 0
+                rel target = </Root/Uranus>
+            }
+        }
+
+        def RealityKitTrack "Track2"
+        {
+            def RealityKitAction "Spin"
+            {
+                string actionKind = "spin"
+                int blendLayer = 400
+                double duration = 300
+                uniform token info:id = "F0B59D66-97F0-4CBC-B6CE-FCD8B933D75E"
+                float revolutions = 15
+                double startTime = 0
+                rel target = </Root/Uranus>
+
+                def RealityKitStruct "timingFunction"
+                {
+                    token type = "linear"
+                }
+            }
+        }
+    }
+
+    def RealityKitTimeline "NeptuneOrbit"
+    {
+        reorder nameChildren = ["Track", "Track2"]
+        def RealityKitTrack "Track"
+        {
+            def RealityKitAction "Orbit"
+            {
+                string actionKind = "orbit"
+                int blendLayer = 300
+                double duration = 300
+                uniform token info:id = "327ADDD0-D760-4E82-AE6C-E07950256C80"
+                token orbitDirection = "counterClockwise"
+                bool orientToPath = 1
+                rel pivotEntity = </Root/Sun>
+                float revolutions = 3
+                double startTime = 0
+                rel target = </Root/Neptune>
+            }
+        }
+
+        def RealityKitTrack "Track2"
+        {
+            def RealityKitAction "Spin"
+            {
+                string actionKind = "spin"
+                int blendLayer = 400
+                double duration = 300
+                uniform token info:id = "FF04B67F-F4DF-4DE6-9B30-29C316985078"
+                float revolutions = 17
+                double startTime = 0
+                rel target = </Root/Neptune>
+
+                def RealityKitStruct "timingFunction"
+                {
+                    token type = "linear"
+                }
+            }
+        }
+    }
+
+    def "Venus" (
+        active = true
+        customData = {
+            float3 rotationEulerHint = (0.059166674, -1.1641532e-10, 3.095516)
+        }
+        references = @Venus.usdz@
+    )
+    {
+        quatf xformOp:orient = (0.023026226, 0.0006813914, 0.029571172, 0.9992972)
+        float3 xformOp:scale = (3, 3, 3)
+        float3 xformOp:translate = (0, 0.9, -6)
+        uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+
+        def RealityKitComponent "InputTarget"
+        {
+            uniform token info:id = "RealityKit.InputTarget"
+        }
+
+        def RealityKitComponent "Collider"
+        {
+            uint group = 1
+            uniform token info:id = "RealityKit.Collider"
+            uint mask = 4294967295
+            token type = "Default"
+
+            def RealityKitStruct "Shape"
+            {
+                float3 extent = (0.2, 0.2, 0.2)
+                float radius = 1.5
+                token shapeType = "Sphere"
+
+                def RealityKitStruct "pose"
+                {
+                    float3 position = (2.682209e-7, 0, 2.682209e-7)
+                }
+            }
+        }
+
+        def RealityKitComponent "RCP_BehaviorsContainer"
+        {
+            rel behaviors = </Root/Venus/OnTap>
+            uniform token info:id = "RCP.BehaviorsContainer"
+        }
+
+        def Preliminary_Behavior "OnTap"
+        {
+            rel actions = </Root/Venus/OnTap/Action>
+            uniform bool exclusive
+            rel triggers = </Root/Venus/OnTap/Trigger>
+
+            def Preliminary_Trigger "Trigger"
+            {
+                rel affectedObjects = </Root/Venus>
+                token info:id = "TapGesture"
+            }
+
+            def Preliminary_Action "Action"
+            {
+                rel affectedObjects = </Root>
+                rel animationLibraryKey = </Root/VenusOrbit>
+                rel animationLibraryKeyOverrideKey = </Root/Venus/OnTap/Trigger>
+                token info:id = "PlayTimeline"
+                int loops = 0
+                int performCount = 1
+                token type = "serial"
+            }
+        }
+    }
+
+    def "Mars" (
+        active = true
+        customData = {
+            float3 rotationEulerHint = (0.032288592, 0, 0.43964845)
+        }
+        references = @Mars.usdz@
+    )
+    {
+        reorder nameChildren = ["Saturn", "geom"]
+        quatf xformOp:orient = (0.9758086, 0.015755111, 0.003520241, 0.21802966)
+        float3 xformOp:scale = (3, 3, 3)
+        float3 xformOp:translate = (0, 0.9, -12)
+        uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+
+        def RealityKitComponent "Collider"
+        {
+            uint group = 1
+            uniform token info:id = "RealityKit.Collider"
+            uint mask = 4294967295
+            token type = "Default"
+
+            def RealityKitStruct "Shape"
+            {
+                float3 extent = (0.19999999, 0.19999999, 0.19999999)
+                float radius = 1.5
+                token shapeType = "Sphere"
+
+                def RealityKitStruct "pose"
+                {
+                    float3 position = (3.3527613e-8, -0.000718683, 2.2351742e-8)
+                }
+            }
+        }
+
+        def RealityKitComponent "InputTarget"
+        {
+            uniform token info:id = "RealityKit.InputTarget"
+        }
+
+        def RealityKitComponent "RCP_BehaviorsContainer"
+        {
+            rel behaviors = </Root/Mars/OnTap>
+            uniform token info:id = "RCP.BehaviorsContainer"
+        }
+
+        def Preliminary_Behavior "OnTap"
+        {
+            rel actions = </Root/Mars/OnTap/Action>
+            uniform bool exclusive
+            rel triggers = </Root/Mars/OnTap/Trigger>
+
+            def Preliminary_Trigger "Trigger"
+            {
+                rel affectedObjects = </Root/Mars>
+                token info:id = "TapGesture"
+            }
+
+            def Preliminary_Action "Action"
+            {
+                rel affectedObjects = </Root>
+                rel animationLibraryKey = </Root/MarsOrbit>
+                rel animationLibraryKeyOverrideKey = </Root/Mars/OnTap/Trigger>
+                token info:id = "PlayTimeline"
+                int loops = 0
+                int performCount = 1
+                token type = "serial"
+            }
+        }
+    }
+
+    def "Sun" (
+        active = true
+        prepend apiSchemas = ["MaterialBindingAPI"]
+        customData = {
+            float3 rotationEulerHint = (0, 0.12653638, 0)
+        }
+        references = @Sun.usdz@
+    )
+    {
+        reorder nameChildren = ["geom", "InputTarget", "Collider", "DirectionalLight", "EnvironmentLightingConfiguration", "SpotLight"]
+        quatf xformOp:orient = (0.9979992, 0, 0.06322671, 0)
+        float3 xformOp:scale = (0.01, 0.010000001, 0.01)
+        float3 xformOp:translate = (0, 0.9, 0)
+        uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+
+        def RealityKitComponent "InputTarget" (
+            active = false
+        )
+        {
+            uniform token info:id = "RealityKit.InputTarget"
+        }
+
+        def RealityKitComponent "Collider" (
+            active = false
+        )
+        {
+            uint group = 1
+            uniform token info:id = "RealityKit.Collider"
+            uint mask = 4294967295
+            token type = "Default"
+
+            def RealityKitStruct "Shape"
+            {
+                float3 extent = (0.2, 0.2, 0.19999999)
+                token shapeType = "Box"
+
+                def RealityKitStruct "pose"
+                {
+                    float3 position = (3.7252903e-8, 0, 4.8428774e-8)
+                }
+            }
+        }
+
+        def RealityKitComponent "PointLight"
+        {
+            float attenuationFalloffExponent = 0.5
+            float attenuationRadius = 250
+            uniform token info:id = "RealityKit.PointLight"
+            float intensity = 100000
+        }
+
+        def RealityKitComponent "RCP_BehaviorsContainer"
+        {
+            rel behaviors = </Root/Sun/OnAddedToScene>
+            uniform token info:id = "RCP.BehaviorsContainer"
+        }
+
+        def Preliminary_Behavior "OnAddedToScene"
+        {
+            rel actions = </Root/Sun/OnAddedToScene/Action>
+            uniform bool exclusive
+            rel triggers = </Root/Sun/OnAddedToScene/Trigger>
+
+            def Preliminary_Trigger "Trigger"
+            {
+                rel affectedObjects = </Root/Sun>
+                token info:id = "SceneTransition"
+            }
+
+            def Preliminary_Action "Action"
+            {
+                rel affectedObjects = None
+                rel animationLibraryKeyOverrideKey = </Root/Sun/OnAddedToScene/Trigger>
+                token info:id = "PlayTimeline"
+                int loops = 0
+                int performCount = 1
+                token type = "serial"
+            }
         }
     }
 }

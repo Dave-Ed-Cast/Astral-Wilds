@@ -37,6 +37,10 @@ struct ImmersiveView: View {
     @State var spawnParticle: Bool = true
     @State var currentStep: Int = 0
     
+    var selectedMode: String {
+        return duration == 0 ? "TravelToMarsShort" : "TravelToMarsLong"
+    }
+    
     let textCurver = TextCurver.self
     
     var textArray: [String] {
@@ -48,28 +52,31 @@ struct ImmersiveView: View {
         
         RealityView { content in
             
+//#if !targetEnvironment(simulator)
             Task {
                 await gestureModel.start()
-                await gestureModel.publishHandTrackingUpdates()
+                await gestureModel.updateTracking()
             }
+//#endif
             
             //This is safe to unwrap, it's for readability to write like this
-            if let planet = try? await Entity(named: "TravelToMars", in: realityKitContentBundle) {
+            if let planet = try? await Entity(named: selectedMode, in: realityKitContentBundle) {
                 let environment = try? await EnvironmentResource(named: "studio")
                 
                 planet.configureLighting(resource: environment!, withShadow: true, for: planet)
-                planet.position = SIMD3(x: planet.position.x, y: planet.position.y, z: -40.0)
+//                planet.position = SIMD3(x: planet.position.x, y: planet.position.y, z: -50.0)
                 
                 startTimers(entity: planet, environment: environment!, content: content)
                 content.add(planet)
             }
         }
+//#if !targetEnvironment(simulator)
         .onChange(of: gestureModel.isSnapGestureActivated) { _, isActivated in
             if isActivated {
                 handleSnapGesture()
             }
         }
-        
+//#endif
         .onAppear {
             audioPlayer.playSong(
                 "space", dot: "mp3",
@@ -103,7 +110,7 @@ struct ImmersiveView: View {
         textTimer(environment: environment, content: content)
         createNewParticle(environment: environment, content: content)
         moveParticles()
-        movePlanet(entity)
+//        movePlanet(entity)
     }
     
     /// Stops all timers

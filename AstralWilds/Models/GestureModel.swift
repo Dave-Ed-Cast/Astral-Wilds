@@ -12,16 +12,16 @@ import SwiftUI
 @MainActor @Observable
 class GestureModel: Sendable {
     
-    private var wasInContact: Bool = false
+    private var contact: Bool = false
     private var previousTimestamp: TimeInterval?
     
     private var previousThumbPosition: SIMD3<Float>?
     private var previousMiddleFingerPosition: SIMD3<Float>?
     
-    let session = ARKitSession()
+    internal let session = ARKitSession()
     
-    var handTracking = HandTrackingProvider()
-    var latestHandTracking: HandsUpdates = .init(left: nil, right: nil)
+    internal var handTracking = HandTrackingProvider()
+    internal var latestHandTracking: HandsUpdates = .init(left: nil, right: nil)
     
     var isSnapGestureActivated: Bool = false
     
@@ -30,7 +30,7 @@ class GestureModel: Sendable {
         var right: HandAnchor?
     }
     
-    func start() async {
+    internal func start() async {
         do {
             if HandTrackingProvider.isSupported {
                 print("ARKitSession starting.")
@@ -39,60 +39,57 @@ class GestureModel: Sendable {
         } catch {
             print("ARKitSession error:", error)
         }
-        
-        Task { await checkSnapGesture() }
     }
     
-    func stop() async {
+    internal func stop() async {
         if HandTrackingProvider.isSupported {
             print("ARKitSession stopped.")
             session.stop()
         }
     }
     
-    func publishHandTrackingUpdates() async {
+    internal func updateTracking() async {
         for await update in handTracking.anchorUpdates {
             switch update.event {
             case .updated:
                 let anchor = update.anchor
-                
-                // Publish updates only if the hand and the relevant joints are tracked.
                 guard anchor.isTracked else { continue }
                 
-                // Update left hand info.
                 if anchor.chirality == .left {
                     latestHandTracking.left = anchor
-                } else if anchor.chirality == .right { // Update right hand info.
+                } else if anchor.chirality == .right {
                     latestHandTracking.right = anchor
                 }
+                
+                Task.detached {
+                    let snapGestureDetected = await self.snapGestureActivated()
+                    if snapGestureDetected {
+                        await MainActor.run {
+                            self.isSnapGestureActivated = true
+                        }
+                        try? await Task.sleep(nanoseconds: 1 * 1_000_000_000)
+                        await MainActor.run {
+                            self.isSnapGestureActivated = false
+                        }
+                    }
+                }
+                
             default:
                 break
             }
         }
     }
     
-    func checkSnapGesture() async {
-        while true {
-            if snapGestureActivated() {
-                isSnapGestureActivated = true
-                try? await Task.sleep(nanoseconds: 1 * 1_000_000_000)
-                isSnapGestureActivated = false
-            }
-            await Task.yield()
-        }
-    }
-    
-    func snapGestureActivated() -> Bool {
+    fileprivate func snapGestureActivated() -> Bool {
         guard let leftHandAnchor = latestHandTracking.left,
               leftHandAnchor.isTracked else {
             print("Left hand anchor is not tracked.")
-            resetState()
             return false
         }
+        let leftHandThumb = leftHandAnchor.handSkeleton!.joint(.thumbTip)
+        let leftHandMiddle = leftHandAnchor.handSkeleton!.joint(.middleFingerTip)
         
-        guard let leftHandThumb = leftHandAnchor.handSkeleton?.joint(.thumbTip),
-              let leftHandMiddle = leftHandAnchor.handSkeleton?.joint(.middleFingerTip),
-              leftHandThumb.isTracked, leftHandMiddle.isTracked else {
+        guard leftHandThumb.isTracked, leftHandMiddle.isTracked else {
             print("Thumb or middle finger not tracked.")
             resetState()
             return false
@@ -118,23 +115,27 @@ class GestureModel: Sendable {
             
             let contactThreshold: Float = 0.01
             let releaseThreshold: Float = 0.05
+            let maxThreshold: Float = 0.1
+            
             let minSnapAngle: Float = 2.0
             let maxSnapAngle: Float = 15.0
             
             if distance < contactThreshold {
-                wasInContact = true
-                print("true")
+                contact = true
+                print("wasInContact: \(contact)")
             }
             
-            let maxThreshold: Float = 0.1
+            let fingerDistance = (distance > releaseThreshold && distance < maxThreshold)
+            let fingerAngle = angleInDegrees >= minSnapAngle && angleInDegrees <= maxSnapAngle
             
-            if wasInContact && (distance > releaseThreshold && distance < maxThreshold) &&
-                angleInDegrees >= minSnapAngle && angleInDegrees <= maxSnapAngle {
+            let middleFingerMetacarpal = leftHandAnchor.handSkeleton!.joint(.middleFingerMetacarpal).anchorFromJointTransform.columns.3.xyz
+            
+            if contact && fingerDistance && fingerAngle {
                 
-                let thumbToPalmDirection = simd_normalize(leftThumbPosition - leftHandAnchor.handSkeleton!.joint(.middleFingerMetacarpal).anchorFromJointTransform.columns.3.xyz)
-                let thumbSnapMotion = simd_dot(thumbDirection, thumbToPalmDirection)
+                let thumbToMetacarpalDistance = simd_normalize(leftThumbPosition - middleFingerMetacarpal)
+                let thanosSnap = simd_dot(thumbDirection, thumbToMetacarpalDistance)
                 
-                if thumbSnapMotion > 0.25 {
+                if thanosSnap > 0.25 {
                     print("Thanos snapped!")
                     resetState()
                     return true
@@ -148,8 +149,8 @@ class GestureModel: Sendable {
         return false
     }
     
-    func resetState() {
-        wasInContact = false
+    fileprivate func resetState() {
+        contact = false
         previousThumbPosition = nil
         previousMiddleFingerPosition = nil
     }

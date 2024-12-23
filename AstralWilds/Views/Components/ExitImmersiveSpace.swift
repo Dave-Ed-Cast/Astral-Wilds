@@ -19,26 +19,20 @@ struct ExitImmersiveSpace: View {
     fileprivate let buttonWindowID: String = "Button"
     
     var body: some View {
-        VStack(spacing: 30) {
+        VStack(spacing: 10) {
             let snapText = Text("snap").fontWeight(.bold)
             VStack {
                 Text("Feeling overwhelmed?").font(.title)
-                Text("Click the button or \(snapText) your fingers.").font(.subheadline)
+                Text("Click the button or \(snapText) your fingers.")
             }
-            .multilineTextAlignment(.center)
             
             if mode == .immersiveSpace {
                 VStack {
                     Text("Spatial audio is playing.")
                     Text("Consider repositioning this window.")
                 }
-                .font(.callout)
-                .multilineTextAlignment(.center)
-                
             } else if mode == .choosePlanetsToMove {
                 Text("Tap on a planet to move it or stop it")
-                    .font(.callout)
-                    .multilineTextAlignment(.center)
             }
             
             Button {
@@ -48,10 +42,10 @@ struct ExitImmersiveSpace: View {
                 dismissWindow(id: buttonWindowID)
                 
             } label: {
-                Text("Back")
-                    .font(.headline)
+                Text("Back").font(.headline)
             }
         }
+        .font(.subheadline)
         .multilineTextAlignment(.center)
         .padding()
     }
