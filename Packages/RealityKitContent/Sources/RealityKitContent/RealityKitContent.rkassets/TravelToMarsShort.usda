@@ -66,6 +66,7 @@ def Xform "Root"
             bindMaterialAs = "weakerThanDescendants"
         )
         float3 xformOp:scale = (1, 1, 1)
+        float3 xformOp:translate = (0, 0, -50)
 
         def RealityKitComponent "RCP_BehaviorsContainer"
         {
@@ -134,12 +135,12 @@ def Xform "Root"
             {
                 string actionKind = "moveTo"
                 int blendLayer = 300
-                double duration = 50
+                double duration = 48
                 uniform token info:id = "A0413589-EF75-4476-ADAC-A1CB77896890"
-                float3 position = (0, -0.507, -0.5)
+                float3 position = (0, -0.507, -5)
                 quatf rotation = (1, 0, 0, 0)
                 float3 scale = (10, 10, 10)
-                double startTime = 10
+                double startTime = 7.5
                 rel target = </Root/Mars_1>
 
                 def RealityKitStruct "transformMode"
@@ -163,13 +164,14 @@ def Xform "Root"
                 int blendLayer = 400
                 double duration = 210
                 uniform token info:id = "2E95B770-0F02-48D9-83AA-426D4DB65011"
-                float revolutions = 2
+                float revolutions = 5
                 token spinDirection = "counterclockwise"
                 double startTime = 0
                 rel target = </Root/Mars_1>
 
                 def RealityKitStruct "timingFunction"
                 {
+                    token type = "linear"
                 }
             }
         }
@@ -185,10 +187,10 @@ def Xform "Root"
                 int blendLayer = 300
                 double duration = 55
                 uniform token info:id = "0238D712-E080-4197-A36D-8F3E1182480C"
-                float3 position = (0, 0, 49.5)
+                float3 position = (0, 0, -10)
                 quatf rotation = (1, 0, 0, 0)
                 float3 scale = (1, 1, 1)
-                double startTime = 10
+                double startTime = 7.5
                 rel target = </Root/SkySphere>
 
                 def RealityKitStruct "transformMode"
