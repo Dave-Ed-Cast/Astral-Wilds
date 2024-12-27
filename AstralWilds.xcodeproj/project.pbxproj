@@ -31,6 +31,7 @@
 		3E4ABE4F2D16E66400AA3DE3 /* Assets.xcassets in Sources */ = {isa = PBXBuildFile; fileRef = 3E7B722B2D16E48600937F1E /* Assets.xcassets */; };
 		3E4ABE522D16EB4200AA3DE3 /* space.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 3E7B721A2D16E48600937F1E /* space.mp3 */; };
 		3E4ABE562D16F45400AA3DE3 /* studio.skybox in Resources */ = {isa = PBXBuildFile; fileRef = 3E4ABE552D16F45400AA3DE3 /* studio.skybox */; };
+		3E4ABE5F2D1F5D2700AA3DE3 /* Test.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E4ABE5E2D1F5D2700AA3DE3 /* Test.swift */; };
 		3ED4A6B22CFB1BE600A899A3 /* VisionTextArc in Frameworks */ = {isa = PBXBuildFile; productRef = 3ED4A6B12CFB1BE600A899A3 /* VisionTextArc */; };
 /* End PBXBuildFile section */
 
@@ -47,6 +48,8 @@
 /* Begin PBXFileReference section */
 		3E0636742BF0BAA400F7ED6E /* RealityKitContent */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = RealityKitContent; sourceTree = "<group>"; };
 		3E4ABE552D16F45400AA3DE3 /* studio.skybox */ = {isa = PBXFileReference; lastKnownFileType = file.skybox; path = studio.skybox; sourceTree = "<group>"; };
+		3E4ABE5D2D1F5D2600AA3DE3 /* AstralWildsTests-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "AstralWildsTests-Bridging-Header.h"; sourceTree = "<group>"; };
+		3E4ABE5E2D1F5D2700AA3DE3 /* Test.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Test.swift; sourceTree = "<group>"; };
 		3E5C216F2BF6BD010015AC20 /* AstralWilds.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AstralWilds.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3E7B720E2D16E48600937F1E /* SIMD4.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SIMD4.swift; sourceTree = "<group>"; };
 		3E7B72102D16E48600937F1E /* AudioPlayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioPlayer.swift; sourceTree = "<group>"; };
@@ -101,8 +104,10 @@
 				3E7B72302D16E48600937F1E /* AstralWilds */,
 				3E0636732BF0BAA400F7ED6E /* Packages */,
 				3EA4755F2BF6BA75005A3573 /* Frameworks */,
+				3E4ABE612D1F5D5200AA3DE3 /* AstralWildsTests */,
 				3E5C216F2BF6BD010015AC20 /* AstralWilds.app */,
 				3EBF553A2CE4F49E00216442 /* AstralWildsTests.xctest */,
+				3E4ABE5D2D1F5D2600AA3DE3 /* AstralWildsTests-Bridging-Header.h */,
 			);
 			sourceTree = "<group>";
 		};
@@ -112,6 +117,14 @@
 				3E0636742BF0BAA400F7ED6E /* RealityKitContent */,
 			);
 			path = Packages;
+			sourceTree = "<group>";
+		};
+		3E4ABE612D1F5D5200AA3DE3 /* AstralWildsTests */ = {
+			isa = PBXGroup;
+			children = (
+				3E4ABE5E2D1F5D2700AA3DE3 /* Test.swift */,
+			);
+			path = AstralWildsTests;
 			sourceTree = "<group>";
 		};
 		3E7B720F2D16E48600937F1E /* Extensions */ = {
@@ -284,6 +297,7 @@
 					};
 					3E71D8792CDD3C4F00B515ED = {
 						CreatedOnToolsVersion = 16.1;
+						LastSwiftMigration = 1610;
 						TestTargetID = 3E06366F2BF0BAA400F7ED6E;
 					};
 				};
@@ -361,6 +375,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3E4ABE5F2D1F5D2700AA3DE3 /* Test.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -556,6 +571,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEAD_CODE_STRIPPING = YES;
@@ -569,6 +585,8 @@
 				SDKROOT = auto;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx xros xrsimulator";
 				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_OBJC_BRIDGING_HEADER = "AstralWildsTests-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2,7";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/AstralWilds.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/AstralWilds";
@@ -580,6 +598,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEAD_CODE_STRIPPING = YES;
@@ -593,6 +612,7 @@
 				SDKROOT = auto;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx xros xrsimulator";
 				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_OBJC_BRIDGING_HEADER = "AstralWildsTests-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2,7";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/AstralWilds.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/AstralWilds";
