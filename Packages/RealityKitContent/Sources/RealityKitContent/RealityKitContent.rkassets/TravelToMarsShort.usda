@@ -206,5 +206,23 @@ def Xform "Root"
             }
         }
     }
+
+    def "Sun_1" (
+        active = true
+        prepend references = @Sun 1.usdz@
+    )
+    {
+        float3 xformOp:scale = (0.01, 0.01, 0.01)
+        uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+
+        def RealityKitComponent "SpotLight"
+        {
+            uniform token info:id = "RealityKit.SpotLight"
+
+            def RealityKitStruct "Shadow"
+            {
+            }
+        }
+    }
 }
 

@@ -48,3 +48,8 @@ struct BeforeImmersiveView: View {
         }
     }
 }
+
+#Preview(windowStyle: .automatic) {
+    BeforeImmersiveView(durationSelection: .constant(0))
+}
+

@@ -64,10 +64,10 @@ struct ImmersiveView: View {
                 let environment = try? await EnvironmentResource(named: "studio")
                 
                 planet.configureLighting(resource: environment!, withShadow: true, for: planet)
-//                planet.position = SIMD3(x: planet.position.x, y: planet.position.y, z: -50.0)
                 
                 startTimers(entity: planet, environment: environment!, content: content)
                 content.add(planet)
+                
             }
         }
 #if !targetEnvironment(simulator)
@@ -110,7 +110,6 @@ struct ImmersiveView: View {
         textTimer(environment: environment, content: content)
         createNewParticle(environment: environment, content: content)
         moveParticles()
-//        movePlanet(entity)
     }
     
     /// Stops all timers

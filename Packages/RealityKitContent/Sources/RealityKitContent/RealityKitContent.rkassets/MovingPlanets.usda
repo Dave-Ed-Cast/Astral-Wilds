@@ -32,7 +32,7 @@ def Xform "Root"
             uint group = 1
             uniform token info:id = "RealityKit.Collider"
             uint mask = 4294967295
-            token type = "Default"
+            token type = "Trigger"
 
             def RealityKitStruct "Shape"
             {
@@ -1044,42 +1044,6 @@ def Xform "Root"
         float3 xformOp:translate = (0, 0.9, 0)
         uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
 
-        def RealityKitComponent "InputTarget" (
-            active = false
-        )
-        {
-            uniform token info:id = "RealityKit.InputTarget"
-        }
-
-        def RealityKitComponent "Collider" (
-            active = false
-        )
-        {
-            uint group = 1
-            uniform token info:id = "RealityKit.Collider"
-            uint mask = 4294967295
-            token type = "Default"
-
-            def RealityKitStruct "Shape"
-            {
-                float3 extent = (0.2, 0.2, 0.19999999)
-                token shapeType = "Box"
-
-                def RealityKitStruct "pose"
-                {
-                    float3 position = (3.7252903e-8, 0, 4.8428774e-8)
-                }
-            }
-        }
-
-        def RealityKitComponent "PointLight"
-        {
-            float attenuationFalloffExponent = 0.5
-            float attenuationRadius = 250
-            uniform token info:id = "RealityKit.PointLight"
-            float intensity = 100000
-        }
-
         def RealityKitComponent "RCP_BehaviorsContainer"
         {
             rel behaviors = </Root/Sun/OnAddedToScene>
@@ -1107,6 +1071,14 @@ def Xform "Root"
                 int performCount = 1
                 token type = "serial"
             }
+        }
+
+        def RealityKitComponent "PointLight"
+        {
+            float attenuationFalloffExponent = 0.5
+            float attenuationRadius = 250
+            uniform token info:id = "RealityKit.PointLight"
+            float intensity = 100000
         }
     }
 }

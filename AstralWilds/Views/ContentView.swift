@@ -13,17 +13,16 @@ import RealityKitContent
 struct ContentView: View {
     
     @Environment(\.setMode) private var setMode
-    
+        
     var body: some View {
         VStack(spacing: 100) {
             Text("Welcome to Astral Wilds!")
                 .font(.extraLargeTitle)
             
-            VStack(spacing: 5) {
+            VStack(alignment: .leading, spacing: 5) {
                 HStack {
                     Text("Choose what to explore!")
                         .font(.title2)
-                    Spacer()
                 }
                 .padding(.leading, 15)
                 HStack(spacing: 10) {
@@ -33,12 +32,11 @@ struct ContentView: View {
                 }
                 .environment(\.setMode, setMode)
             }
-            .padding()
         }
-        .padding(50)
     }
+    
+            
 }
-
 
 #Preview(windowStyle: .automatic) {
     ContentView()

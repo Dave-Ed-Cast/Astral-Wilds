@@ -93,7 +93,10 @@ struct AstralWildsApp: App {
         
         WindowGroup(id: Self.mainScreenWindowID) {
             ContentView()
-                .fixedSize()
+                .frame(
+                    minWidth: 1050, maxWidth: 1200,
+                    minHeight: 500, maxHeight: 800
+                )
                 .environment(\.setMode, setMode)
         }
         .windowResizability(.contentSize)
@@ -121,7 +124,10 @@ struct AstralWildsApp: App {
             let size = content.sizeThatFits(.unspecified)
             if let mainViewWindow = context.windows.first(where: { $0.id == Self.mainScreenWindowID }) {
                 
-                return WindowPlacement(.trailing(mainViewWindow), size: size)
+                return WindowPlacement(
+                    .trailing(mainViewWindow),
+                    size: size
+                )
             } else if let chooseTimeWindow = context.windows.first(where: { $0.id == Self.chooseTimeWindowID }) {
                 
                 return WindowPlacement(.replacing(chooseTimeWindow))
@@ -130,11 +136,10 @@ struct AstralWildsApp: App {
         }
         
         ImmersiveSpace(id: Self.planetsWindowID) {
-            withAnimation(.easeInOut) {
-                MovingPlanets()
-                    .environment(gestureModel)
-                    .environment(\.setMode, setMode)
-            }
+            MovingPlanets()
+                .environment(gestureModel)
+                .environment(\.setMode, setMode)
+            
         }
         .immersionStyle(selection: $immersionMode, in: .full)
         
