@@ -39,16 +39,11 @@ extension ImmersiveView {
                     content.add(text3D)
 
                     withAnimation {
-                        updateTextEntities(text3D)
+                        textEntity?.removeFromParent()
+                        textEntity = text3D
                     }
                 }
             }
         }
-    }
-    
-    func updateTextEntities(_ entity: Entity) {
-        
-        textEntity?.removeFromParent()
-        textEntity = entity
     }
 }

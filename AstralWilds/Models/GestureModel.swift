@@ -10,44 +10,48 @@ import SwiftUI
 
 /// A model that contains up-to-date hand coordinate information.
 @MainActor @Observable
-class GestureModel: Sendable {
+final class GestureModel: Sendable {
+        
+    fileprivate var contact: Bool = false
+    fileprivate var previousTimestamp: TimeInterval?
     
-    private var contact: Bool = false
-    private var previousTimestamp: TimeInterval?
-    
-    private var previousThumbPosition: SIMD3<Float>?
-    private var previousMiddleFingerPosition: SIMD3<Float>?
-    
-    internal let session = ARKitSession()
+    fileprivate var previousThumbPosition: SIMD3<Float>?
+    fileprivate var previousMiddleFingerPosition: SIMD3<Float>?
     
     internal var handTracking = HandTrackingProvider()
     internal var latestHandTracking: HandsUpdates = .init(left: nil, right: nil)
     
-    var isSnapGestureActivated: Bool = false
+    internal let session = ARKitSession()
     
-    struct HandsUpdates {
+    internal struct HandsUpdates {
         var left: HandAnchor?
         var right: HandAnchor?
     }
     
+    var isSnapGestureActivated: Bool = false
+    
+    /// Start the hand tracking session.
     internal func start() async {
         do {
             if HandTrackingProvider.isSupported {
-                print("ARKitSession starting.")
                 try await session.run([handTracking])
+                print("ARKitSession starting.")
             }
         } catch {
             print("ARKitSession error:", error)
         }
     }
     
+    /// Stop the hand tracking session.
     internal func stop() async {
         if HandTrackingProvider.isSupported {
-            print("ARKitSession stopped.")
             session.stop()
+            print("ARKitSession stopped.")
         }
     }
     
+    /// Updates the hand tracking session differentiating the cases of updates.
+    /// This function ignores every state except the updating.
     internal func updateTracking() async {
         for await update in handTracking.anchorUpdates {
             switch update.event {
@@ -80,6 +84,8 @@ class GestureModel: Sendable {
         }
     }
     
+    /// Detects a snapping gesture starting from the middle finger of the left hand only.
+    /// - Returns: True if the user snapped.
     fileprivate func snapGestureActivated() -> Bool {
         guard let leftHandAnchor = latestHandTracking.left,
               leftHandAnchor.isTracked else {
