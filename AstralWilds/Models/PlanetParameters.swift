@@ -5,8 +5,6 @@
 //  Created by Davide Castaldi on 26/10/24.
 //
 
-import Foundation
-
 /// The parameters that interest the rotation and the revolution
 /// - Parameter time: changes rotation (higher time = slower speed)
 /// - Parameter posValue: changes distance from user (to update also in reality composer)

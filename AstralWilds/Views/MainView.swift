@@ -6,11 +6,9 @@
 //
 
 import SwiftUI
-import RealityKit
-import RealityKitContent
 
 /// View that handles all the main flow of the app
-struct ContentView: View {
+struct MainView: View {
     
     @Environment(\.setMode) private var setMode
         
@@ -26,7 +24,7 @@ struct ContentView: View {
                 }
                 .padding(.leading, 15)
                 HStack(spacing: 10) {
-                    ImageButton(name: "SolarSystem", title: "View the solar system", chosenMode: .planets)
+                    ImageButton(name: "SolarSystem", title: "View the solar system", chosenMode: .movingPlanets)
                     ImageButton(name: "Touch", title: "Move preferred planets", chosenMode: .choosePlanetsToMove)
                     ImageButton(name: "Mars", title: "Travel to Mars", chosenMode: .chooseTime)
                 }
@@ -39,5 +37,5 @@ struct ContentView: View {
 }
 
 #Preview(windowStyle: .automatic) {
-    ContentView()
+    MainView()
 }

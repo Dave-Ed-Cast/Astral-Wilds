@@ -5,7 +5,7 @@
 //  Created by Davide Castaldi on 21/12/24.
 //
 
-import SwiftUI
+import Foundation
 
 /// Used to return a scalar in SIMD3 format
 extension SIMD4 {

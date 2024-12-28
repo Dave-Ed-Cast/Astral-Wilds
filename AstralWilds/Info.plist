@@ -3,7 +3,7 @@
 <plist version="1.0">
 <dict>
 	<key>NSHandTrackingUsageDescription</key>
-	<string>Allows the usage of custom gestures</string>
+	<string>We ask to track your hands to use gestures to improve your experience</string>
 	<key>UIApplicationSceneManifest</key>
 	<dict>
 		<key>UIApplicationPreferredDefaultSceneSessionRole</key>

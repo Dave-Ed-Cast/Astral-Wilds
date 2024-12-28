@@ -6,7 +6,6 @@
 //
 
 import SwiftUI
-import RealityKitContent
 
 /// In this App Type is represented the different windows alongside a function working on the main actor for handling the views
 /// It uses an enum "Mode" that is defined from cases that return the associated window id, along with 
@@ -14,31 +13,31 @@ import RealityKitContent
 @main
 struct AstralWildsApp: App {
     
-    private static let mainScreenWindowID: String = "main"
-    private static let buttonWindowID: String = "Button"
-    private static let planetsWindowID: String = "planets"
-    private static let planetsDoItYourselfWindowID: String = "DIY"
-    private static let chooseTimeWindowID: String = "Before"
-    private static let immersiveSpaceWindowId: String = "ImmersiveView"
+    fileprivate static let mainScreenWindowID: String = "Main"
+    fileprivate static let buttonWindowID: String = "ImmersiveButton"
+    fileprivate static let planetsWindowID: String = "MovingPlanets"
+    fileprivate static let choosePlanetsWindowID: String = "ChoosePlanets"
+    fileprivate static let chooseTimeWindowID: String = "TimeWindow"
+    fileprivate static let immersiveTravelWindowId: String = "ImmersiveTravel"
     
     enum Mode: Equatable {
         case mainScreen
-        case planets
+        case movingPlanets
         case chooseTime
         case choosePlanetsToMove
-        case immersiveSpace
+        case immersiveTravel
         
-        var needsImmersiveSpace: Bool {
+        internal var needsImmersiveSpace: Bool {
             return self != .mainScreen && self != .chooseTime
         }
         
-        fileprivate var windowId: String {
+        internal var windowId: String {
             switch self {
             case .mainScreen: return mainScreenWindowID
-            case .planets: return planetsWindowID
+            case .movingPlanets: return planetsWindowID
             case .chooseTime: return chooseTimeWindowID
-            case .choosePlanetsToMove: return planetsDoItYourselfWindowID
-            case .immersiveSpace: return immersiveSpaceWindowId
+            case .choosePlanetsToMove: return choosePlanetsWindowID
+            case .immersiveTravel: return immersiveTravelWindowId
             }
         }
     }
@@ -69,6 +68,7 @@ struct AstralWildsApp: App {
         if immersiveSpacePresented && immersiveSpaceNotNeeded {
             
             immersiveSpacePresented = false
+            dismissWindow(id: Self.buttonWindowID)
             await dismissImmersiveSpace()
         }
         
@@ -77,7 +77,7 @@ struct AstralWildsApp: App {
             immersiveSpacePresented = true
             await openImmersiveSpace(id: newMode.windowId)
             
-            //the button window needs to appear when the immersive space appears
+            //the button needs to appear with the immersive space
             openWindow(id: Self.buttonWindowID)
         } else {
             openWindow(id: newMode.windowId)
@@ -92,7 +92,7 @@ struct AstralWildsApp: App {
     var body: some Scene {
         
         WindowGroup(id: Self.mainScreenWindowID) {
-            ContentView()
+            MainView()
                 .frame(
                     minWidth: 1050, maxWidth: 1200,
                     minHeight: 500, maxHeight: 800
@@ -103,6 +103,7 @@ struct AstralWildsApp: App {
         
         WindowGroup(id: Self.chooseTimeWindowID) {
             BeforeImmersiveView(durationSelection: $selectedDuration)
+                .fixedSize()
                 .environment(\.setMode, setMode)
         }
         .windowResizability(.contentSize)
@@ -115,7 +116,7 @@ struct AstralWildsApp: App {
         
         WindowGroup(id: Self.buttonWindowID) {
             ExitImmersiveSpace(mode: $mode)
-                .fixedSize(horizontal: true, vertical: true)
+                .fixedSize()
                 .environment(\.setMode, setMode)
         }
         .windowResizability(.contentSize)
@@ -143,7 +144,7 @@ struct AstralWildsApp: App {
         }
         .immersionStyle(selection: $immersionMode, in: .full)
         
-        ImmersiveSpace(id: Self.planetsDoItYourselfWindowID) {
+        ImmersiveSpace(id: Self.choosePlanetsWindowID) {
             withAnimation(.easeInOut) {
                 MovePlanetsYouChoose()
                     .environment(gestureModel)
@@ -152,7 +153,7 @@ struct AstralWildsApp: App {
         }
         .immersionStyle(selection: $immersionMode, in: .full)
         
-        ImmersiveSpace(id: Self.immersiveSpaceWindowId) {
+        ImmersiveSpace(id: Self.immersiveTravelWindowId) {
             withAnimation(.easeInOut) {
                 ImmersiveView(duration: $selectedDuration)
                     .environment(gestureModel)
@@ -160,17 +161,5 @@ struct AstralWildsApp: App {
             }
         }
         .immersionStyle(selection: $immersionMode, in: .full)
-    }
-}
-
-struct SetModeKey: EnvironmentKey {
-    typealias Value = (AstralWildsApp.Mode) async -> Void
-    static let defaultValue: Value = { _ in }
-}
-
-extension EnvironmentValues {
-    var setMode: SetModeKey.Value {
-        get { self[SetModeKey.self] }
-        set { self[SetModeKey.self] = newValue }
     }
 }

@@ -6,7 +6,6 @@
 //
 
 import SwiftUI
-import RealityKitContent
 
 /// Reusable button component to open the immersive spaces
 struct ImageButton: View {
@@ -30,12 +29,11 @@ struct ImageButton: View {
                     .font(.title3)
                     .frame(width: 260, height: 60)
             }
-            
         }
     }
 }
 
 
 #Preview(windowStyle: .automatic) {
-    ContentView()
+    MainView()
 }

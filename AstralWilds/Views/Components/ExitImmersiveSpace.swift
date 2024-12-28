@@ -6,17 +6,13 @@
 //
 
 import SwiftUI
-import RealityKitContent
 
 /// Reusable button that handles the exiting of the immersive spaces
 struct ExitImmersiveSpace: View {
     
-    @Environment(\.dismissWindow) private var dismissWindow
     @Environment(\.setMode) private var setMode
     
     @Binding var mode: AstralWildsApp.Mode
-    
-    fileprivate let buttonWindowID: String = "Button"
     
     var body: some View {
         VStack(spacing: 10) {
@@ -26,7 +22,7 @@ struct ExitImmersiveSpace: View {
                 Text("Click the button or \(snapText) your fingers.")
             }
             
-            if mode == .immersiveSpace {
+            if mode == .immersiveTravel {
                 VStack {
                     Text("Spatial audio is playing.")
                     Text("Consider repositioning this window.")
@@ -37,10 +33,6 @@ struct ExitImmersiveSpace: View {
             
             Button {
                 Task { await setMode(.mainScreen) }
-                
-                //the button window needs to go when the immersive space disappears
-                dismissWindow(id: buttonWindowID)
-                
             } label: {
                 Text("Back").font(.headline)
             }

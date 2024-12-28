@@ -33,7 +33,7 @@ extension ImmersiveView {
             randomY = Float.random(in: -2...2)
         } while randomY >= 0.7 && randomY <= 1
         
-        let anchor = AnchorEntity(world: [randomX, randomY, -20.0])
+        let anchor = AnchorEntity(world: [randomX, randomY, -25.0])
         anchor.addChild(particleEntity)
         
         return anchor
@@ -50,7 +50,7 @@ extension ImmersiveView {
         
         particleTimer = Timer.scheduledTimer(withTimeInterval: newParticleInterval, repeats: true) { _ in
             
-            guard currentStep > 1 else { return }
+            guard currentStep >= 1 else { return }
             let particleEntity = createParticle()
             
             particleEntity.configureLighting(resource: environment, withShadow: true)

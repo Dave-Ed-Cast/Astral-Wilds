@@ -5,9 +5,8 @@
 //  Created by Davide Castaldi on 08/11/24.
 //
 
-import RealityKit
-import RealityKitContent
 import SwiftUI
+import RealityKit
 
 extension ImmersiveView {
     

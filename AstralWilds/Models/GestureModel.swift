@@ -51,7 +51,7 @@ final class GestureModel: Sendable {
     }
     
     /// Updates the hand tracking session differentiating the cases of updates.
-    /// This function ignores every state except the updating.
+    /// This function ignores every state except the update.
     internal func updateTracking() async {
         for await update in handTracking.anchorUpdates {
             switch update.event {
@@ -65,15 +65,15 @@ final class GestureModel: Sendable {
                     latestHandTracking.right = anchor
                 }
                 
-                Task.detached {
-                    let snapGestureDetected = await self.snapGestureActivated()
+                Task.detached { [self] in
+                    let snapGestureDetected = await snapGestureActivated()
                     if snapGestureDetected {
                         await MainActor.run {
-                            self.isSnapGestureActivated = true
+                            isSnapGestureActivated = true
                         }
                         try? await Task.sleep(nanoseconds: 1 * 1_000_000_000)
                         await MainActor.run {
-                            self.isSnapGestureActivated = false
+                            isSnapGestureActivated = false
                         }
                     }
                 }

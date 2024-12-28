@@ -60,11 +60,6 @@ struct MovePlanetsYouChoose: View {
         
     }
     
-    /// Handles the change of the scene when the snap is activated
-    private func handleSnapGesture() {
-        Task { await setMode(.mainScreen) }
-    }
-    
 //    /// Moves the corresponding planet identified by its own parameters
 //    /// - Parameter entity: The planet to move
 //    private func movePlanet(_ entity: Entity) {

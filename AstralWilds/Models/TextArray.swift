@@ -5,8 +5,6 @@
 //  Created by Davide Castaldi on 06/11/24.
 //
 
-import Foundation
-
 /// Text array depending on the selection of the travel of the user
 struct TextArray {
     

@@ -5,8 +5,6 @@
 //  Created by Davide Castaldi on 12/05/24.
 //
 
-import Foundation
-
 /// This is contains all the characteristic of a planet
 /// - Parameter planet: Name of the planet
 /// - Parameter radius: To determine the rotation

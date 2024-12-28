@@ -41,9 +41,4 @@ struct MovingPlanets: View {
             Task { await gestureModel.stop() }
         }
     }
-    
-    /// Handles the change of the scene when the snap is activated
-    private func handleSnapGesture() {
-        Task { await setMode(.mainScreen) }
-    }
 }

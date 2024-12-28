@@ -8,7 +8,6 @@
 import SwiftUI
 import RealityKit
 import RealityKitContent
-import AVFoundation
 import VisionTextArc
 
 /// Like in the other immersive spaces, we need to first create the skybox.
@@ -34,7 +33,6 @@ struct ImmersiveView: View {
     @State var textEntities: [ModelEntity] = []
     @State var particles: [Entity] = []
     
-    @State var spawnParticle: Bool = true
     @State var currentStep: Int = 0
     
     var selectedMode: String {
@@ -91,11 +89,6 @@ struct ImmersiveView: View {
         }
     }
     
-    /// Handles the change of the scene when the snap is activated
-    private func handleSnapGesture() {
-        Task { await setMode(.mainScreen) }
-    }
-    
     /// This is the function tha handles all the timers
     /// - Parameters:
     ///   - entity: entity variable for certain timers
@@ -118,7 +111,8 @@ struct ImmersiveView: View {
         timer = nil
         planetTimer?.invalidate()
         planetTimer = nil
-        
+        moveParticleTimer?.invalidate()
+        moveParticleTimer = nil
     }
     
     /// Counts the travel steps, and handles the start and finish

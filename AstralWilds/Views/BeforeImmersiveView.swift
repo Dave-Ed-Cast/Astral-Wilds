@@ -13,6 +13,8 @@ struct BeforeImmersiveView: View {
     @Binding var durationSelection: Int
     @Environment(\.setMode) private var setMode
     @Environment(\.dismissWindow) private var dismissWindow
+    
+    let mainScreen = AstralWildsApp.Mode.mainScreen.windowId
 
     var body: some View {
         
@@ -35,7 +37,7 @@ struct BeforeImmersiveView: View {
             .pickerStyle(.palette)
             
             Button {
-                Task { await setMode(.immersiveSpace) }
+                Task { await setMode(.immersiveTravel) }
             } label: {
                 Text("Launch immersive view")
             }
@@ -43,8 +45,11 @@ struct BeforeImmersiveView: View {
         }
         .multilineTextAlignment(.center)
         .padding()
+        
+        /// Despite having `setMode`, manually dismissing the window is better, as the function handles things modularly.
+        /// Checking for an overlay each time across all routes is more resource-intensive.
         .onAppear {
-            dismissWindow(id: "main")
+            dismissWindow(id: mainScreen)
         }
     }
 }
