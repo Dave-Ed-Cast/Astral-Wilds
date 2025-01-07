@@ -18,20 +18,20 @@ final class GestureModel: Sendable {
     fileprivate var previousThumbPosition: SIMD3<Float>?
     fileprivate var previousMiddleFingerPosition: SIMD3<Float>?
     
+    fileprivate var currentSession: ARKitSession = .init()
+    fileprivate let session = ARKitSession()
+    
     internal var handTracking = HandTrackingProvider()
     internal var latestHandTracking: HandsUpdates = .init(left: nil, right: nil)
-    
-    internal let session = ARKitSession()
+    internal var isSnapGestureActivated: Bool = false
     
     internal struct HandsUpdates {
         var left: HandAnchor?
         var right: HandAnchor?
     }
-    
-    var isSnapGestureActivated: Bool = false
-    
+        
     /// Start the hand tracking session.
-    internal func start() async {
+    internal func startTrackingSession() async {
         do {
             if HandTrackingProvider.isSupported {
                 try await session.run([handTracking])
@@ -39,14 +39,6 @@ final class GestureModel: Sendable {
             }
         } catch {
             print("ARKitSession error:", error)
-        }
-    }
-    
-    /// Stop the hand tracking session.
-    internal func stop() async {
-        if HandTrackingProvider.isSupported {
-            session.stop()
-            print("ARKitSession stopped.")
         }
     }
     
@@ -66,12 +58,14 @@ final class GestureModel: Sendable {
                 }
                 
                 Task.detached { [self] in
-                    let snapGestureDetected = await snapGestureActivated()
-                    if snapGestureDetected {
+                    let leftSnap = await snapGestureActivated(for: "left")
+                    let rightSnap = await snapGestureActivated(for: "right")
+                    
+                    if leftSnap || rightSnap {
                         await MainActor.run {
                             isSnapGestureActivated = true
                         }
-                        try? await Task.sleep(nanoseconds: 1 * 1_000_000_000)
+                        try? await Task.sleep(nanoseconds: 500_000_000)
                         await MainActor.run {
                             isSnapGestureActivated = false
                         }
@@ -84,74 +78,69 @@ final class GestureModel: Sendable {
         }
     }
     
-    /// Detects a snapping gesture starting from the middle finger of the left hand only.
-    /// - Returns: True if the user snapped.
-    fileprivate func snapGestureActivated() -> Bool {
-        guard let leftHandAnchor = latestHandTracking.left,
-              leftHandAnchor.isTracked else {
-            print("Left hand anchor is not tracked.")
+    /// Detects a snapping gesture starting from the middle finger of the specified hand.
+    /// - Parameter handSide: Specify "left" or "right" to detect snap gestures for the respective hand.
+    /// - Returns: True if the user snapped with the specified hand.
+    fileprivate func snapGestureActivated(for handSide: String) -> Bool {
+        guard let handAnchor = (handSide == "left" ? latestHandTracking.left : latestHandTracking.right),
+              handAnchor.isTracked else {
+            print("\(handSide.capitalized) hand anchor is not tracked.")
             return false
         }
-        let leftHandThumb = leftHandAnchor.handSkeleton!.joint(.thumbTip)
-        let leftHandMiddle = leftHandAnchor.handSkeleton!.joint(.middleFingerTip)
         
-        guard leftHandThumb.isTracked, leftHandMiddle.isTracked else {
-            print("Thumb or middle finger not tracked.")
+        guard let handSkeleton = handAnchor.handSkeleton else {
+            print("\(handSide.capitalized) hand skeleton not available.")
+            return false
+        }
+        
+        let thumb = handSkeleton.joint(.thumbTip)
+        let middleFinger = handSkeleton.joint(.middleFingerTip)
+        guard thumb.isTracked, middleFinger.isTracked else {
+            print("\(handSide.capitalized) thumb or middle finger not tracked.")
             resetState()
             return false
         }
         
-        let leftThumbPosition = matrix_multiply(
-            leftHandAnchor.originFromAnchorTransform, leftHandThumb.anchorFromJointTransform
-        ).columns.3.xyz
-        
-        let leftMiddleFingerPosition = matrix_multiply(
-            leftHandAnchor.originFromAnchorTransform, leftHandMiddle.anchorFromJointTransform
-        ).columns.3.xyz
-        
-        let distance = simd_distance(leftThumbPosition, leftMiddleFingerPosition)
+        let thumbPosition = matrix_multiply(handAnchor.originFromAnchorTransform, thumb.anchorFromJointTransform).columns.3.xyz
+        let middleFingerPosition = matrix_multiply(handAnchor.originFromAnchorTransform, middleFinger.anchorFromJointTransform).columns.3.xyz
+        let distance = simd_distance(thumbPosition, middleFingerPosition)
         
         if let prevThumb = previousThumbPosition, let prevMiddle = previousMiddleFingerPosition {
-            let thumbDirection = simd_normalize(leftThumbPosition - prevThumb)
-            let middleDirection = simd_normalize(leftMiddleFingerPosition - prevMiddle)
-            
+            let thumbDirection = simd_normalize(thumbPosition - prevThumb)
+            let middleDirection = simd_normalize(middleFingerPosition - prevMiddle)
             let dotProduct = simd_dot(thumbDirection, middleDirection)
-            let angle = acos(dotProduct)
-            let angleInDegrees = angle * (180.0 / .pi)
+            let angleInDegrees = acos(dotProduct) * (180.0 / .pi)
             
             let contactThreshold: Float = 0.01
             let releaseThreshold: Float = 0.05
             let maxThreshold: Float = 0.1
-            
             let minSnapAngle: Float = 2.0
             let maxSnapAngle: Float = 15.0
             
             if distance < contactThreshold {
                 contact = true
-                print("wasInContact: \(contact)")
+                print("\(handSide.capitalized) wasInContact: \(contact)")
             }
             
-            let fingerDistance = (distance > releaseThreshold && distance < maxThreshold)
-            let fingerAngle = angleInDegrees >= minSnapAngle && angleInDegrees <= maxSnapAngle
+            let validDistance = distance > releaseThreshold && distance < maxThreshold
+            let validAngle = angleInDegrees >= minSnapAngle && angleInDegrees <= maxSnapAngle
             
-            let middleFingerMetacarpal = leftHandAnchor.handSkeleton!.joint(.middleFingerMetacarpal).anchorFromJointTransform.columns.3.xyz
-            
-            if contact && fingerDistance && fingerAngle {
+            if contact && validDistance && validAngle {
+                let metacarpalPosition = matrix_multiply(handAnchor.originFromAnchorTransform, handSkeleton.joint(.middleFingerMetacarpal).anchorFromJointTransform).columns.3.xyz
+                let thumbToMetacarpalDir = simd_normalize(thumbPosition - metacarpalPosition)
+                let snapStrength = simd_dot(thumbDirection, thumbToMetacarpalDir)
                 
-                let thumbToMetacarpalDistance = simd_normalize(leftThumbPosition - middleFingerMetacarpal)
-                let thanosSnap = simd_dot(thumbDirection, thumbToMetacarpalDistance)
-                
-                if thanosSnap > 0.25 {
-                    print("Thanos snapped!")
+                if snapStrength > 0.25 {
+                    print("\(handSide.capitalized) hand snapped!")
                     resetState()
                     return true
                 }
             }
         }
         
-        previousThumbPosition = leftThumbPosition
-        previousMiddleFingerPosition = leftMiddleFingerPosition
-        
+        // Update previous positions
+        previousThumbPosition = thumbPosition
+        previousMiddleFingerPosition = middleFingerPosition
         return false
     }
     

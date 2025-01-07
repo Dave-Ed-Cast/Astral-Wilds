@@ -8,7 +8,7 @@
 import SwiftUI
 import RealityKit
 
-extension ImmersiveView {
+extension ImmersiveTravel {
     
     /// Handles the timer to generate new text according to the duration of the travel
     /// - Parameters:

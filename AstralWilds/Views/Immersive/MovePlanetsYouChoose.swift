@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import ARKit
 import RealityKit
 import RealityKitContent
 
@@ -19,14 +20,14 @@ struct MovePlanetsYouChoose: View {
     @State private var timers: [String: Timer] = [:]
     @State private var planetName: Entity? = nil
     @State private var orbitalParameters = PlanetParameters.list
-    
+        
     var body: some View {
                 
         RealityView { content in
 #if !targetEnvironment(simulator)
             Task {
-                await gestureModel.start()
-                await gestureModel.publishHandTrackingUpdates()
+                await gestureModel.startTrackingSession()
+                await gestureModel.updateTracking()
             }
 #endif
             //This is safe to unwrap, it's for readability to write like this
@@ -37,13 +38,10 @@ struct MovePlanetsYouChoose: View {
 #if !targetEnvironment(simulator)
         .onChange(of: gestureModel.isSnapGestureActivated) { _, isActivated in
             if isActivated {
-                handleSnapGesture()
+                Task { await setMode(.mainScreen) }
             }
         }
 #endif
-        .onDisappear {
-            Task { await gestureModel.stop() }
-        }
         
 //        .gesture(
 //            SpatialTapGesture(coordinateSpace: .local)

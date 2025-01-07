@@ -155,7 +155,7 @@ struct AstralWildsApp: App {
         
         ImmersiveSpace(id: Self.immersiveTravelWindowId) {
             withAnimation(.easeInOut) {
-                ImmersiveView(duration: $selectedDuration)
+                ImmersiveTravel(duration: $selectedDuration)
                     .environment(gestureModel)
                     .environment(\.setMode, setMode)
             }

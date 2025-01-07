@@ -6,13 +6,14 @@
 //
 
 import SwiftUI
+import ARKit
 import RealityKit
 import RealityKitContent
 import VisionTextArc
 
 /// Like in the other immersive spaces, we need to first create the skybox.
 /// Then, we need to load the associated scene with the lights.
-struct ImmersiveView: View {
+struct ImmersiveTravel: View {
 
     @Environment(GestureModel.self) private var gestureModel
     @Environment(\.setMode) private var setMode
@@ -23,23 +24,22 @@ struct ImmersiveView: View {
     
     @State private var audioPlayer: AudioPlayer = AudioPlayer.shared
     
-    @State var textEntity: Entity?
-    
     @State var timer: Timer?
     @State var particleTimer: Timer?
     @State var moveParticleTimer: Timer?
     @State var planetTimer: Timer?
     
+    @State var textEntity: Entity?
     @State var textEntities: [ModelEntity] = []
     @State var particles: [Entity] = []
     
     @State var currentStep: Int = 0
     
+    let textCurver = TextCurver.self
+    
     var selectedMode: String {
         return duration == 0 ? "TravelToMarsShort" : "TravelToMarsLong"
     }
-    
-    let textCurver = TextCurver.self
     
     var textArray: [String] {
         let textData = TextArray()
@@ -49,14 +49,12 @@ struct ImmersiveView: View {
     var body: some View {
         
         RealityView { content in
-            
 #if !targetEnvironment(simulator)
             Task {
-                await gestureModel.start()
+                await gestureModel.startTrackingSession()
                 await gestureModel.updateTracking()
             }
 #endif
-            
             //This is safe to unwrap, it's for readability to write like this
             if let planet = try? await Entity(named: selectedMode, in: realityKitContentBundle) {
                 let environment = try? await EnvironmentResource(named: "studio")
@@ -71,7 +69,7 @@ struct ImmersiveView: View {
 #if !targetEnvironment(simulator)
         .onChange(of: gestureModel.isSnapGestureActivated) { _, isActivated in
             if isActivated {
-                handleSnapGesture()
+                Task { await setMode(.mainScreen) }
             }
         }
 #endif
@@ -85,7 +83,6 @@ struct ImmersiveView: View {
         .onDisappear {
             stopTimer()
             audioPlayer.stopSong()
-            Task { await gestureModel.stop() }
         }
     }
     

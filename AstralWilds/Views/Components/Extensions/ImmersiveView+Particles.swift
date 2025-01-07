@@ -8,7 +8,7 @@
 import SwiftUI
 import RealityKit
 
-extension ImmersiveView {
+extension ImmersiveTravel {
     
     /// This creates particles for the immersive travel. They are thrown at the player to simulate the voyage
     /// - Returns: the anchor entity point of where the range of particles should spawn

@@ -8,7 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		3E0636762BF0BAA400F7ED6E /* RealityKitContent in Frameworks */ = {isa = PBXBuildFile; productRef = 3E0636752BF0BAA400F7ED6E /* RealityKitContent */; };
-		3E2408EA2D045DFB00054E49 /* VisionTextArc in Frameworks */ = {isa = PBXBuildFile; productRef = 3E2408E92D045DFB00054E49 /* VisionTextArc */; };
+		3E31ADE82D27085A00E48C15 /* VisionTextArc in Frameworks */ = {isa = PBXBuildFile; productRef = 3E31ADE72D27085A00E48C15 /* VisionTextArc */; };
 		3E4ABE3B2D16E5B400AA3DE3 /* AstralWildsApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E7B722D2D16E48600937F1E /* AstralWildsApp.swift */; };
 		3E4ABE3C2D16E5B400AA3DE3 /* SIMD4.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E7B720E2D16E48600937F1E /* SIMD4.swift */; };
 		3E4ABE3D2D16E5B400AA3DE3 /* AudioPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E7B72102D16E48600937F1E /* AudioPlayer.swift */; };
@@ -22,7 +22,7 @@
 		3E4ABE462D16E5B400AA3DE3 /* ViewExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E7B721F2D16E48600937F1E /* ViewExtension.swift */; };
 		3E4ABE472D16E5B400AA3DE3 /* ExitImmersiveSpace.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E7B72212D16E48600937F1E /* ExitImmersiveSpace.swift */; };
 		3E4ABE482D16E5B400AA3DE3 /* ImageButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E7B72222D16E48600937F1E /* ImageButton.swift */; };
-		3E4ABE492D16E5B400AA3DE3 /* ImmersiveView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E7B72242D16E48600937F1E /* ImmersiveView.swift */; };
+		3E4ABE492D16E5B400AA3DE3 /* ImmersiveTravel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E7B72242D16E48600937F1E /* ImmersiveTravel.swift */; };
 		3E4ABE4A2D16E5B400AA3DE3 /* MovingPlanets.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E7B72252D16E48600937F1E /* MovingPlanets.swift */; };
 		3E4ABE4B2D16E5B400AA3DE3 /* MovePlanetsYouChoose.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E7B72262D16E48600937F1E /* MovePlanetsYouChoose.swift */; };
 		3E4ABE4C2D16E5B400AA3DE3 /* BeforeImmersiveView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E7B72282D16E48600937F1E /* BeforeImmersiveView.swift */; };
@@ -67,7 +67,7 @@
 		3E7B721F2D16E48600937F1E /* ViewExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewExtension.swift; sourceTree = "<group>"; };
 		3E7B72212D16E48600937F1E /* ExitImmersiveSpace.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExitImmersiveSpace.swift; sourceTree = "<group>"; };
 		3E7B72222D16E48600937F1E /* ImageButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageButton.swift; sourceTree = "<group>"; };
-		3E7B72242D16E48600937F1E /* ImmersiveView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImmersiveView.swift; sourceTree = "<group>"; };
+		3E7B72242D16E48600937F1E /* ImmersiveTravel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImmersiveTravel.swift; sourceTree = "<group>"; };
 		3E7B72252D16E48600937F1E /* MovingPlanets.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovingPlanets.swift; sourceTree = "<group>"; };
 		3E7B72262D16E48600937F1E /* MovePlanetsYouChoose.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovePlanetsYouChoose.swift; sourceTree = "<group>"; };
 		3E7B72282D16E48600937F1E /* BeforeImmersiveView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BeforeImmersiveView.swift; sourceTree = "<group>"; };
@@ -86,7 +86,7 @@
 			files = (
 				3ED4A6B22CFB1BE600A899A3 /* VisionTextArc in Frameworks */,
 				3E0636762BF0BAA400F7ED6E /* RealityKitContent in Frameworks */,
-				3E2408EA2D045DFB00054E49 /* VisionTextArc in Frameworks */,
+				3E31ADE82D27085A00E48C15 /* VisionTextArc in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -198,7 +198,7 @@
 		3E7B72272D16E48600937F1E /* Immersive */ = {
 			isa = PBXGroup;
 			children = (
-				3E7B72242D16E48600937F1E /* ImmersiveView.swift */,
+				3E7B72242D16E48600937F1E /* ImmersiveTravel.swift */,
 				3E7B72252D16E48600937F1E /* MovingPlanets.swift */,
 				3E7B72262D16E48600937F1E /* MovePlanetsYouChoose.swift */,
 			);
@@ -259,7 +259,7 @@
 			packageProductDependencies = (
 				3E0636752BF0BAA400F7ED6E /* RealityKitContent */,
 				3ED4A6B12CFB1BE600A899A3 /* VisionTextArc */,
-				3E2408E92D045DFB00054E49 /* VisionTextArc */,
+				3E31ADE72D27085A00E48C15 /* VisionTextArc */,
 			);
 			productName = PlanetarySystem;
 			productReference = 3E5C216F2BF6BD010015AC20 /* AstralWilds.app */;
@@ -314,7 +314,7 @@
 			);
 			mainGroup = 3E0636672BF0BAA400F7ED6E;
 			packageReferences = (
-				3E2408E82D045DFB00054E49 /* XCRemoteSwiftPackageReference "VisionTextArc" */,
+				3E31ADE62D27085A00E48C15 /* XCRemoteSwiftPackageReference "VisionTextArc" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 3E0636672BF0BAA400F7ED6E;
@@ -366,7 +366,7 @@
 				3E4ABE462D16E5B400AA3DE3 /* ViewExtension.swift in Sources */,
 				3E4ABE472D16E5B400AA3DE3 /* ExitImmersiveSpace.swift in Sources */,
 				3E4ABE482D16E5B400AA3DE3 /* ImageButton.swift in Sources */,
-				3E4ABE492D16E5B400AA3DE3 /* ImmersiveView.swift in Sources */,
+				3E4ABE492D16E5B400AA3DE3 /* ImmersiveTravel.swift in Sources */,
 				3E4ABE4A2D16E5B400AA3DE3 /* MovingPlanets.swift in Sources */,
 				3E4ABE4B2D16E5B400AA3DE3 /* MovePlanetsYouChoose.swift in Sources */,
 				3E4ABE4C2D16E5B400AA3DE3 /* BeforeImmersiveView.swift in Sources */,
@@ -657,7 +657,7 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		3E2408E82D045DFB00054E49 /* XCRemoteSwiftPackageReference "VisionTextArc" */ = {
+		3E31ADE62D27085A00E48C15 /* XCRemoteSwiftPackageReference "VisionTextArc" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/Dave-Ed-Cast/VisionTextArc";
 			requirement = {
@@ -672,9 +672,9 @@
 			isa = XCSwiftPackageProductDependency;
 			productName = RealityKitContent;
 		};
-		3E2408E92D045DFB00054E49 /* VisionTextArc */ = {
+		3E31ADE72D27085A00E48C15 /* VisionTextArc */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 3E2408E82D045DFB00054E49 /* XCRemoteSwiftPackageReference "VisionTextArc" */;
+			package = 3E31ADE62D27085A00E48C15 /* XCRemoteSwiftPackageReference "VisionTextArc" */;
 			productName = VisionTextArc;
 		};
 		3ED4A6B12CFB1BE600A899A3 /* VisionTextArc */ = {
