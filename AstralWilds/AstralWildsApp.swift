@@ -13,12 +13,12 @@ import SwiftUI
 @main
 struct AstralWildsApp: App {
     
-    fileprivate static let mainScreenWindowID: String = "Main"
-    fileprivate static let buttonWindowID: String = "ImmersiveButton"
-    fileprivate static let planetsWindowID: String = "MovingPlanets"
-    fileprivate static let choosePlanetsWindowID: String = "ChoosePlanets"
-    fileprivate static let chooseTimeWindowID: String = "TimeWindow"
-    fileprivate static let immersiveTravelWindowId: String = "ImmersiveTravel"
+    private static let mainScreenWindowID: String = "Main"
+    private static let buttonWindowID: String = "ImmersiveButton"
+    private static let planetsWindowID: String = "MovingPlanets"
+    private static let choosePlanetsWindowID: String = "ChoosePlanets"
+    private static let chooseTimeWindowID: String = "TimeWindow"
+    private static let immersiveTravelWindowId: String = "ImmersiveTravel"
     
     enum Mode: Equatable {
         case mainScreen
@@ -94,10 +94,11 @@ struct AstralWildsApp: App {
         WindowGroup(id: Self.mainScreenWindowID) {
             MainView()
                 .frame(
-                    minWidth: 1050, maxWidth: 1200,
-                    minHeight: 500, maxHeight: 800
+                    minWidth: 1100, maxWidth: 1920,
+                    minHeight: 800, maxHeight: 1080
                 )
                 .environment(\.setMode, setMode)
+                .background(.black.opacity(0.4))
         }
         .windowResizability(.contentSize)
         
