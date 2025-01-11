@@ -8,7 +8,7 @@
 import SwiftUI
 import RealityKit
 
-/// Protocol for not reusing the same code everytime
+/// Protocol that handles only one type of lighting: single
 protocol LightConfigurable {
     func configureLighting(
         resource environment: EnvironmentResource,
@@ -18,7 +18,9 @@ protocol LightConfigurable {
 }
 
 extension Entity: LightConfigurable {
-    func configureLighting(
+    
+    //Protection level must be the same as the protocol
+    internal func configureLighting(
         resource environment: EnvironmentResource,
         withShadow castShadow: Bool,
         for entity: Entity? = nil

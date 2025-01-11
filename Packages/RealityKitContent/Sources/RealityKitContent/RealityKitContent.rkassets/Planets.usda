@@ -27,26 +27,6 @@ def Xform "Root"
         float3 xformOp:translate = (0, 0.9, -3)
         uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
 
-        def RealityKitComponent "Collider"
-        {
-            uint group = 1
-            uniform token info:id = "RealityKit.Collider"
-            uint mask = 4294967295
-            token type = "Default"
-
-            def RealityKitStruct "Shape"
-            {
-                float3 extent = (0.19999999, 0.2, 0.2)
-                float radius = 1
-                token shapeType = "Sphere"
-
-                def RealityKitStruct "pose"
-                {
-                    float3 position = (2.2351742e-8, 0, 2.9802322e-8)
-                }
-            }
-        }
-
         def RealityKitComponent "InputTarget"
         {
             uniform token info:id = "RealityKit.InputTarget"
@@ -124,38 +104,23 @@ def Xform "Root"
             }
         }
 
-        def RealityKitComponent "RCP_BehaviorsContainer"
+        def RealityKitComponent "Collider"
         {
-            rel behaviors = </Root/Mercury/OnTap>
-            uniform token info:id = "RCP.BehaviorsContainer"
-        }
+            uint group = 1
+            uniform token info:id = "RealityKit.Collider"
+            uint mask = 4294967295
+            token type = "Default"
 
-        def RealityKitComponent "AnimationLibrary"
-        {
-            uniform token info:id = "RealityKit.AnimationLibrary"
-        }
-
-        def Preliminary_Behavior "OnTap"
-        {
-            rel actions = </Root/Mercury/OnTap/Action>
-            uniform bool exclusive
-            rel triggers = </Root/Mercury/OnTap/Trigger>
-
-            def Preliminary_Trigger "Trigger"
+            def RealityKitStruct "Shape"
             {
-                rel affectedObjects = </Root/Mercury>
-                token info:id = "TapGesture"
-            }
+                float3 extent = (0.19999999, 0.2, 0.2)
+                float radius = 0.1
+                token shapeType = "Sphere"
 
-            def Preliminary_Action "Action"
-            {
-                rel affectedObjects = </Root>
-                rel animationLibraryKey = </Root/MercuryOrbit>
-                rel animationLibraryKeyOverrideKey = </Root/Mercury/OnTap/Trigger>
-                token info:id = "PlayTimeline"
-                int loops = 0
-                int performCount = 1
-                token type = "serial"
+                def RealityKitStruct "pose"
+                {
+                    float3 position = (2.2351742e-8, 0, 2.9802322e-8)
+                }
             }
         }
     }
@@ -174,6 +139,11 @@ def Xform "Root"
         float3 xformOp:translate = (0, 0.9, -9)
         uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
 
+        def RealityKitComponent "InputTarget"
+        {
+            uniform token info:id = "RealityKit.InputTarget"
+        }
+
         def RealityKitComponent "Collider"
         {
             uint group = 1
@@ -184,48 +154,13 @@ def Xform "Root"
             def RealityKitStruct "Shape"
             {
                 float3 extent = (0.20499998, 0.205, 0.20500001)
-                float radius = 2
+                float radius = 0.10250001
                 token shapeType = "Sphere"
 
                 def RealityKitStruct "pose"
                 {
                     float3 position = (0.00004060194, 0, 0.00011316314)
                 }
-            }
-        }
-
-        def RealityKitComponent "InputTarget"
-        {
-            uniform token info:id = "RealityKit.InputTarget"
-        }
-
-        def RealityKitComponent "RCP_BehaviorsContainer"
-        {
-            rel behaviors = </Root/Earth/OnTap>
-            uniform token info:id = "RCP.BehaviorsContainer"
-        }
-
-        def Preliminary_Behavior "OnTap"
-        {
-            rel actions = </Root/Earth/OnTap/Action>
-            uniform bool exclusive
-            rel triggers = </Root/Earth/OnTap/Trigger>
-
-            def Preliminary_Trigger "Trigger"
-            {
-                rel affectedObjects = </Root/Earth>
-                token info:id = "TapGesture"
-            }
-
-            def Preliminary_Action "Action"
-            {
-                rel affectedObjects = </Root>
-                rel animationLibraryKey = </Root/EarthOrbit>
-                rel animationLibraryKeyOverrideKey = </Root/Earth/OnTap/Trigger>
-                token info:id = "PlayTimeline"
-                int loops = 0
-                int performCount = 1
-                token type = "serial"
             }
         }
     }
@@ -243,6 +178,11 @@ def Xform "Root"
         float3 xformOp:translate = (0, 0.9, -15)
         uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
 
+        def RealityKitComponent "InputTarget"
+        {
+            uniform token info:id = "RealityKit.InputTarget"
+        }
+
         def RealityKitComponent "Collider"
         {
             uint group = 1
@@ -253,48 +193,13 @@ def Xform "Root"
             def RealityKitStruct "Shape"
             {
                 float3 extent = (0.19999999, 0.2, 0.20000002)
-                float radius = 4
+                float radius = 0.2
                 token shapeType = "Sphere"
 
                 def RealityKitStruct "pose"
                 {
                     float3 position = (-0.0005309619, 0.000080280006, -3.7252903e-9)
                 }
-            }
-        }
-
-        def RealityKitComponent "InputTarget"
-        {
-            uniform token info:id = "RealityKit.InputTarget"
-        }
-
-        def RealityKitComponent "RCP_BehaviorsContainer"
-        {
-            rel behaviors = </Root/Jupiter/OnTap>
-            uniform token info:id = "RCP.BehaviorsContainer"
-        }
-
-        def Preliminary_Behavior "OnTap"
-        {
-            rel actions = </Root/Jupiter/OnTap/Action>
-            uniform bool exclusive
-            rel triggers = </Root/Jupiter/OnTap/Trigger>
-
-            def Preliminary_Trigger "Trigger"
-            {
-                rel affectedObjects = </Root/Jupiter>
-                token info:id = "TapGesture"
-            }
-
-            def Preliminary_Action "Action"
-            {
-                rel affectedObjects = </Root>
-                rel animationLibraryKey = </Root/JupiterOrbit>
-                rel animationLibraryKeyOverrideKey = </Root/Jupiter/OnTap/Trigger>
-                token info:id = "PlayTimeline"
-                int loops = 0
-                int performCount = 1
-                token type = "serial"
             }
         }
     }
@@ -312,6 +217,11 @@ def Xform "Root"
         float3 xformOp:translate = (0, 0.9, -18)
         uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
 
+        def RealityKitComponent "InputTarget"
+        {
+            uniform token info:id = "RealityKit.InputTarget"
+        }
+
         def RealityKitComponent "Collider"
         {
             uint group = 1
@@ -322,48 +232,13 @@ def Xform "Root"
             def RealityKitStruct "Shape"
             {
                 float3 extent = (0.46763724, 0.20021316, 0.46763742)
-                float radius = 3.5
+                float radius = 0.2
                 token shapeType = "Sphere"
 
                 def RealityKitStruct "pose"
                 {
                     float3 position = (-3.7252903e-8, 0, 3.7252903e-8)
                 }
-            }
-        }
-
-        def RealityKitComponent "InputTarget"
-        {
-            uniform token info:id = "RealityKit.InputTarget"
-        }
-
-        def RealityKitComponent "RCP_BehaviorsContainer"
-        {
-            rel behaviors = </Root/Saturn/OnTap>
-            uniform token info:id = "RCP.BehaviorsContainer"
-        }
-
-        def Preliminary_Behavior "OnTap"
-        {
-            rel actions = </Root/Saturn/OnTap/Action>
-            uniform bool exclusive
-            rel triggers = </Root/Saturn/OnTap/Trigger>
-
-            def Preliminary_Trigger "Trigger"
-            {
-                rel affectedObjects = </Root/Saturn>
-                token info:id = "TapGesture"
-            }
-
-            def Preliminary_Action "Action"
-            {
-                rel affectedObjects = </Root>
-                rel animationLibraryKey = </Root/SaturnOrbit>
-                rel animationLibraryKeyOverrideKey = </Root/Saturn/OnTap/Trigger>
-                token info:id = "PlayTimeline"
-                int loops = 0
-                int performCount = 1
-                token type = "serial"
             }
         }
     }
@@ -381,6 +256,11 @@ def Xform "Root"
         float3 xformOp:translate = (0, 0.9, -21)
         uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
 
+        def RealityKitComponent "InputTarget"
+        {
+            uniform token info:id = "RealityKit.InputTarget"
+        }
+
         def RealityKitComponent "Collider"
         {
             uint group = 1
@@ -391,48 +271,13 @@ def Xform "Root"
             def RealityKitStruct "Shape"
             {
                 float3 extent = (0.19999999, 0.2, 0.20000002)
-                float radius = 2.5
+                float radius = 0.25
                 token shapeType = "Sphere"
 
                 def RealityKitStruct "pose"
                 {
                     float3 position = (6.3329935e-8, 0, 7.0780516e-8)
                 }
-            }
-        }
-
-        def RealityKitComponent "InputTarget"
-        {
-            uniform token info:id = "RealityKit.InputTarget"
-        }
-
-        def RealityKitComponent "RCP_BehaviorsContainer"
-        {
-            rel behaviors = </Root/Uranus/OnTap>
-            uniform token info:id = "RCP.BehaviorsContainer"
-        }
-
-        def Preliminary_Behavior "OnTap"
-        {
-            rel actions = </Root/Uranus/OnTap/Action>
-            uniform bool exclusive
-            rel triggers = </Root/Uranus/OnTap/Trigger>
-
-            def Preliminary_Trigger "Trigger"
-            {
-                rel affectedObjects = </Root/Uranus>
-                token info:id = "TapGesture"
-            }
-
-            def Preliminary_Action "Action"
-            {
-                rel affectedObjects = </Root>
-                rel animationLibraryKey = </Root/UranusOrbit>
-                rel animationLibraryKeyOverrideKey = </Root/Uranus/OnTap/Trigger>
-                token info:id = "PlayTimeline"
-                int loops = 0
-                int performCount = 1
-                token type = "serial"
             }
         }
     }
@@ -450,6 +295,11 @@ def Xform "Root"
         float3 xformOp:translate = (0, 0.9, -24)
         uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
 
+        def RealityKitComponent "InputTarget"
+        {
+            uniform token info:id = "RealityKit.InputTarget"
+        }
+
         def RealityKitComponent "Collider"
         {
             uint group = 1
@@ -460,7 +310,7 @@ def Xform "Root"
             def RealityKitStruct "Shape"
             {
                 float3 extent = (0.2, 0.2, 0.2)
-                float radius = 2.4
+                float radius = 0.25
                 token shapeType = "Sphere"
 
                 def RealityKitStruct "pose"
@@ -469,113 +319,17 @@ def Xform "Root"
                 }
             }
         }
-
-        def RealityKitComponent "InputTarget"
-        {
-            uniform token info:id = "RealityKit.InputTarget"
-        }
-
-        def RealityKitComponent "RCP_BehaviorsContainer"
-        {
-            rel behaviors = </Root/Neptune/OnTap>
-            uniform token info:id = "RCP.BehaviorsContainer"
-        }
-
-        def Preliminary_Behavior "OnTap"
-        {
-            rel actions = </Root/Neptune/OnTap/Action>
-            uniform bool exclusive
-            rel triggers = </Root/Neptune/OnTap/Trigger>
-
-            def Preliminary_Trigger "Trigger"
-            {
-                rel affectedObjects = </Root/Neptune>
-                token info:id = "TapGesture"
-            }
-
-            def Preliminary_Action "Action"
-            {
-                rel affectedObjects = </Root>
-                rel animationLibraryKey = </Root/NeptuneOrbit>
-                rel animationLibraryKeyOverrideKey = </Root/Neptune/OnTap/Trigger>
-                token info:id = "PlayTimeline"
-                int loops = 0
-                int performCount = 1
-                token type = "serial"
-            }
-        }
-    }
-
-    def "SkySphere" (
-        active = true
-        prepend apiSchemas = ["MaterialBindingAPI"]
-        customData = {
-            dictionary RE = {
-                dictionary mesh = {
-                    dictionary v1 = {
-                        bool reorderVertexCaching = 0
-                    }
-                }
-            }
-        }
-        references = @SkySphere.usdz@
-    )
-    {
-        rel material:binding = </Root/SpaceMaterial> (
-            bindMaterialAs = "weakerThanDescendants"
-        )
-        float2 ui:nodegraph:node:pos = (20, 20)
-        int ui:nodegraph:node:stackingOrder = 1
-        float3 xformOp:scale = (1, 1, 1)
-        float3 xformOp:translate = (0, 0, 0)
-    }
-
-    def Material "SpaceMaterial"
-    {
-        token outputs:mtlx:surface.connect = </Root/SpaceMaterial/PreviewSurface.outputs:out>
-        token outputs:realitykit:vertex
-        float2 ui:nodegraph:node:pos = (20, 20)
-        int ui:nodegraph:node:stackingOrder = 1
-        float2 ui:nodegraph:realitykit:subgraphOutputs:pos = (335.25, 100.5)
-
-        def Shader "PreviewSurface"
-        {
-            uniform token info:id = "ND_UsdPreviewSurface_surfaceshader"
-            float inputs:clearcoat = 0
-            float inputs:clearcoatRoughness = 0.01
-            color3f inputs:diffuseColor.connect = </Root/SpaceMaterial/Image.outputs:out>
-            float inputs:ior = 1.5
-            float inputs:metallic = 0.2
-            float3 inputs:normal = (0, 0, 1)
-            float inputs:occlusion = 0.8
-            float inputs:roughness = 1
-            token outputs:out
-            float2 ui:nodegraph:node:pos = (93.5, 100.5)
-            int ui:nodegraph:node:stackingOrder = 9
-        }
-
-        def Shader "Image"
-        {
-            uniform token info:id = "ND_image_color3"
-            color3f inputs:default = (0, 0, 0) (
-                colorSpace = "srgb_displayp3"
-            )
-            asset inputs:file = @SpaceImage-gray.png@
-            color3f outputs:out
-            float2 ui:nodegraph:node:pos = (-138.59766, 67.98828)
-            int ui:nodegraph:node:stackingOrder = 19
-        }
     }
 
     def RealityKitTimeline "MercuryOrbit"
     {
-        reorder nameChildren = ["Track", "Track2", "Track3", "Track4"]
+        reorder nameChildren = ["Track", "Track2", "Track3", "Track4", "Track5"]
         def RealityKitTrack "Track"
         {
             def RealityKitAction "Orbit"
             {
                 string actionKind = "orbit"
-                float3 axis = (0, 1, 1)
+                float3 axis = (0, 1, 0)
                 int blendLayer = 300
                 double duration = 300
                 uniform token info:id = "9ED9F4F2-E410-483A-9FBF-7D433253DA7A"
@@ -588,7 +342,7 @@ def Xform "Root"
             }
         }
 
-        def RealityKitTrack "Track4"
+        def RealityKitTrack "Track2"
         {
             def RealityKitAction "Spin"
             {
@@ -606,6 +360,10 @@ def Xform "Root"
                     token type = "linear"
                 }
             }
+        }
+
+        def RealityKitTrack "Track5"
+        {
         }
     }
 
@@ -918,43 +676,13 @@ def Xform "Root"
             def RealityKitStruct "Shape"
             {
                 float3 extent = (0.2, 0.2, 0.2)
-                float radius = 1.5
+                float radius = 0.1
                 token shapeType = "Sphere"
 
                 def RealityKitStruct "pose"
                 {
                     float3 position = (2.682209e-7, 0, 2.682209e-7)
                 }
-            }
-        }
-
-        def RealityKitComponent "RCP_BehaviorsContainer"
-        {
-            rel behaviors = </Root/Venus/OnTap>
-            uniform token info:id = "RCP.BehaviorsContainer"
-        }
-
-        def Preliminary_Behavior "OnTap"
-        {
-            rel actions = </Root/Venus/OnTap/Action>
-            uniform bool exclusive
-            rel triggers = </Root/Venus/OnTap/Trigger>
-
-            def Preliminary_Trigger "Trigger"
-            {
-                rel affectedObjects = </Root/Venus>
-                token info:id = "TapGesture"
-            }
-
-            def Preliminary_Action "Action"
-            {
-                rel affectedObjects = </Root>
-                rel animationLibraryKey = </Root/VenusOrbit>
-                rel animationLibraryKeyOverrideKey = </Root/Venus/OnTap/Trigger>
-                token info:id = "PlayTimeline"
-                int loops = 0
-                int performCount = 1
-                token type = "serial"
             }
         }
     }
@@ -973,6 +701,11 @@ def Xform "Root"
         float3 xformOp:translate = (0, 0.9, -12)
         uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
 
+        def RealityKitComponent "InputTarget"
+        {
+            uniform token info:id = "RealityKit.InputTarget"
+        }
+
         def RealityKitComponent "Collider"
         {
             uint group = 1
@@ -983,48 +716,13 @@ def Xform "Root"
             def RealityKitStruct "Shape"
             {
                 float3 extent = (0.19999999, 0.19999999, 0.19999999)
-                float radius = 1.5
+                float radius = 0.14
                 token shapeType = "Sphere"
 
                 def RealityKitStruct "pose"
                 {
                     float3 position = (3.3527613e-8, -0.000718683, 2.2351742e-8)
                 }
-            }
-        }
-
-        def RealityKitComponent "InputTarget"
-        {
-            uniform token info:id = "RealityKit.InputTarget"
-        }
-
-        def RealityKitComponent "RCP_BehaviorsContainer"
-        {
-            rel behaviors = </Root/Mars/OnTap>
-            uniform token info:id = "RCP.BehaviorsContainer"
-        }
-
-        def Preliminary_Behavior "OnTap"
-        {
-            rel actions = </Root/Mars/OnTap/Action>
-            uniform bool exclusive
-            rel triggers = </Root/Mars/OnTap/Trigger>
-
-            def Preliminary_Trigger "Trigger"
-            {
-                rel affectedObjects = </Root/Mars>
-                token info:id = "TapGesture"
-            }
-
-            def Preliminary_Action "Action"
-            {
-                rel affectedObjects = </Root>
-                rel animationLibraryKey = </Root/MarsOrbit>
-                rel animationLibraryKeyOverrideKey = </Root/Mars/OnTap/Trigger>
-                token info:id = "PlayTimeline"
-                int loops = 0
-                int performCount = 1
-                token type = "serial"
             }
         }
     }
@@ -1044,34 +742,6 @@ def Xform "Root"
         float3 xformOp:translate = (0, 0.9, 0)
         uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
 
-        def RealityKitComponent "InputTarget" (
-            active = false
-        )
-        {
-            uniform token info:id = "RealityKit.InputTarget"
-        }
-
-        def RealityKitComponent "Collider" (
-            active = false
-        )
-        {
-            uint group = 1
-            uniform token info:id = "RealityKit.Collider"
-            uint mask = 4294967295
-            token type = "Default"
-
-            def RealityKitStruct "Shape"
-            {
-                float3 extent = (0.2, 0.2, 0.19999999)
-                token shapeType = "Box"
-
-                def RealityKitStruct "pose"
-                {
-                    float3 position = (3.7252903e-8, 0, 4.8428774e-8)
-                }
-            }
-        }
-
         def RealityKitComponent "PointLight"
         {
             float attenuationFalloffExponent = 0.5
@@ -1079,34 +749,66 @@ def Xform "Root"
             uniform token info:id = "RealityKit.PointLight"
             float intensity = 100000
         }
+    }
 
-        def RealityKitComponent "RCP_BehaviorsContainer"
+    def "SkySphere" (
+        active = true
+        prepend apiSchemas = ["MaterialBindingAPI"]
+        customData = {
+            dictionary RE = {
+                dictionary mesh = {
+                    dictionary v1 = {
+                        bool reorderVertexCaching = 0
+                    }
+                }
+            }
+        }
+        references = @SkySphere.usdz@
+    )
+    {
+        rel material:binding = </Root/SpaceMaterial> (
+            bindMaterialAs = "weakerThanDescendants"
+        )
+        float2 ui:nodegraph:node:pos = (20, 20)
+        int ui:nodegraph:node:stackingOrder = 1
+        float3 xformOp:scale = (1, 1, 1)
+        float3 xformOp:translate = (0, 0, 0)
+    }
+
+    def Material "SpaceMaterial"
+    {
+        token outputs:mtlx:surface.connect = </Root/SpaceMaterial/PreviewSurface.outputs:out>
+        token outputs:realitykit:vertex
+        float2 ui:nodegraph:node:pos = (20, 20)
+        int ui:nodegraph:node:stackingOrder = 1
+        float2 ui:nodegraph:realitykit:subgraphOutputs:pos = (335.25, 100.5)
+
+        def Shader "PreviewSurface"
         {
-            rel behaviors = </Root/Sun/OnAddedToScene>
-            uniform token info:id = "RCP.BehaviorsContainer"
+            uniform token info:id = "ND_UsdPreviewSurface_surfaceshader"
+            float inputs:clearcoat = 0
+            float inputs:clearcoatRoughness = 0.01
+            color3f inputs:diffuseColor.connect = </Root/SpaceMaterial/Image.outputs:out>
+            float inputs:ior = 1.5
+            float inputs:metallic = 0.2
+            float3 inputs:normal = (0, 0, 1)
+            float inputs:occlusion = 0.8
+            float inputs:roughness = 1
+            token outputs:out
+            float2 ui:nodegraph:node:pos = (93.5, 100.5)
+            int ui:nodegraph:node:stackingOrder = 9
         }
 
-        def Preliminary_Behavior "OnAddedToScene"
+        def Shader "Image"
         {
-            rel actions = </Root/Sun/OnAddedToScene/Action>
-            uniform bool exclusive
-            rel triggers = </Root/Sun/OnAddedToScene/Trigger>
-
-            def Preliminary_Trigger "Trigger"
-            {
-                rel affectedObjects = </Root/Sun>
-                token info:id = "SceneTransition"
-            }
-
-            def Preliminary_Action "Action"
-            {
-                rel affectedObjects = None
-                rel animationLibraryKeyOverrideKey = </Root/Sun/OnAddedToScene/Trigger>
-                token info:id = "PlayTimeline"
-                int loops = 0
-                int performCount = 1
-                token type = "serial"
-            }
+            uniform token info:id = "ND_image_color3"
+            color3f inputs:default = (0, 0, 0) (
+                colorSpace = "srgb_displayp3"
+            )
+            asset inputs:file = @SpaceImage-gray.png@
+            color3f outputs:out
+            float2 ui:nodegraph:node:pos = (-138.59766, 67.98828)
+            int ui:nodegraph:node:stackingOrder = 19
         }
     }
 }

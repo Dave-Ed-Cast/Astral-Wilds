@@ -15,7 +15,12 @@ class AudioPlayer {
     
     private init() {}
     
-    func playSong(_ name: String, dot ext: String, numberOfLoops number: Int, withVolume volume: Float) {
+    func playSong(
+        _ name: String = "space",
+        dot ext: String = "mp3",
+        numberOfLoops number: Int = 0,
+        withVolume volume: Float = 0.25
+    ) {
         guard let path = Bundle.main.url(forResource: name, withExtension: ext) else {
             fatalError("Cannot find path for resource: \(name).\(ext)")
         }
@@ -34,6 +39,4 @@ class AudioPlayer {
     }
     
     func stopSong() { player?.stop() }
-    
-    
 }

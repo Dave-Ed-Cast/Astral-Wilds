@@ -14,7 +14,7 @@ struct BeforeImmersiveView: View {
     @Environment(\.setMode) private var setMode
     @Environment(\.dismissWindow) private var dismissWindow
     
-    let mainScreen = AstralWildsApp.Mode.mainScreen.windowId
+    private let mainScreen = AstralWildsApp.Mode.mainScreen.windowId
 
     var body: some View {
         
@@ -29,7 +29,7 @@ struct BeforeImmersiveView: View {
             }
             .font(.callout)
 
-            Picker("Choose: ", selection: $durationSelection) {
+            Picker("Choose:", selection: $durationSelection) {
                 Text("1 minute").tag(0)
                 Text("3 minutes").tag(1)
             }
