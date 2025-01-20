@@ -8,12 +8,12 @@
 import SwiftUI
 
 /// Reusable button component to open the immersive spaces
-struct ImageButton: View {
+struct NewImageButton: View {
     
     @Environment(\.setMode) private var setMode
     
     let name: String
-    let title: String
+    let text: String
     let chosenMode: AstralWildsApp.Mode
     
     var body: some View {
@@ -26,28 +26,32 @@ struct ImageButton: View {
             
             let imageWidth = size.width * 0.9 + dynamicSpacing
             let imageHeight = size.height * 0.5 + dynamicSpacing
-            let textSize = size.height * 0.045
+            let textSize = size.height * 0.16
             
-            let buttonWidth = size.width
-            let buttonHeight = size.height * 0.2
-                        
-            VStack(spacing: 5) {
+            let buttonWidth = size.width * 0.035
+            let buttonHeight = size.height * 0.05
+            
+            HStack(spacing: 10) {
                 Image(name)
                     .resizable()
                     .scaledToFit()
                     .cornerRadius(20)
-                    .frame(width: imageWidth, height: imageHeight)
-                Button {
-                    Task { await setMode(chosenMode) }
-                } label: {
-                    Text(title)
-                        .font(.system(size: textSize))
-                        .padding()
-                        .fontWeight(.bold)
-                }
-                
+                    .padding(dynamicSpacing)
+                    
+                Text(text)
+                    .font(.system(size: textSize)).fontWeight(.bold)
+                    .overlay(alignment: .bottomTrailing) {
+                        Button {
+                            Task { await setMode(chosenMode) }
+                        } label: {
+                            Image(systemName: "play.circle")
+                                .resizable()
+                                .scaledToFit()
+                                .frame(width: buttonWidth, height: buttonHeight)
+                        }
+                    }
             }
-            .frame(width: buttonWidth)
+            
         }
     }
 }
@@ -56,3 +60,4 @@ struct ImageButton: View {
 #Preview(windowStyle: .automatic) {
     MainView()
 }
+

@@ -14,7 +14,7 @@ import VisionTextArc
 /// Like in the other immersive spaces, we need to first create the skybox.
 /// Then, we need to load the associated scene with the lights.
 struct ImmersiveTravel: View {
-
+    
     @Environment(GestureModel.self) private var gestureModel
     @Environment(\.setMode) private var setMode
     @Environment(\.openWindow) private var openWindow
@@ -22,28 +22,22 @@ struct ImmersiveTravel: View {
     
     @Binding var duration: Int
     
+    @StateObject private var travel = ImmersiveTravelController()
+    
     @State private var audioPlayer: AudioPlayer = AudioPlayer.shared
     
-    @State var timer: Timer?
-    @State var particleTimer: Timer?
-    @State var moveParticleTimer: Timer?
-    @State var planetTimer: Timer?
-    
-    @State var textEntity: Entity?
-    @State var textEntities: [ModelEntity] = []
-    @State var particles: [Entity] = []
-    
-    @State var currentStep: Int = 0
-    
-    let textCurver = TextCurver.self
-    
-    var selectedMode: String {
+    private var selectedMode: String {
         return duration == 0 ? "TravelToMarsShort" : "TravelToMarsLong"
     }
     
+    let configuration = TextCurver.Configuration(
+        radius: 3.5,
+        yPosition: 1.1
+    )
+    
     var textArray: [String] {
-        let textData = TextArray()
-        return duration == 0 ? textData.minuteArray : textData.threeMinutesArray
+        let text = TextArray()
+        return duration == 0 ? text.minuteArray : text.threeMinutesArray
     }
     
     var body: some View {
@@ -55,15 +49,17 @@ struct ImmersiveTravel: View {
                 await gestureModel.updateTracking()
             }
 #endif
+            let localContent = content
+            
             //This is safe to unwrap, it's for readability to write like this
             if let planet = try? await Entity(named: selectedMode, in: realityKitContentBundle) {
                 let environment = try? await EnvironmentResource(named: "studio")
                 
                 planet.configureLighting(resource: environment!, withShadow: true, for: planet)
                 
-                startTimers(entity: planet, environment: environment!, content: content)
                 content.add(planet)
                 
+                await startTravel(content: localContent, environment: environment!)
             }
         }
 #if !targetEnvironment(simulator)
@@ -73,59 +69,24 @@ struct ImmersiveTravel: View {
             }
         }
 #endif
-        .onAppear {
-            audioPlayer.playSong(
-                "space", dot: "mp3",
-                numberOfLoops: 0,
-                withVolume: 0.35
-            )
-        }
-        .onDisappear {
-            stopTimer()
-            audioPlayer.stopSong()
-        }
-    }
-    
-    /// This is the function tha handles all the timers
-    /// - Parameters:
-    ///   - entity: entity variable for certain timers
-    ///   - environment: environment variable for certain timers
-    ///   - content: reality view variable for certain timers
-    private func startTimers(
-        entity: Entity,
-        environment: EnvironmentResource,
-        content: RealityViewContent
-    ) {
         
-        textTimer(environment: environment, content: content)
-        createNewParticle(environment: environment, content: content)
-        moveParticles()
+        .onAppear { audioPlayer.playSong() }
+        .onDisappear { audioPlayer.stopSong() }
     }
     
-    /// Stops all timers
-    private func stopTimer() {
-        timer?.invalidate()
-        timer = nil
-        planetTimer?.invalidate()
-        planetTimer = nil
-        moveParticleTimer?.invalidate()
-        moveParticleTimer = nil
-    }
-    
-    /// Counts the travel steps, and handles the start and finish
-    func updateStep() {
+    private func startTravel(content: RealityViewContent, environment: EnvironmentResource?) async {
                 
-        currentStep = (currentStep + 1) % textArray.count
+        await travel.createText(
+            textConfig: configuration,
+            textArray: textArray,
+            content: content
+        )
         
-        let lastStep = (currentStep == textArray.count - 1)
-        let thirdToLast = (currentStep == textArray.count - 3)
-        
-        if lastStep {
-            stopTimer()
+        travel.startParticles(environment: environment!) { newParticle in
+            content.add(newParticle)
         }
         
-        if thirdToLast {
-            stopParticles()
-        }
+        travel.moveParticles()
     }
+    
 }

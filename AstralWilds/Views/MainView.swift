@@ -13,23 +13,49 @@ struct MainView: View {
     @Environment(\.setMode) private var setMode
         
     var body: some View {
-        VStack(spacing: 100) {
-            Text("Welcome to Astral Wilds!")
-                .font(.extraLargeTitle)
+        GeometryReader { geometry in
+            let size = geometry.size
+            let titleTextSize = size.height * 0.07
+            let titleTextPadding = size.height * 0.1
+            let headlineTextSize = size.height * 0.04
+            let adaptivePadding = size.width * 0.02
             
-            VStack(alignment: .leading, spacing: 5) {
-                HStack {
-                    Text("Choose what to explore!")
-                        .font(.title2)
+            let maxSpacing: CGFloat = 10
+            let minSpacing: CGFloat = 5
+            let dynamicSpacing = max(minSpacing, min(maxSpacing, size.width * 0.085))
+            
+            VStack(spacing: dynamicSpacing) {
+                Text("Welcome to Astral Wilds!")
+                    .font(.system(size: titleTextSize))
+                    .padding(titleTextPadding)
+                
+                VStack(alignment: .leading, spacing: dynamicSpacing * 0.3) {
+                    HStack {
+                        Text("Choose what to explore!")
+                            .font(.system(size: headlineTextSize))
+                    }
+                    .padding(.leading, adaptivePadding)
+                    
+                    HStack(spacing: 10) {
+                        ImageButton(name: "SolarSystem", title: "Solar system", chosenMode: .movingPlanets)
+                        ImageButton(name: "Touch", title: "Preferred planets", chosenMode: .choosePlanetsToMove)
+                        ImageButton(name: "Mars", title: "Mars Travel", chosenMode: .chooseTime)
+                    }
+                    
+//                    VStack(spacing: 10) {
+//                        NewImageButton(name: "SolarSystem", text: text1, chosenMode: .movingPlanets)
+//                        NewImageButton(name: "Touch", text: text1, chosenMode: .choosePlanetsToMove)
+//                        NewImageButton(name: "Mars", text: text1, chosenMode: .chooseTime)
+//                    }
+                    .environment(\.setMode, setMode)
                 }
-                .padding(.leading, 15)
-                HStack(spacing: 10) {
-                    ImageButton(name: "SolarSystem", title: "View the solar system", chosenMode: .movingPlanets)
-                    ImageButton(name: "Touch", title: "Move preferred planets", chosenMode: .choosePlanetsToMove)
-                    ImageButton(name: "Mars", title: "Travel to Mars", chosenMode: .chooseTime)
-                }
-                .environment(\.setMode, setMode)
             }
+            .onChange(of: size) {
+                print("width: \(size.width), height: \(size.height)")
+            }
+            .padding()
+            .fontWeight(.bold)
+
         }
     }
     

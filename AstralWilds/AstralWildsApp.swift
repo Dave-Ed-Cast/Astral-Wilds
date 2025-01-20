@@ -44,7 +44,7 @@ struct AstralWildsApp: App {
     
     @State private var mode: Mode = .mainScreen
     @State private var immersiveSpacePresented: Bool = false
-    @State private var immersionMode: ImmersionStyle = .full
+    @State private var immersionMode: ImmersionStyle = .mixed
     @State private var selectedDuration: Int = 0
     @State private var tapLocation: CGPoint = .zero
     @State private var gestureModel = GestureModel()
@@ -94,18 +94,19 @@ struct AstralWildsApp: App {
         WindowGroup(id: Self.mainScreenWindowID) {
             MainView()
                 .frame(
-                    minWidth: 1100, maxWidth: 1920,
-                    minHeight: 800, maxHeight: 1080
+                    minWidth: 1280, maxWidth: 1920,
+                    minHeight: 720, maxHeight: 1080
                 )
                 .environment(\.setMode, setMode)
                 .background(.black.opacity(0.4))
         }
-        .windowResizability(.contentSize)
+        .windowResizability(.automatic)
         
         WindowGroup(id: Self.chooseTimeWindowID) {
             BeforeImmersiveView(durationSelection: $selectedDuration)
                 .fixedSize()
                 .environment(\.setMode, setMode)
+                .background(.black.opacity(0.4))
         }
         .windowResizability(.contentSize)
         .defaultWindowPlacement { content, _ in
@@ -119,6 +120,7 @@ struct AstralWildsApp: App {
             ExitImmersiveSpace(mode: $mode)
                 .fixedSize()
                 .environment(\.setMode, setMode)
+//                .background(.black.opacity(0.4))
         }
         .windowResizability(.contentSize)
         .defaultWindowPlacement { content, context in
