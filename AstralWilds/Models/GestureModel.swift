@@ -12,52 +12,22 @@ import SwiftUI
 @MainActor @Observable
 final class GestureModel: Sendable {
     
-    
-    private var lastLogTime: TimeInterval = 0
-    private let logThrottleInterval: TimeInterval = 0.5
-    
     private let session = ARKitSession()
     private var handTracking = HandTrackingProvider()
     
-    private var fingerState: FingerState = .init()
-    fileprivate var latestHandTracking: HandsUpdates = .init()
+    private var latestHandTracking: HandsUpdates = .init()
     
     private var leftContactIndex: Bool = false
     private var leftContactMiddle: Bool = false
     private var leftContactRing: Bool = false
-    
     private var rightContactIndex: Bool = false
     private var rightContactMiddle: Bool = false
     private var rightContactRing: Bool = false
-    
-    private var activeHandSide: String?
-    private var activeFinger: HandSkeleton.JointName?
-    
-    private var detectedContactTime: TimeInterval = 0
-    private var generalTime: TimeInterval = Date().timeIntervalSince1970
-    private var elapsedTime: TimeInterval = 0
-    
-    private var fingersThatCanSnap: [HandSkeleton.JointName] = [
-        HandSkeleton.JointName.indexFingerTip,
-        HandSkeleton.JointName.middleFingerTip,
-        HandSkeleton.JointName.ringFingerTip,
-    ]
-    
-    var isSnapGestureActivated: Bool = false
-    
-    struct FingerState {
-        var detectedFinger: HandSkeleton.JointName?
-        var detectedHand: String?
-        var detectedAnchor: HandAnchor?
-        var previousDistance: Float?
         
-        fileprivate init() {
-            self.detectedFinger = nil
-            self.detectedHand = nil
-            self.detectedAnchor = nil
-            self.previousDistance = nil
-        }
-    }
+    private var detectedContactTime: TimeInterval = 0
+    private var elapsedTime: TimeInterval = 0
+    private var lastLogTime: TimeInterval = 0
+    private let logThrottleInterval: TimeInterval = 0.5
     
     fileprivate struct HandsUpdates {
         var left: HandAnchor?
@@ -68,6 +38,8 @@ final class GestureModel: Sendable {
             self.right = nil
         }
     }
+    
+    var isSnapGestureActivated: Bool = false
     
     /// Start the hand tracking session.
     func startTrackingSession() async {
@@ -98,22 +70,20 @@ final class GestureModel: Sendable {
                         latestHandTracking.right = anchor
                     }
                 }
-                
-//                let rightResult = fingerSnap(handAnchor: latestHandTracking.right!)
-                
+                                
                 // Process snapping gesture detection
                 Task.detached { [self] in
-                    let leftSnapMiddle = await snapGestureActivated(for: "left", finger: .middleFingerTip)
-                    let leftSnapRing = await snapGestureActivated(for: "left", finger: .ringFingerTip)
-                    let leftSnapIndex = await snapGestureActivated(for: "left", finger: .indexFingerTip)
+                    let leftSnapMiddle = await thanosSnap(for: "left", finger: .middleFingerTip)
+                    let leftSnapRing = await thanosSnap(for: "left", finger: .ringFingerTip)
+                    let leftSnapIndex = await thanosSnap(for: "left", finger: .indexFingerTip)
                     
-                    let rightSnapMiddle = await snapGestureActivated(for: "right", finger: .middleFingerTip)
-                    let rightSnapRing = await snapGestureActivated(for: "right", finger: .ringFingerTip)
-                    let rightSnapIndex = await snapGestureActivated(for: "right", finger: .indexFingerTip)
+                    let rightSnapMiddle = await thanosSnap(for: "right", finger: .middleFingerTip)
+                    let rightSnapRing = await thanosSnap(for: "right", finger: .ringFingerTip)
+                    let rightSnapIndex = await thanosSnap(for: "right", finger: .indexFingerTip)
                     
                     let anySnap = leftSnapMiddle || leftSnapRing || leftSnapIndex || rightSnapMiddle || rightSnapRing || rightSnapIndex
                     
-                    if await anySnap {
+                    if anySnap {
                         await MainActor.run {
                             isSnapGestureActivated = true
                         }
@@ -132,11 +102,12 @@ final class GestureModel: Sendable {
     }
     
     /// Detects a snapping gesture starting from the thumb and a specified finger (index, middle, or ring) of the specified hand.
+    ///
     /// - Parameters:
     ///   - handSide: Specify "left" or "right" to detect snap gestures for the respective hand.
     ///   - finger: The specific finger to check for the snap gesture.
     /// - Returns: True if the user snapped with the specified finger of the specified hand.
-    fileprivate func snapGestureActivated(for handSide: String, finger: HandSkeleton.JointName) -> Bool {
+    private func thanosSnap(for handSide: String, finger: HandSkeleton.JointName) -> Bool {
         guard let handAnchor = (handSide == "left" ? latestHandTracking.left : latestHandTracking.right),
               let handSkeleton = handAnchor.handSkeleton,
               handAnchor.isTracked else {
@@ -147,113 +118,84 @@ final class GestureModel: Sendable {
         let origin = handAnchor.originFromAnchorTransform
         let joint = handSkeleton.joint
         
-        let thumbPosition = matrix_multiply(
-            origin, joint(.thumbTip).anchorFromJointTransform
-        ).columns.3.xyz
+        let thumbAnchor = joint(.thumbTip).anchorFromJointTransform
+        let fingerAnchor = joint(finger).anchorFromJointTransform
+        let thumbKnuckleAnchor = joint(.thumbKnuckle).anchorFromJointTransform
         
-        let fingerPosition = matrix_multiply(
-            origin, joint(finger).anchorFromJointTransform
-        ).columns.3.xyz
-        
-        let thumbKnucklePosition = matrix_multiply(
-            origin, joint(.thumbKnuckle).anchorFromJointTransform
-        ).columns.3.xyz
+        let thumbPosition = matrix_multiply(origin, thumbAnchor).columns.3.xyz
+        let fingerPosition = matrix_multiply(origin, fingerAnchor).columns.3.xyz
+        let thumbKnucklePosition = matrix_multiply(origin, thumbKnuckleAnchor).columns.3.xyz
         
         let distanceThumbFinger = simd_precise_distance(thumbPosition, fingerPosition)
         let distanceFingerDestination = simd_precise_distance(fingerPosition, thumbKnucklePosition)
         
-        let contactThreshold: Float = 0.01
-        let destinationThreshold: Float = 0.075
+        let contactThreshold: Float = 0.011
+        let destinationThreshold: Float = 0.08
         
         let currentTime = Date().timeIntervalSince1970
         
         if distanceThumbFinger < contactThreshold {
-            detectedContactTime = Date().timeIntervalSince1970
-            elapsedTime = currentTime - detectedContactTime
-            activeHandSide = handSide
-            activeFinger = finger
-
+            detectedContactTime = currentTime
+            
             switch finger {
             case .indexFingerTip:
-                if handSide == "left" {
-                    leftContactIndex = true
-                    rightContactIndex = false
-                } else {
-                    leftContactIndex = false
-                    rightContactIndex = true
-                }
-               
-                leftContactMiddle = false
-                leftContactRing = false
-                rightContactMiddle = false
-                rightContactRing = false
-                
+                updateContacts(for: handSide, index: true, middle: false, ring: false)
             case .middleFingerTip:
-                if handSide == "left" {
-                    leftContactMiddle = true
-                    rightContactMiddle = false
-                } else {
-                    leftContactMiddle = false
-                    rightContactMiddle = true
-                }
-                
-                leftContactIndex = false
-                leftContactRing = false
-                rightContactIndex = false
-                rightContactRing = false
+                updateContacts(for: handSide, index: false, middle: true, ring: false)
             case .ringFingerTip:
-                if handSide == "left" {
-                    leftContactRing = true
-                    rightContactRing = false
-                } else {
-                    leftContactRing = false
-                    rightContactRing = true
-                }
-                
-                leftContactIndex = false
-                leftContactMiddle = false
-                rightContactIndex = false
-                rightContactMiddle = false
-            default: break
+                updateContacts(for: handSide, index: false, middle: false, ring: true)
+            default:
+                break
             }
             
             if shouldLog() {
-                print("Phase 1: \(String(describing: activeHandSide)) \(finger) touched.")
-//                print("leftContactIndex: \(leftContactIndex), leftContactMiddle: \(leftContactMiddle), leftContactRing: \(leftContactRing), rightContactIndex: \(rightContactIndex), rightContactMiddle: \(rightContactMiddle), rightContactRing: \(rightContactRing)")
+                print("Phase 1: \(handSide) \(finger) touched.")
             }
         }
-        
-        
-            
-            // Ensure the respective flag for the finger is true before confirming the snap
-            let isFingerFlagActive: Bool = {
-                switch finger {
-                case .indexFingerTip:
-                    return handSide == "left" ? leftContactIndex : rightContactIndex
-                case .middleFingerTip:
-                    return handSide == "left" ? leftContactMiddle : rightContactMiddle
-                case .ringFingerTip:
-                    return handSide == "left" ? leftContactRing : rightContactRing
-                default:
-                    return false
-                }
-            }()
-            
-            if isFingerFlagActive && distanceFingerDestination < destinationThreshold && elapsedTime < 0.3 {
-                resetState()
-                print("Phase 2: Snap gesture detected with \(finger).")
-                return true
-            }
-        
+        if isContactFlagActive(for: handSide, finger: finger) &&
+            distanceFingerDestination < destinationThreshold &&
+            (currentTime - detectedContactTime) < 0.15 {
+            resetState()
+            print("Phase 2: Snap gesture detected with \(finger).")
+            return true
+        }
         
         return false
     }
     
-    fileprivate func resetState() {
+    private func updateContacts(for handSide: String, index: Bool, middle: Bool, ring: Bool) {
+        if handSide == "left" {
+            leftContactIndex = index
+            leftContactMiddle = middle
+            leftContactRing = ring
+            rightContactIndex = false
+            rightContactMiddle = false
+            rightContactRing = false
+        } else {
+            rightContactIndex = index
+            rightContactMiddle = middle
+            rightContactRing = ring
+            leftContactIndex = false
+            leftContactMiddle = false
+            leftContactRing = false
+        }
+    }
+    
+    private func isContactFlagActive(for handSide: String, finger: HandSkeleton.JointName) -> Bool {
+        switch finger {
+        case .indexFingerTip:
+            return handSide == "left" ? leftContactIndex : rightContactIndex
+        case .middleFingerTip:
+            return handSide == "left" ? leftContactMiddle : rightContactMiddle
+        case .ringFingerTip:
+            return handSide == "left" ? leftContactRing : rightContactRing
+        default:
+            return false
+        }
+    }
+    
+    private func resetState() {
         
-        generalTime = 0
-        activeHandSide = nil
-        activeFinger = nil
         leftContactRing = false
         leftContactIndex = false
         leftContactMiddle = false
@@ -265,7 +207,7 @@ final class GestureModel: Sendable {
         }
     }
     
-    fileprivate func shouldLog() -> Bool {
+    private func shouldLog() -> Bool {
         let currentTime = Date().timeIntervalSince1970
         if currentTime - lastLogTime > logThrottleInterval {
             lastLogTime = currentTime

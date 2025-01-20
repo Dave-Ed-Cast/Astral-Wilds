@@ -29,7 +29,6 @@ struct ImageButton: View {
             let textSize = size.height * 0.045
             
             let buttonWidth = size.width
-            let buttonHeight = size.height * 0.2
                         
             VStack(spacing: 5) {
                 Image(name)

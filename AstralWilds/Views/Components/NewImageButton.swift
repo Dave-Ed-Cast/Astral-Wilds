@@ -24,8 +24,6 @@ struct NewImageButton: View {
             let minSpacing: CGFloat = 5
             let dynamicSpacing = max(minSpacing, min(maxSpacing, size.width * 0.025))
             
-            let imageWidth = size.width * 0.9 + dynamicSpacing
-            let imageHeight = size.height * 0.5 + dynamicSpacing
             let textSize = size.height * 0.16
             
             let buttonWidth = size.width * 0.035

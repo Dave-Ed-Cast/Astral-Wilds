@@ -12,9 +12,9 @@ import VisionTextArc
 @MainActor
 class ImmersiveTravelController: ObservableObject {
     
-    var particleController: ParticleController
-    var textController: TextController
-    var timerManager: TimerManager
+    private var particleController: ParticleController
+    private var textController: TextController
+    private var timerManager: TimerManager
     
     private var textEntity = Entity()
     

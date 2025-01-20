@@ -43,7 +43,7 @@ final class PlanetController {
     private var list: [Descriptor]
     
     /// Initialize with custom time and posValue
-    private init(time: Float = 3.5, posValue: Float = 3) {
+    private init(time: Float = 10, posValue: Float = 3) {
         self.time = time
         self.posValue = posValue
         
@@ -62,15 +62,6 @@ final class PlanetController {
     /// Fetch the planet parameters by entity name
     private func getPlanetParameters(for entityName: String) -> Descriptor? {
         return list.first { $0.planet == entityName }
-    }
-    
-    // Move the planet based on its parameters
-    func movePlanet(_ entity: Entity) {
-        guard let parameters = getPlanetParameters(for: entity.name) else {
-            return
-        }
-        
-        parameters.revolving ? stop(entity) : move(entity, with: parameters)
     }
     
     private func move(_ entity: Entity, with parameters: Descriptor) {
@@ -113,5 +104,14 @@ final class PlanetController {
         if let index = list.firstIndex(where: { $0.planet == entity.name }) {
             list[index].revolving = false
         }
+    }
+    
+    // Move the planet based on its parameters
+    func movePlanet(_ entity: Entity) {
+        guard let parameters = getPlanetParameters(for: entity.name) else {
+            return
+        }
+        
+        parameters.revolving ? stop(entity) : move(entity, with: parameters)
     }
 }

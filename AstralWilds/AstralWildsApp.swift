@@ -100,7 +100,7 @@ struct AstralWildsApp: App {
                 .environment(\.setMode, setMode)
                 .background(.black.opacity(0.4))
         }
-        .windowResizability(.automatic)
+        .windowResizability(.contentSize)
         
         WindowGroup(id: Self.chooseTimeWindowID) {
             BeforeImmersiveView(durationSelection: $selectedDuration)
@@ -117,10 +117,13 @@ struct AstralWildsApp: App {
         }
         
         WindowGroup(id: Self.buttonWindowID) {
-            ExitImmersiveSpace(mode: $mode)
-                .fixedSize()
-                .environment(\.setMode, setMode)
-//                .background(.black.opacity(0.4))
+            ZStack {
+                Color.black.opacity(0.4)
+                
+                ExitImmersiveSpace(mode: $mode)
+                    .fixedSize()
+                    .environment(\.setMode, setMode)
+            }
         }
         .windowResizability(.contentSize)
         .defaultWindowPlacement { content, context in
