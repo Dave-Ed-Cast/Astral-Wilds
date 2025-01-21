@@ -8,35 +8,29 @@
 import AVFAudio
 
 /// Handles the audio by playing or stopping the song
-class AudioPlayer {
+final class AudioPlayer: Sendable {
     
     static let shared: AudioPlayer = .init()
-    private var player: AVAudioPlayer?
     
     private init() {}
     
-    func playSong(
+    func createPlayer(
         _ name: String = "space",
         dot ext: String = "mp3",
         numberOfLoops number: Int = 0,
         withVolume volume: Float = 0.25
-    ) {
+    ) -> AVAudioPlayer? {
         guard let path = Bundle.main.url(forResource: name, withExtension: ext) else {
             fatalError("Cannot find path for resource: \(name).\(ext)")
         }
         
         do {
-            player = try AVAudioPlayer(contentsOf: path)
+            let player = try AVAudioPlayer(contentsOf: path)
+            player.numberOfLoops = number
+            player.volume = volume
+            return player
         } catch {
             fatalError("Failed to initialize AVAudioPlayer: \(error)")
         }
-        
-        guard let player = player else { return }
-        
-        player.numberOfLoops = number
-        player.volume = volume
-        player.play()
     }
-    
-    func stopSong() { player?.stop() }
 }

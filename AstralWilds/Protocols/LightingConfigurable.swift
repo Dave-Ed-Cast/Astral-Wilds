@@ -14,7 +14,7 @@ protocol LightConfigurable {
         resource environment: EnvironmentResource,
         withShadow castShadow: Bool,
         for entity: Entity?
-    )
+    ) async
 }
 
 extension Entity: LightConfigurable {

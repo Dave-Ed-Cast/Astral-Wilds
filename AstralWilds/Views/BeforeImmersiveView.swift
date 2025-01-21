@@ -29,9 +29,16 @@ struct BeforeImmersiveView: View {
             }
             .font(.callout)
 
-            Picker("Choose:", selection: $durationSelection) {
-                Text("1 minute").tag(0)
-                Text("3 minutes").tag(1)
+            VStack(spacing: 5) {
+                Picker("Choose:", selection: $durationSelection) {
+                    Text("1 minute").tag(0)
+                    Text("3 minutes").tag(1)
+                }
+                
+                Picker("Are you sitting?:", selection: $durationSelection) {
+                    Text("Yes").tag(0)
+                    Text("No").tag(1)
+                }
             }
             .frame(width: 400)
             .pickerStyle(.palette)

@@ -39,7 +39,7 @@ final class GestureModel: Sendable {
         }
     }
     
-    var isSnapGestureActivated: Bool = false
+    var didThanosSnap: Bool = false
     
     /// Start the hand tracking session.
     func startTrackingSession() async {
@@ -85,11 +85,11 @@ final class GestureModel: Sendable {
                     
                     if anySnap {
                         await MainActor.run {
-                            isSnapGestureActivated = true
+                            didThanosSnap = true
                         }
                         try? await Task.sleep(nanoseconds: 500_000_000)
                         await MainActor.run {
-                            isSnapGestureActivated = false
+                            didThanosSnap = false
                         }
                     }
                 }

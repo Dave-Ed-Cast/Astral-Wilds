@@ -20,18 +20,18 @@ struct AstralWildsApp: App {
     private static let chooseTimeWindowID: String = "TimeWindow"
     private static let immersiveTravelWindowId: String = "ImmersiveTravel"
     
-    enum Mode: Equatable {
+    @MainActor enum Mode: Equatable {
         case mainScreen
         case movingPlanets
         case chooseTime
         case choosePlanetsToMove
         case immersiveTravel
         
-        internal var needsImmersiveSpace: Bool {
+        fileprivate var needsImmersiveSpace: Bool {
             return self != .mainScreen && self != .chooseTime
         }
         
-        internal var windowId: String {
+        var windowId: String {
             switch self {
             case .mainScreen: return mainScreenWindowID
             case .movingPlanets: return planetsWindowID
@@ -77,7 +77,7 @@ struct AstralWildsApp: App {
             immersiveSpacePresented = true
             await openImmersiveSpace(id: newMode.windowId)
             
-            //the button needs to appear with the immersive space
+            //Need the button to appear with the immersive space
             openWindow(id: Self.buttonWindowID)
         } else {
             openWindow(id: newMode.windowId)
@@ -125,19 +125,19 @@ struct AstralWildsApp: App {
                     .environment(\.setMode, setMode)
             }
         }
-        .windowResizability(.contentSize)
+        .windowResizability(.contentMinSize)
         .defaultWindowPlacement { content, context in
             
             let size = content.sizeThatFits(.unspecified)
             if let mainViewWindow = context.windows.first(where: { $0.id == Self.mainScreenWindowID }) {
                 
                 return WindowPlacement(
-                    .trailing(mainViewWindow),
+                    .below(mainViewWindow),
                     size: size
                 )
             } else if let chooseTimeWindow = context.windows.first(where: { $0.id == Self.chooseTimeWindowID }) {
                 
-                return WindowPlacement(.replacing(chooseTimeWindow))
+                return WindowPlacement(.replacing(chooseTimeWindow), size: size)
             }
             return WindowPlacement(.none)
         }

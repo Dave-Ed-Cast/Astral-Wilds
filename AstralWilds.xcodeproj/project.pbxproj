@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		3E0636762BF0BAA400F7ED6E /* RealityKitContent in Frameworks */ = {isa = PBXBuildFile; productRef = 3E0636752BF0BAA400F7ED6E /* RealityKitContent */; };
+		3E254D942D404D97005CE58C /* RealityViewContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E254D932D404D97005CE58C /* RealityViewContent.swift */; };
 		3E31ADE82D27085A00E48C15 /* VisionTextArc in Frameworks */ = {isa = PBXBuildFile; productRef = 3E31ADE72D27085A00E48C15 /* VisionTextArc */; };
 		3E4A62192D32A84500E3C0D4 /* ImmersiveTravelController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E4A62182D32A84500E3C0D4 /* ImmersiveTravelController.swift */; };
 		3E4A621B2D35144400E3C0D4 /* TimerManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E4A621A2D35144400E3C0D4 /* TimerManager.swift */; };
@@ -35,6 +36,7 @@
 		3E4ABE562D16F45400AA3DE3 /* studio.skybox in Resources */ = {isa = PBXBuildFile; fileRef = 3E4ABE552D16F45400AA3DE3 /* studio.skybox */; };
 		3E4ABE5F2D1F5D2700AA3DE3 /* Test.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E4ABE5E2D1F5D2700AA3DE3 /* Test.swift */; };
 		3E4ABE652D2099F500AA3DE3 /* SetModeKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E4ABE642D2099F500AA3DE3 /* SetModeKey.swift */; };
+		3E6EAA652D3FE7FD002A7BBF /* Documentation.docc in Sources */ = {isa = PBXBuildFile; fileRef = 3E6EAA642D3FE7FD002A7BBF /* Documentation.docc */; };
 		3ED4A6B22CFB1BE600A899A3 /* VisionTextArc in Frameworks */ = {isa = PBXBuildFile; productRef = 3ED4A6B12CFB1BE600A899A3 /* VisionTextArc */; };
 /* End PBXBuildFile section */
 
@@ -50,6 +52,7 @@
 
 /* Begin PBXFileReference section */
 		3E0636742BF0BAA400F7ED6E /* RealityKitContent */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = RealityKitContent; sourceTree = "<group>"; };
+		3E254D932D404D97005CE58C /* RealityViewContent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealityViewContent.swift; sourceTree = "<group>"; };
 		3E4A62182D32A84500E3C0D4 /* ImmersiveTravelController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImmersiveTravelController.swift; sourceTree = "<group>"; };
 		3E4A621A2D35144400E3C0D4 /* TimerManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimerManager.swift; sourceTree = "<group>"; };
 		3E4A621E2D37116200E3C0D4 /* NewImageButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewImageButton.swift; sourceTree = "<group>"; };
@@ -58,6 +61,8 @@
 		3E4ABE5E2D1F5D2700AA3DE3 /* Test.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Test.swift; sourceTree = "<group>"; };
 		3E4ABE642D2099F500AA3DE3 /* SetModeKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetModeKey.swift; sourceTree = "<group>"; };
 		3E5C216F2BF6BD010015AC20 /* AstralWilds.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AstralWilds.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		3E6EAA642D3FE7FD002A7BBF /* Documentation.docc */ = {isa = PBXFileReference; lastKnownFileType = folder.documentationcatalog; path = Documentation.docc; sourceTree = "<group>"; };
+		3E6EAA662D3FE912002A7BBF /* AstralWilds.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = AstralWilds.md; sourceTree = "<group>"; };
 		3E7B720E2D16E48600937F1E /* SIMD4.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SIMD4.swift; sourceTree = "<group>"; };
 		3E7B72102D16E48600937F1E /* AudioPlayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioPlayer.swift; sourceTree = "<group>"; };
 		3E7B72112D16E48600937F1E /* GestureModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GestureModel.swift; sourceTree = "<group>"; };
@@ -107,6 +112,7 @@
 		3E0636672BF0BAA400F7ED6E = {
 			isa = PBXGroup;
 			children = (
+				3E6EAA662D3FE912002A7BBF /* AstralWilds.md */,
 				3E7B72302D16E48600937F1E /* AstralWilds */,
 				3E0636732BF0BAA400F7ED6E /* Packages */,
 				3EA4755F2BF6BA75005A3573 /* Frameworks */,
@@ -138,6 +144,7 @@
 			children = (
 				3E7B720E2D16E48600937F1E /* SIMD4.swift */,
 				3E4ABE642D2099F500AA3DE3 /* SetModeKey.swift */,
+				3E254D932D404D97005CE58C /* RealityViewContent.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -225,6 +232,7 @@
 		3E7B72302D16E48600937F1E /* AstralWilds */ = {
 			isa = PBXGroup;
 			children = (
+				3E6EAA642D3FE7FD002A7BBF /* Documentation.docc */,
 				3E7B72172D16E48600937F1E /* Preview Content */,
 				3E4ABE552D16F45400AA3DE3 /* studio.skybox */,
 				3E7B722D2D16E48600937F1E /* AstralWildsApp.swift */,
@@ -376,6 +384,8 @@
 				3E4A621F2D37116200E3C0D4 /* NewImageButton.swift in Sources */,
 				3E4ABE492D16E5B400AA3DE3 /* ImmersiveTravel.swift in Sources */,
 				3E4ABE4A2D16E5B400AA3DE3 /* MovingPlanets.swift in Sources */,
+				3E254D942D404D97005CE58C /* RealityViewContent.swift in Sources */,
+				3E6EAA652D3FE7FD002A7BBF /* Documentation.docc in Sources */,
 				3E4ABE4B2D16E5B400AA3DE3 /* MovePlanetsYouChoose.swift in Sources */,
 				3E4ABE4C2D16E5B400AA3DE3 /* BeforeImmersiveView.swift in Sources */,
 				3E4ABE652D2099F500AA3DE3 /* SetModeKey.swift in Sources */,
@@ -461,6 +471,7 @@
 				SDKROOT = xros;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_STRICT_CONCURRENCY = complete;
 				XROS_DEPLOYMENT_TARGET = 1.1;
 			};
 			name = Debug;
@@ -516,6 +527,7 @@
 				MTL_FAST_MATH = YES;
 				SDKROOT = xros;
 				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_STRICT_CONCURRENCY = complete;
 				VALIDATE_PRODUCT = YES;
 				XROS_DEPLOYMENT_TARGET = 1.1;
 			};
@@ -539,7 +551,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.2;
+				MARKETING_VERSION = 1.3;
 				PRODUCT_BUNDLE_IDENTIFIER = com.Dave.PlanetarySystem;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "xros xrsimulator";
@@ -568,7 +580,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.2;
+				MARKETING_VERSION = 1.3;
 				PRODUCT_BUNDLE_IDENTIFIER = com.Dave.PlanetarySystem;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "xros xrsimulator";

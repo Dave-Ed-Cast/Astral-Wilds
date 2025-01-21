@@ -7,9 +7,10 @@
 
 import SwiftUI
 
+/// This can be nonisolated(unsafe) because it is protected in the `setMode` function.
 struct SetModeKey: EnvironmentKey {
     typealias Value = (AstralWildsApp.Mode) async -> Void
-    static let defaultValue: Value = { _ in }
+    nonisolated(unsafe) static let defaultValue: Value = { _ in }
 }
 
 extension EnvironmentValues {

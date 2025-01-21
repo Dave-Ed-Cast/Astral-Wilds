@@ -530,7 +530,7 @@ def Xform "Root"
                 int blendLayer = 400
                 double duration = 600
                 uniform token info:id = "D23B6D54-A05A-4AD0-83FA-73B897B14DE5"
-                float revolutions = 7
+                float revolutions = 16
                 token spinDirection = "counterclockwise"
                 double startTime = 0
                 rel target = </Root/Mercury>
@@ -575,7 +575,7 @@ def Xform "Root"
                 int blendLayer = 400
                 double duration = 600
                 uniform token info:id = "33577A18-D2C2-49B6-8EE3-F30BF7C85348"
-                float revolutions = 4
+                float revolutions = 13
                 double startTime = 0
                 rel target = </Root/Venus>
 
@@ -614,7 +614,7 @@ def Xform "Root"
                 int blendLayer = 400
                 double duration = 600
                 uniform token info:id = "721C7547-8B61-427E-A9F2-90AF0C6DA039"
-                float revolutions = 14
+                float revolutions = 17
                 token spinDirection = "counterclockwise"
                 double startTime = 0
                 rel target = </Root/Earth>
@@ -654,7 +654,7 @@ def Xform "Root"
                 int blendLayer = 400
                 double duration = 600
                 uniform token info:id = "0097E71F-931F-4591-B66C-8E3D043C85BD"
-                float revolutions = 13
+                float revolutions = 22
                 token spinDirection = "counterclockwise"
                 double startTime = 0
                 rel target = </Root/Mars>
@@ -694,7 +694,7 @@ def Xform "Root"
                 int blendLayer = 400
                 double duration = 600
                 uniform token info:id = "A7512422-6057-4759-937B-E6BF434CFB9F"
-                float revolutions = 28
+                float revolutions = 37
                 token spinDirection = "counterclockwise"
                 double startTime = 0
                 rel target = </Root/Jupiter>
@@ -735,7 +735,7 @@ def Xform "Root"
                 int blendLayer = 400
                 double duration = 600
                 uniform token info:id = "3A0F1A74-B505-47F4-BFD7-D0CCEB061F2F"
-                float revolutions = 26
+                float revolutions = 35
                 token spinDirection = "counterclockwise"
                 double startTime = 0
                 rel target = </Root/Saturn>
@@ -776,7 +776,7 @@ def Xform "Root"
                 int blendLayer = 400
                 double duration = 600
                 uniform token info:id = "F0B59D66-97F0-4CBC-B6CE-FCD8B933D75E"
-                float revolutions = 18
+                float revolutions = 27
                 double startTime = 0
                 rel target = </Root/Uranus>
 
@@ -816,7 +816,7 @@ def Xform "Root"
                 int blendLayer = 400
                 double duration = 600
                 uniform token info:id = "FF04B67F-F4DF-4DE6-9B30-29C316985078"
-                float revolutions = 20
+                float revolutions = 29
                 double startTime = 0
                 rel target = </Root/Neptune>
 

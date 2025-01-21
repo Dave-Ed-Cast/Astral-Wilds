@@ -11,7 +11,7 @@ import RealityFoundation
 /// Contains all the parameters and functions related to planets chracteristic and their movement.
 final class PlanetController {
     
-    static let shared = PlanetController()
+    @MainActor static let shared = PlanetController()
     
     /// The parameters that define the planet
     ///
@@ -64,13 +64,13 @@ final class PlanetController {
         return list.first { $0.planet == entityName }
     }
     
-    private func move(_ entity: Entity, with parameters: Descriptor) {
+    @MainActor private func move(_ entity: Entity, with parameters: Descriptor) {
 
         if let index = list.firstIndex(where: { $0.planet == entity.name }) {
             list[index].revolving = true
         }
         
-        var angle = atan2(entity.position.z, entity.position.x)
+        let initialAngle = atan2(entity.position.z, entity.position.x)
         let rotationAngle: Float = 0.0025
         let spinRotation: Float = rotationAngle * 3
         
@@ -83,19 +83,22 @@ final class PlanetController {
         let rotation = isRetrograde ? -spinRotation : spinRotation
         let rotationAxis = isRetrograde ? SIMD3(0, -entity.position.y, 0) : SIMD3(0, entity.position.y, 0)
         
+        var angle = initialAngle
         let timer = Timer.scheduledTimer(withTimeInterval: updateInterval, repeats: true) { _ in
-            angle -= rotationAngle * Float(angularVelocity)
-            let x = radius * cos(angle)
-            let z = radius * sin(angle)
-            let newPosition = SIMD3(x, entity.position.y, z)
-            entity.position = newPosition
-            entity.transform.rotation *= simd_quatf(angle: rotation, axis: rotationAxis)
+            Task { @MainActor in
+                angle -= rotationAngle * Float(angularVelocity)
+                let x = radius * cos(angle)
+                let z = radius * sin(angle)
+                let newPosition = SIMD3(x, entity.position.y, z)
+                entity.position = newPosition
+                entity.transform.rotation *= simd_quatf(angle: rotation, axis: rotationAxis)
+            }
         }
         
         timers[entity.name] = timer
     }
     
-    private func stop(_ entity: Entity) {
+    @MainActor private func stop(_ entity: Entity) {
 
         guard let timer = timers[entity.name] else { return }
         timer.invalidate()
@@ -106,8 +109,7 @@ final class PlanetController {
         }
     }
     
-    // Move the planet based on its parameters
-    func movePlanet(_ entity: Entity) {
+    @MainActor func movePlanet(_ entity: Entity) {
         guard let parameters = getPlanetParameters(for: entity.name) else {
             return
         }
