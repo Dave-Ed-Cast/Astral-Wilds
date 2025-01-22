@@ -47,7 +47,7 @@ struct MovePlanetsYouChoose: View {
                 }
         )
 #if !targetEnvironment(simulator)
-        .onChange(of: gestureModel.isSnapGestureActivated) { _, isActivated in
+        .onChange(of: gestureModel.didThanosSnap) { _, isActivated in
             if isActivated {
                 Task { await setMode(.mainScreen) }
             }

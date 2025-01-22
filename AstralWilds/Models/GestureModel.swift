@@ -130,7 +130,7 @@ final class GestureModel: Sendable {
         let distanceFingerDestination = simd_precise_distance(fingerPosition, thumbKnucklePosition)
         
         let contactThreshold: Float = 0.011
-        let destinationThreshold: Float = 0.08
+        let destinationThreshold: Float = finger == .middleFingerTip ? 0.09 : 0.08
         
         let currentTime = Date().timeIntervalSince1970
         
