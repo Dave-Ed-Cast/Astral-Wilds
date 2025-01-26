@@ -9,6 +9,8 @@ import SwiftUI
 import RealityKit
 
 /// Protocol that handles only one type of lighting: single
+///
+/// Used for entities that need lighting. This avoids redundant code
 protocol LightConfigurable {
     func configureLighting(
         resource environment: EnvironmentResource,

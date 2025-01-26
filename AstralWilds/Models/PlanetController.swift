@@ -9,8 +9,12 @@ import SwiftUI
 import RealityFoundation
 
 /// Contains all the parameters and functions related to planets chracteristic and their movement.
+///
+/// The class is strictly used in the second use case of the app, that features a playground for the user to interact freely with each planet.
+/// To note that only certain items are `MainActor` because it is not needed for the entire class to be so.
 final class PlanetController {
     
+    /// Holds a shared value for the interaction with the selected planet
     @MainActor static let shared = PlanetController()
     
     /// The parameters that define the planet
@@ -36,14 +40,15 @@ final class PlanetController {
         }
     }
     
+    //arbitrary values that help define the radius and period to conform with RealityComposerPro's scene.
     private let time: Float
     private let posValue: Float
     
-    private var timers: [String: Timer] = [:]
+    private var taskHolder: [String: Task<Void, Never>] = [:]
     private var list: [Descriptor]
     
-    /// Initialize with custom time and posValue
-    private init(time: Float = 10, posValue: Float = 3) {
+    /// Initialize with custom time and posValue. Defaults are provided
+    private init(time: Float = 8, posValue: Float = 3) {
         self.time = time
         self.posValue = posValue
         
@@ -64,17 +69,42 @@ final class PlanetController {
         return list.first { $0.planet == entityName }
     }
     
+    /// Tries to reposition the entity in a suitable position when the user wants to rotate it
+    /// - Parameters:
+    ///   - entity: The entity to reposition
+    ///   - parameters: The parameters to follow
+    private func resetEntity(_ entity: Entity, with parameters: Descriptor) {
+        
+        Task { @MainActor in
+            if entity.position != SIMD3(0, 0.9, parameters.radius) {
+                entity.position = SIMD3(0, 0.9, parameters.radius)
+            }
+        }
+    }
+    
+    /// The move function allows for the control of the movement of planet, regarding its parameters.
+    ///
+    /// The math here revolves on basic calculus:
+    ///  - First: we calculate the parameters needed (angle, rotation and spin)
+    ///  - Second: we define the angular velocity
+    ///  - Third: understand if the planet should rotate counter-clockwise or not
+    ///  - Fourth: finally, update the movement.
+    ///
+    ///  Each planet that started movement, will be assigned to the `taskHolder` so that can be later stopped
+    ///
+    /// - Parameters:
+    ///   - entity: The planet to move
+    ///   - parameters: The parameters of the planet
     @MainActor private func move(_ entity: Entity, with parameters: Descriptor) {
-
         if let index = list.firstIndex(where: { $0.planet == entity.name }) {
+            resetEntity(entity, with: parameters)
             list[index].revolving = true
         }
         
         let initialAngle = atan2(entity.position.z, entity.position.x)
-        let rotationAngle: Float = 0.0025
-        let spinRotation: Float = rotationAngle * 3
+        let rotationAngle: Float = 0.002
+        let spinRotation: Float = rotationAngle * 2
         
-        let updateInterval: Double = 1.0 / 90.0
         let angularSpace = 2.0 * Float.pi
         let angularVelocity = angularSpace / parameters.period
         
@@ -84,32 +114,41 @@ final class PlanetController {
         let rotationAxis = isRetrograde ? SIMD3(0, -entity.position.y, 0) : SIMD3(0, entity.position.y, 0)
         
         var angle = initialAngle
-        let timer = Timer.scheduledTimer(withTimeInterval: updateInterval, repeats: true) { _ in
-            Task { @MainActor in
-                angle -= rotationAngle * Float(angularVelocity)
+        
+        let task = Task { @MainActor in
+            while self.list.first(where: { $0.planet == entity.name })?.revolving == true {
                 let x = radius * cos(angle)
                 let z = radius * sin(angle)
                 let newPosition = SIMD3(x, entity.position.y, z)
-                entity.position = newPosition
-                entity.transform.rotation *= simd_quatf(angle: rotation, axis: rotationAxis)
+                angle -= rotationAngle * Float(angularVelocity)
+                
+                await MainActor.run {
+                    entity.position = newPosition
+                    entity.transform.rotation *= simd_quatf(angle: rotation, axis: rotationAxis)
+                }
+                
+                try? await Task.sleep(nanoseconds: UInt64(1_000_000_000 / 90)) // 1/90 seconds
             }
         }
         
-        timers[entity.name] = timer
+        taskHolder[entity.name] = task
     }
     
+    /// Stops the entity that is moving, after finding it from `taskHolder`
+    /// - Parameter entity: the entity that must be stopped
     @MainActor private func stop(_ entity: Entity) {
-
-        guard let timer = timers[entity.name] else { return }
-        timer.invalidate()
-        timers[entity.name] = nil
+        guard let task = taskHolder[entity.name] else { return }
+        task.cancel()
+        taskHolder[entity.name] = nil
         
         if let index = list.firstIndex(where: { $0.planet == entity.name }) {
             list[index].revolving = false
         }
     }
     
-    @MainActor func movePlanet(_ entity: Entity) {
+    /// Allows to move the planet which the user interacts with
+    /// - Parameter entity: The planet to move
+    @MainActor func moveThisPlanet(_ entity: Entity) {
         guard let parameters = getPlanetParameters(for: entity.name) else {
             return
         }

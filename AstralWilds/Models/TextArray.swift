@@ -5,7 +5,7 @@
 //  Created by Davide Castaldi on 06/11/24.
 //
 
-/// Text array depending on the selection of the travel of the user
+/// Text array depending on the duration of the travel selected by the user
 struct TextArray {
     
     let minuteArray: [String] = [
@@ -13,13 +13,12 @@ struct TextArray {
         "Now let us enjoy the journey to Mars",
         "Without weight, embrace the silence",
         "Among stars, are infinite possibilities",
-        "Breathe in and breathe out. Let it go.",
+        "Breathe in and breathe out, let it go.",
         "Connect the cosmo and your heartbeat",
         "Time slows down, you transcend space",
         "The universe, it feels cold yet calm",
         "Gravity fades, and so we become one.",
-        "Finally, here we are... we reached Mars.",
-        ""
+        "Finally, here we are... we reached Mars."
     ]
     
     let threeMinutesArray: [String] = [
@@ -48,7 +47,6 @@ struct TextArray {
         "You are a voyager of the infinite...",
         "Endless odyssey through space wonders",
         "Become boundless and free with the universe",
-        "Here we are... we reached Mars...",
-        ""
+        "Here we are... we reached Mars..."
     ]
 }

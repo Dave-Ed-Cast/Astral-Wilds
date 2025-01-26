@@ -30,4 +30,17 @@ extension View {
         
         return nil
     }
+    
+    func calculateScale(
+        for size: CGSize,
+        baseWidth: CGFloat = 500,
+        baseHeight: CGFloat = 500,
+        scale: CGFloat = 3.0
+    ) -> CGFloat {
+        let widthScale = size.width / baseWidth
+        let heightScale = size.height / baseHeight
+        
+        // Use the smaller of the two scales, clamped to a reasonable range
+        return min(max(min(widthScale, heightScale), 1.0), scale)
+    }
 }

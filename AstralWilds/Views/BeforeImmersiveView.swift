@@ -11,11 +11,10 @@ import SwiftUI
 struct BeforeImmersiveView: View {
     
     @Binding var durationSelection: Int
-    @Environment(\.setMode) private var setMode
-    @Environment(\.dismissWindow) private var dismissWindow
+    @Binding var sitting: Bool
     
-    private let mainScreen = AstralWildsApp.Mode.mainScreen.windowId
-
+    @Environment(\.setMode) private var setMode
+    
     var body: some View {
         
         VStack(spacing: 35) {
@@ -28,16 +27,18 @@ struct BeforeImmersiveView: View {
                 Text("Then, position this window where you want the journey to happen.")
             }
             .font(.callout)
-
+            
             VStack(spacing: 5) {
                 Picker("Choose:", selection: $durationSelection) {
                     Text("1 minute").tag(0)
                     Text("3 minutes").tag(1)
                 }
                 
-                Picker("Are you sitting?:", selection: $durationSelection) {
-                    Text("Yes").tag(0)
-                    Text("No").tag(1)
+                Text("Are you sitting?").font(.title3)
+                    .padding()
+                Picker("Are you sitting?:", selection: $sitting) {
+                    Text("Yes").tag(true)
+                    Text("No").tag(false)
                 }
             }
             .frame(width: 400)
@@ -53,15 +54,10 @@ struct BeforeImmersiveView: View {
         .multilineTextAlignment(.center)
         .padding()
         
-        /// Despite having `setMode`, manually dismissing the window is better, as the function handles things modularly.
-        /// Checking for an overlay each time across all routes is more resource-intensive.
-        .onAppear {
-            dismissWindow(id: mainScreen)
-        }
     }
 }
 
 #Preview(windowStyle: .automatic) {
-    BeforeImmersiveView(durationSelection: .constant(0))
+    BeforeImmersiveView(durationSelection: .constant(0), sitting: .constant(true))
 }
 

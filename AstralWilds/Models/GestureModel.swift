@@ -9,6 +9,11 @@ import ARKit
 import SwiftUI
 
 /// A model that contains up-to-date hand coordinate information.
+/// In this class, custom gestures are implemented.
+///
+/// Supported custom gestures available: `Snap`
+///  -  This is built with `accessibility` in mind. Humans can snap with three possible fingers and two possible hands.
+///     Up to `six` possible cases, all of them are consistently handled.
 @MainActor @Observable
 final class GestureModel: Sendable {
     
@@ -17,19 +22,23 @@ final class GestureModel: Sendable {
     
     private var latestHandTracking: HandsUpdates = .init()
     
+    /// These variables hold the information of the finger that was last in contact for the `Snap` gesture
     private var leftContactIndex: Bool = false
     private var leftContactMiddle: Bool = false
     private var leftContactRing: Bool = false
     private var rightContactIndex: Bool = false
     private var rightContactMiddle: Bool = false
     private var rightContactRing: Bool = false
-        
+    
+    /// Time variable to understand if a `snap`  happened
+    ///
+    /// A 2021 California study found out a snap occurs in 7 ms.
+    /// In thus Swift 6 app, due to concurrency, we use 20 ms as a safe threshold to confirm a snap, based on testing.
     private var detectedContactTime: TimeInterval = 0
     private var elapsedTime: TimeInterval = 0
-    private var lastLogTime: TimeInterval = 0
-    private let logThrottleInterval: TimeInterval = 0.5
     
-    fileprivate struct HandsUpdates {
+    /// Holds the information of the last update for the hand
+    private struct HandsUpdates {
         var left: HandAnchor?
         var right: HandAnchor?
         
@@ -39,6 +48,7 @@ final class GestureModel: Sendable {
         }
     }
     
+    /// Use this supervisor to detect if a snap occurs. It will be true once the snap has occurred.
     var didThanosSnap: Bool = false
     
     /// Start the hand tracking session.
@@ -55,6 +65,7 @@ final class GestureModel: Sendable {
     
     /// Updates the hand tracking session differentiating the cases of updates.
     /// This function ignores every state except the update.
+    /// It works on the `MainActor`, while updating, and checks the gestures through a `Task.detached`
     func updateTracking() async {
         for await update in handTracking.anchorUpdates {
             switch update.event {
@@ -70,9 +81,10 @@ final class GestureModel: Sendable {
                         latestHandTracking.right = anchor
                     }
                 }
-                                
+                
                 // Process snapping gesture detection
                 Task.detached { [self] in
+                    
                     let leftSnapMiddle = await thanosSnap(for: "left", finger: .middleFingerTip)
                     let leftSnapRing = await thanosSnap(for: "left", finger: .ringFingerTip)
                     let leftSnapIndex = await thanosSnap(for: "left", finger: .indexFingerTip)
@@ -103,6 +115,8 @@ final class GestureModel: Sendable {
     
     /// Detects a snapping gesture starting from the thumb and a specified finger (index, middle, or ring) of the specified hand.
     ///
+    /// ### The building of this function is still in the process of optimisation. However, the current state grants robust and consistent usage
+    ///
     /// - Parameters:
     ///   - handSide: Specify "left" or "right" to detect snap gestures for the respective hand.
     ///   - finger: The specific finger to check for the snap gesture.
@@ -129,8 +143,8 @@ final class GestureModel: Sendable {
         let distanceThumbFinger = simd_precise_distance(thumbPosition, fingerPosition)
         let distanceFingerDestination = simd_precise_distance(fingerPosition, thumbKnucklePosition)
         
-        let contactThreshold: Float = 0.011
-        let destinationThreshold: Float = finger == .middleFingerTip ? 0.09 : 0.08
+        let contactThreshold: Float = finger == .middleFingerTip ? 0.02 : 0.01
+        let destinationThreshold: Float = 0.08
         
         let currentTime = Date().timeIntervalSince1970
         
@@ -147,22 +161,26 @@ final class GestureModel: Sendable {
             default:
                 break
             }
-            
-            if shouldLog() {
-                print("Phase 1: \(handSide) \(finger) touched.")
-            }
         }
+        
         if isContactFlagActive(for: handSide, finger: finger) &&
             distanceFingerDestination < destinationThreshold &&
-            (currentTime - detectedContactTime) < 0.15 {
+            (currentTime - detectedContactTime) < 0.02 {
             resetState()
-            print("Phase 2: Snap gesture detected with \(finger).")
             return true
         }
         
         return false
     }
     
+    /// Updates the state of the fingers that have been in contact
+    ///
+    /// This is an helper function for the `thanosSnap`. It helps in understanding which finger touched and should be considered for the snapping motion
+    /// - Parameters:
+    ///   - handSide: The hand (left or right)
+    ///   - index: State of the index (if it was the one in contact or not)
+    ///   - middle: State of the middle (if it was the one in contact or not)
+    ///   - ring: State of the ring (if it was the one in contact or not)
     private func updateContacts(for handSide: String, index: Bool, middle: Bool, ring: Bool) {
         if handSide == "left" {
             leftContactIndex = index
@@ -202,19 +220,6 @@ final class GestureModel: Sendable {
         rightContactRing = false
         rightContactIndex = false
         rightContactMiddle = false
-        if shouldLog() {
-            print("Gesture state reset.")
-        }
     }
-    
-    private func shouldLog() -> Bool {
-        let currentTime = Date().timeIntervalSince1970
-        if currentTime - lastLogTime > logThrottleInterval {
-            lastLogTime = currentTime
-            return true
-        }
-        return false
-    }
-    
 }
 

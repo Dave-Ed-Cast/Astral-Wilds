@@ -12,109 +12,132 @@ import VisionTextArc
 /// The controller for the immersive travel experience.
 ///
 /// This class acts as a caller to all the other classes and functionalities involved.
+/// The class is on the main actor.
 /// See `ParticleController` or `TextController` for more information.
 @MainActor
 final class ImmersiveTravelController: ObservableObject {
     
+    /// The duration of the travel, therefore, the text length chosen by the user.
+    /// It is imperative to assign to this variable the text array.
+    @Published var textArray: [String] = [] {
+        didSet {
+            maxStepCounter = textArray.count
+        }
+    }
+    
+    private var textEntity: Entity
+    
     private var particleController: ParticleController
     private var textController: TextController
-        
-    private var textEntity = Entity()
-    private var textCount = 100
     
+    /// Everything depends on the step of the travel
+    private var maxStepCounter: Int = 0
+    
+    /// Initializes the classes `ParticleController` and `TextController`
     init() {
         self.particleController = .init()
         self.textController = .init()
+        self.textEntity = .init()
     }
     
-    
-    /// Handles the creation of the particles for the immersive travel experience.
+    /// Starts the creation of the particles for the immersive travel experience.
     ///
-    /// Given the class is a `MainActor`, the task used will be on the said actor.
-    /// - Parameters:
-    ///   - environment: The lighting resource used
-    ///   - onParticleCreated: When the particle is created, it can be used in the RealityView.
-    func startParticles(
-        environment: EnvironmentResource,
-        onParticleCreated: @Sendable @escaping (AnchorEntity) -> Void
-    ) {
+    /// This function executes a task that creates a particle every 0.2 seconds,
+    /// then, adds it to the reality view.
+    /// - Parameter view: The Reality View to add the anchor
+    func startParticles(view: RealityViewContent) {
         
         Task {
-            while textController.currentStep <= textCount - 3 {
-                print("start particles")
+            while textController.currentStep <= maxStepCounter - 3 {
                 try await Task.sleep(nanoseconds: 200_000_000) // 0.2 seconds
-                particleController.startParticles(environment: environment, onParticleCreated: onParticleCreated)
+                let particle = await particleController.start()
+                view.add(particle)
             }
         }
         
     }
     
+    /// Moves each and every particle created to simulate the travel
+    ///
     /// Calls the `startMovement` function in `ParticleController`.
     func moveParticles() {
         particleController.startMovement()
     }
     
-    
-    /// Creates the immersive 3D text leveraging the `VisionTextArc` package
+    /// Handles the update of 3D text during the immersive travel
     ///
-    /// More information at `createText` funcion in the `Text` class
+    /// This function executes a Task in which handles the removal and addition of the text.
+    /// Leveraging the package `VisionTextArc`, it is possible to create curved text.
+    /// It is later added in the reality view.
     /// - Parameters:
-    ///   - textConfig: The configuration for the 3D text
     ///   - textArray: The array of text to make it 3D
-    ///   - content: The reality view to add it in
+    ///   - config: The configuration for the 3D text, provided by `VisionTextArc.Configuration`
+    ///   - view: The reality view to add it in
     func createText(
-        textConfig: TextCurver.Configuration,
-        textArray: [String],
-        content: @escaping (Entity) -> Void
+        _ textArray: [String],
+        config: TextCurver.Configuration,
+        view: RealityViewContent
     ) {
         
-        textCount = textArray.count
         Task {
             try await Task.sleep(nanoseconds: 2_500_000_000) // 2.5 seconds
-            while textController.currentStep <= textCount - 1 {
-                print("start text")
-                textEntity.removeFromParent()
-                if let newText = await textController.createText(textConfig: textConfig, textArray: textArray) {
-                    textEntity = newText
+            while true {
+                
+                textEntity = await textController.create(config: config, textArray: textArray)
+                view.add(textEntity)
+                
+                try await Task.sleep(nanoseconds: 5_000_000_000) // 5 second
+                if textController.currentStep == maxStepCounter {
+                    break
                 }
-                try await Task.sleep(nanoseconds: 5_000_000_000) // 5 seconds
+                textEntity.removeFromParent()
             }
         }
     }
 }
 
-/// The controller for the particles.
+/// The particle controller handles the creation of particles and their movement
 final class ParticleController {
     
-    fileprivate var particles: [Entity] = []
+    /// The array of entities to move each
+    fileprivate var particles: [Entity]
     
-    @MainActor
-    fileprivate func startParticles(
-        environment: EnvironmentResource,
-        onParticleCreated: @escaping (AnchorEntity) -> Void
-    ) {
-        let newParticle = createParticle()
-        newParticle.configureLighting(resource: environment, withShadow: true)
-        particles.append(newParticle)
-        onParticleCreated(newParticle)
+    fileprivate init() {
+        self.particles = []
     }
     
+    /// Handles the start process to control particles..
+    ///
+    /// First, uses `create` to return a particle, then populates the `particles` entity array to move them
+    /// - Returns: returns a created particle to be used
+    @MainActor fileprivate func start() async -> AnchorEntity {
+        let environment = try? await EnvironmentResource(named: "studio")
+        let newParticle = create()
+        newParticle.configureLighting(resource: environment!, withShadow: false)
+        particles.append(newParticle)
+        return newParticle
+    }
+    
+    /// Handles the movement of each individual particle in the `particles` array
     @MainActor fileprivate func startMovement() {
         Task {
-            try await Task.sleep(nanoseconds: 500_000_000)
+            // This prevents the particles array to be found empty
+            try await Task.sleep(nanoseconds: 500_000_000) // 0.5 seconds
             while !particles.isEmpty {
                 for particle in particles {
-                    updateParticlePosition(particle)
+                    updatePosition(particle)
                 }
-                try await Task.sleep(nanoseconds: 11_111_111) // ~1/90 seconds
+                try? await Task.sleep(nanoseconds: UInt64(1_000_000_000 / 240)) // 1/240 seconds
             }
         }
     }
     
-    @MainActor private func updateParticlePosition(_ particle: Entity) {
+    /// Helper function for the movement. Updates the position
+    /// - Parameter particle: The singular particle to move
+    @MainActor private func updatePosition(_ particle: Entity) {
         
-        particle.position.z += 0.015
-        if particle.position.z > 25 {
+        particle.position.z += 0.0075
+        if particle.position.z > 26 {
             particle.removeFromParent()
             if let index = particles.firstIndex(of: particle) {
                 particles.remove(at: index)
@@ -122,7 +145,9 @@ final class ParticleController {
         }
     }
     
-    @MainActor private func createParticle() -> AnchorEntity {
+    /// Helper function for the creation. Creates a particle
+    /// - Returns: The particle created with its configuration
+    @MainActor private func create() -> AnchorEntity {
         let material = SimpleMaterial(color: UIColor(Color("particleColor").opacity(0.15)), isMetallic: false)
         let mesh = MeshResource.generateSphere(radius: 0.02)
         let particleEntity = ModelEntity(mesh: mesh, materials: [material])
@@ -144,24 +169,35 @@ final class ParticleController {
     }
 }
 
+/// The text controller class leverages the `VisionTextArc` package.
+///
+/// It allows for curved 3D text to be displayed to the user through a private function: `create`
 final class TextController {
     
     private var textCurver = TextCurver.self
+    
+    /// The current step is one of the most important variables.
+    /// It allows to understand at which part of the journey we are.
     fileprivate var currentStep: Int = 0
     
-    @MainActor fileprivate func createText(
-        textConfig: TextCurver.Configuration,
+    /// Creates a 3D text leveraging the `VisionTextArc` package
+    ///
+    /// - Parameters:
+    ///   - config: The configuration needed
+    ///   - textArray: The entire array (this way I can create a list of strings in 3D)
+    /// - Returns: A 3D text entity
+    @MainActor fileprivate func create(
+        config: TextCurver.Configuration,
         textArray: [String]
-    ) async -> Entity? {
+    ) async -> Entity {
         
         let text = textArray[currentStep]
-        let text3D = textCurver.curveText(text, configuration: textConfig)
+        let text3D = textCurver.curveText(text, configuration: config)
         let environment = try? await EnvironmentResource(named: "studio")
         text3D.configureLighting(resource: environment!, withShadow: false)
         
         currentStep += 1
         
         return text3D
-        
     }
 }

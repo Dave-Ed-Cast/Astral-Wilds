@@ -22,20 +22,17 @@ struct ImmersiveTravel: View {
     @Environment(\.dismissWindow) private var dismissWindow
     
     @Binding var duration: Int
+    @Binding var sitting: Bool
     
     @StateObject private var travel = ImmersiveTravelController()
     
     @State private var player: AVAudioPlayer? = nil
     @State private var audioPlayer: AudioPlayer = AudioPlayer.shared
+    @State private var textEntity: Entity = Entity()
     
     private var selectedMode: String {
         return duration == 0 ? "TravelToMarsShort" : "TravelToMarsLong"
     }
-    
-    let configuration = TextCurver.Configuration(
-        radius: 3.5,
-        yPosition: 1.1
-    )
     
     var textArray: [String] {
         let text = TextArray()
@@ -44,16 +41,20 @@ struct ImmersiveTravel: View {
     
     var body: some View {
         
-        RealityView { content in
-            /// This is not good practice!
-            ///
-            /// However, creating a copy of this content in this particular point (which is still empty) helps with the creation of the controller class.
-            /// it means that the way this has been coded, rather my knowledge, is as far as it goes.
-            ///
-            /// It is imperative, generally, to avoid using copies of the reality views, especially if they are heavy! They impact performance!
-            /// Also, if necessary, copy them always at the earliest possible time.
-            let localContent = content
-            
+        /// `This is not good practice!`
+        /// This was implemented at some point because I didn't understand how to factor inside my functions the `inout` parameter that is the reality view.
+        ///
+        /// Creating a copy of the reality view, only if truly needed, demands to be done at the start, so it is almost empty.
+        /// In a way, it is like creating another reality view on top of the original one, which is not recommended overall.
+        ///
+        /// However, there are some cases where this could be useful, for example if the reality view doesn't load any scenes, or light ones.
+        ///
+        /// It is imperative, generally, to avoid using copies of the reality views, especially if they are heavy! They impact performance!
+        ///
+        /// `let localContent = view` <- is the copy
+        
+        RealityView { view in
+                
 #if !targetEnvironment(simulator)
             Task.detached(priority: .background) {
                 await gestureModel.startTrackingSession()
@@ -61,18 +62,15 @@ struct ImmersiveTravel: View {
             }            
 #endif
             
-            
             //This is safe to unwrap, it's for readability to write like this
             if let planet = try? await Entity(named: selectedMode, in: realityKitContentBundle) {
                 let environment = try? await EnvironmentResource(named: "studio")
                 
                 planet.configureLighting(resource: environment!, withShadow: true, for: planet)
                 
-                content.add(planet)
-                
-                await startTravel(content: localContent, environment: environment!)
-                
-                travel.moveParticles()
+                await startTravel(view: view)
+               
+                view.add(planet)
             }
         }
 #if !targetEnvironment(simulator)
@@ -84,8 +82,16 @@ struct ImmersiveTravel: View {
 #endif
         
         .onAppear {
-            player = audioPlayer.createPlayer("space", dot: "mp3", numberOfLoops: -1, withVolume: 0.5)
+            player = audioPlayer.createPlayer(
+                "space",
+                dot: "mp3",
+                numberOfLoops: -1,
+                withVolume: 0.5
+            )
+            
             player?.play()
+            
+            travel.textArray = textArray
         }
         .onDisappear {
             player?.stop()
@@ -93,14 +99,17 @@ struct ImmersiveTravel: View {
         }
     }
     
-    private func startTravel(content: RealityViewContent, environment: EnvironmentResource?) async {
-                
-        travel.createText(textConfig: configuration, textArray: textArray) { text3D in
-            content.add(text3D)
-        }
+    private func startTravel (view: RealityViewContent) async {
         
-        travel.startParticles(environment: environment!) { newParticle in
-            content.add(newParticle)
-        }
+        let configuration = TextCurver.Configuration(
+            fontSize: 0.1,
+            radius: 3.5,
+            yPosition: sitting == true ? 1.1 : 1.6
+        )
+        
+        travel.createText(textArray, config: configuration, view: view)
+        travel.startParticles(view: view)
+        travel.moveParticles()
     }
 }
+

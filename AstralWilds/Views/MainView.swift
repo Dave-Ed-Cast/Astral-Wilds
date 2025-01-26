@@ -11,55 +11,56 @@ import SwiftUI
 struct MainView: View {
     
     @Environment(\.setMode) private var setMode
-        
+    @Environment(\.openWindow) private var openWindow
+    @Environment(\.dismissWindow) private var dismissWindow
+    
     var body: some View {
-        GeometryReader { geometry in
-            let size = geometry.size
-            let titleTextSize = size.height * 0.07
-            let titleTextPadding = size.height * 0.1
-            let headlineTextSize = size.height * 0.04
-            let adaptivePadding = size.width * 0.02
+        
+        VStack(spacing: 20) {
             
-            let maxSpacing: CGFloat = 10
-            let minSpacing: CGFloat = 5
-            let dynamicSpacing = max(minSpacing, min(maxSpacing, size.width * 0.085))
-            
-            VStack(spacing: dynamicSpacing) {
-                Text("Welcome to Astral Wilds!")
-                    .font(.system(size: titleTextSize))
-                    .padding(titleTextPadding)
+            Text("Choose what to explore!")
+                .font(.largeTitle)
+            VStack(alignment: .leading, spacing: 10) {
                 
-                VStack(alignment: .leading, spacing: dynamicSpacing * 0.3) {
-                    HStack {
-                        Text("Choose what to explore!")
-                            .font(.system(size: headlineTextSize))
-                    }
-                    .padding(.leading, adaptivePadding)
-                    
-                    HStack(spacing: 10) {
-                        ImageButton(name: "SolarSystem", title: "Solar system", chosenMode: .movingPlanets)
-                        ImageButton(name: "Touch", title: "Preferred planets", chosenMode: .choosePlanetsToMove)
-                        ImageButton(name: "Mars", title: "Mars Travel", chosenMode: .chooseTime)
-                    }
-                    
-//                    VStack(spacing: 10) {
-//                        NewImageButton(name: "SolarSystem", text: text1, chosenMode: .movingPlanets)
-//                        NewImageButton(name: "Touch", text: text1, chosenMode: .choosePlanetsToMove)
-//                        NewImageButton(name: "Mars", text: text1, chosenMode: .chooseTime)
-//                    }
-                    .environment(\.setMode, setMode)
-                }
+                ImageButton(
+                    name: "SolarSystem",
+                    text: "Put yourself at the center of the univers and admire, from up close, how the solar system works!",
+                    chosenMode: .movingPlanets
+                )
+                ImageButton(
+                    name: "Touch",
+                    text: "In this playground, interact with each planet and make it your toy!",
+                    chosenMode: .choosePlanetsToMove
+                )
+                ImageButton(
+                    name: "Mars",
+                    text: "Experience a simulated travel to Mars, while admiring the red planet!",
+                    chosenMode: .chooseTime
+                )
             }
-            .onChange(of: size) {
-                print("width: \(size.width), height: \(size.height)")
+            .environment(\.setMode, setMode)
+        }
+        .overlay(alignment: .topTrailing) {
+            Button {
+                openWindow(id: "Tutorial")
+                
+            } label: {
+                Image(systemName: "info.circle")
+                   
             }
+            .buttonStyle(.plain)
             .padding()
-            .fontWeight(.bold)
-
+        }
+        
+        .padding()
+        .fontWeight(.bold)
+        
+        /// For whatever reason, the tested code that should close the window doesn't close it.
+        /// The dismissWindow in the setMode function doesn't work properly
+        .onAppear {
+            dismissWindow(id: "Welcome")
         }
     }
-    
-            
 }
 
 #Preview(windowStyle: .automatic) {

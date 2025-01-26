@@ -36,16 +36,19 @@ struct MovePlanetsYouChoose: View {
                 content.add(scene)
             }
         }
+        .installGestures()
+        
         .gesture(
             SpatialTapGesture(coordinateSpace: .local)
                 .targetedToAnyEntity()
                 .onEnded { value in
                     if let planet = planetName(for: value.entity, in: value.entity.name) {
                         selectedPlanetEntity = planet
-                        planetController.movePlanet(planet)
+                        planetController.moveThisPlanet(planet)
                     }
                 }
         )
+        
 #if !targetEnvironment(simulator)
         .onChange(of: gestureModel.didThanosSnap) { _, isActivated in
             if isActivated {

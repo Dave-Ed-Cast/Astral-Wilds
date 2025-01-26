@@ -32,7 +32,7 @@ def Xform "Root"
             uint group = 1
             uniform token info:id = "RealityKit.Collider"
             uint mask = 4294967295
-            token type = "Trigger"
+            token type = "Default"
 
             def RealityKitStruct "Shape"
             {
@@ -124,14 +124,9 @@ def Xform "Root"
             }
         }
 
-        def RealityKitComponent "RCP_BehaviorsContainer"
+        def RealityKitCustomComponent "RealityKitContent_GestureComponent"
         {
-            uniform token info:id = "RCP.BehaviorsContainer"
-        }
-
-        def RealityKitComponent "AnimationLibrary"
-        {
-            uniform token info:id = "RealityKit.AnimationLibrary"
+            uniform token info:id = "RealityKitContent.GestureComponent"
         }
     }
 
@@ -174,9 +169,9 @@ def Xform "Root"
             uniform token info:id = "RealityKit.InputTarget"
         }
 
-        def RealityKitComponent "RCP_BehaviorsContainer"
+        def RealityKitCustomComponent "RealityKitContent_GestureComponent"
         {
-            uniform token info:id = "RCP.BehaviorsContainer"
+            uniform token info:id = "RealityKitContent.GestureComponent"
         }
     }
 
@@ -218,9 +213,9 @@ def Xform "Root"
             uniform token info:id = "RealityKit.InputTarget"
         }
 
-        def RealityKitComponent "RCP_BehaviorsContainer"
+        def RealityKitCustomComponent "RealityKitContent_GestureComponent"
         {
-            uniform token info:id = "RCP.BehaviorsContainer"
+            uniform token info:id = "RealityKitContent.GestureComponent"
         }
     }
 
@@ -262,9 +257,9 @@ def Xform "Root"
             uniform token info:id = "RealityKit.InputTarget"
         }
 
-        def RealityKitComponent "RCP_BehaviorsContainer"
+        def RealityKitCustomComponent "RealityKitContent_GestureComponent"
         {
-            uniform token info:id = "RCP.BehaviorsContainer"
+            uniform token info:id = "RealityKitContent.GestureComponent"
         }
     }
 
@@ -306,9 +301,9 @@ def Xform "Root"
             uniform token info:id = "RealityKit.InputTarget"
         }
 
-        def RealityKitComponent "RCP_BehaviorsContainer"
+        def RealityKitCustomComponent "RealityKitContent_GestureComponent"
         {
-            uniform token info:id = "RCP.BehaviorsContainer"
+            uniform token info:id = "RealityKitContent.GestureComponent"
         }
     }
 
@@ -350,9 +345,9 @@ def Xform "Root"
             uniform token info:id = "RealityKit.InputTarget"
         }
 
-        def RealityKitComponent "RCP_BehaviorsContainer"
+        def RealityKitCustomComponent "RealityKitContent_GestureComponent"
         {
-            uniform token info:id = "RCP.BehaviorsContainer"
+            uniform token info:id = "RealityKitContent.GestureComponent"
         }
     }
 
@@ -455,9 +450,9 @@ def Xform "Root"
             }
         }
 
-        def RealityKitComponent "RCP_BehaviorsContainer"
+        def RealityKitCustomComponent "RealityKitContent_GestureComponent"
         {
-            uniform token info:id = "RCP.BehaviorsContainer"
+            uniform token info:id = "RealityKitContent.GestureComponent"
         }
     }
 
@@ -500,9 +495,9 @@ def Xform "Root"
             uniform token info:id = "RealityKit.InputTarget"
         }
 
-        def RealityKitComponent "RCP_BehaviorsContainer"
+        def RealityKitCustomComponent "RealityKitContent_GestureComponent"
         {
-            uniform token info:id = "RCP.BehaviorsContainer"
+            uniform token info:id = "RealityKitContent.GestureComponent"
         }
     }
 
