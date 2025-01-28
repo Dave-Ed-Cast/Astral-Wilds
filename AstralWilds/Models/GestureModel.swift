@@ -33,7 +33,7 @@ final class GestureModel: Sendable {
     /// Time variable to understand if a `snap`  happened
     ///
     /// A 2021 California study found out a snap occurs in 7 ms.
-    /// In thus Swift 6 app, due to concurrency, we use 20 ms as a safe threshold to confirm a snap, based on testing.
+    /// In thus Swift 6 app, due to concurrency, we use 70 ms as a safe threshold to confirm a snap, based on testing.
     private var detectedContactTime: TimeInterval = 0
     private var elapsedTime: TimeInterval = 0
     
@@ -48,7 +48,7 @@ final class GestureModel: Sendable {
         }
     }
     
-    /// Use this supervisor to detect if a snap occurs. It will be true once the snap has occurred.
+    /// Use this supervisor to detect if a snap occurs. Becomes true if the snap has occurred.
     var didThanosSnap: Bool = false
     
     /// Start the hand tracking session.
@@ -63,8 +63,9 @@ final class GestureModel: Sendable {
         }
     }
     
-    /// Updates the hand tracking session differentiating the cases of updates.
-    /// This function ignores every state except the update.
+    /// Updates the hand tracking session.
+    ///
+    /// This function ignores every state except the `update`.
     /// It works on the `MainActor`, while updating, and checks the gestures through a `Task.detached`
     func updateTracking() async {
         for await update in handTracking.anchorUpdates {
@@ -73,7 +74,7 @@ final class GestureModel: Sendable {
                 let anchor = update.anchor
                 guard anchor.isTracked else { continue }
                 
-                // Update the latest hand tracking state
+                // Update the latest state
                 await MainActor.run {
                     if anchor.chirality == .left {
                         latestHandTracking.left = anchor
@@ -113,14 +114,14 @@ final class GestureModel: Sendable {
         
     }
     
-    /// Detects a snapping gesture starting from the thumb and a specified finger (index, middle, or ring) of the specified hand.
+    /// Detects a snapping gesture between the thumb and a specified finger (index, middle, or ring) of that hand.
     ///
     /// ### The building of this function is still in the process of optimisation. However, the current state grants robust and consistent usage
     ///
     /// - Parameters:
     ///   - handSide: Specify "left" or "right" to detect snap gestures for the respective hand.
     ///   - finger: The specific finger to check for the snap gesture.
-    /// - Returns: True if the user snapped with the specified finger of the specified hand.
+    /// - Returns: True if the user snapped.
     private func thanosSnap(for handSide: String, finger: HandSkeleton.JointName) -> Bool {
         guard let handAnchor = (handSide == "left" ? latestHandTracking.left : latestHandTracking.right),
               let handSkeleton = handAnchor.handSkeleton,
@@ -165,7 +166,7 @@ final class GestureModel: Sendable {
         
         if isContactFlagActive(for: handSide, finger: finger) &&
             distanceFingerDestination < destinationThreshold &&
-            (currentTime - detectedContactTime) < 0.02 {
+            (currentTime - detectedContactTime) < 0.07 {
             resetState()
             return true
         }

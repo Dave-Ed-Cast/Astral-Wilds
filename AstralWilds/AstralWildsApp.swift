@@ -76,24 +76,28 @@ struct AstralWildsApp: App {
     /// - Parameter newMode: is the next mode after interacting within the app
     @MainActor private func setMode(_ newMode: Mode) async {
         
-        
         let oldMode = mode
+        print("old: \(oldMode)")
         guard newMode != oldMode else { return }
         mode = newMode
+        print("new: \(newMode)")
+
         
-        let immersiveSpaceNotNeeded = (oldMode.needsImmersiveSpace || !newMode.needsImmersiveSpace)
-        
-        if immersiveSpacePresented && immersiveSpaceNotNeeded {
+        if immersiveSpacePresented {
             
             immersiveSpacePresented = false
             dismissWindow(id: Self.buttonWindowID)
             await dismissImmersiveSpace()
-            openWindow(id: newMode.windowId)
+            print("Immersive space and button dismissed")
 
-        } else if newMode.needsLastWindowClosed {
+        } else {
             dismissWindow(id: oldMode.windowId)
-            openWindow(id: newMode.windowId)
+            print("dismissed old window: \(oldMode.windowId)")
         }
+        
+        
+        
+
         
         if newMode.needsImmersiveSpace {
             
@@ -103,6 +107,10 @@ struct AstralWildsApp: App {
             //Need the button to appear with the immersive space
             openWindow(id: Self.buttonWindowID)
             dismissWindow(id: oldMode.windowId)
+            print("opened immersive space, button and dismissed \(oldMode.windowId)")
+        } else {
+            openWindow(id: newMode.windowId)
+            print("opened \(newMode.windowId)")
         }
     }
     
@@ -133,11 +141,12 @@ struct AstralWildsApp: App {
                     minWidth: 650, maxWidth: 1000,
                     minHeight: 530, maxHeight: 900
                 )
-                .environment(\.setMode, setMode)
+                
                 .background(.black.opacity(0.4))
-            //Until the adaptive UI is fixed
+                //Until the adaptive UI is fixed
                 .fixedSize()
         }
+        .environment(\.setMode, setMode)
         .windowResizability(.contentSize)
         .defaultSize(width: 600, height: 500)
         
@@ -163,21 +172,18 @@ struct AstralWildsApp: App {
             return WindowPlacement(.none)
         }
         
-        /// I guess there is a main actor issue or something.
-        /// When i use `setMode` this should close the main view once this one appears, but it doesn't.
         WindowGroup(id: Self.chooseTimeWindowID) {
-            BeforeImmersiveView(durationSelection: $selectedDuration, sitting: $sitting)
+            ChooseTimeView(durationSelection: $selectedDuration, sitting: $sitting)
                 .fixedSize()
                 .background(.black.opacity(0.4))
                 .onAppear {
+                    /// I don't know what is the problem, but without this I can't dismiss the window properly
                     dismissWindow(id: Self.mainScreenWindowID)
                 }
         }
         .environment(\.setMode, setMode)
         .windowResizability(.contentSize)
         .defaultWindowPlacement { content, context in
-            
-            dismissWindow(id: Self.mainScreenWindowID)
             return WindowPlacement(
                 .utilityPanel,
                 size: content.sizeThatFits(.unspecified)

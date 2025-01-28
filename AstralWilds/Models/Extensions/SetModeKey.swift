@@ -8,9 +8,9 @@
 import SwiftUI
 
 /// This can be nonisolated(unsafe) because it is protected in the `setMode` function.
-struct SetModeKey: EnvironmentKey {
+struct SetModeKey: @preconcurrency EnvironmentKey {
     typealias Value = (AstralWildsApp.Mode) async -> Void
-    nonisolated(unsafe) static let defaultValue: Value = { _ in }
+    @MainActor static let defaultValue: Value = { _ in }
 }
 
 extension EnvironmentValues {
