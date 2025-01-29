@@ -76,14 +76,11 @@ struct AstralWildsApp: App {
     /// - Parameter newMode: is the next mode after interacting within the app
     @MainActor private func setMode(_ newMode: Mode) async {
         
-        
         let oldMode = mode
         guard newMode != oldMode else { return }
         mode = newMode
-        
-        let immersiveSpaceNotNeeded = (oldMode.needsImmersiveSpace || !newMode.needsImmersiveSpace)
-        
-        if immersiveSpacePresented && immersiveSpaceNotNeeded {
+                
+        if immersiveSpacePresented {
             
             immersiveSpacePresented = false
             dismissWindow(id: Self.buttonWindowID)
@@ -169,9 +166,6 @@ struct AstralWildsApp: App {
             BeforeImmersiveView(durationSelection: $selectedDuration, sitting: $sitting)
                 .fixedSize()
                 .background(.black.opacity(0.4))
-                .onAppear {
-                    dismissWindow(id: Self.mainScreenWindowID)
-                }
         }
         .environment(\.setMode, setMode)
         .windowResizability(.contentSize)
@@ -232,6 +226,9 @@ struct AstralWildsApp: App {
                 ImmersiveTravel(duration: $selectedDuration, sitting: $sitting)
                     .environment(gestureModel)
                     .environment(\.setMode, setMode)
+                    .onAppear {
+                        dismissWindow(id: Self.mainScreenWindowID)
+                    }
             }
         }
         .immersionStyle(selection: $immersionMode, in: .mixed, .progressive, .full)
