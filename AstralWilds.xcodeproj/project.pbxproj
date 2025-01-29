@@ -12,6 +12,8 @@
 		3E1654242D428967006635B2 /* WelcomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E1654232D428967006635B2 /* WelcomeView.swift */; };
 		3E254D942D404D97005CE58C /* RealityViewContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E254D932D404D97005CE58C /* RealityViewContent.swift */; };
 		3E31ADE82D27085A00E48C15 /* VisionTextArc in Frameworks */ = {isa = PBXBuildFile; productRef = 3E31ADE72D27085A00E48C15 /* VisionTextArc */; };
+		3E41C3ED2D49355A0033BF19 /* StartTravel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E41C3EC2D49355A0033BF19 /* StartTravel.swift */; };
+		3E41C3EF2D4935910033BF19 /* AppShortcutProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E41C3EE2D4935910033BF19 /* AppShortcutProvider.swift */; };
 		3E4A62192D32A84500E3C0D4 /* ImmersiveTravelController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E4A62182D32A84500E3C0D4 /* ImmersiveTravelController.swift */; };
 		3E4A621F2D37116200E3C0D4 /* ImageButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E4A621E2D37116200E3C0D4 /* ImageButton.swift */; };
 		3E4ABE3B2D16E5B400AA3DE3 /* AstralWildsApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E7B722D2D16E48600937F1E /* AstralWildsApp.swift */; };
@@ -53,6 +55,8 @@
 		3E08413D2D45B26000DDBACF /* TutorialView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TutorialView.swift; sourceTree = "<group>"; };
 		3E1654232D428967006635B2 /* WelcomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeView.swift; sourceTree = "<group>"; };
 		3E254D932D404D97005CE58C /* RealityViewContent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealityViewContent.swift; sourceTree = "<group>"; };
+		3E41C3EC2D49355A0033BF19 /* StartTravel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartTravel.swift; sourceTree = "<group>"; };
+		3E41C3EE2D4935910033BF19 /* AppShortcutProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppShortcutProvider.swift; sourceTree = "<group>"; };
 		3E4A62182D32A84500E3C0D4 /* ImmersiveTravelController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImmersiveTravelController.swift; sourceTree = "<group>"; };
 		3E4A621E2D37116200E3C0D4 /* ImageButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageButton.swift; sourceTree = "<group>"; };
 		3E4ABE552D16F45400AA3DE3 /* studio.skybox */ = {isa = PBXFileReference; lastKnownFileType = file.skybox; path = studio.skybox; sourceTree = "<group>"; };
@@ -148,6 +152,8 @@
 		3E74776C2D48315700BBF4B2 /* Intents */ = {
 			isa = PBXGroup;
 			children = (
+				3E41C3EC2D49355A0033BF19 /* StartTravel.swift */,
+				3E41C3EE2D4935910033BF19 /* AppShortcutProvider.swift */,
 			);
 			path = Intents;
 			sourceTree = "<group>";
@@ -373,6 +379,7 @@
 				3E4ABE3C2D16E5B400AA3DE3 /* SIMD4.swift in Sources */,
 				3E4ABE3D2D16E5B400AA3DE3 /* AudioPlayer.swift in Sources */,
 				3E4ABE3E2D16E5B400AA3DE3 /* GestureModel.swift in Sources */,
+				3E41C3EF2D4935910033BF19 /* AppShortcutProvider.swift in Sources */,
 				3E4ABE402D16E5B400AA3DE3 /* PlanetController.swift in Sources */,
 				3E1654242D428967006635B2 /* WelcomeView.swift in Sources */,
 				3E4A62192D32A84500E3C0D4 /* ImmersiveTravelController.swift in Sources */,
@@ -384,6 +391,7 @@
 				3E4ABE492D16E5B400AA3DE3 /* ImmersiveTravel.swift in Sources */,
 				3E4ABE4A2D16E5B400AA3DE3 /* MovingPlanets.swift in Sources */,
 				3E254D942D404D97005CE58C /* RealityViewContent.swift in Sources */,
+				3E41C3ED2D49355A0033BF19 /* StartTravel.swift in Sources */,
 				3E6EAA652D3FE7FD002A7BBF /* Documentation.docc in Sources */,
 				3E4ABE4B2D16E5B400AA3DE3 /* MovePlanetsYouChoose.swift in Sources */,
 				3E08413E2D45B26000DDBACF /* TutorialView.swift in Sources */,

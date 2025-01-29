@@ -16,6 +16,7 @@ struct AstralWildsApp: App {
     init() {
         RealityKitContent.GestureComponent
             .registerComponent()
+//        AppShortcutProvider
     }
     
     private static let welcomeWindowID: String = "Welcome"
