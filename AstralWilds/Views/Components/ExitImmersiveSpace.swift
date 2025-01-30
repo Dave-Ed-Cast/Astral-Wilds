@@ -1,6 +1,6 @@
 //
 //  ExitImmersiveSpace.swift
-//  PlanetarySystem
+//  AstralWilds
 //
 //  Created by Davide Castaldi on 13/11/24.
 //
@@ -15,10 +15,10 @@ struct ExitImmersiveSpace: View {
     @Binding var mode: AstralWildsApp.Mode
     
     var body: some View {
-        VStack(spacing: 10) {
+        VStack(spacing: 15) {
             let snapText = Text("snap").fontWeight(.bold)
             VStack {
-                Text("Feeling overwhelmed?").font(.title)
+                Text("Feeling overwhelmed?").font(.title3)
                 Text("Click the button or \(snapText) your fingers.")
             }
             

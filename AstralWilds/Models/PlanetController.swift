@@ -1,6 +1,6 @@
 //
 //  OrbitalParameters.swift
-//  PlanetarySystem
+//  AstralWilds
 //
 //  Created by Davide Castaldi on 26/10/24.
 //
@@ -115,17 +115,15 @@ final class PlanetController {
         
         var angle = initialAngle
         
-        let task = Task { @MainActor in
+        let task = Task {
             while self.list.first(where: { $0.planet == entity.name })?.revolving == true {
                 let x = radius * cos(angle)
                 let z = radius * sin(angle)
                 let newPosition = SIMD3(x, entity.position.y, z)
                 angle -= rotationAngle * Float(angularVelocity)
                 
-                await MainActor.run {
-                    entity.position = newPosition
-                    entity.transform.rotation *= simd_quatf(angle: rotation, axis: rotationAxis)
-                }
+                entity.position = newPosition
+                entity.transform.rotation *= simd_quatf(angle: rotation, axis: rotationAxis)
                 
                 try? await Task.sleep(nanoseconds: UInt64(1_000_000_000 / 90)) // 1/90 seconds
             }

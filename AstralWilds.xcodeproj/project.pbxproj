@@ -217,17 +217,25 @@
 			isa = PBXGroup;
 			children = (
 				3E6EAA642D3FE7FD002A7BBF /* Documentation.docc */,
-				3E7B72172D16E48600937F1E /* Preview Content */,
-				3E4ABE552D16F45400AA3DE3 /* studio.skybox */,
 				3E7B722D2D16E48600937F1E /* AstralWildsApp.swift */,
 				3E7B72152D16E48600937F1E /* Models */,
 				3E7B72192D16E48600937F1E /* Protocols */,
-				3E7B721B2D16E48600937F1E /* Sounds */,
 				3E7B722A2D16E48600937F1E /* Views */,
+				3E8CBBE52D4BBAB4006E7E45 /* Resources */,
+			);
+			path = AstralWilds;
+			sourceTree = "<group>";
+		};
+		3E8CBBE52D4BBAB4006E7E45 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				3E7B72172D16E48600937F1E /* Preview Content */,
+				3E7B721B2D16E48600937F1E /* Sounds */,
+				3E4ABE552D16F45400AA3DE3 /* studio.skybox */,
 				3E7B722B2D16E48600937F1E /* Assets.xcassets */,
 				3E7B722C2D16E48600937F1E /* Info.plist */,
 			);
-			path = AstralWilds;
+			path = Resources;
 			sourceTree = "<group>";
 		};
 		3EA4755F2BF6BA75005A3573 /* Frameworks */ = {
@@ -522,11 +530,11 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 0;
-				DEVELOPMENT_ASSET_PATHS = "\"AstralWilds/Preview Content\"";
+				DEVELOPMENT_ASSET_PATHS = "\"AstralWilds/Resources/Preview Content\"";
 				DEVELOPMENT_TEAM = WLW428B75Y;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = "$(TARGET_NAME)/Info.plist";
+				INFOPLIST_FILE = "$(TARGET_NAME)/Resources/Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = "Astral Wilds";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.education";
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -551,11 +559,11 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 0;
-				DEVELOPMENT_ASSET_PATHS = "\"AstralWilds/Preview Content\"";
+				DEVELOPMENT_ASSET_PATHS = "\"AstralWilds/Resources/Preview Content\"";
 				DEVELOPMENT_TEAM = WLW428B75Y;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = "$(TARGET_NAME)/Info.plist";
+				INFOPLIST_FILE = "$(TARGET_NAME)/Resources/Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = "Astral Wilds";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.education";
 				LD_RUNPATH_SEARCH_PATHS = (

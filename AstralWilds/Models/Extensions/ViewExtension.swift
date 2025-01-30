@@ -1,6 +1,6 @@
 //
 //  ViewExtension.swift
-//  PlanetarySystem
+//  AstralWilds
 //
 //  Created by Davide Castaldi on 04/11/24.
 //

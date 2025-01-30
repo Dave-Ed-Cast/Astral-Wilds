@@ -61,7 +61,7 @@ struct AstralWildsApp: App {
     @State private var mode: Mode = .welcome
     @State private var immersiveSpacePresented: Bool = false
     @State private var immersionMode: ImmersionStyle = .progressive(0...100, initialAmount: 100)
-    @State private var selectedDuration: Int = 0
+    @State private var duration: Int = 0
     @State private var sitting: Bool = true
     @State private var tapLocation: CGPoint = .zero
     @State private var gestureModel = GestureModel()
@@ -127,8 +127,8 @@ struct AstralWildsApp: App {
         WindowGroup(id: Self.mainScreenWindowID) {
             MainView()
                 .frame(
-                    minWidth: 650, maxWidth: 1000,
-                    minHeight: 530, maxHeight: 900
+                    minWidth: 700, maxWidth: 1000,
+                    minHeight: 550, maxHeight: 900
                 )
                 .environment(\.setMode, setMode)
                 .background(.black.opacity(0.4))
@@ -136,15 +136,14 @@ struct AstralWildsApp: App {
                 .fixedSize()
         }
         .windowResizability(.contentSize)
-        .defaultSize(width: 600, height: 500)
+        .defaultSize(width: 700, height: 550)
         
         WindowGroup(id: Self.tutorialWindowID) {
             
-            ZStack {
-                Color.black.opacity(0.4).ignoresSafeArea(.all)
-                TutorialView()
-            }
-            .fixedSize()
+            TutorialView()
+                .frame(width: 320, height: 200)
+                .background(.black.opacity(0.4)).ignoresSafeArea(.all)
+                .fixedSize()
         }
         .windowResizability(.contentSize)
         .defaultWindowPlacement { content, context in
@@ -163,7 +162,7 @@ struct AstralWildsApp: App {
         /// I guess there is a main actor issue or something.
         /// When i use `setMode` this should close the main view once this one appears, but it doesn't.
         WindowGroup(id: Self.chooseTimeWindowID) {
-            BeforeImmersiveView(durationSelection: $selectedDuration, sitting: $sitting)
+            BeforeImmersiveView(duration: $duration, sitting: $sitting)
                 .fixedSize()
                 .background(.black.opacity(0.4))
         }
@@ -223,7 +222,7 @@ struct AstralWildsApp: App {
         
         ImmersiveSpace(id: Self.immersiveTravelWindowId) {
             withAnimation(.easeInOut) {
-                ImmersiveTravel(duration: $selectedDuration, sitting: $sitting)
+                ImmersiveTravel(duration: $duration, sitting: $sitting)
                     .environment(gestureModel)
                     .environment(\.setMode, setMode)
                     .onAppear {

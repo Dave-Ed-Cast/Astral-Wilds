@@ -10,7 +10,7 @@ import SwiftUI
 /// This is the window that lets the user select how long should the immersive travel be.
 struct BeforeImmersiveView: View {
     
-    @Binding var durationSelection: Int
+    @Binding var duration: Int
     @Binding var sitting: Bool
     
     @Environment(\.setMode) private var setMode
@@ -19,17 +19,17 @@ struct BeforeImmersiveView: View {
         
         VStack(spacing: 35) {
             
-            Text("Select the duration of your journey.")
+            Text("Select the parameters.")
                 .font(.title2)
             
             VStack {
-                Text("It is recommended to bring some snacks and sit comfortably.")
+                Text("It is recommended to bring snacks and sit comfortably.")
                 Text("Then, position this window where you want the journey to happen.")
             }
             .font(.callout)
             
             VStack(spacing: 5) {
-                Picker("Choose:", selection: $durationSelection) {
+                Picker("Choose:", selection: $duration) {
                     Text("1 minute").tag(0)
                     Text("3 minutes").tag(1)
                 }
@@ -41,7 +41,7 @@ struct BeforeImmersiveView: View {
                     Text("No").tag(false)
                 }
             }
-            .frame(width: 400)
+            .frame(width: 350)
             .pickerStyle(.palette)
             
             Button {
@@ -58,6 +58,6 @@ struct BeforeImmersiveView: View {
 }
 
 #Preview(windowStyle: .automatic) {
-    BeforeImmersiveView(durationSelection: .constant(0), sitting: .constant(true))
+    BeforeImmersiveView(duration: .constant(0), sitting: .constant(true))
 }
 

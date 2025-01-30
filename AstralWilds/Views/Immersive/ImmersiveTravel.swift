@@ -6,7 +6,6 @@
 //
 
 import SwiftUI
-import ARKit
 import RealityKit
 import RealityKitContent
 import VisionTextArc
@@ -56,10 +55,8 @@ struct ImmersiveTravel: View {
         RealityView { view in
                 
 #if !targetEnvironment(simulator)
-            Task.detached(priority: .background) {
-                await gestureModel.startTrackingSession()
-                await gestureModel.updateTracking()
-            }            
+            await gestureModel.startTrackingSession()
+            await gestureModel.updateTracking()
 #endif
             
             //This is safe to unwrap, it's for readability to write like this
