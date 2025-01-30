@@ -1,6 +1,6 @@
 //
 //  Parameters.swift
-//  PlanetarySystem
+//  AstralWilds
 //
 //  Created by Davide Castaldi on 21/12/24.
 //
@@ -14,31 +14,33 @@ import SwiftUI
 /// Supported custom gestures available: `Snap`
 ///  -  This is built with `accessibility` in mind. Humans can snap with three possible fingers and two possible hands.
 ///     Up to `six` possible cases, all of them are consistently handled.
-@MainActor @Observable
+@Observable
 final class GestureModel: Sendable {
     
-    private let session = ARKitSession()
-    private var handTracking = HandTrackingProvider()
+    @MainActor init() {}
     
-    private var latestHandTracking: HandsUpdates = .init()
+    private let session = ARKitSession()
+    @MainActor private var handTracking = HandTrackingProvider()
+    
+    @MainActor private var latestHandTracking: HandsUpdates = .init()
     
     /// These variables hold the information of the finger that was last in contact for the `Snap` gesture
-    private var leftContactIndex: Bool = false
-    private var leftContactMiddle: Bool = false
-    private var leftContactRing: Bool = false
-    private var rightContactIndex: Bool = false
-    private var rightContactMiddle: Bool = false
-    private var rightContactRing: Bool = false
+    @MainActor private var leftContactIndex: Bool = false
+    @MainActor private var leftContactMiddle: Bool = false
+    @MainActor private var leftContactRing: Bool = false
+    @MainActor private var rightContactIndex: Bool = false
+    @MainActor private var rightContactMiddle: Bool = false
+    @MainActor private var rightContactRing: Bool = false
     
     /// Time variable to understand if a `snap`  happened
     ///
     /// A 2021 California study found out a snap occurs in 7 ms.
     /// In thus Swift 6 app, due to concurrency, we use 20 ms as a safe threshold to confirm a snap, based on testing.
-    private var detectedContactTime: TimeInterval = 0
-    private var elapsedTime: TimeInterval = 0
+    @MainActor private var detectedContactTime: TimeInterval = 0
+    @MainActor private var elapsedTime: TimeInterval = 0
     
     /// Holds the information of the last update for the hand
-    private struct HandsUpdates {
+    @MainActor private struct HandsUpdates {
         var left: HandAnchor?
         var right: HandAnchor?
         
@@ -49,7 +51,7 @@ final class GestureModel: Sendable {
     }
     
     /// Use this supervisor to detect if a snap occurs. It will be true once the snap has occurred.
-    var didThanosSnap: Bool = false
+    @MainActor var didThanosSnap: Bool = false
     
     /// Start the hand tracking session.
     func startTrackingSession() async {
@@ -67,7 +69,7 @@ final class GestureModel: Sendable {
     /// This function ignores every state except the update.
     /// It works on the `MainActor`, while updating, and checks the gestures through a `Task.detached`
     func updateTracking() async {
-        for await update in handTracking.anchorUpdates {
+        for await update in await handTracking.anchorUpdates {
             switch update.event {
             case .updated:
                 let anchor = update.anchor
@@ -121,11 +123,13 @@ final class GestureModel: Sendable {
     ///   - handSide: Specify "left" or "right" to detect snap gestures for the respective hand.
     ///   - finger: The specific finger to check for the snap gesture.
     /// - Returns: True if the user snapped with the specified finger of the specified hand.
-    private func thanosSnap(for handSide: String, finger: HandSkeleton.JointName) -> Bool {
+    private func thanosSnap(for handSide: String, finger: HandSkeleton.JointName) async -> Bool {
+        
+        let latestHandTracking = await self.latestHandTracking
         guard let handAnchor = (handSide == "left" ? latestHandTracking.left : latestHandTracking.right),
               let handSkeleton = handAnchor.handSkeleton,
               handAnchor.isTracked else {
-            resetState()
+            await resetState()
             return false
         }
         
@@ -149,24 +153,25 @@ final class GestureModel: Sendable {
         let currentTime = Date().timeIntervalSince1970
         
         if distanceThumbFinger < contactThreshold {
-            detectedContactTime = currentTime
+            await MainActor.run { detectedContactTime = currentTime }
             
             switch finger {
             case .indexFingerTip:
-                updateContacts(for: handSide, index: true, middle: false, ring: false)
+                await updateContacts(for: handSide, index: true, middle: false, ring: false)
             case .middleFingerTip:
-                updateContacts(for: handSide, index: false, middle: true, ring: false)
+                await updateContacts(for: handSide, index: false, middle: true, ring: false)
             case .ringFingerTip:
-                updateContacts(for: handSide, index: false, middle: false, ring: true)
+                await updateContacts(for: handSide, index: false, middle: false, ring: true)
             default:
                 break
             }
         }
         
-        if isContactFlagActive(for: handSide, finger: finger) &&
+        let test = await (currentTime - detectedContactTime)
+        if await isContactFlagActive(for: handSide, finger: finger) &&
             distanceFingerDestination < destinationThreshold &&
-            (currentTime - detectedContactTime) < 0.02 {
-            resetState()
+            test < 0.02 {
+            await resetState()
             return true
         }
         
@@ -181,7 +186,7 @@ final class GestureModel: Sendable {
     ///   - index: State of the index (if it was the one in contact or not)
     ///   - middle: State of the middle (if it was the one in contact or not)
     ///   - ring: State of the ring (if it was the one in contact or not)
-    private func updateContacts(for handSide: String, index: Bool, middle: Bool, ring: Bool) {
+    @MainActor private func updateContacts(for handSide: String, index: Bool, middle: Bool, ring: Bool) {
         if handSide == "left" {
             leftContactIndex = index
             leftContactMiddle = middle
@@ -199,7 +204,7 @@ final class GestureModel: Sendable {
         }
     }
     
-    private func isContactFlagActive(for handSide: String, finger: HandSkeleton.JointName) -> Bool {
+    @MainActor private func isContactFlagActive(for handSide: String, finger: HandSkeleton.JointName) -> Bool {
         switch finger {
         case .indexFingerTip:
             return handSide == "left" ? leftContactIndex : rightContactIndex
@@ -212,7 +217,7 @@ final class GestureModel: Sendable {
         }
     }
     
-    private func resetState() {
+    @MainActor private func resetState() {
         
         leftContactRing = false
         leftContactIndex = false
