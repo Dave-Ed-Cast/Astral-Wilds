@@ -6,9 +6,41 @@
 //
 
 import SwiftUI
-import RealityFoundation
+import RealityKit
 
 extension View {
+    
+    /// Conditionally transforms the view.
+    ///
+    /// Use this method to apply a transformation to the view only if the specified condition is true.
+    /// If the condition is false, the original view is returned unchanged.
+    ///
+    /// ### Example Usage:
+    /// ```swift
+    /// someView.conditionalModifier(showDoneButton) { view in
+    ///     view.overlay(alignment: .bottom) {
+    ///         Button {
+    ///             counter += 1
+    ///         } label: {
+    ///             Text("Ok!")
+    ///         }
+    ///         .buttonStyle(.bordered)
+    ///     }
+    /// }
+    /// ```
+    ///
+    /// - Parameters:
+    ///   - booleanCondition: A Boolean value that determines whether the transformation should be applied.
+    ///   - transformingClosure: A closure that transforms the view content when the condition is `true`.
+    /// - Returns: A modified view if the condition is met; otherwise, the original view.
+    @ViewBuilder func conditionalModifier<Content: View>(
+        _ booleanCondition: Bool,
+        transformingClosure: (Self) -> Content
+    ) -> some View {
+        
+        if booleanCondition { transformingClosure(self) } else { self }
+    }
+    
     
     /// Finds the planet name through Depth First Search method
     ///

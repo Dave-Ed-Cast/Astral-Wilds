@@ -10,7 +10,7 @@
 
 def Xform "Root"
 {
-    reorder nameChildren = ["Mars_1", "SkySphere", "SpaceMaterial", "TravelToUser", "SkysphereTravel"]
+    reorder nameChildren = ["SoundHolder", "Mars_1", "SkySphere", "SpaceMaterial", "TravelToUser", "SkysphereTravel", "RCP_BehaviorsContainer", "AudioPlayer"]
     def "Mars_1" (
         active = true
         references = @Mars 1.usdz@
@@ -52,6 +52,31 @@ def Xform "Root"
                 int loops = 0
                 int performCount = 1
                 token type = "serial"
+            }
+        }
+
+        def RealityKitCustomComponent "RealityKitContent_GestureComponent"
+        {
+            uniform token info:id = "RealityKitContent.GestureComponent"
+        }
+
+        def RealityKitComponent "Collider"
+        {
+            uint group = 1
+            uniform token info:id = "RealityKit.Collider"
+            uint mask = 4294967295
+            token type = "Default"
+
+            def RealityKitStruct "Shape"
+            {
+                float3 extent = (0.19999999, 0.19999999, 0.19999999)
+                float radius = 0.099999994
+                token shapeType = "Sphere"
+
+                def RealityKitStruct "pose"
+                {
+                    float3 position = (3.3527613e-8, -0.000718683, 2.2351742e-8)
+                }
             }
         }
     }
@@ -207,20 +232,102 @@ def Xform "Root"
         }
     }
 
-    def "Sun_1" (
+    def RealityKitComponent "RCP_BehaviorsContainer"
+    {
+        uniform token info:id = "RCP.BehaviorsContainer"
+    }
+
+    def Cube "SoundHolder" (
         active = true
-        prepend references = @Sun 1.usdz@
+        prepend apiSchemas = ["MaterialBindingAPI"]
     )
     {
-        float3 xformOp:scale = (0.01, 0.01, 0.01)
+        rel material:binding = None (
+            bindMaterialAs = "weakerThanDescendants"
+        )
+        double size = 0.2
+        float3 xformOp:scale = (2.220446e-16, 2.220446e-16, 2.220446e-16)
         uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
 
-        def RealityKitComponent "SpotLight"
+        def Material "DefaultMaterial"
         {
-            uniform token info:id = "RealityKit.SpotLight"
+            token outputs:surface.connect = </Root/SoundHolder/DefaultMaterial/DefaultSurfaceShader.outputs:surface>
 
-            def RealityKitStruct "Shadow"
+            def Shader "DefaultSurfaceShader"
             {
+                uniform token info:id = "UsdPreviewSurface"
+                color3f inputs:diffuseColor = (1, 1, 1)
+                float inputs:roughness = 0.75
+                token outputs:surface
+            }
+        }
+
+        def RealityKitComponent "AudioLibrary"
+        {
+            uniform token info:id = "RealityKit.AudioLibrary"
+
+            def RealityKitDict "resources"
+            {
+                string[] keys = ["space.mp3"]
+                rel values = </Root/space_mp3>
+            }
+        }
+
+        def RealityKitComponent "RCP_BehaviorsContainer"
+        {
+            rel behaviors = </Root/SoundHolder/OnAddedToScene>
+            uniform token info:id = "RCP.BehaviorsContainer"
+        }
+
+        def Preliminary_Behavior "OnAddedToScene"
+        {
+            rel actions = </Root/SoundHolder/OnAddedToScene/Action>
+            uniform bool exclusive
+            rel triggers = </Root/SoundHolder/OnAddedToScene/Trigger>
+
+            def Preliminary_Trigger "Trigger"
+            {
+                rel affectedObjects = </Root/SoundHolder>
+                token info:id = "SceneTransition"
+            }
+
+            def Preliminary_Action "Action"
+            {
+                rel affectedObjects = </Root>
+                rel animationLibraryKey = </Root/AudioPlayer>
+                rel animationLibraryKeyOverrideKey = </Root/SoundHolder/OnAddedToScene/Trigger>
+                token info:id = "PlayTimeline"
+                int loops = 0
+                int performCount = 1
+                token type = "serial"
+            }
+        }
+    }
+
+    def RealityKitAudioFile "space_mp3"
+    {
+        uniform asset file = @space.mp3@
+        uniform bool shouldLoop = 0
+    }
+
+    def RealityKitTimeline "AudioPlayer"
+    {
+        def RealityKitTrack "Track"
+        {
+            def RealityKitAction "Play_Audio"
+            {
+                string actionKind = "audio"
+                string audioResourceName = "space.mp3"
+                bool controlPlayback = 1
+                double duration = 255.1640625
+                double gain = -10.029341063348419
+                uniform token info:id = "61762EA8-002E-4BBE-AF53-A4964C7D89D8"
+                double startTime = 0
+                rel target = </Root/SoundHolder>
+
+                def RealityKitStruct "handoffType"
+                {
+                }
             }
         }
     }

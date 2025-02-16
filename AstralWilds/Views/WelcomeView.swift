@@ -17,11 +17,9 @@ struct WelcomeView: View {
     var body: some View {
         GeometryReader { geometry in
             VStack(alignment: .center, spacing: 50) {
-                // Header Text
                 Text("Welcome to Astral Wilds!")
                     .font(.system(size: 40 * scale, weight: .bold))
                 
-                // Description
                 VStack(spacing: 5) {
                     Text("Explore our solar system differently!")
                     Text("With the use of \(gestures)")
@@ -31,7 +29,6 @@ struct WelcomeView: View {
                 .font(.system(size: 24 * scale))
                 .multilineTextAlignment(.center)
                 
-                // Start Button
                 Button {
                     Task { await setMode(.mainScreen) }
                 } label: {

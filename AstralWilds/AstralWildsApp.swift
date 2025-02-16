@@ -46,7 +46,7 @@ struct AstralWildsApp: App {
             return self == .mainScreen || self == .chooseTime
         }
                 
-        var windowId: String {
+        fileprivate var windowId: String {
             switch self {
             case .welcome: return welcomeWindowID
             case .mainScreen: return mainScreenWindowID
@@ -180,10 +180,15 @@ struct AstralWildsApp: App {
         WindowGroup(id: Self.buttonWindowID) {
             ZStack {
                 Color.black.opacity(0.4)
-                
-                ExitImmersiveSpace(mode: $mode)
+#if targetEnvironment(simulator)
+                ExitImmersiveSpaceButton(mode: $mode)
                     .fixedSize()
                     .environment(\.setMode, setMode)
+#elseif !targetEnvironment(simulator)
+                ExitImmersiveSpaceGesture()
+                    .fixedSize()
+                    .environment(\.setMode, setMode)
+#endif
             }
         }
         .windowResizability(.contentMinSize)
