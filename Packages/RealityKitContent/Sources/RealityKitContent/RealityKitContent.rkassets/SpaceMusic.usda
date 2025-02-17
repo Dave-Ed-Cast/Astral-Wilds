@@ -16,14 +16,14 @@ def Xform "Root"
 
         def RealityKitDict "resources"
         {
-            string[] keys = ["space.mp3"]
-            rel values = </Root/space_mp3>
+            string[] keys = ["space.caf"]
+            rel values = </Root/space_caf>
         }
     }
 
-    def RealityKitAudioFile "space_mp3"
+    def RealityKitAudioFile "space_caf"
     {
-        uniform asset file = @space.mp3@
+        uniform asset file = @space.caf@
         uniform bool shouldLoop = 0
     }
 

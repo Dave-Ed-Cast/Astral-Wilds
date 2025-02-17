@@ -24,11 +24,7 @@ struct ImmersiveTravel: View {
     
     @Binding var duration: Int
     @Binding var sitting: Bool
-    
-    @State private var player: AVAudioPlayer? = nil
-    @State private var audioPlayer: AudioPlayer = AudioPlayer.shared
-    @State private var textEntity: Entity = Entity()
-    
+        
     private var selectedMode: String {
         return duration == 0 ? "TravelToMarsShort" : "TravelToMarsLong"
     }
@@ -37,9 +33,8 @@ struct ImmersiveTravel: View {
         return sitting ? 1.1 : 1.6
     }
     
-    var textArray: [String] {
-        let text = TextArray()
-        return duration == 0 ? text.minuteArray : text.threeMinutesArray
+    private var textArray: [String] {
+        return duration == 0 ? TextArray().minuteArray : TextArray().threeMinutesArray
     }
     
     var body: some View {
@@ -67,34 +62,21 @@ struct ImmersiveTravel: View {
 #endif
            
             //This is safe to unwrap, it's for readability to write like this
-            if let planet = try? await Entity(named: selectedMode, in: realityKitContentBundle) {
-                
-                guard let music = planet.findEntity(named: "AudioHolder") else {
-                    print("audio holder not found")
-                    return
-                }
-
-                guard let audioLibrary = music.components[AudioLibraryComponent.self] else {
-                    print("audio library not found")
-                    return
-                }
-                guard let audioResource = audioLibrary.resources.first?.value else {
-                    print("music not found")
-                    return
-                }
+            if let scene = try? await Entity(named: selectedMode, in: realityKitContentBundle) {
                 
                 let environment = try? await EnvironmentResource(named: "studio")
-                planet.configureLighting(resource: environment!, withShadow: true, for: planet)
-                await startTravel(view: view)
-                planet.playAudio(audioResource)
-                view.add(planet)
+                scene.configureLighting(resource: environment!, withShadow: true, for: scene)
+                await startTravel(view: view, entity: scene)
+                
+                view.add(scene)
             }
         } placeholder: {
             Text("Opening immersive space...")
-                .font(.extraLargeTitle)
+            ProgressView()
+                .font(.largeTitle)
                 .position(x: 150, y: 150)
         }
-        //        .installGestures()
+//        .installGestures()
         
 #if !targetEnvironment(simulator)
         .onChange(of: gestureModel.didThanosSnap) { _, isActivated in
@@ -103,24 +85,10 @@ struct ImmersiveTravel: View {
             }
         }
 #endif
-        .onAppear {
-//            player = audioPlayer.createPlayer(
-//                "space",
-//                dot: "mp3",
-//                numberOfLoops: -1,
-//                withVolume: 0.5
-//            )
-//            player?.play()
-            travel.textArray = textArray
-        }
-        .onDisappear {
-//            player?.stop()
-//            player = nil
-        }
+        .onAppear { travel.textArray = textArray }
     }
     
-    private func startTravel(view: RealityViewContent) async {
-        
+    private func startTravel(view: RealityViewContent, entity: Entity) async {
         
         let configuration = TextCurver.Configuration(
             fontSize: 0.1,
@@ -131,6 +99,21 @@ struct ImmersiveTravel: View {
         travel.createText(textArray, config: configuration, view: view)
         travel.startParticles(view: view)
         travel.moveParticles()
+        
+        guard let music = entity.findEntity(named: "SpaceMusic") else {
+            print("audio holder not found")
+            return
+        }
+        
+        guard let audioLibrary = music.components[AudioLibraryComponent.self] else {
+            print("audio library not found")
+            return
+        }
+        guard let audioResource = audioLibrary.resources.first?.value else {
+            print("music not found")
+            return
+        }
+        entity.playAudio(audioResource)
     }
 }
 

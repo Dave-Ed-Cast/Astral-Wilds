@@ -29,6 +29,9 @@
     "D4588DAC-986B-442B-97D8-3E8ADFC2BC2A" : [
 
     ],
+    "D6D59B04-12EB-413B-A01C-5BE561BDF8AF" : [
+
+    ],
     "EB08777C-F2E4-4731-965E-D19D29053AA3" : [
 
     ]
@@ -1413,5 +1416,5 @@
       }
     ]
   },
-  "selectedSceneRelativePath" : "SpaceMusic.usda"
+  "selectedSceneRelativePath" : "TravelToMarsShort.usda"
 }

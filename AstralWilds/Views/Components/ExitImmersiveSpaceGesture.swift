@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-/// Window telling the user how to exit immersive space through gesture
+/// Window telling the user how to exit immersive space through gesture (only with device)
 struct ExitImmersiveSpaceGesture: View {
     
     @Environment(\.setMode) private var setMode
@@ -22,11 +22,11 @@ struct ExitImmersiveSpaceGesture: View {
                 Text("Therefore, \(boldSnap) your fingers to go back.")
             }
             .multilineTextAlignment(.center)
-            .font(.body)
+            .font(.caption)
             Image("Snap")
                 .resizable()
                 .scaledToFit()
-                .frame(width: 64, height: 64)
+                .frame(width: 32, height: 32)
                 .colorInvert()
         }
         .padding()

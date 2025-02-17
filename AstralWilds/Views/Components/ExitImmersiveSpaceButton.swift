@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-/// Reusable button that handles the exiting of the immersive spaces
+/// Reusable button that handles the exiting of the immersive spaces (only simulator)
 struct ExitImmersiveSpaceButton: View {
     
     @Environment(\.setMode) private var setMode

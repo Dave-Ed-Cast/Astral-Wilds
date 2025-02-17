@@ -14,7 +14,6 @@
 		3E4A621F2D37116200E3C0D4 /* ImageButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E4A621E2D37116200E3C0D4 /* ImageButton.swift */; };
 		3E4ABE3B2D16E5B400AA3DE3 /* AstralWildsApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E7B722D2D16E48600937F1E /* AstralWildsApp.swift */; };
 		3E4ABE3C2D16E5B400AA3DE3 /* SIMD4.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E7B720E2D16E48600937F1E /* SIMD4.swift */; };
-		3E4ABE3D2D16E5B400AA3DE3 /* AudioPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E7B72102D16E48600937F1E /* AudioPlayer.swift */; };
 		3E4ABE3E2D16E5B400AA3DE3 /* GestureModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E7B72112D16E48600937F1E /* GestureModel.swift */; };
 		3E4ABE402D16E5B400AA3DE3 /* PlanetController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E7B72132D16E48600937F1E /* PlanetController.swift */; };
 		3E4ABE412D16E5B400AA3DE3 /* TextArray.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E7B72142D16E48600937F1E /* TextArray.swift */; };
@@ -63,7 +62,6 @@
 		3E5C216F2BF6BD010015AC20 /* AstralWilds.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AstralWilds.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3E6EAA642D3FE7FD002A7BBF /* Documentation.docc */ = {isa = PBXFileReference; lastKnownFileType = folder.documentationcatalog; path = Documentation.docc; sourceTree = "<group>"; };
 		3E7B720E2D16E48600937F1E /* SIMD4.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SIMD4.swift; sourceTree = "<group>"; };
-		3E7B72102D16E48600937F1E /* AudioPlayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioPlayer.swift; sourceTree = "<group>"; };
 		3E7B72112D16E48600937F1E /* GestureModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GestureModel.swift; sourceTree = "<group>"; };
 		3E7B72132D16E48600937F1E /* PlanetController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlanetController.swift; sourceTree = "<group>"; };
 		3E7B72142D16E48600937F1E /* TextArray.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextArray.swift; sourceTree = "<group>"; };
@@ -161,7 +159,6 @@
 			isa = PBXGroup;
 			children = (
 				3E7B720F2D16E48600937F1E /* Extensions */,
-				3E7B72102D16E48600937F1E /* AudioPlayer.swift */,
 				3E7B72112D16E48600937F1E /* GestureModel.swift */,
 				3E7B72132D16E48600937F1E /* PlanetController.swift */,
 				3E4A62182D32A84500E3C0D4 /* ImmersiveTravelController.swift */,
@@ -398,7 +395,6 @@
 				3E8FFFC42D633EB700061A8F /* MainView.swift in Sources */,
 				3E8FFFC52D633EB700061A8F /* WelcomeView.swift in Sources */,
 				3E4ABE3C2D16E5B400AA3DE3 /* SIMD4.swift in Sources */,
-				3E4ABE3D2D16E5B400AA3DE3 /* AudioPlayer.swift in Sources */,
 				3E4ABE3E2D16E5B400AA3DE3 /* GestureModel.swift in Sources */,
 				3E52A3962D61DA9D00D67E4B /* ExitImmersiveSpaceButton.swift in Sources */,
 				3E4ABE402D16E5B400AA3DE3 /* PlanetController.swift in Sources */,

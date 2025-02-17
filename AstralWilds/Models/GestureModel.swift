@@ -168,7 +168,6 @@ final class GestureModel {
             resetState()
             return true
         }
-        
         return false
     }
     

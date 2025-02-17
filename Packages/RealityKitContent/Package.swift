@@ -5,6 +5,11 @@ import PackageDescription
 
 let package = Package(
     name: "RealityKitContent",
+    platforms: [
+        .visionOS(.v2),
+        .macOS(.v15),
+        .iOS(.v18)
+    ],
     products: [
         // Products define the executables and libraries a package produces, and make them visible to other packages.
         .library(
