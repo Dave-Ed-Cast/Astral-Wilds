@@ -127,6 +127,17 @@
 			path = Packages;
 			sourceTree = "<group>";
 		};
+		3E1A15082D6342B80070C5AC /* Windows */ = {
+			isa = PBXGroup;
+			children = (
+				3E8FFFBE2D633EB700061A8F /* ChooseTimeView.swift */,
+				3E8FFFBF2D633EB700061A8F /* MainView.swift */,
+				3E8FFFC02D633EB700061A8F /* TutorialView.swift */,
+				3E8FFFC12D633EB700061A8F /* WelcomeView.swift */,
+			);
+			path = Windows;
+			sourceTree = "<group>";
+		};
 		3E4ABE612D1F5D5200AA3DE3 /* AstralWildsTests */ = {
 			isa = PBXGroup;
 			children = (
@@ -199,7 +210,7 @@
 		3E7B722A2D16E48600937F1E /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				3E8FFFC82D633EE600061A8F /* Windows */,
+				3E1A15082D6342B80070C5AC /* Windows */,
 				3E7B72232D16E48600937F1E /* Components */,
 				3E7B72272D16E48600937F1E /* Immersive */,
 			);
@@ -228,17 +239,6 @@
 				3E7B722C2D16E48600937F1E /* Info.plist */,
 			);
 			path = Resources;
-			sourceTree = "<group>";
-		};
-		3E8FFFC82D633EE600061A8F /* Windows */ = {
-			isa = PBXGroup;
-			children = (
-				3E8FFFBE2D633EB700061A8F /* ChooseTimeView.swift */,
-				3E8FFFBF2D633EB700061A8F /* MainView.swift */,
-				3E8FFFC02D633EB700061A8F /* TutorialView.swift */,
-				3E8FFFC12D633EB700061A8F /* WelcomeView.swift */,
-			);
-			path = Windows;
 			sourceTree = "<group>";
 		};
 		3E8FFFCA2D633F0D00061A8F /* Protocols */ = {
