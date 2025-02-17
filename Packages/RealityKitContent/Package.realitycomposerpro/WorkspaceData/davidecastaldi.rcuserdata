@@ -1,9 +1,9 @@
 {
-  "advancedEditorSelectedIdentifier" : "BehaviorsPluginID",
+  "advancedEditorSelectedIdentifier" : "ProjectBrowser",
   "openSceneRelativePaths" : [
     "TravelToMarsShort.usda",
-    "TravelToMarsLong.usda",
     "MovingPlanets.usda",
+    "TravelToMarsLong.usda",
     "Planets.usda"
   ],
   "recentIdentifiers" : {

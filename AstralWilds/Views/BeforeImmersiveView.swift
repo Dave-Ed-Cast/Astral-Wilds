@@ -14,6 +14,7 @@ struct BeforeImmersiveView: View {
     @Binding var sitting: Bool
     
     @Environment(\.setMode) private var setMode
+    @Environment(\.dismissWindow) private var dismissWindow
     
     var body: some View {
         
@@ -51,6 +52,15 @@ struct BeforeImmersiveView: View {
             }
             
         }
+//        .overlay(alignment: .topLeading) {
+//            Button {
+//                Task { await setMode(.mainScreen) }
+//                dismissWindow(id: "TimeWindow")
+//            } label: {
+//                Image(systemName: "chevron.left")
+//            }
+//            .buttonStyle(.borderless)
+//        }
         .multilineTextAlignment(.center)
         .padding()
         

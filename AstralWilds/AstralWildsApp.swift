@@ -137,6 +137,18 @@ struct AstralWildsApp: App {
         }
         .windowResizability(.contentSize)
         .defaultSize(width: 700, height: 550)
+//        .defaultWindowPlacement { content, context in
+//            
+//            let size = content.sizeThatFits(.unspecified)
+//            if let chooseTimeWindow = context.windows.first(where: { $0.id == Self.chooseTimeWindowID }) {
+//                
+//                return WindowPlacement(
+//                    .above(chooseTimeWindow),
+//                    size: size
+//                )
+//            }
+//            return WindowPlacement(.none)
+//        }
         
         WindowGroup(id: Self.tutorialWindowID) {
             
@@ -173,7 +185,6 @@ struct AstralWildsApp: App {
         .windowResizability(.contentSize)
         .defaultWindowPlacement { content, context in
             
-            dismissWindow(id: Self.mainScreenWindowID)
             return WindowPlacement(
                 .utilityPanel,
                 size: content.sizeThatFits(.unspecified)
