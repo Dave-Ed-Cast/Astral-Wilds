@@ -61,7 +61,7 @@ struct AstralWildsApp: App {
     @State private var mode: Mode = .welcome
     @State private var immersiveSpacePresented: Bool = false
     @State private var immersionMode: ImmersionStyle = .progressive(0...100, initialAmount: 100)
-    @State private var duration: Int = 0
+    @State private var selectedDuration: Int = 0
     @State private var sitting: Bool = true
     @State private var tapLocation: CGPoint = .zero
     @State private var gestureModel = GestureModel()
@@ -162,7 +162,7 @@ struct AstralWildsApp: App {
         /// I guess there is a main actor issue or something.
         /// When i use `setMode` this should close the main view once this one appears, but it doesn't.
         WindowGroup(id: Self.chooseTimeWindowID) {
-            BeforeImmersiveView(duration: $duration, sitting: $sitting)
+            BeforeImmersiveView(durationSelection: $selectedDuration, sitting: $sitting)
                 .fixedSize()
                 .background(.black.opacity(0.4))
                 .onAppear {
@@ -230,12 +230,9 @@ struct AstralWildsApp: App {
         
         ImmersiveSpace(id: Self.immersiveTravelWindowId) {
             withAnimation(.easeInOut) {
-                ImmersiveTravel(duration: $duration, sitting: $sitting)
+                ImmersiveTravel(duration: $selectedDuration, sitting: $sitting)
                     .environment(gestureModel)
                     .environment(\.setMode, setMode)
-                    .onAppear {
-                        dismissWindow(id: Self.mainScreenWindowID)
-                    }
             }
         }
         .immersionStyle(selection: $immersionMode, in: .mixed, .progressive, .full)
