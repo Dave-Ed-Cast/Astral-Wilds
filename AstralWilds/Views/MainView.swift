@@ -48,7 +48,7 @@ struct MainView: View {
                 Image(systemName: "info.circle")
                    
             }
-            .buttonStyle(.plain)
+            .buttonStyle(.borderless)
             .padding()
         }
         

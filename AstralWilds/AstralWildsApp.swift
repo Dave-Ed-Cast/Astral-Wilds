@@ -46,7 +46,7 @@ struct AstralWildsApp: App {
             return self == .mainScreen || self == .chooseTime
         }
                 
-        var windowId: String {
+        fileprivate var windowId: String {
             switch self {
             case .welcome: return welcomeWindowID
             case .mainScreen: return mainScreenWindowID
@@ -76,20 +76,17 @@ struct AstralWildsApp: App {
     /// - Parameter newMode: is the next mode after interacting within the app
     @MainActor private func setMode(_ newMode: Mode) async {
         
-        
         let oldMode = mode
         guard newMode != oldMode else { return }
         mode = newMode
         
-        let immersiveSpaceNotNeeded = (oldMode.needsImmersiveSpace || !newMode.needsImmersiveSpace)
-        
-        if immersiveSpacePresented && immersiveSpaceNotNeeded {
+        if immersiveSpacePresented{
             
             immersiveSpacePresented = false
             dismissWindow(id: Self.buttonWindowID)
             await dismissImmersiveSpace()
             openWindow(id: newMode.windowId)
-
+            
         } else if newMode.needsLastWindowClosed {
             dismissWindow(id: oldMode.windowId)
             openWindow(id: newMode.windowId)
@@ -130,8 +127,8 @@ struct AstralWildsApp: App {
         WindowGroup(id: Self.mainScreenWindowID) {
             MainView()
                 .frame(
-                    minWidth: 650, maxWidth: 1000,
-                    minHeight: 530, maxHeight: 900
+                    minWidth: 700, maxWidth: 1000,
+                    minHeight: 550, maxHeight: 900
                 )
                 .environment(\.setMode, setMode)
                 .background(.black.opacity(0.4))
@@ -139,15 +136,26 @@ struct AstralWildsApp: App {
                 .fixedSize()
         }
         .windowResizability(.contentSize)
-        .defaultSize(width: 600, height: 500)
+        .defaultSize(width: 700, height: 550)
+//        .defaultWindowPlacement { content, context in
+//            
+//            let size = content.sizeThatFits(.unspecified)
+//            if let chooseTimeWindow = context.windows.first(where: { $0.id == Self.chooseTimeWindowID }) {
+//                
+//                return WindowPlacement(
+//                    .above(chooseTimeWindow),
+//                    size: size
+//                )
+//            }
+//            return WindowPlacement(.none)
+//        }
         
         WindowGroup(id: Self.tutorialWindowID) {
             
-            ZStack {
-                Color.black.opacity(0.4).ignoresSafeArea(.all)
-                TutorialView()
-            }
-            .fixedSize()
+            TutorialView()
+                .frame(width: 320, height: 200)
+                .background(.black.opacity(0.4)).ignoresSafeArea(.all)
+                .fixedSize()
         }
         .windowResizability(.contentSize)
         .defaultWindowPlacement { content, context in
@@ -166,7 +174,7 @@ struct AstralWildsApp: App {
         /// I guess there is a main actor issue or something.
         /// When i use `setMode` this should close the main view once this one appears, but it doesn't.
         WindowGroup(id: Self.chooseTimeWindowID) {
-            BeforeImmersiveView(durationSelection: $selectedDuration, sitting: $sitting)
+            ChooseTimeView(durationSelection: $selectedDuration, sitting: $sitting)
                 .fixedSize()
                 .background(.black.opacity(0.4))
                 .onAppear {
@@ -177,7 +185,6 @@ struct AstralWildsApp: App {
         .windowResizability(.contentSize)
         .defaultWindowPlacement { content, context in
             
-            dismissWindow(id: Self.mainScreenWindowID)
             return WindowPlacement(
                 .utilityPanel,
                 size: content.sizeThatFits(.unspecified)
@@ -187,10 +194,15 @@ struct AstralWildsApp: App {
         WindowGroup(id: Self.buttonWindowID) {
             ZStack {
                 Color.black.opacity(0.4)
-                
-                ExitImmersiveSpace(mode: $mode)
+#if targetEnvironment(simulator)
+                ExitImmersiveSpaceButton(mode: $mode)
                     .fixedSize()
                     .environment(\.setMode, setMode)
+#elseif !targetEnvironment(simulator)
+                ExitImmersiveSpaceGesture()
+                    .fixedSize()
+                    .environment(\.setMode, setMode)
+#endif
             }
         }
         .windowResizability(.contentMinSize)

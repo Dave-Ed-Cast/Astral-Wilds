@@ -8,6 +8,8 @@
 import SwiftUI
 
 /// Reusable button component to open the immersive spaces
+/// This optimizees the operation of opening the next `chosenMode`
+/// Refer to the `setMode` function 
 struct ImageButton: View {
     
     @Environment(\.setMode) private var setMode
@@ -31,31 +33,18 @@ struct ImageButton: View {
                         .resizable()
                         .scaledToFit()
                         .cornerRadius(20)
-                        .frame(width: 200 * scale, height: 100 * scale)
+                        .frame(width: 200, height: 100)
                     Text(text)
-                        .font(.system(size: 20 * scale))
-                        .frame(maxWidth: 500 * scale)
-                        .padding()
+                        .font(.headline)
                 }
                 
             }
-            .onAppear {
-                scale = calculateScale(for: geometry.size)
-            }
-            .onChange(of: geometry.size) { _, newSize in
-                scale = calculateScale(for: newSize)
-                print(scale)
-            }
             .background(.clear)
-            .buttonStyle(.plain)
+            .buttonStyle(.borderless)
         }
         
     
-        .hoverEffect(.lift).clipShape(.buttonBorder)
-        .onTapGesture {
-            
-        }
-        
+        .hoverEffect(.lift)
         .padding()
         .frame(maxWidth: .infinity, maxHeight: .infinity)
     }

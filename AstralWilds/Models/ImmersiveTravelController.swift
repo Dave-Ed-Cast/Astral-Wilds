@@ -12,7 +12,6 @@ import VisionTextArc
 /// The controller for the immersive travel experience.
 ///
 /// This class acts as a caller to all the other classes and functionalities involved.
-/// The class is on the main actor.
 /// See `ParticleController` or `TextController` for more information.
 @MainActor
 final class ImmersiveTravelController: ObservableObject {
@@ -24,6 +23,8 @@ final class ImmersiveTravelController: ObservableObject {
             maxStepCounter = textArray.count
         }
     }
+    
+    @Published var ended: Bool = false
     
     private var textEntity: Entity
     
@@ -54,7 +55,6 @@ final class ImmersiveTravelController: ObservableObject {
                 view.add(particle)
             }
         }
-        
     }
     
     /// Moves each and every particle created to simulate the travel
@@ -81,16 +81,19 @@ final class ImmersiveTravelController: ObservableObject {
         
         Task {
             try await Task.sleep(nanoseconds: 2_500_000_000) // 2.5 seconds
-            while true {
+            while !ended {
                 
                 textEntity = await textController.create(config: config, textArray: textArray)
                 view.add(textEntity)
                 
                 try await Task.sleep(nanoseconds: 5_000_000_000) // 5 second
                 if textController.currentStep == maxStepCounter {
+                    ended = true
                     break
                 }
-                textEntity.removeFromParent()
+                withAnimation {
+                    textEntity.removeFromParent()
+                }
             }
         }
     }
@@ -106,7 +109,7 @@ final class ParticleController {
         self.particles = []
     }
     
-    /// Handles the start process to control particles..
+    /// Handles the start process to control particles.
     ///
     /// First, uses `create` to return a particle, then populates the `particles` entity array to move them
     /// - Returns: returns a created particle to be used
@@ -184,7 +187,7 @@ final class TextController {
     ///
     /// - Parameters:
     ///   - config: The configuration needed
-    ///   - textArray: The entire array (this way I can create a list of strings in 3D)
+    ///   - textArray: The entire array (this way list of strings in 3D can be created)
     /// - Returns: A 3D text entity
     @MainActor fileprivate func create(
         config: TextCurver.Configuration,

@@ -15,7 +15,7 @@ import SwiftUI
 ///  -  This is built with `accessibility` in mind. Humans can snap with three possible fingers and two possible hands.
 ///     Up to `six` possible cases, all of them are consistently handled.
 @MainActor @Observable
-final class GestureModel: Sendable {
+final class GestureModel {
     
     private let session = ARKitSession()
     private var handTracking = HandTrackingProvider()
@@ -35,7 +35,6 @@ final class GestureModel: Sendable {
     /// A 2021 California study found out a snap occurs in 7 ms.
     /// In thus Swift 6 app, due to concurrency, we use 20 ms as a safe threshold to confirm a snap, based on testing.
     private var detectedContactTime: TimeInterval = 0
-    private var elapsedTime: TimeInterval = 0
     
     /// Holds the information of the last update for the hand
     private struct HandsUpdates {
