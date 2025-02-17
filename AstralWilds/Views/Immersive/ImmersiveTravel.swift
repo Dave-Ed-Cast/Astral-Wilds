@@ -60,17 +60,19 @@ struct ImmersiveTravel: View {
 #endif
             
             //This is safe to unwrap, it's for readability to write like this
-            if let planet = try? await Entity(named: selectedMode, in: realityKitContentBundle) {
+            do {
+                let planet = try await Entity(named: selectedMode, in: realityKitContentBundle)
                 let environment = try? await EnvironmentResource(named: "studio")
-                
                 planet.configureLighting(resource: environment!, withShadow: true, for: planet)
                 await startTravel(view: view)
-                
                 view.add(planet)
+            } catch {
+                print("Failed to load RealityKit entity:", error)
             }
         } placeholder: {
             Text("Opening immersive space...")
                 .font(.extraLargeTitle)
+                .position(x: 150, y: 150)
         }
 //        .installGestures()
         
@@ -81,20 +83,20 @@ struct ImmersiveTravel: View {
             }
         }
 #endif
-//        .onAppear {
-//            player = audioPlayer.createPlayer(
-//                "space",
-//                dot: "mp3",
-//                numberOfLoops: -1,
-//                withVolume: 0.5
-//            )
-//            player?.play()
-//            travel.textArray = textArray
-//        }
-//        .onDisappear {
-//            player?.stop()
-//            player = nil
-//        }
+        .onAppear {
+            player = audioPlayer.createPlayer(
+                "space",
+                dot: "mp3",
+                numberOfLoops: -1,
+                withVolume: 0.5
+            )
+            player?.play()
+            travel.textArray = textArray
+        }
+        .onDisappear {
+            player?.stop()
+            player = nil
+        }
     }
     
     private func startTravel(view: RealityViewContent) async {
@@ -102,7 +104,7 @@ struct ImmersiveTravel: View {
         let configuration = TextCurver.Configuration(
             fontSize: 0.1,
             radius: 3.5,
-            yPosition: sitting ? 1.1 : 1.6
+            yPosition: 1.6
         )
         
         travel.createText(textArray, config: configuration, view: view)
