@@ -31,11 +31,11 @@
 		3E52A3942D611E2500D67E4B /* space.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 3E52A3932D611E2500D67E4B /* space.mp3 */; };
 		3E52A3962D61DA9D00D67E4B /* ExitImmersiveSpaceButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E52A3952D61DA9D00D67E4B /* ExitImmersiveSpaceButton.swift */; };
 		3E6EAA652D3FE7FD002A7BBF /* Documentation.docc in Sources */ = {isa = PBXBuildFile; fileRef = 3E6EAA642D3FE7FD002A7BBF /* Documentation.docc */; };
-		3E8FFFB42D633E3400061A8F /* LightingConfigurable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E8FFFB22D633E3400061A8F /* LightingConfigurable.swift */; };
-		3E8FFFBA2D633E5C00061A8F /* ChooseTimeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E8FFFB52D633E5C00061A8F /* ChooseTimeView.swift */; };
-		3E8FFFBB2D633E5C00061A8F /* TutorialView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E8FFFB72D633E5C00061A8F /* TutorialView.swift */; };
-		3E8FFFBC2D633E5C00061A8F /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E8FFFB62D633E5C00061A8F /* MainView.swift */; };
-		3E8FFFBD2D633E5C00061A8F /* WelcomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E8FFFB82D633E5C00061A8F /* WelcomeView.swift */; };
+		3E8FFFC22D633EB700061A8F /* ChooseTimeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E8FFFBE2D633EB700061A8F /* ChooseTimeView.swift */; };
+		3E8FFFC32D633EB700061A8F /* TutorialView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E8FFFC02D633EB700061A8F /* TutorialView.swift */; };
+		3E8FFFC42D633EB700061A8F /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E8FFFBF2D633EB700061A8F /* MainView.swift */; };
+		3E8FFFC52D633EB700061A8F /* WelcomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E8FFFC12D633EB700061A8F /* WelcomeView.swift */; };
+		3E8FFFCB2D633F0D00061A8F /* LightingConfigurable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E8FFFC92D633F0D00061A8F /* LightingConfigurable.swift */; };
 		3ED4A6B22CFB1BE600A899A3 /* VisionTextArc in Frameworks */ = {isa = PBXBuildFile; productRef = 3ED4A6B12CFB1BE600A899A3 /* VisionTextArc */; };
 /* End PBXBuildFile section */
 
@@ -76,11 +76,11 @@
 		3E7B722B2D16E48600937F1E /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		3E7B722C2D16E48600937F1E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		3E7B722D2D16E48600937F1E /* AstralWildsApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AstralWildsApp.swift; sourceTree = "<group>"; };
-		3E8FFFB22D633E3400061A8F /* LightingConfigurable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LightingConfigurable.swift; sourceTree = "<group>"; };
-		3E8FFFB52D633E5C00061A8F /* ChooseTimeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChooseTimeView.swift; sourceTree = "<group>"; };
-		3E8FFFB62D633E5C00061A8F /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
-		3E8FFFB72D633E5C00061A8F /* TutorialView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TutorialView.swift; sourceTree = "<group>"; };
-		3E8FFFB82D633E5C00061A8F /* WelcomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeView.swift; sourceTree = "<group>"; };
+		3E8FFFBE2D633EB700061A8F /* ChooseTimeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ChooseTimeView.swift; path = AstralWilds/Views/ChooseTimeView.swift; sourceTree = SOURCE_ROOT; };
+		3E8FFFBF2D633EB700061A8F /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = MainView.swift; path = AstralWilds/Views/MainView.swift; sourceTree = SOURCE_ROOT; };
+		3E8FFFC02D633EB700061A8F /* TutorialView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = TutorialView.swift; path = AstralWilds/Views/TutorialView.swift; sourceTree = SOURCE_ROOT; };
+		3E8FFFC12D633EB700061A8F /* WelcomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = WelcomeView.swift; path = AstralWilds/Views/WelcomeView.swift; sourceTree = SOURCE_ROOT; };
+		3E8FFFC92D633F0D00061A8F /* LightingConfigurable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LightingConfigurable.swift; sourceTree = "<group>"; };
 		3EA475602BF6BA75005A3573 /* RealityKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RealityKit.framework; path = System/Library/Frameworks/RealityKit.framework; sourceTree = SDKROOT; };
 		3EBF553A2CE4F49E00216442 /* AstralWildsTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AstralWildsTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -155,7 +155,7 @@
 				3E7B72132D16E48600937F1E /* PlanetController.swift */,
 				3E4A62182D32A84500E3C0D4 /* ImmersiveTravelController.swift */,
 				3E7B72142D16E48600937F1E /* TextArray.swift */,
-				3E8FFFB32D633E3400061A8F /* Protocols */,
+				3E8FFFCA2D633F0D00061A8F /* Protocols */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -199,9 +199,9 @@
 		3E7B722A2D16E48600937F1E /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				3E8FFFC82D633EE600061A8F /* Windows */,
 				3E7B72232D16E48600937F1E /* Components */,
 				3E7B72272D16E48600937F1E /* Immersive */,
-				3E8FFFB92D633E5C00061A8F /* Windows */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -230,23 +230,23 @@
 			path = Resources;
 			sourceTree = "<group>";
 		};
-		3E8FFFB32D633E3400061A8F /* Protocols */ = {
+		3E8FFFC82D633EE600061A8F /* Windows */ = {
 			isa = PBXGroup;
 			children = (
-				3E8FFFB22D633E3400061A8F /* LightingConfigurable.swift */,
-			);
-			path = Protocols;
-			sourceTree = "<group>";
-		};
-		3E8FFFB92D633E5C00061A8F /* Windows */ = {
-			isa = PBXGroup;
-			children = (
-				3E8FFFB52D633E5C00061A8F /* ChooseTimeView.swift */,
-				3E8FFFB62D633E5C00061A8F /* MainView.swift */,
-				3E8FFFB72D633E5C00061A8F /* TutorialView.swift */,
-				3E8FFFB82D633E5C00061A8F /* WelcomeView.swift */,
+				3E8FFFBE2D633EB700061A8F /* ChooseTimeView.swift */,
+				3E8FFFBF2D633EB700061A8F /* MainView.swift */,
+				3E8FFFC02D633EB700061A8F /* TutorialView.swift */,
+				3E8FFFC12D633EB700061A8F /* WelcomeView.swift */,
 			);
 			path = Windows;
+			sourceTree = "<group>";
+		};
+		3E8FFFCA2D633F0D00061A8F /* Protocols */ = {
+			isa = PBXGroup;
+			children = (
+				3E8FFFC92D633F0D00061A8F /* LightingConfigurable.swift */,
+			);
+			path = Protocols;
 			sourceTree = "<group>";
 		};
 		3EA4755F2BF6BA75005A3573 /* Frameworks */ = {
@@ -392,12 +392,12 @@
 				3E4ABE4E2D16E66400AA3DE3 /* Preview Assets.xcassets in Sources */,
 				3E4ABE4F2D16E66400AA3DE3 /* Assets.xcassets in Sources */,
 				3E4ABE3B2D16E5B400AA3DE3 /* AstralWildsApp.swift in Sources */,
+				3E8FFFC22D633EB700061A8F /* ChooseTimeView.swift in Sources */,
+				3E8FFFCB2D633F0D00061A8F /* LightingConfigurable.swift in Sources */,
+				3E8FFFC32D633EB700061A8F /* TutorialView.swift in Sources */,
+				3E8FFFC42D633EB700061A8F /* MainView.swift in Sources */,
+				3E8FFFC52D633EB700061A8F /* WelcomeView.swift in Sources */,
 				3E4ABE3C2D16E5B400AA3DE3 /* SIMD4.swift in Sources */,
-				3E8FFFBA2D633E5C00061A8F /* ChooseTimeView.swift in Sources */,
-				3E8FFFBB2D633E5C00061A8F /* TutorialView.swift in Sources */,
-				3E8FFFBC2D633E5C00061A8F /* MainView.swift in Sources */,
-				3E8FFFBD2D633E5C00061A8F /* WelcomeView.swift in Sources */,
-				3E8FFFB42D633E3400061A8F /* LightingConfigurable.swift in Sources */,
 				3E4ABE3D2D16E5B400AA3DE3 /* AudioPlayer.swift in Sources */,
 				3E4ABE3E2D16E5B400AA3DE3 /* GestureModel.swift in Sources */,
 				3E52A3962D61DA9D00D67E4B /* ExitImmersiveSpaceButton.swift in Sources */,

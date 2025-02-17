@@ -8,7 +8,7 @@
 import SwiftUI
 
 /// This is the window that lets the user select how long should the immersive travel be.
-struct BeforeImmersiveView: View {
+struct ChooseTimeView: View {
     
     @Binding var durationSelection: Int
     @Binding var sitting: Bool
@@ -68,6 +68,6 @@ struct BeforeImmersiveView: View {
 }
 
 #Preview(windowStyle: .automatic) {
-    BeforeImmersiveView(durationSelection: .constant(0), sitting: .constant(true))
+    ChooseTimeView(durationSelection: .constant(0), sitting: .constant(true))
 }
 
