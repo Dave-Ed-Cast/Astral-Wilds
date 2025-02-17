@@ -26,7 +26,7 @@ struct MovePlanetsYouChoose: View {
                 
         RealityView { content in
 #if !targetEnvironment(simulator)
-            Task {
+            Task.detached(priority: .low) {
                 await gestureModel.startTrackingSession()
                 await gestureModel.updateTracking()
             }

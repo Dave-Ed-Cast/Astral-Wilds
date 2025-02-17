@@ -55,10 +55,12 @@ struct ImmersiveTravel: View {
         RealityView { view in
                 
 #if !targetEnvironment(simulator)
-            await gestureModel.startTrackingSession()
-            await gestureModel.updateTracking()
+            //Without task it cannot load the view because it will keep waiting for t
+            Task.detached(priority: .low) {
+                await gestureModel.startTrackingSession()
+                await gestureModel.updateTracking()
+            }
 #endif
-            
             //This is safe to unwrap, it's for readability to write like this
             do {
                 let planet = try await Entity(named: selectedMode, in: realityKitContentBundle)
