@@ -174,7 +174,7 @@ struct AstralWildsApp: App {
         /// I guess there is a main actor issue or something.
         /// When i use `setMode` this should close the main view once this one appears, but it doesn't.
         WindowGroup(id: Self.chooseTimeWindowID) {
-            BeforeImmersiveView(durationSelection: $selectedDuration, sitting: $sitting)
+            ChooseTimeView(durationSelection: $selectedDuration, sitting: $sitting)
                 .fixedSize()
                 .background(.black.opacity(0.4))
                 .onAppear {
