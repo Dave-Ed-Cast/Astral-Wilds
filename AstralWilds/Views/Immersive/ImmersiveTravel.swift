@@ -33,6 +33,10 @@ struct ImmersiveTravel: View {
         return duration == 0 ? "TravelToMarsShort" : "TravelToMarsLong"
     }
     
+    private var selectedStance: Float {
+        return sitting ? 1.1 : 1.6
+    }
+    
     var textArray: [String] {
         let text = TextArray()
         return duration == 0 ? text.minuteArray : text.threeMinutesArray
@@ -106,7 +110,7 @@ struct ImmersiveTravel: View {
         let configuration = TextCurver.Configuration(
             fontSize: 0.1,
             radius: 3.5,
-            yPosition: 1.6
+            yPosition: selectedStance
         )
         
         travel.createText(textArray, config: configuration, view: view)
