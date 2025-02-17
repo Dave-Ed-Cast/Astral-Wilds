@@ -51,6 +51,10 @@ struct BeforeImmersiveView: View {
             }
             
         }
+        .overlay(alignment: .topTrailing) {
+            Image(systemName: "chevron.left")
+                .font(.headline)
+        }
         .multilineTextAlignment(.center)
         .padding()
         

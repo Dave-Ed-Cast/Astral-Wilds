@@ -79,14 +79,14 @@ struct AstralWildsApp: App {
         let oldMode = mode
         guard newMode != oldMode else { return }
         mode = newMode
-                
-        if immersiveSpacePresented {
+        
+        if immersiveSpacePresented{
             
             immersiveSpacePresented = false
             dismissWindow(id: Self.buttonWindowID)
             await dismissImmersiveSpace()
             openWindow(id: newMode.windowId)
-
+            
         } else if newMode.needsLastWindowClosed {
             dismissWindow(id: oldMode.windowId)
             openWindow(id: newMode.windowId)
@@ -165,6 +165,9 @@ struct AstralWildsApp: App {
             BeforeImmersiveView(duration: $duration, sitting: $sitting)
                 .fixedSize()
                 .background(.black.opacity(0.4))
+                .onAppear {
+                    dismissWindow(id: Self.mainScreenWindowID)
+                }
         }
         .environment(\.setMode, setMode)
         .windowResizability(.contentSize)
