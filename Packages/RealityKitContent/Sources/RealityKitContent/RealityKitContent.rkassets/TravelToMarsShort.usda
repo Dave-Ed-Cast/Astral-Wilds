@@ -10,7 +10,7 @@
 
 def Xform "Root"
 {
-    reorder nameChildren = ["SoundHolder", "Mars_1", "SkySphere", "SpaceMaterial", "TravelToUser", "SkysphereTravel", "RCP_BehaviorsContainer", "AudioPlayer"]
+    reorder nameChildren = ["Mars_1", "SkySphere", "SpaceMaterial", "TravelToUser", "SkysphereTravel", "RCP_BehaviorsContainer", "AudioPlayer", "AudioHolder"]
     def "Mars_1" (
         active = true
         references = @Mars 1.usdz@
@@ -87,6 +87,7 @@ def Xform "Root"
         references = @SkySphere.usdz@
     )
     {
+        reorder nameChildren = ["SkySphere_mat", "RCP_BehaviorsContainer", "OnAddedToScene"]
         rel material:binding = </Root/SpaceMaterial> (
             bindMaterialAs = "weakerThanDescendants"
         )
@@ -256,6 +257,43 @@ def Xform "Root"
                 {
                 }
             }
+        }
+    }
+
+    def Cube "AudioHolder" (
+        active = true
+        prepend apiSchemas = ["MaterialBindingAPI"]
+    )
+    {
+        reorder nameChildren = ["SpaceMusic", "DefaultMaterial"]
+        rel material:binding = </Root/AudioHolder/DefaultMaterial> (
+            bindMaterialAs = "weakerThanDescendants"
+        )
+        double size = 0.2
+
+        def Material "DefaultMaterial"
+        {
+            token outputs:mtlx:surface
+            token outputs:realitykit:vertex
+            token outputs:surface.connect = </Root/AudioHolder/DefaultMaterial/DefaultSurfaceShader.outputs:surface>
+
+            def Shader "DefaultSurfaceShader"
+            {
+                uniform token info:id = "UsdPreviewSurface"
+                color3f inputs:diffuseColor = (1, 1, 1)
+                float inputs:opacity = 0
+                float inputs:roughness = 0.75
+                token outputs:surface
+            }
+        }
+
+        def "SpaceMusic" (
+            active = true
+            prepend references = @SpaceMusic.usda@
+        )
+        {
+            float3 xformOp:scale = (1, 1, 1)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
         }
     }
 }

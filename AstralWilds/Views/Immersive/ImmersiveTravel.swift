@@ -57,7 +57,7 @@ struct ImmersiveTravel: View {
         /// `let localContent = view` <- is the copy
         
         RealityView { view in
-                
+            
 #if !targetEnvironment(simulator)
             //Without task it cannot load the view because it will keep waiting for t
             Task.detached(priority: .low) {
@@ -65,22 +65,36 @@ struct ImmersiveTravel: View {
                 await gestureModel.updateTracking()
             }
 #endif
+           
             //This is safe to unwrap, it's for readability to write like this
-            do {
-                let planet = try await Entity(named: selectedMode, in: realityKitContentBundle)
+            if let planet = try? await Entity(named: selectedMode, in: realityKitContentBundle) {
+                
+                guard let music = planet.findEntity(named: "AudioHolder") else {
+                    print("audio holder not found")
+                    return
+                }
+
+                guard let audioLibrary = music.components[AudioLibraryComponent.self] else {
+                    print("audio library not found")
+                    return
+                }
+                guard let audioResource = audioLibrary.resources.first?.value else {
+                    print("music not found")
+                    return
+                }
+                
                 let environment = try? await EnvironmentResource(named: "studio")
                 planet.configureLighting(resource: environment!, withShadow: true, for: planet)
                 await startTravel(view: view)
+                planet.playAudio(audioResource)
                 view.add(planet)
-            } catch {
-                print("Failed to load RealityKit entity:", error)
             }
         } placeholder: {
             Text("Opening immersive space...")
                 .font(.extraLargeTitle)
                 .position(x: 150, y: 150)
         }
-//        .installGestures()
+        //        .installGestures()
         
 #if !targetEnvironment(simulator)
         .onChange(of: gestureModel.didThanosSnap) { _, isActivated in
@@ -90,22 +104,23 @@ struct ImmersiveTravel: View {
         }
 #endif
         .onAppear {
-            player = audioPlayer.createPlayer(
-                "space",
-                dot: "mp3",
-                numberOfLoops: -1,
-                withVolume: 0.5
-            )
-            player?.play()
+//            player = audioPlayer.createPlayer(
+//                "space",
+//                dot: "mp3",
+//                numberOfLoops: -1,
+//                withVolume: 0.5
+//            )
+//            player?.play()
             travel.textArray = textArray
         }
         .onDisappear {
-            player?.stop()
-            player = nil
+//            player?.stop()
+//            player = nil
         }
     }
     
     private func startTravel(view: RealityViewContent) async {
+        
         
         let configuration = TextCurver.Configuration(
             fontSize: 0.1,
