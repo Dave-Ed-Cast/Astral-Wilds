@@ -143,7 +143,7 @@ final class GestureModel {
         let distanceFingerDestination = simd_precise_distance(fingerPosition, thumbKnucklePosition)
         
         let contactThreshold: Float = finger == .middleFingerTip ? 0.02 : 0.01
-        let destinationThreshold: Float = 0.08
+        let destinationThreshold: Float = 0.07
         
         let currentTime = Date().timeIntervalSince1970
         

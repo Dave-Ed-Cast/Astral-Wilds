@@ -53,9 +53,9 @@ struct AstralWildsApp: App {
         }
         
         fileprivate var needsLastWindowClosed: Bool {
-            return self == .mainScreen
+            return self == .mainScreen || self == .chooseTime
         }
-                
+        
         fileprivate var windowId: String {
             switch self {
             case .welcome: return welcomeWindowID
@@ -72,8 +72,6 @@ struct AstralWildsApp: App {
         RealityKitContent.GestureComponent
             .registerComponent()
     }
-    
-    
     
     var body: some Scene {
         
@@ -95,7 +93,6 @@ struct AstralWildsApp: App {
                         minWidth: 700, maxWidth: 1000,
                         minHeight: 550, maxHeight: 900
                     )
-                    .environment(\.setMode, setMode)
                     .background(.black.opacity(0.4))
                     .fixedSize()
                     .opacity(chooseTimeIsPresent ? 0.2 : 1)
@@ -107,6 +104,7 @@ struct AstralWildsApp: App {
                 TutorialView()
                     .background(.black.opacity(0.4)).ignoresSafeArea(.all)
                     .fixedSize()
+                    .environment(\.setMode, setMode)
             }
             .defaultSize(width: 320, height: 200)
             .windowResizability(.contentSize)
@@ -153,6 +151,7 @@ struct AstralWildsApp: App {
                 }
                 .fixedSize()
             }
+            
             .windowResizability(.contentMinSize)
             .defaultWindowPlacement { content, context in
                 
@@ -188,7 +187,7 @@ struct AstralWildsApp: App {
             .environment(gestureModel)
             .immersionStyle(selection: $immersionMode, in: .mixed, .progressive, .full)
         }
-        .environment(\.setMode, setMode)
+                .environment(\.setMode, setMode)
     }
     
     /// This handles the opening and dismissing of either windows and immersive spaces
@@ -196,46 +195,37 @@ struct AstralWildsApp: App {
     @MainActor private func setMode(_ newMode: Mode) async {
         
         let oldMode = mode
-        guard newMode != oldMode else {
-            //It fails only if I use the third button and close it without starting the journey.
-            //For whatever bug, just return to the main screen in any case.
-            print("guard failed")
-            mode = .mainScreen
-            return
-        }
+        guard newMode != oldMode else { return }
         mode = newMode
         
         if immersiveSpacePresented {
             
             immersiveSpacePresented = false
             openWindow(id: newMode.windowId)
-            try? await Task.sleep(for: .seconds(0.001))
+            try? await Task.sleep(for: .seconds(0.01))
             dismissWindow(id: Self.buttonWindowID)
             await dismissImmersiveSpace()
-           
+            
             
         } else if newMode.needsLastWindowClosed {
             openWindow(id: newMode.windowId)
-            try? await Task.sleep(for: .seconds(0.001))
+            try? await Task.sleep(for: .seconds(0.01))
             dismissWindow(id: oldMode.windowId)
-        } else {
-            openWindow(id: newMode.windowId)
         }
         
         if newMode.needsImmersiveSpace {
             
-            for windowID in [
-                Self.mainScreenWindowID,
-                Self.tutorialWindowID
-            ] {
-                dismissWindow(id: windowID)
+            dismissWindow(id: oldMode.windowId)
+
+            if newMode == .immersiveTravel {
+                dismissWindow(id: Self.mainScreenWindowID)
             }
             immersiveSpacePresented = true
             await openImmersiveSpace(id: newMode.windowId)
-            try? await Task.sleep(for: .seconds(0.1))
             
             //Need the button to appear with the immersive space
             openWindow(id: Self.buttonWindowID)
+            try? await Task.sleep(for: .seconds(0.1))
         }
     }
 }
