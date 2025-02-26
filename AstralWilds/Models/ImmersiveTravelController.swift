@@ -50,7 +50,7 @@ final class ImmersiveTravelController: ObservableObject {
         
         Task {
             while textController.currentStep <= maxStepCounter - 3 {
-                try await Task.sleep(nanoseconds: 200_000_000) // 0.2 seconds
+                try await Task.sleep(for: .seconds(0.2))
                 let particle = await particleController.start()
                 view.add(particle)
             }
@@ -80,13 +80,13 @@ final class ImmersiveTravelController: ObservableObject {
     ) {
         
         Task {
-            try await Task.sleep(nanoseconds: 2_500_000_000) // 2.5 seconds
+            try await Task.sleep(for: .seconds(2.5))
             while !ended {
                 
                 textEntity = await textController.create(config: config, textArray: textArray)
                 view.add(textEntity)
                 
-                try await Task.sleep(nanoseconds: 5_000_000_000) // 5 second
+                try await Task.sleep(for: .seconds(5))
                 if textController.currentStep == maxStepCounter {
                     ended = true
                     break

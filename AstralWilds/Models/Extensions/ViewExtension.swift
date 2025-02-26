@@ -33,14 +33,9 @@ extension View {
     ///   - booleanCondition: A Boolean value that determines whether the transformation should be applied.
     ///   - transformingClosure: A closure that transforms the view content when the condition is `true`.
     /// - Returns: A modified view if the condition is met; otherwise, the original view.
-    @ViewBuilder func conditionalModifier<Content: View>(
-        _ booleanCondition: Bool,
-        transformingClosure: (Self) -> Content
-    ) -> some View {
-        
-        if booleanCondition { transformingClosure(self) } else { self }
+    @ViewBuilder func `if`<Content: View>(_ condition: Bool, transform: (Self) -> Content) -> some View {
+        if condition { transform(self) } else { self }
     }
-    
     
     /// Finds the planet name through Depth First Search method
     ///
