@@ -10,6 +10,7 @@
 		3E0636762BF0BAA400F7ED6E /* RealityKitContent in Frameworks */ = {isa = PBXBuildFile; productRef = 3E0636752BF0BAA400F7ED6E /* RealityKitContent */; };
 		3E254D942D404D97005CE58C /* RealityViewContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E254D932D404D97005CE58C /* RealityViewContent.swift */; };
 		3E31ADE82D27085A00E48C15 /* VisionTextArc in Frameworks */ = {isa = PBXBuildFile; productRef = 3E31ADE72D27085A00E48C15 /* VisionTextArc */; };
+		3E428A602D6F285D002EBECD /* ParticleController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E428A5F2D6F285D002EBECD /* ParticleController.swift */; };
 		3E4A62192D32A84500E3C0D4 /* ImmersiveTravelController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E4A62182D32A84500E3C0D4 /* ImmersiveTravelController.swift */; };
 		3E4A621F2D37116200E3C0D4 /* ImageButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E4A621E2D37116200E3C0D4 /* ImageButton.swift */; };
 		3E4ABE3B2D16E5B400AA3DE3 /* AstralWildsApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E7B722D2D16E48600937F1E /* AstralWildsApp.swift */; };
@@ -51,6 +52,7 @@
 /* Begin PBXFileReference section */
 		3E0636742BF0BAA400F7ED6E /* RealityKitContent */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = RealityKitContent; sourceTree = "<group>"; };
 		3E254D932D404D97005CE58C /* RealityViewContent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealityViewContent.swift; sourceTree = "<group>"; };
+		3E428A5F2D6F285D002EBECD /* ParticleController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParticleController.swift; sourceTree = "<group>"; };
 		3E4A62182D32A84500E3C0D4 /* ImmersiveTravelController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImmersiveTravelController.swift; sourceTree = "<group>"; };
 		3E4A621E2D37116200E3C0D4 /* ImageButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageButton.swift; sourceTree = "<group>"; };
 		3E4ABE552D16F45400AA3DE3 /* studio.skybox */ = {isa = PBXFileReference; lastKnownFileType = file.skybox; path = studio.skybox; sourceTree = "<group>"; };
@@ -74,10 +76,10 @@
 		3E7B722B2D16E48600937F1E /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		3E7B722C2D16E48600937F1E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		3E7B722D2D16E48600937F1E /* AstralWildsApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AstralWildsApp.swift; sourceTree = "<group>"; };
-		3E8FFFBE2D633EB700061A8F /* ChooseTimeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ChooseTimeView.swift; path = AstralWilds/Views/ChooseTimeView.swift; sourceTree = SOURCE_ROOT; };
-		3E8FFFBF2D633EB700061A8F /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = MainView.swift; path = AstralWilds/Views/MainView.swift; sourceTree = SOURCE_ROOT; };
-		3E8FFFC02D633EB700061A8F /* TutorialView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = TutorialView.swift; path = AstralWilds/Views/TutorialView.swift; sourceTree = SOURCE_ROOT; };
-		3E8FFFC12D633EB700061A8F /* WelcomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = WelcomeView.swift; path = AstralWilds/Views/WelcomeView.swift; sourceTree = SOURCE_ROOT; };
+		3E8FFFBE2D633EB700061A8F /* ChooseTimeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ChooseTimeView.swift; path = AstralWilds/Views/Windows/ChooseTimeView.swift; sourceTree = SOURCE_ROOT; };
+		3E8FFFBF2D633EB700061A8F /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = MainView.swift; path = AstralWilds/Views/Windows/MainView.swift; sourceTree = SOURCE_ROOT; };
+		3E8FFFC02D633EB700061A8F /* TutorialView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = TutorialView.swift; path = AstralWilds/Views/Windows/TutorialView.swift; sourceTree = SOURCE_ROOT; };
+		3E8FFFC12D633EB700061A8F /* WelcomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = WelcomeView.swift; path = AstralWilds/Views/Windows/WelcomeView.swift; sourceTree = SOURCE_ROOT; };
 		3E8FFFC92D633F0D00061A8F /* LightingConfigurable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LightingConfigurable.swift; sourceTree = "<group>"; };
 		3EA475602BF6BA75005A3573 /* RealityKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RealityKit.framework; path = System/Library/Frameworks/RealityKit.framework; sourceTree = SDKROOT; };
 		3EBF553A2CE4F49E00216442 /* AstralWildsTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AstralWildsTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -125,7 +127,7 @@
 			path = Packages;
 			sourceTree = "<group>";
 		};
-		3E1A15082D6342B80070C5AC /* Windows */ = {
+		3E428A5C2D6F180B002EBECD /* Windows */ = {
 			isa = PBXGroup;
 			children = (
 				3E8FFFBE2D633EB700061A8F /* ChooseTimeView.swift */,
@@ -162,6 +164,7 @@
 				3E7B72112D16E48600937F1E /* GestureModel.swift */,
 				3E7B72132D16E48600937F1E /* PlanetController.swift */,
 				3E4A62182D32A84500E3C0D4 /* ImmersiveTravelController.swift */,
+				3E428A5F2D6F285D002EBECD /* ParticleController.swift */,
 				3E7B72142D16E48600937F1E /* TextArray.swift */,
 				3E8FFFCA2D633F0D00061A8F /* Protocols */,
 			);
@@ -207,7 +210,7 @@
 		3E7B722A2D16E48600937F1E /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				3E1A15082D6342B80070C5AC /* Windows */,
+				3E428A5C2D6F180B002EBECD /* Windows */,
 				3E7B72232D16E48600937F1E /* Components */,
 				3E7B72272D16E48600937F1E /* Immersive */,
 			);
@@ -405,6 +408,7 @@
 				3E4A621F2D37116200E3C0D4 /* ImageButton.swift in Sources */,
 				3E4ABE492D16E5B400AA3DE3 /* ImmersiveTravel.swift in Sources */,
 				3E4ABE4A2D16E5B400AA3DE3 /* MovingPlanets.swift in Sources */,
+				3E428A602D6F285D002EBECD /* ParticleController.swift in Sources */,
 				3E254D942D404D97005CE58C /* RealityViewContent.swift in Sources */,
 				3E6EAA652D3FE7FD002A7BBF /* Documentation.docc in Sources */,
 				3E4ABE4B2D16E5B400AA3DE3 /* MovePlanetsYouChoose.swift in Sources */,
