@@ -14,6 +14,7 @@ struct MainView: View {
     @Environment(\.openWindow) private var openWindow
     @Environment(\.dismissWindow) private var dismissWindow
     
+    @State private var showTutorial: Bool = false
     var body: some View {
         
         VStack(spacing: 20) {
@@ -42,12 +43,18 @@ struct MainView: View {
         }
         .overlay(alignment: .topTrailing) {
             Button {
-                openWindow(id: "Tutorial")
-                
+                showTutorial = true
             } label: {
                 Image(systemName: "info.circle")
                    
             }
+            .popover(isPresented: $showTutorial, attachmentAnchor: .point(.init(x: 4, y: 0)) ) {
+                TutorialView()
+                    .frame(width: 350, height: 200)
+                    .background(.black.opacity(0.4)).ignoresSafeArea(.all)
+                    .fixedSize()
+            }
+            
             .buttonStyle(.borderless)
             .padding()
         }

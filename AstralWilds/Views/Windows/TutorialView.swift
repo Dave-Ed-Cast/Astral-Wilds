@@ -9,24 +9,23 @@ import SwiftUI
 import RealityKit
 
 struct TutorialView: View {
-        
+    
     let boldSnap = Text("snap").fontWeight(.bold)
     
     var body: some View {
         
         HStack(alignment: .center) {
-            VStack(alignment: .center) {
-                Text("Immersive spaces can be overwhelming.")
-                Text("So, if windows are closed, \(boldSnap) your fingers.")
-            }
-            .multilineTextAlignment(.center)
-            .font(.body)
+            Text("During immersion, \(boldSnap) your fingers to go back.")
+            
+                .multilineTextAlignment(.center)
+                .font(.body)
             Image("Snap")
                 .resizable()
                 .scaledToFit()
                 .frame(width: 64, height: 64)
                 .colorInvert()
         }
+        .frame(width: 220, height: 100)
         .padding()
     }
 }

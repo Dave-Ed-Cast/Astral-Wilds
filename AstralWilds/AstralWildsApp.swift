@@ -8,21 +8,35 @@
 import SwiftUI
 import RealityKitContent
 
-/// Here we have the different windows alongside a function working on the `MainActor` to handle UI changes.
+/// The main entry point for the AstralWilds app.
+///
+/// This app manages multiple windows and immersive spaces on visionOS, handling UI transitions on the main actor.
+/// It leverages RealityKitContent for immersive experiences and uses different modes (window IDs) to control its lifecycle.
 @main
 struct AstralWildsApp: App {
     
+    /// Current mode of the app, which determines which window is active.
     @State private var mode: Mode = .welcome
+    
+    /// The immersive style used for immersive
     @State private var immersionMode: ImmersionStyle = .progressive(0...100.0, initialAmount: 100.0)
+    
+    /// Duration selected for immersive travel.
     @State private var selectedDuration: Int = 0
     
+    /// Indicates whether the user is sitting.
     @State private var sitting: Bool = true
+    
+    /// Tracks if an immersive space is currently presented.
     @State private var immersiveSpacePresented: Bool = false
+    
+    /// Indicates whether the "Choose Time" window is visible.
     @State private var chooseTimeIsPresent: Bool = false
     
+    /// Model used for handling gesture interactions within immersive spaces.
     @State private var gestureModel = GestureModel()
     
-    //Usually, I put environment first, but with immersionMode I must put them here or Xcode complains
+    // Normally, I place environment variables first; but due to immersionMode dependencies these must go here or Xcode complains.
     @Environment(\.openWindow) private var openWindow
     @Environment(\.dismissWindow) private var dismissWindow
     @Environment(\.openImmersiveSpace) private var openImmersiveSpace
@@ -30,16 +44,15 @@ struct AstralWildsApp: App {
     
     private static let welcomeWindowID: String = "Welcome"
     private static let mainScreenWindowID: String = "Main"
-    private static let tutorialWindowID: String = "Tutorial"
     private static let buttonWindowID: String = "ImmersiveButton"
     private static let planetsWindowID: String = "MovingPlanets"
     private static let choosePlanetsWindowID: String = "ChoosePlanets"
     private static let chooseTimeWindowID: String = "TimeWindow"
     private static let immersiveTravelWindowId: String = "ImmersiveTravel"
     
-    /// This `Mode`defines the cases in which the app can be. They are window IDs.
-    /// There are also variables such as along with that defines which one should use an immersive space,
-    /// and which windows to close that are not needed anymore.
+    /// Represents the different states of the application.
+    ///
+    /// Each mode corresponds to a specific window ID and determines whether an immersive space is needed.
     @MainActor enum Mode: Equatable {
         case welcome
         case mainScreen
@@ -48,14 +61,17 @@ struct AstralWildsApp: App {
         case choosePlanetsToMove
         case immersiveTravel
         
+        /// Indicates if the mode requires an immersive space.
         fileprivate var needsImmersiveSpace: Bool {
             return self != .mainScreen && self != .chooseTime && self != .welcome
         }
         
+        /// Indicates if the previous window should be closed when switching to this mode.
         fileprivate var needsLastWindowClosed: Bool {
             return self == .mainScreen || self == .chooseTime
         }
         
+        /// Returns the associated window identifier for the mode.
         fileprivate var windowId: String {
             switch self {
             case .welcome: return welcomeWindowID
@@ -68,58 +84,34 @@ struct AstralWildsApp: App {
         }
     }
     
+    /// Initializes the AstralWilds app by registering the RealityKit gesture component.
     init() {
-        RealityKitContent.GestureComponent
-            .registerComponent()
+        RealityKitContent.GestureComponent.registerComponent()
     }
     
+    // MARK: - Scene Definition
+    
     var body: some Scene {
-        
         Group {
             WindowGroup(id: Self.welcomeWindowID) {
                 WelcomeView()
                     .background(.black.opacity(0.4))
-                    .frame(
-                        minWidth: 520, maxWidth: 1000,
-                        minHeight: 450, maxHeight: 930
-                    )
+                    .frame(minWidth: 520, maxWidth: 1000,
+                           minHeight: 450, maxHeight: 930)
             }
             .windowResizability(.contentSize)
             .defaultSize(width: 520, height: 450)
             
             WindowGroup(id: Self.mainScreenWindowID) {
                 MainView()
-                    .frame(
-                        minWidth: 700, maxWidth: 1000,
-                        minHeight: 550, maxHeight: 900
-                    )
+                    .frame(minWidth: 700, maxWidth: 1000,
+                           minHeight: 550, maxHeight: 900)
                     .background(.black.opacity(0.4))
                     .fixedSize()
                     .opacity(chooseTimeIsPresent ? 0.2 : 1)
             }
             .windowResizability(.contentSize)
             .defaultSize(width: 700, height: 550)
-            
-            WindowGroup(id: Self.tutorialWindowID) {
-                TutorialView()
-                    .background(.black.opacity(0.4)).ignoresSafeArea(.all)
-                    .fixedSize()
-                    .environment(\.setMode, setMode)
-            }
-            .defaultSize(width: 320, height: 200)
-            .windowResizability(.contentSize)
-            .defaultWindowPlacement { content, context in
-                
-                let size = content.sizeThatFits(.unspecified)
-                if let mainViewWindow = context.windows.first(where: { $0.id == Self.mainScreenWindowID }) {
-                    
-                    return WindowPlacement(
-                        .trailing(mainViewWindow),
-                        size: size
-                    )
-                }
-                return WindowPlacement(.none)
-            }
             
             WindowGroup(id: Self.chooseTimeWindowID) {
                 ChooseTimeView(durationSelection: $selectedDuration, sitting: $sitting)
@@ -132,9 +124,8 @@ struct AstralWildsApp: App {
                     }
             }
             .windowResizability(.contentSize)
-            .defaultWindowPlacement { content, context in
-                
-                return WindowPlacement(
+            .defaultWindowPlacement { content, _ in
+                WindowPlacement(
                     .utilityPanel,
                     size: content.sizeThatFits(.unspecified)
                 )
@@ -151,35 +142,30 @@ struct AstralWildsApp: App {
                 }
                 .fixedSize()
             }
-            
+            .persistentSystemOverlays(.hidden)
             .windowResizability(.contentMinSize)
             .defaultWindowPlacement { content, context in
-                
                 let size = content.sizeThatFits(.unspecified)
                 if let mainViewWindow = context.windows.first(where: { $0.id == Self.mainScreenWindowID }) {
-                    
-                    return WindowPlacement(
-                        .below(mainViewWindow),
-                        size: size
-                    )
+                    return WindowPlacement(.below(mainViewWindow), size: size)
                 } else if let chooseTimeWindow = context.windows.first(where: { $0.id == Self.chooseTimeWindowID }) {
-                    
                     return WindowPlacement(.replacing(chooseTimeWindow), size: size)
                 }
                 return WindowPlacement(.none)
             }
             
             Group {
+                // Moving Planets Immersive Space
                 ImmersiveSpace(id: Self.planetsWindowID) {
                     MovingPlanets()
-                    
                 }
                 
+                // Choose Planets Immersive Space
                 ImmersiveSpace(id: Self.choosePlanetsWindowID) {
                     MovePlanetsYouChoose()
-                    
                 }
                 
+                // Immersive Travel Immersive Space
                 ImmersiveSpace(id: Self.immersiveTravelWindowId) {
                     ImmersiveTravel(duration: $selectedDuration, sitting: $sitting)
                 }
@@ -187,45 +173,51 @@ struct AstralWildsApp: App {
             .environment(gestureModel)
             .immersionStyle(selection: $immersionMode, in: .mixed, .progressive, .full)
         }
-                .environment(\.setMode, setMode)
+        .environment(\.setMode, setMode)
     }
     
-    /// This handles the opening and dismissing of either windows and immersive spaces
-    /// - Parameter newMode: is the next mode after interacting within the app
+    
+    /// Handles transitions between different modes by opening and dismissing windows and immersive spaces.
+    ///
+    /// Each transition includes a short sleep to mitigate potential race conditions and concurrency issues on visionOS.
+    /// - Parameter newMode: The new mode to transition to.
     @MainActor private func setMode(_ newMode: Mode) async {
         
         let oldMode = mode
+        //No transition if the mode hasn't changed.
         guard newMode != oldMode else { return }
         mode = newMode
         
         if immersiveSpacePresented {
-            
+            //Close the space -> dismiss the window and open main.
             immersiveSpacePresented = false
-            openWindow(id: newMode.windowId)
-            try? await Task.sleep(for: .seconds(0.01))
-            dismissWindow(id: Self.buttonWindowID)
             await dismissImmersiveSpace()
-            
+            dismissWindow(id: Self.buttonWindowID)
+            try? await Task.sleep(for: .seconds(0.01))
+            openWindow(id: newMode.windowId)
             
         } else if newMode.needsLastWindowClosed {
+            // Transition by opening the new window and dismissing the previous one.
             openWindow(id: newMode.windowId)
             try? await Task.sleep(for: .seconds(0.01))
             dismissWindow(id: oldMode.windowId)
         }
         
         if newMode.needsImmersiveSpace {
-            
+            // If a space is required, dismiss the old window
             dismissWindow(id: oldMode.windowId)
-
+            
+            // Special handling for immersive travel mode.
             if newMode == .immersiveTravel {
                 dismissWindow(id: Self.mainScreenWindowID)
             }
             immersiveSpacePresented = true
             await openImmersiveSpace(id: newMode.windowId)
             
-            //Need the button to appear with the immersive space
+            try? await Task.sleep(for: .seconds(0.01))
+            // Open the immersive exit button.
             openWindow(id: Self.buttonWindowID)
-            try? await Task.sleep(for: .seconds(0.1))
+            
         }
     }
 }
