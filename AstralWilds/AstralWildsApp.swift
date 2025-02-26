@@ -12,11 +12,21 @@ import RealityKitContent
 @main
 struct AstralWildsApp: App {
     
-    /// This initializes all the gestures that can be used
-    init() {
-        RealityKitContent.GestureComponent
-            .registerComponent()
-    }
+    @State private var mode: Mode = .welcome
+    @State private var immersionMode: ImmersionStyle = .progressive(0...100.0, initialAmount: 100.0)
+    @State private var selectedDuration: Int = 0
+    
+    @State private var sitting: Bool = true
+    @State private var immersiveSpacePresented: Bool = false
+    @State private var chooseTimeIsPresent: Bool = false
+    
+    @State private var gestureModel = GestureModel()
+    
+    //Usually, I put environment first, but with immersionMode I must put them here or Xcode complains
+    @Environment(\.openWindow) private var openWindow
+    @Environment(\.dismissWindow) private var dismissWindow
+    @Environment(\.openImmersiveSpace) private var openImmersiveSpace
+    @Environment(\.dismissImmersiveSpace) private var dismissImmersiveSpace
     
     private static let welcomeWindowID: String = "Welcome"
     private static let mainScreenWindowID: String = "Main"
@@ -27,7 +37,7 @@ struct AstralWildsApp: App {
     private static let chooseTimeWindowID: String = "TimeWindow"
     private static let immersiveTravelWindowId: String = "ImmersiveTravel"
     
-    /// This "Mode" defines the cases in which the app can be. They are window IDs.
+    /// This `Mode`defines the cases in which the app can be. They are window IDs.
     /// There are also variables such as along with that defines which one should use an immersive space,
     /// and which windows to close that are not needed anymore.
     @MainActor enum Mode: Equatable {
@@ -43,7 +53,7 @@ struct AstralWildsApp: App {
         }
         
         fileprivate var needsLastWindowClosed: Bool {
-            return self == .mainScreen || self == .chooseTime
+            return self == .mainScreen
         }
                 
         fileprivate var windowId: String {
@@ -58,194 +68,174 @@ struct AstralWildsApp: App {
         }
     }
     
-    @State private var mode: Mode = .welcome
-    @State private var immersiveSpacePresented: Bool = false
-    @State private var immersionMode: ImmersionStyle = .progressive(0...100, initialAmount: 100)
-    @State private var selectedDuration: Int = 0
-    @State private var sitting: Bool = true
-    @State private var tapLocation: CGPoint = .zero
-    @State private var gestureModel = GestureModel()
+    init() {
+        RealityKitContent.GestureComponent
+            .registerComponent()
+    }
     
-    @Environment(\.openWindow) private var openWindow
-    @Environment(\.dismissWindow) private var dismissWindow
-    @Environment(\.openImmersiveSpace) private var openImmersiveSpace
-    @Environment(\.dismissImmersiveSpace) private var dismissImmersiveSpace
-    @Environment(\.pushWindow) private var pushWindow
+    
+    
+    var body: some Scene {
+        
+        Group {
+            WindowGroup(id: Self.welcomeWindowID) {
+                WelcomeView()
+                    .background(.black.opacity(0.4))
+                    .frame(
+                        minWidth: 520, maxWidth: 1000,
+                        minHeight: 450, maxHeight: 930
+                    )
+            }
+            .windowResizability(.contentSize)
+            .defaultSize(width: 520, height: 450)
+            
+            WindowGroup(id: Self.mainScreenWindowID) {
+                MainView()
+                    .frame(
+                        minWidth: 700, maxWidth: 1000,
+                        minHeight: 550, maxHeight: 900
+                    )
+                    .environment(\.setMode, setMode)
+                    .background(.black.opacity(0.4))
+                    .fixedSize()
+                    .opacity(chooseTimeIsPresent ? 0.2 : 1)
+            }
+            .windowResizability(.contentSize)
+            .defaultSize(width: 700, height: 550)
+            
+            WindowGroup(id: Self.tutorialWindowID) {
+                TutorialView()
+                    .background(.black.opacity(0.4)).ignoresSafeArea(.all)
+                    .fixedSize()
+            }
+            .defaultSize(width: 320, height: 200)
+            .windowResizability(.contentSize)
+            .defaultWindowPlacement { content, context in
+                
+                let size = content.sizeThatFits(.unspecified)
+                if let mainViewWindow = context.windows.first(where: { $0.id == Self.mainScreenWindowID }) {
+                    
+                    return WindowPlacement(
+                        .trailing(mainViewWindow),
+                        size: size
+                    )
+                }
+                return WindowPlacement(.none)
+            }
+            
+            WindowGroup(id: Self.chooseTimeWindowID) {
+                ChooseTimeView(durationSelection: $selectedDuration, sitting: $sitting)
+                    .fixedSize()
+                    .background(.black.opacity(0.4))
+                    .onAppear { chooseTimeIsPresent = true }
+                    .onDisappear {
+                        chooseTimeIsPresent = false
+                        mode = .mainScreen
+                    }
+            }
+            .windowResizability(.contentSize)
+            .defaultWindowPlacement { content, context in
+                
+                return WindowPlacement(
+                    .utilityPanel,
+                    size: content.sizeThatFits(.unspecified)
+                )
+            }
+            
+            WindowGroup(id: Self.buttonWindowID) {
+                ZStack {
+                    Color.black.opacity(0.4)
+#if targetEnvironment(simulator)
+                    ExitImmersiveSpaceButton(mode: $mode)
+#elseif !targetEnvironment(simulator)
+                    ExitImmersiveSpaceGesture()
+#endif
+                }
+                .fixedSize()
+            }
+            .windowResizability(.contentMinSize)
+            .defaultWindowPlacement { content, context in
+                
+                let size = content.sizeThatFits(.unspecified)
+                if let mainViewWindow = context.windows.first(where: { $0.id == Self.mainScreenWindowID }) {
+                    
+                    return WindowPlacement(
+                        .below(mainViewWindow),
+                        size: size
+                    )
+                } else if let chooseTimeWindow = context.windows.first(where: { $0.id == Self.chooseTimeWindowID }) {
+                    
+                    return WindowPlacement(.replacing(chooseTimeWindow), size: size)
+                }
+                return WindowPlacement(.none)
+            }
+            
+            Group {
+                ImmersiveSpace(id: Self.planetsWindowID) {
+                    MovingPlanets()
+                    
+                }
+                
+                ImmersiveSpace(id: Self.choosePlanetsWindowID) {
+                    MovePlanetsYouChoose()
+                    
+                }
+                
+                ImmersiveSpace(id: Self.immersiveTravelWindowId) {
+                    ImmersiveTravel(duration: $selectedDuration, sitting: $sitting)
+                }
+            }
+            .environment(gestureModel)
+            .immersionStyle(selection: $immersionMode, in: .mixed, .progressive, .full)
+        }
+        .environment(\.setMode, setMode)
+    }
     
     /// This handles the opening and dismissing of either windows and immersive spaces
     /// - Parameter newMode: is the next mode after interacting within the app
     @MainActor private func setMode(_ newMode: Mode) async {
         
         let oldMode = mode
-        guard newMode != oldMode else { return }
+        guard newMode != oldMode else {
+            //It fails only if I use the third button and close it without starting the journey.
+            //For whatever bug, just return to the main screen in any case.
+            print("guard failed")
+            mode = .mainScreen
+            return
+        }
         mode = newMode
         
-        if immersiveSpacePresented{
+        if immersiveSpacePresented {
             
             immersiveSpacePresented = false
+            openWindow(id: newMode.windowId)
+            try? await Task.sleep(for: .seconds(0.001))
             dismissWindow(id: Self.buttonWindowID)
             await dismissImmersiveSpace()
-            openWindow(id: newMode.windowId)
+           
             
         } else if newMode.needsLastWindowClosed {
+            openWindow(id: newMode.windowId)
+            try? await Task.sleep(for: .seconds(0.001))
             dismissWindow(id: oldMode.windowId)
+        } else {
             openWindow(id: newMode.windowId)
         }
         
         if newMode.needsImmersiveSpace {
             
+            for windowID in [
+                Self.mainScreenWindowID,
+                Self.tutorialWindowID
+            ] {
+                dismissWindow(id: windowID)
+            }
             immersiveSpacePresented = true
             await openImmersiveSpace(id: newMode.windowId)
+            try? await Task.sleep(for: .seconds(0.1))
             
             //Need the button to appear with the immersive space
             openWindow(id: Self.buttonWindowID)
-            dismissWindow(id: oldMode.windowId)
         }
-    }
-    
-    /// Here are all the views and immersive spaces needed.
-    ///
-    /// The window group allows windows to be created that act as containers of views.
-    /// This can be leveraged for UI overlay in Immersive spaces.
-    var body: some Scene {
-        
-        WindowGroup(id: Self.welcomeWindowID) {
-            
-            WelcomeView()
-                .environment(\.setMode, setMode)
-                .background(.black.opacity(0.4))
-            
-                .frame(
-                    minWidth: 520, maxWidth: 1000,
-                    minHeight: 450, maxHeight: 930,
-                    alignment: .center
-                )
-        }
-        .windowResizability(.contentSize)
-        .defaultSize(width: 520, height: 450)
-        
-        WindowGroup(id: Self.mainScreenWindowID) {
-            MainView()
-                .frame(
-                    minWidth: 700, maxWidth: 1000,
-                    minHeight: 550, maxHeight: 900
-                )
-                .environment(\.setMode, setMode)
-                .background(.black.opacity(0.4))
-            //Until the adaptive UI is fixed
-                .fixedSize()
-        }
-        .windowResizability(.contentSize)
-        .defaultSize(width: 700, height: 550)
-//        .defaultWindowPlacement { content, context in
-//            
-//            let size = content.sizeThatFits(.unspecified)
-//            if let chooseTimeWindow = context.windows.first(where: { $0.id == Self.chooseTimeWindowID }) {
-//                
-//                return WindowPlacement(
-//                    .above(chooseTimeWindow),
-//                    size: size
-//                )
-//            }
-//            return WindowPlacement(.none)
-//        }
-        
-        WindowGroup(id: Self.tutorialWindowID) {
-            
-            TutorialView()
-                .frame(width: 320, height: 200)
-                .background(.black.opacity(0.4)).ignoresSafeArea(.all)
-                .fixedSize()
-        }
-        .windowResizability(.contentSize)
-        .defaultWindowPlacement { content, context in
-            
-            let size = content.sizeThatFits(.unspecified)
-            if let mainViewWindow = context.windows.first(where: { $0.id == Self.mainScreenWindowID }) {
-                
-                return WindowPlacement(
-                    .trailing(mainViewWindow),
-                    size: size
-                )
-            }
-            return WindowPlacement(.none)
-        }
-        
-        /// I guess there is a main actor issue or something.
-        /// When i use `setMode` this should close the main view once this one appears, but it doesn't.
-        WindowGroup(id: Self.chooseTimeWindowID) {
-            ChooseTimeView(durationSelection: $selectedDuration, sitting: $sitting)
-                .fixedSize()
-                .background(.black.opacity(0.4))
-                .onAppear {
-                    dismissWindow(id: Self.mainScreenWindowID)
-                }
-        }
-        .environment(\.setMode, setMode)
-        .windowResizability(.contentSize)
-        .defaultWindowPlacement { content, context in
-            
-            return WindowPlacement(
-                .utilityPanel,
-                size: content.sizeThatFits(.unspecified)
-            )
-        }
-        
-        WindowGroup(id: Self.buttonWindowID) {
-            ZStack {
-                Color.black.opacity(0.4)
-#if targetEnvironment(simulator)
-                ExitImmersiveSpaceButton(mode: $mode)
-                    .fixedSize()
-                    .environment(\.setMode, setMode)
-#elseif !targetEnvironment(simulator)
-                ExitImmersiveSpaceGesture()
-                    .fixedSize()
-                    .environment(\.setMode, setMode)
-#endif
-            }
-        }
-        .windowResizability(.contentMinSize)
-        .defaultWindowPlacement { content, context in
-            
-            let size = content.sizeThatFits(.unspecified)
-            if let mainViewWindow = context.windows.first(where: { $0.id == Self.mainScreenWindowID }) {
-                
-                return WindowPlacement(
-                    .below(mainViewWindow),
-                    size: size
-                )
-            } else if let chooseTimeWindow = context.windows.first(where: { $0.id == Self.chooseTimeWindowID }) {
-                
-                return WindowPlacement(.replacing(chooseTimeWindow), size: size)
-            }
-            return WindowPlacement(.none)
-        }
-        
-        ImmersiveSpace(id: Self.planetsWindowID) {
-            MovingPlanets()
-                .environment(gestureModel)
-                .environment(\.setMode, setMode)
-            
-        }
-        .immersionStyle(selection: $immersionMode, in: .mixed, .progressive, .full)
-        
-        ImmersiveSpace(id: Self.choosePlanetsWindowID) {
-            withAnimation(.easeInOut) {
-                MovePlanetsYouChoose()
-                    .environment(gestureModel)
-                    .environment(\.setMode, setMode)
-            }
-        }
-        .immersionStyle(selection: $immersionMode, in: .mixed, .progressive, .full)
-        
-        ImmersiveSpace(id: Self.immersiveTravelWindowId) {
-            withAnimation(.easeInOut) {
-                ImmersiveTravel(duration: $selectedDuration, sitting: $sitting)
-                    .environment(gestureModel)
-                    .environment(\.setMode, setMode)
-            }
-        }
-        .immersionStyle(selection: $immersionMode, in: .mixed, .progressive, .full)
     }
 }
