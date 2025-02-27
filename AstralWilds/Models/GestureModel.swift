@@ -139,8 +139,8 @@ final class GestureModel {
         
         for finger in fingers {
             
-            let contactThreshold: Float = 0.02
-            let destinationThreshold: Float = 0.09
+            let contactThreshold: Float = finger == .middleFingerTip ? 0.02 : 0.01
+            let destinationThreshold: Float = 0.07
             
             let currentTime = Date().timeIntervalSince1970
             
