@@ -61,12 +61,6 @@ struct MainView: View {
         
         .padding()
         .fontWeight(.bold)
-        
-        /// For whatever reason, the tested code that should close the window doesn't close it.
-        /// The dismissWindow in the setMode function doesn't work properly
-        .onAppear {
-            dismissWindow(id: "Welcome")
-        }
     }
 }
 

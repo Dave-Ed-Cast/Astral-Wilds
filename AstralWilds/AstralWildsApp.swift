@@ -66,9 +66,10 @@ struct AstralWildsApp: App {
             return self != .mainScreen && self != .chooseTime && self != .welcome
         }
         
-        /// Indicates if the previous window should be closed when switching to this mode.
+        /// Indicates if the window should be closed when switching to this mode
+        /// This variable must be accessed through mode, check `setMode` for examples
         fileprivate var needsLastWindowClosed: Bool {
-            return self == .mainScreen || self == .chooseTime
+            return self == .mainScreen
         }
         
         /// Returns the associated window identifier for the mode.
@@ -180,6 +181,12 @@ struct AstralWildsApp: App {
     /// Handles transitions between different modes by opening and dismissing windows and immersive spaces.
     ///
     /// Each transition includes a short sleep to mitigate potential race conditions and concurrency issues on visionOS.
+    /// Here is also a little `HowTo` populate the function according to some discovered guidelines:
+    /// ```
+    /// Whenever a new window must be opened, the flow must be: open -> sleep -> dismiss the last one if needed (optional)
+    ///
+    /// Whenever an immersive space must be opened, the flow must be: open -> sleep -> dismiss the last one if needed (optional)
+    /// ```
     /// - Parameter newMode: The new mode to transition to.
     @MainActor private func setMode(_ newMode: Mode) async {
         
@@ -188,25 +195,37 @@ struct AstralWildsApp: App {
         guard newMode != oldMode else { return }
         mode = newMode
         
+        print("oldMode: \(oldMode), newMode: \(newMode)")
+        
         if immersiveSpacePresented {
-            //Close the space -> dismiss the window and open main.
+            dismissWindow(id: Self.buttonWindowID)
             immersiveSpacePresented = false
             await dismissImmersiveSpace()
-            dismissWindow(id: Self.buttonWindowID)
-            try? await Task.sleep(for: .seconds(0.01))
             openWindow(id: newMode.windowId)
+            
+            print("dismissing immersive space")
+            print("opening: \(newMode.windowId)")
+
             
         } else if newMode.needsLastWindowClosed {
             // Transition by opening the new window and dismissing the previous one.
             openWindow(id: newMode.windowId)
-            try? await Task.sleep(for: .seconds(0.01))
-            dismissWindow(id: oldMode.windowId)
+            do {
+                try await Task.sleep(for: .seconds(0.1))
+                dismissWindow(id: oldMode.windowId)
+            } catch {
+                print(error.localizedDescription)
+            }
+        } else if !newMode.needsLastWindowClosed {
+            openWindow(id: newMode.windowId)
+        } else {
+            print("Unforseen consequences.")
+            print("oldMode: \(oldMode), newMode: \(newMode)")
         }
         
         if newMode.needsImmersiveSpace {
-            // If a space is required, dismiss the old window
-            dismissWindow(id: oldMode.windowId)
             
+
             // Special handling for immersive travel mode.
             if newMode == .immersiveTravel {
                 dismissWindow(id: Self.mainScreenWindowID)
@@ -214,10 +233,15 @@ struct AstralWildsApp: App {
             immersiveSpacePresented = true
             await openImmersiveSpace(id: newMode.windowId)
             
-            try? await Task.sleep(for: .seconds(0.01))
-            // Open the immersive exit button.
-            openWindow(id: Self.buttonWindowID)
-            
+            do {
+                // Open the immersive exit button.
+                openWindow(id: Self.buttonWindowID)
+                try await Task.sleep(for: .seconds(0.1))
+                // If a space is required, dismiss the old window
+                dismissWindow(id: oldMode.windowId)
+            } catch {
+                print(error.localizedDescription)
+            }
         }
     }
 }

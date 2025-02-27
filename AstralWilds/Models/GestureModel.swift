@@ -50,6 +50,12 @@ final class GestureModel {
     /// Use this supervisor to detect if a snap occurs. It will be true once the snap has occurred.
     var didThanosSnap: Bool = false
     
+    private let fingers: [HandSkeleton.JointName] = [
+        .indexFingerTip,
+        .middleFingerTip,
+        .ringFingerTip
+    ]
+    
     /// Start the hand tracking session.
     func startTrackingSession() async {
         do {
@@ -84,21 +90,14 @@ final class GestureModel {
                 // Process snapping gesture detection
                 Task.detached { [self] in
                     
-                    let leftSnapMiddle = await thanosSnap(for: "left", finger: .middleFingerTip)
-                    let leftSnapRing = await thanosSnap(for: "left", finger: .ringFingerTip)
-                    let leftSnapIndex = await thanosSnap(for: "left", finger: .indexFingerTip)
+                    let leftSnap = await thanosSnap(for: "left", fingers: fingers)
+                    let rightSnap = await thanosSnap(for: "right", fingers: fingers)
                     
-                    let rightSnapMiddle = await thanosSnap(for: "right", finger: .middleFingerTip)
-                    let rightSnapRing = await thanosSnap(for: "right", finger: .ringFingerTip)
-                    let rightSnapIndex = await thanosSnap(for: "right", finger: .indexFingerTip)
-                    
-                    let anySnap = leftSnapMiddle || leftSnapRing || leftSnapIndex || rightSnapMiddle || rightSnapRing || rightSnapIndex
-                    
-                    if anySnap {
+                    if leftSnap || rightSnap {
                         await MainActor.run {
                             didThanosSnap = true
                         }
-                        try? await Task.sleep(nanoseconds: 500_000_000)
+                        try? await Task.sleep(for: .seconds(0.25))
                         await MainActor.run {
                             didThanosSnap = false
                         }
@@ -120,7 +119,7 @@ final class GestureModel {
     ///   - handSide: Specify "left" or "right" to detect snap gestures for the respective hand.
     ///   - finger: The specific finger to check for the snap gesture.
     /// - Returns: True if the user snapped with the specified finger of the specified hand.
-    private func thanosSnap(for handSide: String, finger: HandSkeleton.JointName) -> Bool {
+    private func thanosSnap(for handSide: String, fingers: [HandSkeleton.JointName]) -> Bool {
         guard let handAnchor = (handSide == "left" ? latestHandTracking.left : latestHandTracking.right),
               let handSkeleton = handAnchor.handSkeleton,
               handAnchor.isTracked else {
@@ -132,43 +131,52 @@ final class GestureModel {
         let joint = handSkeleton.joint
         
         let thumbAnchor = joint(.thumbTip).anchorFromJointTransform
-        let fingerAnchor = joint(finger).anchorFromJointTransform
+        
         let thumbKnuckleAnchor = joint(.thumbKnuckle).anchorFromJointTransform
         
         let thumbPosition = matrix_multiply(origin, thumbAnchor).columns.3.xyz
-        let fingerPosition = matrix_multiply(origin, fingerAnchor).columns.3.xyz
         let thumbKnucklePosition = matrix_multiply(origin, thumbKnuckleAnchor).columns.3.xyz
         
-        let distanceThumbFinger = simd_precise_distance(thumbPosition, fingerPosition)
-        let distanceFingerDestination = simd_precise_distance(fingerPosition, thumbKnucklePosition)
-        
-        let contactThreshold: Float = finger == .middleFingerTip ? 0.02 : 0.01
-        let destinationThreshold: Float = 0.07
-        
-        let currentTime = Date().timeIntervalSince1970
-        
-        if distanceThumbFinger < contactThreshold {
-            detectedContactTime = currentTime
+        for finger in fingers {
             
-            switch finger {
-            case .indexFingerTip:
-                updateContacts(for: handSide, index: true, middle: false, ring: false)
-            case .middleFingerTip:
-                updateContacts(for: handSide, index: false, middle: true, ring: false)
-            case .ringFingerTip:
-                updateContacts(for: handSide, index: false, middle: false, ring: true)
-            default:
-                break
+            let contactThreshold: Float = 0.02
+            let destinationThreshold: Float = 0.09
+            
+            let currentTime = Date().timeIntervalSince1970
+            
+            let fingerAnchor = joint(finger).anchorFromJointTransform
+            let fingerPosition = matrix_multiply(origin, fingerAnchor).columns.3.xyz
+            let distanceThumbFinger = simd_precise_distance(thumbPosition, fingerPosition)
+            let distanceFingerDestination = simd_precise_distance(fingerPosition, thumbKnucklePosition)
+            
+            if distanceThumbFinger < contactThreshold {
+                detectedContactTime = currentTime
+                
+                switch finger {
+                case .indexFingerTip:
+                    updateContacts(for: handSide, index: true, middle: false, ring: false)
+                    break;
+                case .middleFingerTip:
+                    updateContacts(for: handSide, index: false, middle: true, ring: false)
+                    break;
+                case .ringFingerTip:
+                    updateContacts(for: handSide, index: false, middle: false, ring: true)
+                    break;
+                default:
+                    break
+                }
             }
-        }
-        
-        if isContactFlagActive(for: handSide, finger: finger) &&
-            distanceFingerDestination < destinationThreshold &&
-            (currentTime - detectedContactTime) < 0.02 {
-            resetState()
-            return true
+            
+            if isContactFlagActive(for: handSide, finger: finger) &&
+                distanceFingerDestination < destinationThreshold &&
+                (currentTime - detectedContactTime) < 0.02 {
+                resetState()
+                return true
+            }
+            
         }
         return false
+        
     }
     
     /// Updates the state of the fingers that have been in contact
