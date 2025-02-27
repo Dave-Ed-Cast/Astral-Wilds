@@ -97,19 +97,24 @@ struct AstralWildsApp: App {
             WindowGroup(id: Self.welcomeWindowID) {
                 WelcomeView()
                     .background(.black.opacity(0.4))
-                    .frame(minWidth: 520, maxWidth: 1000,
-                           minHeight: 450, maxHeight: 930)
+                    .frame(
+                        minWidth: 520, maxWidth: 1000,
+                        minHeight: 450, maxHeight: 930
+                    )
             }
             .windowResizability(.contentSize)
             .defaultSize(width: 520, height: 450)
             
             WindowGroup(id: Self.mainScreenWindowID) {
                 MainView()
-                    .frame(minWidth: 700, maxWidth: 1000,
-                           minHeight: 550, maxHeight: 900)
+                    .frame(
+                        minWidth: 700, maxWidth: 1000,
+                        minHeight: 550, maxHeight: 900
+                    )
                     .background(.black.opacity(0.4))
                     .fixedSize()
-                    .opacity(chooseTimeIsPresent ? 0.2 : 1)
+                    .opacity(chooseTimeIsPresent ? 0.35 : 1)
+                    .animation(.default, value: chooseTimeIsPresent)
             }
             .windowResizability(.contentSize)
             .defaultSize(width: 700, height: 550)
@@ -119,10 +124,7 @@ struct AstralWildsApp: App {
                     .fixedSize()
                     .background(.black.opacity(0.4))
                     .onAppear { chooseTimeIsPresent = true }
-                    .onDisappear {
-                        chooseTimeIsPresent = false
-                        mode = .mainScreen
-                    }
+                    .onDisappear { chooseTimeIsPresent = false }
             }
             .windowResizability(.contentSize)
             .defaultWindowPlacement { content, _ in
@@ -178,70 +180,83 @@ struct AstralWildsApp: App {
     }
     
     
-    /// Handles transitions between different modes by opening and dismissing windows and immersive spaces.
+    /// Manages transitions between application modes by orchestrating the opening and dismissal of windows and immersive spaces.
     ///
-    /// Each transition includes a short sleep to mitigate potential race conditions and concurrency issues on visionOS.
-    /// Here is also a little `HowTo` populate the function according to some discovered guidelines:
+    /// Each transition incorporates a brief pause to mitigate potential race conditions and concurrency issues on visionOS.
+    /// The function adheres to the following guidelines:
     /// ```
-    /// Whenever a new window must be opened, the flow must be: open -> sleep -> dismiss the last one if needed (optional)
+    /// When opening a new window, follow this sequence:
+    /// 1. Open the window.
+    /// 2. Pause briefly to mitigate race conditions.
+    /// 3. Optionally, dismiss any window if necessary.
     ///
-    /// Whenever an immersive space must be opened, the flow must be: open -> sleep -> dismiss the last one if needed (optional)
+    /// When opening an immersive space, use the same sequence:
+    /// 1. Open the immersive space.
+    /// 2. Pause briefly.
+    /// 3. Optionally, dismiss the previously active immersive space.
+    ///
+    /// Whenever an immersive space must be closed, the flow must can be whatever.
     /// ```
     /// - Parameter newMode: The new mode to transition to.
     @MainActor private func setMode(_ newMode: Mode) async {
         
         let oldMode = mode
-        //No transition if the mode hasn't changed.
         guard newMode != oldMode else { return }
         mode = newMode
         
+        print("")
         print("oldMode: \(oldMode), newMode: \(newMode)")
         
         if immersiveSpacePresented {
+            
+            print("immersive -> window operation")
             dismissWindow(id: Self.buttonWindowID)
-            immersiveSpacePresented = false
-            await dismissImmersiveSpace()
-            openWindow(id: newMode.windowId)
-            
-            print("dismissing immersive space")
-            print("opening: \(newMode.windowId)")
+            print("dismissing button window")
 
+            await dismissImmersiveSpace()
+            immersiveSpacePresented = false
+            print("dismissing immersive space")
             
-        } else if newMode.needsLastWindowClosed {
-            // Transition by opening the new window and dismissing the previous one.
+        }
+        if newMode.needsLastWindowClosed && !immersiveSpacePresented {
+            
+            print("new window operation")
             openWindow(id: newMode.windowId)
+            print("opening: \(newMode.windowId)")
             do {
-                try await Task.sleep(for: .seconds(0.1))
-                dismissWindow(id: oldMode.windowId)
+                try await Task.sleep(for: .seconds(0.05))
             } catch {
                 print(error.localizedDescription)
             }
-        } else if !newMode.needsLastWindowClosed {
+            if !oldMode.needsImmersiveSpace{
+                dismissWindow(id: oldMode.windowId)
+            }
+        } else if !newMode.needsImmersiveSpace {
+            print("new window that doesn't need immersive space")
             openWindow(id: newMode.windowId)
-        } else {
-            print("Unforseen consequences.")
-            print("oldMode: \(oldMode), newMode: \(newMode)")
+            print("opening: \(newMode.windowId)")
         }
         
         if newMode.needsImmersiveSpace {
-            
 
-            // Special handling for immersive travel mode.
+            print("window(s) -> immersive")
             if newMode == .immersiveTravel {
                 dismissWindow(id: Self.mainScreenWindowID)
+                print("dismissed the main screen")
             }
             immersiveSpacePresented = true
             await openImmersiveSpace(id: newMode.windowId)
+            print("opened the immersive space: \(newMode.windowId)")
             
+            openWindow(id: Self.buttonWindowID)
+            print("opened the button window")
             do {
-                // Open the immersive exit button.
-                openWindow(id: Self.buttonWindowID)
-                try await Task.sleep(for: .seconds(0.1))
-                // If a space is required, dismiss the old window
-                dismissWindow(id: oldMode.windowId)
+                try await Task.sleep(for: .seconds(0.05))
             } catch {
                 print(error.localizedDescription)
             }
+            dismissWindow(id: oldMode.windowId)
+            print("dismissed old window: \(oldMode.windowId)")
         }
     }
 }

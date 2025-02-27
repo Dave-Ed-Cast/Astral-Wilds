@@ -43,14 +43,16 @@ struct MainView: View {
         }
         .overlay(alignment: .topTrailing) {
             Button {
-                showTutorial = true
+                withAnimation {
+                    showTutorial = true
+                }
             } label: {
                 Image(systemName: "info.circle")
                    
             }
-            .popover(isPresented: $showTutorial, attachmentAnchor: .point(.init(x: 4, y: 0)) ) {
+            .popover(isPresented: $showTutorial, attachmentAnchor: .point(.init(x: -3, y: 1.5)) ) {
                 TutorialView()
-                    .frame(width: 350, height: 200)
+                    .frame(width: 360, height: 200)
                     .background(.black.opacity(0.4)).ignoresSafeArea(.all)
                     .fixedSize()
             }
@@ -58,7 +60,7 @@ struct MainView: View {
             .buttonStyle(.borderless)
             .padding()
         }
-        
+        .opacity(showTutorial ? 0.65 : 1)
         .padding()
         .fontWeight(.bold)
     }
@@ -66,4 +68,8 @@ struct MainView: View {
 
 #Preview(windowStyle: .automatic) {
     MainView()
+        .frame(
+            minWidth: 700, maxWidth: 1000,
+            minHeight: 550, maxHeight: 900
+        )
 }
