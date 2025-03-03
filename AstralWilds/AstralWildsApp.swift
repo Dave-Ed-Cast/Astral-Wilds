@@ -17,26 +17,19 @@ struct AstralWildsApp: App {
     
     /// Current mode of the app, which determines which window is active.
     @State private var mode: Mode = .welcome
-    
-    /// The immersive style used for immersive
     @State private var immersionMode: ImmersionStyle = .progressive(0...100.0, initialAmount: 100.0)
-    
     /// Duration selected for immersive travel.
     @State private var selectedDuration: Int = 0
-    
     /// Indicates whether the user is sitting.
     @State private var sitting: Bool = true
-    
     /// Tracks if an immersive space is currently presented.
     @State private var immersiveSpacePresented: Bool = false
-    
     /// Indicates whether the "Choose Time" window is visible.
     @State private var chooseTimeIsPresent: Bool = false
-    
     /// Model used for handling gesture interactions within immersive spaces.
     @State private var gestureModel = GestureModel()
     
-    // Normally, I place environment variables first; but due to immersionMode dependencies these must go here or Xcode complains.
+    // Usually, I put environment variables first; but due to immersionMode dependencies they must go here or Xcode complains.
     @Environment(\.openWindow) private var openWindow
     @Environment(\.dismissWindow) private var dismissWindow
     @Environment(\.openImmersiveSpace) private var openImmersiveSpace
@@ -51,7 +44,6 @@ struct AstralWildsApp: App {
     private static let immersiveTravelWindowId: String = "ImmersiveTravel"
     
     /// Represents the different states of the application.
-    ///
     /// Each mode corresponds to a specific window ID and determines whether an immersive space is needed.
     @MainActor enum Mode: Equatable {
         case welcome
@@ -137,16 +129,20 @@ struct AstralWildsApp: App {
             WindowGroup(id: Self.buttonWindowID) {
                 ZStack {
                     Color.black.opacity(0.4)
+//#if targetEnvironment(simulator)
+//                    ExitImmersiveSpaceButton(mode: $mode)
+//                        .frame(width: 350, height: 170)
 #if targetEnvironment(simulator)
-                    ExitImmersiveSpaceButton(mode: $mode)
-#elseif !targetEnvironment(simulator)
                     ExitImmersiveSpaceGesture()
+                        .frame(width: 350, height: 180)
 #endif
                 }
+                
+                .background(.black.opacity(0.4))
                 .fixedSize()
             }
             .persistentSystemOverlays(.hidden)
-            .windowResizability(.contentMinSize)
+            .windowResizability(.contentSize)
             .defaultWindowPlacement { content, context in
                 let size = content.sizeThatFits(.unspecified)
                 if let mainViewWindow = context.windows.first(where: { $0.id == Self.mainScreenWindowID }) {

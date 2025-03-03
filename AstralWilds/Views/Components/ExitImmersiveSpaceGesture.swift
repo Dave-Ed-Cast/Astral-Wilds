@@ -16,17 +16,17 @@ struct ExitImmersiveSpaceGesture: View {
     
     var body: some View {
         
-        HStack(alignment: .center) {
+        HStack(alignment: .center, spacing: 15) {
             VStack(alignment: .center) {
-                Text("Immersive spaces can be overwhelming.")
-                Text("Therefore, \(boldSnap) your fingers to go back.")
+                Text("If you want to go back")
+                Text("\(boldSnap) your fingers.")
             }
             .multilineTextAlignment(.center)
-            .font(.caption)
+            .font(.headline)
             Image("Snap")
                 .resizable()
                 .scaledToFit()
-                .frame(width: 32, height: 32)
+                .frame(width: 44, height: 44)
                 .colorInvert()
         }
         .padding()

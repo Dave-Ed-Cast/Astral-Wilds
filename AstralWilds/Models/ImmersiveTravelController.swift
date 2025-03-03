@@ -13,26 +13,27 @@ import VisionTextArc
 ///
 /// This class acts as a caller to all the other classes and functionalities involved.
 /// See `ParticleController` or `TextController` for more information.
-@MainActor
-final class ImmersiveTravelController: ObservableObject {
+@MainActor @Observable
+final class ImmersiveTravelController {
     
     /// The duration of the travel, therefore, the text length chosen by the user.
     /// It is imperative to assign to this variable the text array.
-    @Published var textArray: [String] = [] {
+    var textArray: [String] = [] {
         didSet {
             maxStepCounter = textArray.count
         }
     }
     
-    @Published var ended: Bool = false
+    var entityHolder: Entity = .init()
     
-    private var textEntity: Entity
+    @ObservationIgnored private var ended: Bool = false
+    @ObservationIgnored private var textEntity: Entity
     
-    private var particleController: ParticleController
-    private var textController: TextController
+    @ObservationIgnored private var particleController: ParticleController
+    @ObservationIgnored private var textController: TextController
     
     /// Everything depends on the step of the travel
-    private var maxStepCounter: Int = 0
+    @ObservationIgnored private var maxStepCounter: Int = 0
     
     /// Initializes the classes `ParticleController` and `TextController`
     init() {
@@ -96,6 +97,24 @@ final class ImmersiveTravelController: ObservableObject {
                 }
             }
         }
+    }
+    
+    func playAudio() {
+        
+        guard let music = entityHolder.findEntity(named: "SpaceMusic") else {
+            print("audio holder not found")
+            return
+        }
+        
+        guard let audioLibrary = music.components[AudioLibraryComponent.self] else {
+            print("audio library not found")
+            return
+        }
+        guard let audioResource = audioLibrary.resources.first?.value else {
+            print("music not found")
+            return
+        }
+        entityHolder.playAudio(audioResource)
     }
 }
 

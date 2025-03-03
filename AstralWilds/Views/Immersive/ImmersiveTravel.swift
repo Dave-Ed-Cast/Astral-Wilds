@@ -15,8 +15,6 @@ import AVFAudio
 /// Then, we need to load the associated scene with the lights.
 struct ImmersiveTravel: View {
     
-    @StateObject private var travel = ImmersiveTravelController()
-    
     @Environment(GestureModel.self) private var gestureModel
     @Environment(\.setMode) private var setMode
     @Environment(\.openWindow) private var openWindow
@@ -24,6 +22,9 @@ struct ImmersiveTravel: View {
     
     @Binding var duration: Int
     @Binding var sitting: Bool
+    
+    @State private var travel = ImmersiveTravelController()
+    @State private var enableGestures = false
         
     private var selectedMode: String {
         return duration == 0 ? "TravelToMarsShort" : "TravelToMarsLong"
@@ -60,10 +61,11 @@ struct ImmersiveTravel: View {
                 await gestureModel.updateTracking()
             }
 #endif
-           
+            
             //This is safe to unwrap, it's for readability to write like this
             if let scene = try? await Entity(named: selectedMode, in: realityKitContentBundle) {
                 
+                travel.entityHolder = scene
                 let environment = try? await EnvironmentResource(named: "studio")
                 scene.configureLighting(resource: environment!, withShadow: true, for: scene)
                 await startTravel(view: view, entity: scene)
@@ -76,7 +78,15 @@ struct ImmersiveTravel: View {
                 .font(.largeTitle)
                 .position(x: 150, y: 150)
         }
-//        .installGestures()
+        .installGestures()
+        .disabled(!enableGestures)
+        .onAppear {
+            Task {
+                let sleepDuration = duration == 0 ? 55 : 175
+                try? await Task.sleep(for: .seconds(sleepDuration))
+                enableGestures = true
+            }
+        }
         
 #if !targetEnvironment(simulator)
         .onChange(of: gestureModel.didThanosSnap) { _, isActivated in
@@ -92,28 +102,29 @@ struct ImmersiveTravel: View {
         
         let configuration = TextCurver.Configuration(
             fontSize: 0.1,
-            radius: 3.5,
+            radius: 4,
             yPosition: selectedStance
         )
         
         travel.createText(textArray, config: configuration, view: view)
         travel.startParticles(view: view)
         travel.moveParticles()
+        travel.playAudio()
         
-        guard let music = entity.findEntity(named: "SpaceMusic") else {
-            print("audio holder not found")
-            return
-        }
-        
-        guard let audioLibrary = music.components[AudioLibraryComponent.self] else {
-            print("audio library not found")
-            return
-        }
-        guard let audioResource = audioLibrary.resources.first?.value else {
-            print("music not found")
-            return
-        }
-        entity.playAudio(audioResource)
+//        guard let music = entity.findEntity(named: "SpaceMusic") else {
+//            print("audio holder not found")
+//            return
+//        }
+//        
+//        guard let audioLibrary = music.components[AudioLibraryComponent.self] else {
+//            print("audio library not found")
+//            return
+//        }
+//        guard let audioResource = audioLibrary.resources.first?.value else {
+//            print("music not found")
+//            return
+//        }
+//        entity.playAudio(audioResource)
     }
 }
 
