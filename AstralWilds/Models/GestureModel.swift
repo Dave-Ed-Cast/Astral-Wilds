@@ -9,7 +9,7 @@ import ARKit
 import SwiftUI
 
 /// A model that contains up-to-date hand coordinate information.
-/// In this class, custom gestures are implemented.
+/// This class also holds custom gestures.
 ///
 /// Supported custom gestures available: `Snap`
 ///  -  This is built with `accessibility` in mind. Humans can snap with three possible fingers and two possible hands.
@@ -17,26 +17,47 @@ import SwiftUI
 @MainActor @Observable
 final class GestureModel {
     
+    /// Varaibles for the hand tracking
     private let session = ARKitSession()
     private var handTracking = HandTrackingProvider()
     
+    /// The variable holding the latest tracked hand
     private var latestHandTracking: HandsUpdates = .init()
-    
-    /// These variables hold the information of the finger that was last in contact for the `Snap` gesture
-    private var leftContactIndex: Bool = false
-    private var leftContactMiddle: Bool = false
-    private var leftContactRing: Bool = false
-    private var rightContactIndex: Bool = false
-    private var rightContactMiddle: Bool = false
-    private var rightContactRing: Bool = false
     
     /// Time variable to understand if a `snap`  happened
     ///
     /// A 2021 California study found out a snap occurs in 7 ms.
-    /// In thus Swift 6 app, due to concurrency, we use 20 ms as a safe threshold to confirm a snap, based on testing.
+    /// Due to concurrency, it's safer to use a 7.5ms threshold to confirm a snap, based on testing.
     private var detectedContactTime: TimeInterval = 0
     
-    /// Holds the information of the last update for the hand
+    /// Represents the state of a finger during gesture detection
+    ///
+    /// Check the variables `leftFingerStates` or `leftFingerStates` for example usage.
+    ///
+    /// - Parameters:
+    ///   - isContacting: Whether the finger is in contact with the thumb
+    ///   - contactTime: The timestamp of the contact
+    ///   - initialDistanceToDestination: Tracks the initial distance from the finger that needs the snap, to the destination from when the contact began
+    private struct FingerSnapState {
+        var isContacting: Bool = false
+        var contactTime: TimeInterval = 0
+        var initialDistanceToDestination: Float = 0
+    }
+    
+    /// The updated dictionaries now track each finger’s state separately per hand.
+    private var leftFingerStates: [HandSkeleton.JointName: FingerSnapState] = [
+        .indexFingerTip: FingerSnapState(),
+        .middleFingerTip: FingerSnapState(),
+        .ringFingerTip: FingerSnapState()
+    ]
+    private var rightFingerStates: [HandSkeleton.JointName: FingerSnapState] = [
+        .indexFingerTip: FingerSnapState(),
+        .middleFingerTip: FingerSnapState(),
+        .ringFingerTip: FingerSnapState()
+    ]
+
+    
+    /// Holds the latest hand anchor information for the hands.
     private struct HandsUpdates {
         var left: HandAnchor?
         var right: HandAnchor?
@@ -47,15 +68,16 @@ final class GestureModel {
         }
     }
     
-    /// Use this supervisor to detect if a snap occurs. It will be true once the snap has occurred.
-    var didThanosSnap: Bool = false
-    
+    /// The possible fingers that can snap
     private let fingers: [HandSkeleton.JointName] = [
         .indexFingerTip,
         .middleFingerTip,
         .ringFingerTip
     ]
-    
+        
+    /// Use this supervisor to detect if a snap occurs. It will be true once the snap has occurred.
+    var didThanosSnap: Bool = false
+        
     /// Start the hand tracking session.
     func startTrackingSession() async {
         do {
@@ -78,7 +100,7 @@ final class GestureModel {
                 let anchor = update.anchor
                 guard anchor.isTracked else { continue }
                 
-                // Update the latest hand tracking state
+                //If tracked, update the latest state
                 await MainActor.run {
                     if anchor.chirality == .left {
                         latestHandTracking.left = anchor
@@ -87,7 +109,8 @@ final class GestureModel {
                     }
                 }
                 
-                // Process snapping gesture detection
+                //Then, create the task.
+                //This could be optimised and will later in the future.
                 Task.detached { [self] in
                     
                     let leftSnap = await thanosSnap(for: "left", fingers: fingers)
@@ -111,121 +134,106 @@ final class GestureModel {
         
     }
     
-    /// Detects a snapping gesture starting from the thumb and a specified finger (index, middle, or ring) of the specified hand.
+    /// Detects a snapping gesture starting from the thumb and the specified finger (index, middle, or ring) of the specified hand.
     ///
-    /// ### The building of this function is still in the process of optimisation. However, the current state grants robust and consistent usage
+    /// This function has been built through countless user testing and has finally been optimised to a very consistent level.
+    /// However, it is still always monitored for optimisation.
+    ///
+    /// A per-finger state used to track the contact and snapping motion.
+    /// Detects a snapping gesture for a specific hand using a state-machine per finger.
     ///
     /// - Parameters:
     ///   - handSide: Specify "left" or "right" to detect snap gestures for the respective hand.
-    ///   - finger: The specific finger to check for the snap gesture.
-    /// - Returns: True if the user snapped with the specified finger of the specified hand.
+    ///   - fingers: The fingers that can execute the snap gesture.
+    /// - Returns: `True` if the user snapped with one of the designated fingers with either one or both hands simultaneously.
     private func thanosSnap(for handSide: String, fingers: [HandSkeleton.JointName]) -> Bool {
         guard let handAnchor = (handSide == "left" ? latestHandTracking.left : latestHandTracking.right),
               let handSkeleton = handAnchor.handSkeleton,
               handAnchor.isTracked else {
-            resetState()
+            resetFingerStates(for: handSide)
             return false
         }
         
         let origin = handAnchor.originFromAnchorTransform
         let joint = handSkeleton.joint
         
-        let thumbAnchor = joint(.thumbTip).anchorFromJointTransform
+        let thumbTip = joint(.thumbTip).anchorFromJointTransform
+        let thumbKnuckle = joint(.thumbKnuckle).anchorFromJointTransform
         
-        let thumbKnuckleAnchor = joint(.thumbKnuckle).anchorFromJointTransform
+        let thumbPosition = matrix_multiply(origin, thumbTip).columns.3.xyz
+        let thumbKnucklePosition = matrix_multiply(origin, thumbKnuckle).columns.3.xyz
         
-        let thumbPosition = matrix_multiply(origin, thumbAnchor).columns.3.xyz
-        let thumbKnucklePosition = matrix_multiply(origin, thumbKnuckleAnchor).columns.3.xyz
+        let currentTime = Date().timeIntervalSince1970
+        let snapTimeThreshold: TimeInterval = 0.0075
+        let maxContactDuration: TimeInterval = 0.05
+        let minMovementDistance: Float = 0.01
+        
+        let contactThreshold: Float = 0.025
+        let destinationThreshold: Float = 0.2
         
         for finger in fingers {
             
-            let contactThreshold: Float = finger == .middleFingerTip ? 0.02 : 0.01
-            let destinationThreshold: Float = 0.07
-            
-            let currentTime = Date().timeIntervalSince1970
-            
-            let fingerAnchor = joint(finger).anchorFromJointTransform
-            let fingerPosition = matrix_multiply(origin, fingerAnchor).columns.3.xyz
+            let fingerPosition = matrix_multiply(origin, joint(finger).anchorFromJointTransform).columns.3.xyz
             let distanceThumbFinger = simd_precise_distance(thumbPosition, fingerPosition)
             let distanceFingerDestination = simd_precise_distance(fingerPosition, thumbKnucklePosition)
             
-            if distanceThumbFinger < contactThreshold {
-                detectedContactTime = currentTime
-                
-                switch finger {
-                case .indexFingerTip:
-                    updateContacts(for: handSide, index: true, middle: false, ring: false)
-                    break;
-                case .middleFingerTip:
-                    updateContacts(for: handSide, index: false, middle: true, ring: false)
-                    break;
-                case .ringFingerTip:
-                    updateContacts(for: handSide, index: false, middle: false, ring: true)
-                    break;
-                default:
-                    break
+            var state = fingerState(for: handSide, finger: finger)
+            
+            if !state.isContacting {
+                if distanceThumbFinger < contactThreshold {
+                    state.isContacting = true
+                    state.contactTime = currentTime
+                    state.initialDistanceToDestination = distanceFingerDestination
+                    saveFingerState(for: handSide, finger: finger, state: state)
+                }
+            } else {
+                let elapsed = currentTime - state.contactTime
+                if elapsed <= snapTimeThreshold &&
+                    distanceFingerDestination < destinationThreshold &&
+                    (state.initialDistanceToDestination - distanceFingerDestination) > minMovementDistance {
+                    
+                    resetFingerState(for: handSide, finger: finger)
+                    
+                    print("Data for snap! \n")
+                    print("elapsedTime: \(elapsed)\n distanceFingerDestination: \(distanceFingerDestination)\n stata.initialDistanceToDestination: \(state.initialDistanceToDestination)\n")
+                    return true
+                }
+                if elapsed > maxContactDuration {
+                    resetFingerState(for: handSide, finger: finger)
                 }
             }
-            
-            if isContactFlagActive(for: handSide, finger: finger) &&
-                distanceFingerDestination < destinationThreshold &&
-                (currentTime - detectedContactTime) < 0.02 {
-                resetState()
-                return true
-            }
-            
         }
+        
         return false
-        
     }
-    
-    /// Updates the state of the fingers that have been in contact
-    ///
-    /// This is an helper function for the `thanosSnap`. It helps in understanding which finger touched and should be considered for the snapping motion
-    /// - Parameters:
-    ///   - handSide: The hand (left or right)
-    ///   - index: State of the index (if it was the one in contact or not)
-    ///   - middle: State of the middle (if it was the one in contact or not)
-    ///   - ring: State of the ring (if it was the one in contact or not)
-    private func updateContacts(for handSide: String, index: Bool, middle: Bool, ring: Bool) {
+
+    /// Helper: Retrieve the current state for a given finger.
+    private func fingerState(for handSide: String, finger: HandSkeleton.JointName) -> FingerSnapState {
         if handSide == "left" {
-            leftContactIndex = index
-            leftContactMiddle = middle
-            leftContactRing = ring
-            rightContactIndex = false
-            rightContactMiddle = false
-            rightContactRing = false
+            return leftFingerStates[finger] ?? FingerSnapState()
         } else {
-            rightContactIndex = index
-            rightContactMiddle = middle
-            rightContactRing = ring
-            leftContactIndex = false
-            leftContactMiddle = false
-            leftContactRing = false
+            return rightFingerStates[finger] ?? FingerSnapState()
         }
     }
-    
-    private func isContactFlagActive(for handSide: String, finger: HandSkeleton.JointName) -> Bool {
-        switch finger {
-        case .indexFingerTip:
-            return handSide == "left" ? leftContactIndex : rightContactIndex
-        case .middleFingerTip:
-            return handSide == "left" ? leftContactMiddle : rightContactMiddle
-        case .ringFingerTip:
-            return handSide == "left" ? leftContactRing : rightContactRing
-        default:
-            return false
+
+    /// Helper: Save the updated state for a given finger.
+    private func saveFingerState(for handSide: String, finger: HandSkeleton.JointName, state: FingerSnapState) {
+        if handSide == "left" {
+            leftFingerStates[finger] = state
+        } else {
+            rightFingerStates[finger] = state
         }
     }
-    
-    private func resetState() {
-        
-        leftContactRing = false
-        leftContactIndex = false
-        leftContactMiddle = false
-        rightContactRing = false
-        rightContactIndex = false
-        rightContactMiddle = false
+
+    /// Helper: Reset a finger’s state.
+    private func resetFingerState(for handSide: String, finger: HandSkeleton.JointName) {
+        saveFingerState(for: handSide, finger: finger, state: FingerSnapState())
+    }
+
+    /// Helper: Reset all finger states for a given hand.
+    private func resetFingerStates(for handSide: String) {
+        for finger in fingers {
+            resetFingerState(for: handSide, finger: finger)
+        }
     }
 }
-
