@@ -81,9 +81,7 @@ struct AstralWildsApp: App {
     init() {
         RealityKitContent.GestureComponent.registerComponent()
     }
-    
-    // MARK: - Scene Definition
-    
+        
     var body: some Scene {
         Group {
             WindowGroup(id: Self.welcomeWindowID) {
@@ -127,16 +125,14 @@ struct AstralWildsApp: App {
             }
             
             WindowGroup(id: Self.buttonWindowID) {
-                ZStack {
+                Group {
 #if targetEnvironment(simulator)
                     ExitImmersiveSpaceButton(mode: $mode)
-                        .frame(width: 350, height: 170)
 #elseif !targetEnvironment(simulator)
                     ExitImmersiveSpaceGesture()
-                        .frame(width: 350, height: 180)
 #endif
                 }
-                
+                .frame(width: 350, height: 180)
                 .background(.black.opacity(0.4))
                 .fixedSize()
             }
@@ -153,17 +149,12 @@ struct AstralWildsApp: App {
             }
             
             Group {
-                // Moving Planets Immersive Space
                 ImmersiveSpace(id: Self.planetsWindowID) {
                     MovingPlanets()
                 }
-                
-                // Choose Planets Immersive Space
                 ImmersiveSpace(id: Self.choosePlanetsWindowID) {
                     MovePlanetsYouChoose()
                 }
-                
-                // Immersive Travel Immersive Space
                 ImmersiveSpace(id: Self.immersiveTravelWindowId) {
                     ImmersiveTravel(duration: $selectedDuration, sitting: $sitting)
                 }
@@ -173,7 +164,6 @@ struct AstralWildsApp: App {
         }
         .environment(\.setMode, setMode)
     }
-    
     
     /// Manages transitions between application modes by orchestrating the opening and dismissal of windows and immersive spaces.
     ///

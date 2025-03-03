@@ -18,32 +18,38 @@ struct ChooseTimeView: View {
     
     var body: some View {
         
-        VStack(spacing: 35) {
-            
+        VStack(spacing: 10) {
             Text("Select the parameters.")
                 .font(.title2)
-            
             VStack {
-                Text("It is recommended to bring snacks and sit comfortably.")
-                Text("Then, position this window where you want the journey to happen.")
+                Text("It is recommended to bring snacks!")
+                Text("Then, put the window where you prefer.")
             }
             .font(.callout)
-            
-            VStack(spacing: 5) {
-                Picker("Choose:", selection: $durationSelection) {
-                    Text("1 minute").tag(0)
-                    Text("3 minutes").tag(1)
+                        
+            VStack(alignment: .leading, spacing: 10) {
+                VStack(alignment: .leading, spacing: 5) {
+                    Text("Duration:")
+                        .font(.headline)
+                        .padding(.horizontal, 10)
+                    Picker("Choose:", selection: $durationSelection) {
+                        Text("1 minute").tag(0)
+                        Text("3 minutes").tag(1)
+                    }
                 }
-                
-                Text("Are you sitting?").font(.title3)
-                    .padding()
-                Picker("Are you sitting?:", selection: $sitting) {
-                    Text("Yes").tag(true)
-                    Text("No").tag(false)
+                VStack(alignment: .leading) {
+                    Text("Are you sitting?")
+                        .font(.headline)
+                        .padding(.horizontal, 10)
+                    Picker("Are you sitting?:", selection: $sitting) {
+                        Text("Yes").tag(true)
+                        Text("No").tag(false)
+                    }
                 }
             }
-            .frame(width: 400)
+            .padding()
             .pickerStyle(.palette)
+            
             
             Button {
                 Task { await setMode(.immersiveTravel) }
@@ -52,22 +58,15 @@ struct ChooseTimeView: View {
             }
             
         }
-//        .overlay(alignment: .topLeading) {
-//            Button {
-//                Task { await setMode(.mainScreen) }
-//                dismissWindow(id: "TimeWindow")
-//            } label: {
-//                Image(systemName: "chevron.left")
-//            }
-//            .buttonStyle(.borderless)
-//        }
+        .frame(width: 350, height: 350)
         .multilineTextAlignment(.center)
         .padding()
         
     }
 }
 
-#Preview(windowStyle: .automatic) {
+#Preview(windowStyle: .plain) {
     ChooseTimeView(durationSelection: .constant(0), sitting: .constant(true))
+        .frame(width: 400)
 }
 
