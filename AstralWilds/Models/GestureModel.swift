@@ -164,12 +164,12 @@ final class GestureModel {
         let thumbKnucklePosition = matrix_multiply(origin, thumbKnuckle).columns.3.xyz
         
         let currentTime = Date().timeIntervalSince1970
-        let snapTimeThreshold: TimeInterval = 0.0075
-        let maxContactDuration: TimeInterval = 0.05
-        let minMovementDistance: Float = 0.01
         
-        let contactThreshold: Float = 0.025
-        let destinationThreshold: Float = 0.2
+        let snapTimeThreshold: TimeInterval = 0.025
+        let maxContactDuration: TimeInterval = 0.05
+        let minMovementDistance: Float = 0.04
+        let contactThreshold: Float = 0.02
+        let destinationThreshold: Float = 0.125
         
         for finger in fingers {
             
