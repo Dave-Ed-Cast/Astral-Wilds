@@ -39,7 +39,6 @@ struct MainView: View {
                     chosenMode: .chooseTime
                 )
             }
-            .environment(\.setMode, setMode)
         }
         .overlay(alignment: .topTrailing) {
             Button {
@@ -48,7 +47,6 @@ struct MainView: View {
                 }
             } label: {
                 Image(systemName: "info.circle")
-                   
             }
             .popover(isPresented: $showTutorial, attachmentAnchor: .point(.init(x: -3, y: 1.5)) ) {
                 TutorialView()

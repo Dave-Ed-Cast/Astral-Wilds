@@ -24,6 +24,7 @@ struct ImmersiveTravel: View {
     @Binding var sitting: Bool
     
     @State private var travel = ImmersiveTravelController()
+    @State private var player = AudioPlayer()
     @State private var enableGestures = false
         
     private var selectedMode: String {
@@ -65,7 +66,7 @@ struct ImmersiveTravel: View {
             //This is safe to unwrap, it's for readability to write like this
             if let scene = try? await Entity(named: selectedMode, in: realityKitContentBundle) {
                 
-                travel.entityHolder = scene
+                player.entityHolder = scene
                 let environment = try? await EnvironmentResource(named: "studio")
                 scene.configureLighting(resource: environment!, withShadow: true, for: scene)
                 await startTravel(view: view, entity: scene)
@@ -109,7 +110,7 @@ struct ImmersiveTravel: View {
         travel.createText(textArray, config: configuration, view: view)
         travel.startParticles(view: view)
         travel.moveParticles()
-        travel.playAudio()
+        player.playAudio("SpaceMusic")
         
 //        guard let music = entity.findEntity(named: "SpaceMusic") else {
 //            print("audio holder not found")

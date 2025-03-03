@@ -17,6 +17,8 @@ struct MovingPlanets: View {
     @Environment(GestureModel.self) private var gestureModel
     @Environment(\.setMode) private var setMode
     
+    @State private var player: AudioPlayer = .init()
+    
     var body: some View {
         
         RealityView { content in
@@ -28,6 +30,8 @@ struct MovingPlanets: View {
 #endif
             //This is safe to unwrap, it's for readability to write like this
             if let planets = try? await Entity(named: "MovingPlanets", in: realityKitContentBundle) {
+                player.entityHolder = planets
+                player.playAudio("MuseumMusic")
                 content.add(planets)
             }
         }

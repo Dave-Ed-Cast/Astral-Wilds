@@ -23,17 +23,15 @@ final class ImmersiveTravelController {
             maxStepCounter = textArray.count
         }
     }
+        
+    private var ended: Bool = false
+    private var textEntity: Entity
     
-    var entityHolder: Entity = .init()
-    
-    @ObservationIgnored private var ended: Bool = false
-    @ObservationIgnored private var textEntity: Entity
-    
-    @ObservationIgnored private var particleController: ParticleController
-    @ObservationIgnored private var textController: TextController
+    private var particleController: ParticleController
+    private var textController: TextController
     
     /// Everything depends on the step of the travel
-    @ObservationIgnored private var maxStepCounter: Int = 0
+    private var maxStepCounter: Int = 0
     
     /// Initializes the classes `ParticleController` and `TextController`
     init() {
@@ -97,24 +95,6 @@ final class ImmersiveTravelController {
                 }
             }
         }
-    }
-    
-    func playAudio() {
-        
-        guard let music = entityHolder.findEntity(named: "SpaceMusic") else {
-            print("audio holder not found")
-            return
-        }
-        
-        guard let audioLibrary = music.components[AudioLibraryComponent.self] else {
-            print("audio library not found")
-            return
-        }
-        guard let audioResource = audioLibrary.resources.first?.value else {
-            print("music not found")
-            return
-        }
-        entityHolder.playAudio(audioResource)
     }
 }
 

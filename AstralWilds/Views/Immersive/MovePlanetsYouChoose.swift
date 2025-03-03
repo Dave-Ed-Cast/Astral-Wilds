@@ -6,7 +6,6 @@
 //
 
 import SwiftUI
-import ARKit
 import RealityKit
 import RealityKitContent
 
@@ -17,6 +16,7 @@ struct MovePlanetsYouChoose: View {
     @Environment(GestureModel.self) private var gestureModel
     @Environment(\.setMode) private var setMode
         
+    @State private var player: AudioPlayer = .init()
     @State private var timers: [String: Timer] = [:]
     @State private var selectedPlanetEntity: Entity? = nil
     
@@ -33,6 +33,8 @@ struct MovePlanetsYouChoose: View {
 #endif
             //This is safe to unwrap, it's for readability to write like this
             if let scene = try? await Entity(named: "Planets", in: realityKitContentBundle) {
+                player.entityHolder = scene
+                player.playAudio("MuseumMusic")
                 content.add(scene)
             }
         }

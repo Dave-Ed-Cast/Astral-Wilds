@@ -315,20 +315,11 @@ def Xform "Root"
 
         def "SpaceMusic" (
             active = true
-            prepend apiSchemas = ["MaterialBindingAPI"]
             prepend references = @SpaceMusic.usda@
         )
         {
-            rel material:binding = None (
-                bindMaterialAs = "weakerThanDescendants"
-            )
             float3 xformOp:scale = (1, 1, 1)
             uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
-
-            over "space_caf"
-            {
-                uniform token normalization = "none"
-            }
         }
     }
 }

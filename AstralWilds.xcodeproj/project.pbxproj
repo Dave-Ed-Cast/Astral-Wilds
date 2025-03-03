@@ -36,6 +36,7 @@
 		3E8FFFC42D633EB700061A8F /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E8FFFBF2D633EB700061A8F /* MainView.swift */; };
 		3E8FFFC52D633EB700061A8F /* WelcomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E8FFFC12D633EB700061A8F /* WelcomeView.swift */; };
 		3E8FFFCB2D633F0D00061A8F /* LightingConfigurable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E8FFFC92D633F0D00061A8F /* LightingConfigurable.swift */; };
+		3ECFA3C82D76044F0068D262 /* AudioPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3ECFA3C72D76044F0068D262 /* AudioPlayer.swift */; };
 		3ED4A6B22CFB1BE600A899A3 /* VisionTextArc in Frameworks */ = {isa = PBXBuildFile; productRef = 3ED4A6B12CFB1BE600A899A3 /* VisionTextArc */; };
 /* End PBXBuildFile section */
 
@@ -83,6 +84,7 @@
 		3E8FFFC92D633F0D00061A8F /* LightingConfigurable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LightingConfigurable.swift; sourceTree = "<group>"; };
 		3EA475602BF6BA75005A3573 /* RealityKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RealityKit.framework; path = System/Library/Frameworks/RealityKit.framework; sourceTree = SDKROOT; };
 		3EBF553A2CE4F49E00216442 /* AstralWildsTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AstralWildsTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		3ECFA3C72D76044F0068D262 /* AudioPlayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioPlayer.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -164,6 +166,7 @@
 				3E7B72112D16E48600937F1E /* GestureModel.swift */,
 				3E7B72132D16E48600937F1E /* PlanetController.swift */,
 				3E4A62182D32A84500E3C0D4 /* ImmersiveTravelController.swift */,
+				3ECFA3C72D76044F0068D262 /* AudioPlayer.swift */,
 				3E428A5F2D6F285D002EBECD /* ParticleController.swift */,
 				3E7B72142D16E48600937F1E /* TextArray.swift */,
 				3E8FFFCA2D633F0D00061A8F /* Protocols */,
@@ -401,6 +404,7 @@
 				3E4ABE3E2D16E5B400AA3DE3 /* GestureModel.swift in Sources */,
 				3E52A3962D61DA9D00D67E4B /* ExitImmersiveSpaceButton.swift in Sources */,
 				3E4ABE402D16E5B400AA3DE3 /* PlanetController.swift in Sources */,
+				3ECFA3C82D76044F0068D262 /* AudioPlayer.swift in Sources */,
 				3E4A62192D32A84500E3C0D4 /* ImmersiveTravelController.swift in Sources */,
 				3E4ABE412D16E5B400AA3DE3 /* TextArray.swift in Sources */,
 				3E4ABE462D16E5B400AA3DE3 /* ViewExtension.swift in Sources */,
