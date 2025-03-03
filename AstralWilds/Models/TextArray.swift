@@ -9,7 +9,7 @@
 struct TextArray {
     
     let minuteArray: [String] = [
-        "Hello traveler, and welcome.",
+        "Hello traveler, and welcome!",
         "Now let us enjoy the journey to Mars",
         "Without weight, embrace the silence",
         "Among stars, are infinite possibilities",
@@ -22,7 +22,7 @@ struct TextArray {
     ]
     
     let threeMinutesArray: [String] = [
-        "Welcome. Please sit and relax...",
+        "Hello traveler, and welcome!",
         "Let us enjoy the journey to Mars",
         "Without weight, embrace the silence",
         "Amongs stars, countless possibilities",

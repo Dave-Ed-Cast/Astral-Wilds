@@ -232,5 +232,77 @@ def Xform "Root"
             }
         }
     }
+
+    def Cube "AudioHolder" (
+        active = true
+        prepend apiSchemas = ["MaterialBindingAPI"]
+    )
+    {
+        reorder nameChildren = ["SpaceMusic", "DefaultMaterial"]
+        rel material:binding = </Root/AudioHolder/DefaultMaterial> (
+            bindMaterialAs = "weakerThanDescendants"
+        )
+        double size = 0.2
+        float2 ui:nodegraph:node:pos = (20, 20)
+        int ui:nodegraph:node:stackingOrder = 1
+        quatf xformOp:orient = (1, 0, 0, 0)
+        float3 xformOp:scale = (1, 1, 1)
+        float3 xformOp:translate = (0, 0, 0)
+        uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+
+        def Material "DefaultMaterial"
+        {
+            token cullMode = "unspecified" (
+                allowedTokens = ["unspecified", "none", "front", "back"]
+            )
+            token outputs:mtlx:surface.connect = </Root/AudioHolder/DefaultMaterial/UnlitSurface.outputs:out>
+            token outputs:realitykit:vertex
+            token outputs:surface.connect = </Root/AudioHolder/DefaultMaterial/DefaultSurfaceShader.outputs:surface>
+            float2 ui:nodegraph:realitykit:subgraphOutputs:pos = (0, 110.5)
+
+            def Shader "DefaultSurfaceShader" (
+                active = false
+            )
+            {
+                uniform token info:id = "UsdPreviewSurface"
+                color3f inputs:diffuseColor = (1, 1, 1) (
+                    colorSpace = "srgb_displayp3"
+                )
+                float inputs:opacity = 0
+                float inputs:opacityThreshold
+                float inputs:roughness = 1
+                token outputs:surface
+            }
+
+            def Shader "UnlitSurface"
+            {
+                uniform token info:id = "ND_realitykit_unlit_surfaceshader"
+                bool inputs:applyPostProcessToneMap
+                bool inputs:hasPremultipliedAlpha
+                float inputs:opacity = 0
+                token outputs:out
+                float2 ui:nodegraph:node:pos = (-249.71484, 114.72266)
+                int ui:nodegraph:node:stackingOrder = 4
+            }
+        }
+
+        def "SpaceMusic" (
+            active = true
+            prepend apiSchemas = ["MaterialBindingAPI"]
+            prepend references = @SpaceMusic.usda@
+        )
+        {
+            rel material:binding = None (
+                bindMaterialAs = "weakerThanDescendants"
+            )
+            float3 xformOp:scale = (1, 1, 1)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+
+            over "space_caf"
+            {
+                uniform token normalization = "none"
+            }
+        }
+    }
 }
 

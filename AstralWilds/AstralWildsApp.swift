@@ -128,11 +128,10 @@ struct AstralWildsApp: App {
             
             WindowGroup(id: Self.buttonWindowID) {
                 ZStack {
-                    Color.black.opacity(0.4)
-//#if targetEnvironment(simulator)
-//                    ExitImmersiveSpaceButton(mode: $mode)
-//                        .frame(width: 350, height: 170)
 #if targetEnvironment(simulator)
+                    ExitImmersiveSpaceButton(mode: $mode)
+                        .frame(width: 350, height: 170)
+#elseif !targetEnvironment(simulator)
                     ExitImmersiveSpaceGesture()
                         .frame(width: 350, height: 180)
 #endif
