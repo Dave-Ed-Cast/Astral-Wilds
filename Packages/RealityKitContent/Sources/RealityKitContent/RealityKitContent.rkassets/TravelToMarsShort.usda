@@ -328,13 +328,13 @@ def Xform "Root"
             color3f inputs:default = (0, 0, 0) (
                 colorSpace = "srgb_displayp3"
             )
-            asset inputs:file = @SpaceImage-gray-upscaled.png@
+            asset inputs:file = @SpaceImage-gray.png@
             string inputs:filtertype = "linear"
             string inputs:uaddressmode = "periodic"
             string inputs:vaddressmode = "periodic"
             color3f outputs:out
             float2 ui:nodegraph:node:pos = (-138.59766, 67.98828)
-            int ui:nodegraph:node:stackingOrder = 21
+            int ui:nodegraph:node:stackingOrder = 23
         }
     }
 }

@@ -26,6 +26,8 @@ struct ImmersiveTravel: View {
     @State private var travel = ImmersiveTravelController()
     @State private var player = AudioPlayer()
     @State private var enableGestures = false
+    
+    let fixedZPosition: Float = -1.5
         
     private var selectedMode: String {
         return duration == 0 ? "TravelToMarsShort" : "TravelToMarsLong"
@@ -79,15 +81,16 @@ struct ImmersiveTravel: View {
                 .font(.largeTitle)
                 .position(x: 150, y: 150)
         }
-        .installGestures()
-        .disabled(!enableGestures)
-        .onAppear {
-            Task {
-                let sleepDuration = duration == 0 ? 55 : 175
-                try? await Task.sleep(for: .seconds(sleepDuration))
-                enableGestures = true
-            }
-        }
+        // MARK: To be fixed
+//        .installGestures()
+//        .disabled(!enableGestures)
+//        .onAppear {
+//            Task {
+//                let sleepDuration = duration == 0 ? 55 : 175
+//                try? await Task.sleep(for: .seconds(sleepDuration))
+//                enableGestures = true
+//            }
+//        }
         
 #if !targetEnvironment(simulator)
         .onChange(of: gestureModel.didThanosSnap) { _, isActivated in
@@ -111,21 +114,6 @@ struct ImmersiveTravel: View {
         travel.startParticles(view: view)
         travel.moveParticles()
         player.playAudio("SpaceMusic")
-        
-//        guard let music = entity.findEntity(named: "SpaceMusic") else {
-//            print("audio holder not found")
-//            return
-//        }
-//        
-//        guard let audioLibrary = music.components[AudioLibraryComponent.self] else {
-//            print("audio library not found")
-//            return
-//        }
-//        guard let audioResource = audioLibrary.resources.first?.value else {
-//            print("music not found")
-//            return
-//        }
-//        entity.playAudio(audioResource)
     }
 }
 
