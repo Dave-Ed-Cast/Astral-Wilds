@@ -10,7 +10,7 @@
 
 def Xform "Root"
 {
-    reorder nameChildren = ["Mars_1", "SkySphere", "SpaceMaterial", "TravelToUser", "SkysphereTravel"]
+    reorder nameChildren = ["Mars_1", "SkySphere", "TravelToUser", "SkysphereTravel", "AudioHolder", "SpaceMaterial"]
     def "Mars_1" (
         active = true
         references = @Mars 1.usdz@
@@ -87,6 +87,7 @@ def Xform "Root"
         references = @SkySphere.usdz@
     )
     {
+        reorder nameChildren = ["SkySphere_mat", "RCP_BehaviorsContainer", "OnAddedToScene", "SpaceMaterial"]
         rel material:binding = </Root/SpaceMaterial> (
             bindMaterialAs = "weakerThanDescendants"
         )
@@ -122,33 +123,6 @@ def Xform "Root"
                 int performCount = 1
                 token type = "serial"
             }
-        }
-    }
-
-    def Material "SpaceMaterial"
-    {
-        token outputs:mtlx:surface.connect = </Root/SpaceMaterial/PreviewSurface.outputs:out>
-        token outputs:realitykit:vertex
-        float2 ui:nodegraph:realitykit:subgraphOutputs:pos = (335.25, 100.5)
-
-        def Shader "PreviewSurface"
-        {
-            uniform token info:id = "ND_UsdPreviewSurface_surfaceshader"
-            color3f inputs:diffuseColor.connect = </Root/SpaceMaterial/Image.outputs:out>
-            float inputs:metallic
-            float inputs:roughness = 1
-            token outputs:out
-            float2 ui:nodegraph:node:pos = (93.5, 100.5)
-            int ui:nodegraph:node:stackingOrder = 7
-        }
-
-        def Shader "Image"
-        {
-            uniform token info:id = "ND_image_color3"
-            asset inputs:file = @SpaceImage-gray.png@
-            color3f outputs:out
-            float2 ui:nodegraph:node:pos = (-138.59766, 67.98828)
-            int ui:nodegraph:node:stackingOrder = 9
         }
     }
 
@@ -289,7 +263,7 @@ def Xform "Root"
         def "SpaceMusic" (
             active = true
             prepend apiSchemas = ["MaterialBindingAPI"]
-            prepend references = @SpaceMusic.usda@
+            references = @SpaceMusic.usda@
         )
         {
             rel material:binding = None (
@@ -302,6 +276,48 @@ def Xform "Root"
             {
                 uniform token normalization = "none"
             }
+        }
+    }
+
+    def Material "SpaceMaterial"
+    {
+        token outputs:mtlx:surface.connect = </Root/SpaceMaterial/PreviewSurface.outputs:out>
+        token outputs:realitykit:vertex
+        float2 ui:nodegraph:node:pos = (40, 40)
+        int ui:nodegraph:node:stackingOrder = 2
+        string[] ui:nodegraph:realitykit:node:attributesShowingChildren = ["outputs:mtlx:surface"]
+        float2 ui:nodegraph:realitykit:subgraphOutputs:pos = (335.25, 100.5)
+        int ui:nodegraph:realitykit:subgraphOutputs:stackingOrder = 18
+
+        def Shader "PreviewSurface"
+        {
+            uniform token info:id = "ND_UsdPreviewSurface_surfaceshader"
+            float inputs:clearcoat = 0
+            float inputs:clearcoatRoughness = 0.01
+            color3f inputs:diffuseColor.connect = </Root/SpaceMaterial/Image.outputs:out>
+            float inputs:ior = 1
+            float inputs:metallic = 0.2
+            float3 inputs:normal = (0, 0, 1)
+            float inputs:occlusion = 1
+            float inputs:roughness = 1
+            token outputs:out
+            float2 ui:nodegraph:node:pos = (93.5, 100.5)
+            int ui:nodegraph:node:stackingOrder = 22
+        }
+
+        def Shader "Image"
+        {
+            uniform token info:id = "ND_image_color3"
+            color3f inputs:default = (0, 0, 0) (
+                colorSpace = "srgb_displayp3"
+            )
+            asset inputs:file = @SpaceImage-gray-upscaled.png@
+            string inputs:filtertype = "linear"
+            string inputs:uaddressmode = "periodic"
+            string inputs:vaddressmode = "periodic"
+            color3f outputs:out
+            float2 ui:nodegraph:node:pos = (-138.59766, 67.98828)
+            int ui:nodegraph:node:stackingOrder = 21
         }
     }
 }
