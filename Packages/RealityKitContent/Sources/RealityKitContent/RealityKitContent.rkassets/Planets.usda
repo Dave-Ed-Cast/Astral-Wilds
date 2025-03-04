@@ -373,42 +373,88 @@ def Xform "Root"
         int ui:nodegraph:node:stackingOrder = 1
         float3 xformOp:scale = (1, 1, 1)
         float3 xformOp:translate = (0, 0, 0)
-    }
 
-    def Material "SpaceMaterial"
-    {
-        token outputs:mtlx:surface.connect = </Root/SpaceMaterial/PreviewSurface.outputs:out>
-        token outputs:realitykit:vertex
-        float2 ui:nodegraph:node:pos = (20, 20)
-        int ui:nodegraph:node:stackingOrder = 1
-        float2 ui:nodegraph:realitykit:subgraphOutputs:pos = (335.25, 100.5)
-
-        def Shader "PreviewSurface"
+        over "SkySphere_mat"
         {
-            uniform token info:id = "ND_UsdPreviewSurface_surfaceshader"
-            float inputs:clearcoat = 0
-            float inputs:clearcoatRoughness = 0.01
-            color3f inputs:diffuseColor.connect = </Root/SpaceMaterial/Image.outputs:out>
-            float inputs:ior = 1.5
-            float inputs:metallic = 0.2
-            float3 inputs:normal = (0, 0, 1)
-            float inputs:occlusion = 0.8
-            float inputs:roughness = 1
-            token outputs:out
-            float2 ui:nodegraph:node:pos = (93.5, 100.5)
-            int ui:nodegraph:node:stackingOrder = 9
-        }
-
-        def Shader "Image"
-        {
-            uniform token info:id = "ND_image_color3"
-            color3f inputs:default = (0, 0, 0) (
-                colorSpace = "srgb_displayp3"
+            token cullMode = "none" (
+                allowedTokens = ["unspecified", "none", "front", "back"]
             )
-            asset inputs:file = @SpaceImage-gray.png@
-            color3f outputs:out
-            float2 ui:nodegraph:node:pos = (-138.59766, 67.98828)
-            int ui:nodegraph:node:stackingOrder = 16
+            asset inputs:SkySphere_Texture = None (
+                customData = {
+                    dictionary realitykit = {
+                        float2 positionInSubgraph = (-754.4517, 71.84726)
+                        float2 sizeInSubgraph = (188.5, 53)
+                        int stackingOrderInSubgraph = 414
+                    }
+                }
+            )
+            token outputs:mtlx:surface.connect = </Root/SkySphere/SkySphere_mat/UnlitSurface.outputs:out>
+            token outputs:surface.connect = </Root/SkySphere/SkySphere_mat/UsdPreviewSurface.outputs:surface>
+            string[] ui:nodegraph:realitykit:node:attributesShowingChildren = ["outputs:realitykit:vertex", "outputs:mtlx:surface", "outputs:mtlx:surface"]
+            int ui:nodegraph:realitykit:subgraphOutputs:stackingOrder = 414
+
+            over "RealityKitTexture2D_1"
+            {
+                color3f inputs:default = (0, 0, 0) (
+                    colorSpace = "srgb_displayp3"
+                )
+                asset inputs:file
+                bool inputs:no_flip_v = 1
+                int ui:nodegraph:node:stackingOrder = 412
+                string[] ui:nodegraph:realitykit:node:attributesShowingChildren = ["inputs:no_flip_v", "inputs:file", "inputs:max_lod_clamp"]
+            }
+
+            over "RealityKitTexture2D"
+            {
+                float inputs:bias = 0
+                float inputs:dynamic_min_lod_clamp = 0
+                int ui:nodegraph:node:stackingOrder = 411
+            }
+
+            over "UnlitSurface" (
+                active = true
+            )
+            {
+                bool inputs:applyPostProcessToneMap = 1
+                bool inputs:hasPremultipliedAlpha = 1
+                float inputs:opacity = 1
+                float inputs:opacityThreshold
+                int ui:nodegraph:node:stackingOrder = 413
+                string[] ui:nodegraph:realitykit:node:attributesShowingChildren = ["inputs:opacity", "inputs:color"]
+            }
+
+            def Shader "UsdPreviewSurface" (
+                active = false
+            )
+            {
+                uniform token info:id = "UsdPreviewSurface"
+                token outputs:surface
+            }
+
+            over "Ifgreater"
+            {
+                int ui:nodegraph:node:stackingOrder = 402
+            }
+
+            over "Absval"
+            {
+                int ui:nodegraph:node:stackingOrder = 404
+            }
+
+            over "Texcoord"
+            {
+                int ui:nodegraph:node:stackingOrder = 405
+            }
+
+            over "Subtract"
+            {
+                int ui:nodegraph:node:stackingOrder = 406
+            }
+
+            over "Swizzle"
+            {
+                int ui:nodegraph:node:stackingOrder = 408
+            }
         }
     }
 
@@ -609,11 +655,53 @@ def Xform "Root"
 
         def "MuseumMusic" (
             active = true
-            prepend references = @MuseumMusic.usda@
+            references = @MuseumMusic.usda@
         )
         {
             float3 xformOp:scale = (1, 1, 1)
             uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+        }
+    }
+
+    def Material "SpaceMaterial"
+    {
+        token outputs:mtlx:surface.connect = </Root/SpaceMaterial/PreviewSurface.outputs:out>
+        token outputs:realitykit:vertex
+        float2 ui:nodegraph:node:pos = (20, 20)
+        int ui:nodegraph:node:stackingOrder = 1
+        string[] ui:nodegraph:realitykit:node:attributesShowingChildren = ["outputs:mtlx:surface"]
+        float2 ui:nodegraph:realitykit:subgraphOutputs:pos = (335.25, 100.5)
+        int ui:nodegraph:realitykit:subgraphOutputs:stackingOrder = 18
+
+        def Shader "PreviewSurface"
+        {
+            uniform token info:id = "ND_UsdPreviewSurface_surfaceshader"
+            float inputs:clearcoat = 0
+            float inputs:clearcoatRoughness = 0.01
+            color3f inputs:diffuseColor.connect = </Root/SpaceMaterial/Image.outputs:out>
+            float inputs:ior = 1
+            float inputs:metallic = 0.2
+            float3 inputs:normal = (0, 0, 1)
+            float inputs:occlusion = 1
+            float inputs:roughness = 1
+            token outputs:out
+            float2 ui:nodegraph:node:pos = (93.5, 100.5)
+            int ui:nodegraph:node:stackingOrder = 22
+        }
+
+        def Shader "Image"
+        {
+            uniform token info:id = "ND_image_color3"
+            color3f inputs:default = (0, 0, 0) (
+                colorSpace = "srgb_displayp3"
+            )
+            asset inputs:file = @SpaceImage-gray-upscaled.png@
+            string inputs:filtertype = "linear"
+            string inputs:uaddressmode = "periodic"
+            string inputs:vaddressmode = "periodic"
+            color3f outputs:out
+            float2 ui:nodegraph:node:pos = (-138.59766, 67.98828)
+            int ui:nodegraph:node:stackingOrder = 21
         }
     }
 }
