@@ -3,9 +3,9 @@
 <plist version="1.0">
 <dict>
 	<key>NSHandsTrackingUsageDescription</key>
-	<string>We ask to track your hands to use gestures to improve your experience</string>
+	<string>Astral Wilds uses hand tracking to enable gesture-based navigation and interaction within the VR environment. For example, you can snap your fingers to go back or use hand movements to manipulate objects in space.</string>
 	<key>NSWorldSensingUsageDescription</key>
-	<string>We ask to track the place you are in to allow world coordinates to work for gestures</string>
+	<string>Astral Wilds tracks your surroundings to anchor gestures and interactions in physical space. For example, this allows you to reach out and grab interact with objects that stay in place relative to your environment.</string>
 	<key>UIApplicationSceneManifest</key>
 	<dict>
 		<key>UIApplicationPreferredDefaultSceneSessionRole</key>

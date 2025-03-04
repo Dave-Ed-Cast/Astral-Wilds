@@ -165,11 +165,11 @@ final class GestureModel {
         
         let currentTime = Date().timeIntervalSince1970
         
-        let snapTimeThreshold: TimeInterval = 0.025
+        let snapTimeThreshold: TimeInterval = 0.0275
         let maxContactDuration: TimeInterval = 0.05
-        let minMovementDistance: Float = 0.04
-        let contactThreshold: Float = 0.02
-        let destinationThreshold: Float = 0.125
+        let minMovementDistance: Float = 0.035
+        let contactThreshold: Float = 0.0225
+        let destinationThreshold: Float = 0.13
         
         for finger in fingers {
             
