@@ -171,8 +171,8 @@ final class GestureModel {
         let thumbPosition = matrix_multiply(origin, thumbTip).columns.3.xyz
         let thumbKnucklePosition = matrix_multiply(origin, thumbKnuckle).columns.3.xyz
                 
-        let contactThreshold: Float = 0.02
-        let destinationThreshold: Float = 0.07
+        let contactThreshold: Float = 0.0225
+        let destinationThreshold: Float = 0.08
         
         let currentTime = Date().timeIntervalSince1970
         
@@ -203,7 +203,7 @@ final class GestureModel {
             }
             if isContactFlagActive(for: handSide, finger: finger) &&
                 distanceFingerDestination < destinationThreshold &&
-                (currentTime - detectedContactTime) < 0.02 {
+                (currentTime - detectedContactTime) < 0.025 {
                 resetState()
                 return true
             }
