@@ -24,7 +24,8 @@ final class ImmersiveTravelController {
         }
     }
         
-    private var ended: Bool = false
+    var particleHolder: Entity?
+    var ended: Bool = false
     private var textEntity: Entity
     
     private var particleController: ParticleController
@@ -94,6 +95,27 @@ final class ImmersiveTravelController {
                     textEntity.removeFromParent()
                 }
             }
+        }
+    }
+    
+    func particleEmitter() {
+        let particleEntity = particleHolder!.findEntity(named: "ParticleEmitter")
+        guard var particles = particleEntity?.components[ParticleEmitterComponent.self] else { return }
+        
+        print("Do not emit!")
+        particles.isEmitting = false
+        Task {
+            do {
+                try await Task.sleep(for: .seconds(7.5))
+            } catch {
+                print("Error")
+            }
+            print("Now emit!")
+            particles.isEmitting = true
+        }
+        while ended {
+            print("I stop!")
+            particles.isEmitting = false
         }
     }
 }

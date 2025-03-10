@@ -69,6 +69,7 @@ struct ImmersiveTravel: View {
             if let scene = try? await Entity(named: selectedMode, in: realityKitContentBundle) {
                 
                 player.entityHolder = scene
+                travel.particleHolder = scene
                 let environment = try? await EnvironmentResource(named: "studio")
                 scene.configureLighting(resource: environment!, withShadow: true, for: scene)
                 await startTravel(view: view, entity: scene)
@@ -111,8 +112,7 @@ struct ImmersiveTravel: View {
         )
         
         travel.createText(textArray, config: configuration, view: view)
-        travel.startParticles(view: view)
-        travel.moveParticles()
+        travel.particleEmitter()
         player.playAudio("SpaceMusic")
     }
 }

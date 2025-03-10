@@ -321,10 +321,12 @@ def Xform "Root"
         prepend apiSchemas = ["MaterialBindingAPI"]
     )
     {
-        reorder nameChildren = ["Particles", "DefaultMaterial", "Material"]
+        reorder nameChildren = ["RCP_BehaviorsContainer", "OnAddedToScene", "Particles", "DefaultMaterial"]
         rel material:binding = </Root/ParticlesHolder/DefaultMaterial>
         double size = 0.2
-        float3 xformOp:translate = (0, 1.25, 1.5)
+        quatf xformOp:orient = (1, 0, 0, 0)
+        float3 xformOp:scale = (1, 1, 1)
+        float3 xformOp:translate = (0, 1.75, -1.5)
         uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
 
         def "Particles" (
@@ -339,6 +341,15 @@ def Xform "Root"
             float3 xformOp:scale = (1, 1, 1)
             float3 xformOp:translate = (0, 0, 0)
             uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+
+            over "ParticleEmitter" (
+                prepend apiSchemas = ["MaterialBindingAPI"]
+            )
+            {
+                rel material:binding = </Root/ParticlesHolder/DefaultMaterial> (
+                    bindMaterialAs = "weakerThanDescendants"
+                )
+            }
         }
 
         def Material "DefaultMaterial"
@@ -361,11 +372,16 @@ def Xform "Root"
             def Shader "UnlitSurface"
             {
                 uniform token info:id = "ND_realitykit_unlit_surfaceshader"
-                float inputs:opacity = 1
+                float inputs:opacity = 0
                 token outputs:out
                 float2 ui:nodegraph:node:pos = (-210.4379, 79.572685)
-                int ui:nodegraph:node:stackingOrder = 4
+                int ui:nodegraph:node:stackingOrder = 6
             }
+        }
+
+        def RealityKitComponent "RCP_BehaviorsContainer"
+        {
+            uniform token info:id = "RCP.BehaviorsContainer"
         }
     }
 }

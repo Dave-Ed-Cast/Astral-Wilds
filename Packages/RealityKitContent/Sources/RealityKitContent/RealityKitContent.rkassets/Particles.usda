@@ -17,7 +17,7 @@ def Xform "Root"
     )
     {
         quatf xformOp:orient = (0.70710677, 0.70710677, 0, 0)
-        float3 xformOp:translate = (0, 1, -3)
+        float3 xformOp:translate = (0, 0, 0)
         uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
 
         def RealityKitComponent "VFXEmitter"
@@ -44,14 +44,14 @@ def Xform "Root"
                 def RealityKitStruct "mainEmitter"
                 {
                     token billboardMode = "Billboard"
-                    float birthRate = 500
+                    float birthRate = 300
                     token blendMode = "Additive"
                     float colorEvolutionPower = 0
                     float4 endColorA = (0.8039216, 0.81960785, 0.89411765, 1)
                     bool isLightingEnabled = 0
                     token opacityOverLife = "QuickFadeInOut"
                     float particleAngle = 0
-                    double particleLifeSpan = 5
+                    double particleLifeSpan = 8.5
                     float particleMass = 100
                     float particleSize = 0.001
                     float sizeMultiplierAtEndOfLifespan = 0.01
