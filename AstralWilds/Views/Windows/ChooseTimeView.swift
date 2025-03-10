@@ -10,7 +10,7 @@ import SwiftUI
 /// This is the window that lets the user select how long should the immersive travel be.
 struct ChooseTimeView: View {
     
-    @Binding var durationSelection: Int
+    @Binding var duration: Int
     @Binding var sitting: Bool
     
     @Environment(\.setMode) private var setMode
@@ -32,7 +32,7 @@ struct ChooseTimeView: View {
                     Text("Duration:")
                         .font(.headline)
                         .padding(.horizontal, 10)
-                    Picker("Choose:", selection: $durationSelection) {
+                    Picker("Choose:", selection: $duration) {
                         Text("1 minute").tag(0)
                         Text("3 minutes").tag(1)
                     }
@@ -61,12 +61,13 @@ struct ChooseTimeView: View {
         .frame(width: 350, height: 350)
         .multilineTextAlignment(.center)
         .padding()
-        
+        .fixedSize()
+        .background(.black.opacity(0.4))
     }
 }
 
 #Preview(windowStyle: .plain) {
-    ChooseTimeView(durationSelection: .constant(0), sitting: .constant(true))
+    ChooseTimeView(duration: .constant(0), sitting: .constant(true))
         .frame(width: 400)
 }
 

@@ -13,10 +13,8 @@ struct TutorialView: View {
     let boldSnap = Text("snap").fontWeight(.bold)
     
     var body: some View {
-        
         HStack(alignment: .center) {
-            Text("During immersion, \(boldSnap) your fingers to go back.")
-            
+            Text("\(boldSnap) your fingers to go back.")
                 .multilineTextAlignment(.center)
                 .font(.body)
             Image("Snap")

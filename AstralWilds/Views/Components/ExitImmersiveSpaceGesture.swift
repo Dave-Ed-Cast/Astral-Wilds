@@ -29,6 +29,7 @@ struct ExitImmersiveSpaceGesture: View {
                 .frame(width: 44, height: 44)
                 .colorInvert()
         }
+        .fixedSize()
         .padding()
     }
 }

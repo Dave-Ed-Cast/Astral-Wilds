@@ -15,18 +15,13 @@ import RealityKitContent
 @main
 struct AstralWildsApp: App {
     
-    /// Current mode of the app, which determines which window is active.
     @State private var mode: Mode = .welcome
     @State private var immersionMode: ImmersionStyle = .progressive(0...100.0, initialAmount: 100.0)
-    /// Duration selected for immersive travel.
-    @State private var selectedDuration: Int = 0
-    /// Indicates whether the user is sitting.
+    @State private var duration: Int = 0
+    
     @State private var sitting: Bool = true
-    /// Tracks if an immersive space is currently presented.
     @State private var immersiveSpacePresented: Bool = false
-    /// Indicates whether the "Choose Time" window is visible.
     @State private var chooseTimeIsPresent: Bool = false
-    /// Model used for handling gesture interactions within immersive spaces.
     @State private var gestureModel = GestureModel()
     
     // Usually, I put environment variables first; but due to immersionMode dependencies they must go here or Xcode complains.
@@ -46,12 +41,7 @@ struct AstralWildsApp: App {
     /// Represents the different states of the application.
     /// Each mode corresponds to a specific window ID and determines whether an immersive space is needed.
     @MainActor enum Mode: Equatable {
-        case welcome
-        case mainScreen
-        case movingPlanets
-        case chooseTime
-        case choosePlanetsToMove
-        case immersiveTravel
+        case welcome, mainScreen, movingPlanets, chooseTime, choosePlanetsToMove, immersiveTravel
         
         /// Indicates if the mode requires an immersive space.
         fileprivate var needsImmersiveSpace: Bool {
@@ -81,28 +71,17 @@ struct AstralWildsApp: App {
     init() {
         RealityKitContent.GestureComponent.registerComponent()
     }
-        
+    
     var body: some Scene {
         Group {
             WindowGroup(id: Self.welcomeWindowID) {
                 WelcomeView()
-                    .background(.black.opacity(0.4))
-                    .frame(
-                        minWidth: 520, maxWidth: 1000,
-                        minHeight: 450, maxHeight: 930
-                    )
             }
             .windowResizability(.contentSize)
             .defaultSize(width: 520, height: 450)
             
             WindowGroup(id: Self.mainScreenWindowID) {
                 MainView()
-                    .frame(
-                        minWidth: 700, maxWidth: 1000,
-                        minHeight: 550, maxHeight: 900
-                    )
-                    .background(.black.opacity(0.4))
-                    .fixedSize()
                     .opacity(chooseTimeIsPresent ? 0.35 : 1)
                     .animation(.default, value: chooseTimeIsPresent)
             }
@@ -110,9 +89,7 @@ struct AstralWildsApp: App {
             .defaultSize(width: 700, height: 550)
             
             WindowGroup(id: Self.chooseTimeWindowID) {
-                ChooseTimeView(durationSelection: $selectedDuration, sitting: $sitting)
-                    .fixedSize()
-                    .background(.black.opacity(0.4))
+                ChooseTimeView(duration: $duration, sitting: $sitting)
                     .onAppear { chooseTimeIsPresent = true }
                     .onDisappear { chooseTimeIsPresent = false }
             }
@@ -125,16 +102,13 @@ struct AstralWildsApp: App {
             }
             
             WindowGroup(id: Self.buttonWindowID) {
-                Group {
 #if targetEnvironment(simulator)
-                    ExitImmersiveSpaceButton(mode: $mode)
+                ExitImmersiveSpaceButton()
 #elseif !targetEnvironment(simulator)
-                    ExitImmersiveSpaceGesture()
+                ExitImmersiveSpaceGesture()
+                    .frame(width: 350, height: 180)
+                    .background(.black.opacity(0.4))
 #endif
-                }
-                .frame(width: 350, height: 180)
-                .background(.black.opacity(0.4))
-                .fixedSize()
             }
             .persistentSystemOverlays(.hidden)
             .windowResizability(.contentSize)
@@ -149,14 +123,10 @@ struct AstralWildsApp: App {
             }
             
             Group {
-                ImmersiveSpace(id: Self.planetsWindowID) {
-                    MovingPlanets()
-                }
-                ImmersiveSpace(id: Self.choosePlanetsWindowID) {
-                    MovePlanetsYouChoose()
-                }
+                ImmersiveSpace(id: Self.planetsWindowID) { MovingPlanets() }
+                ImmersiveSpace(id: Self.choosePlanetsWindowID) { MovePlanetsYouChoose() }
                 ImmersiveSpace(id: Self.immersiveTravelWindowId) {
-                    ImmersiveTravel(duration: $selectedDuration, sitting: $sitting)
+                    ImmersiveTravel(duration: $duration, sitting: $sitting)
                 }
             }
             .environment(gestureModel)
@@ -193,18 +163,16 @@ struct AstralWildsApp: App {
         print("oldMode: \(oldMode), newMode: \(newMode)")
         
         if immersiveSpacePresented {
-            
             print("immersive -> window operation")
             dismissWindow(id: Self.buttonWindowID)
             print("dismissing button window")
-
+            
             await dismissImmersiveSpace()
             immersiveSpacePresented = false
             print("dismissing immersive space")
-            
         }
+        
         if newMode.needsLastWindowClosed && !immersiveSpacePresented {
-            
             print("new window operation")
             openWindow(id: newMode.windowId)
             print("opening: \(newMode.windowId)")
@@ -223,7 +191,6 @@ struct AstralWildsApp: App {
         }
         
         if newMode.needsImmersiveSpace {
-
             print("window(s) -> immersive")
             if newMode == .immersiveTravel {
                 dismissWindow(id: Self.mainScreenWindowID)

@@ -105,7 +105,7 @@ struct ImmersiveTravel: View {
     private func startTravel(view: RealityViewContent, entity: Entity) async {
         
         let configuration = TextCurver.Configuration(
-            fontSize: 0.1,
+            fontSize: 0.09,
             radius: 4,
             yPosition: selectedStance
         )

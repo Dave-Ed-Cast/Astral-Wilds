@@ -21,14 +21,11 @@ struct ImageButton: View {
     let chosenMode: AstralWildsApp.Mode
     
     var body: some View {
-        
         GeometryReader { geometry in
-            
             Button {
                 Task { await setMode(chosenMode) }
             } label: {
                 HStack(alignment: .center, spacing: 30) {
-                    
                     Image(name)
                         .resizable()
                         .scaledToFit()
@@ -37,13 +34,10 @@ struct ImageButton: View {
                     Text(text)
                         .font(.headline)
                 }
-                
             }
             .background(.clear)
             .buttonStyle(.borderless)
         }
-        
-    
         .hoverEffect(.lift)
         .padding()
         .frame(maxWidth: .infinity, maxHeight: .infinity)

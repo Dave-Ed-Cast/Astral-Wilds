@@ -47,5 +47,10 @@ struct WelcomeView: View {
                 scale = calculateScale(for: newSize)
             }
         }
+        .background(.black.opacity(0.4))
+        .frame(
+            minWidth: 520, maxWidth: 1000,
+            minHeight: 450, maxHeight: 930
+        )
     }
 }

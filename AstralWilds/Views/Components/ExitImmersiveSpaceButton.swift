@@ -12,31 +12,23 @@ struct ExitImmersiveSpaceButton: View {
     
     @Environment(\.setMode) private var setMode
     
-    @Binding var mode: AstralWildsApp.Mode
-    
+    let snapText = Text("snap").fontWeight(.bold)
+        
     var body: some View {
         VStack(spacing: 15) {
-            let snapText = Text("snap").fontWeight(.bold)
             VStack {
                 Text("Feeling overwhelmed?").font(.title3)
                 Text("Click the button or \(snapText) your fingers.")
             }
-            
-            if mode == .immersiveTravel {
-                VStack {
-                    Text("Spatial audio is playing.")
-                    Text("Consider repositioning this window.")
-                }
-            } else if mode == .choosePlanetsToMove {
-                Text("Tap on a planet to move it or stop it")
-            }
-            
             Button {
                 Task { await setMode(.mainScreen) }
             } label: {
                 Text("Back").font(.headline)
             }
         }
+        .frame(width: 350, height: 180)
+        .background(.black.opacity(0.4))
+        .fixedSize()
         .font(.subheadline)
         .multilineTextAlignment(.center)
         .padding()

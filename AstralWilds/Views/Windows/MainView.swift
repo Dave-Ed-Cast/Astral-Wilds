@@ -40,6 +40,10 @@ struct MainView: View {
                 )
             }
         }
+        .frame(
+            minWidth: 700, maxWidth: 1000,
+            minHeight: 550, maxHeight: 900
+        )
         .overlay(alignment: .topTrailing) {
             Button {
                 withAnimation {
@@ -61,6 +65,8 @@ struct MainView: View {
         .opacity(showTutorial ? 0.65 : 1)
         .padding()
         .fontWeight(.bold)
+        .background(.black.opacity(0.4))
+        .fixedSize()
     }
 }
 
