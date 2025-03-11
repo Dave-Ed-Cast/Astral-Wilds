@@ -10,7 +10,6 @@
 		3E0636762BF0BAA400F7ED6E /* RealityKitContent in Frameworks */ = {isa = PBXBuildFile; productRef = 3E0636752BF0BAA400F7ED6E /* RealityKitContent */; };
 		3E254D942D404D97005CE58C /* RealityViewContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E254D932D404D97005CE58C /* RealityViewContent.swift */; };
 		3E31ADE82D27085A00E48C15 /* VisionTextArc in Frameworks */ = {isa = PBXBuildFile; productRef = 3E31ADE72D27085A00E48C15 /* VisionTextArc */; };
-		3E428A602D6F285D002EBECD /* ParticleController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E428A5F2D6F285D002EBECD /* ParticleController.swift */; };
 		3E4A62192D32A84500E3C0D4 /* ImmersiveTravelController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E4A62182D32A84500E3C0D4 /* ImmersiveTravelController.swift */; };
 		3E4A621F2D37116200E3C0D4 /* ImageButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E4A621E2D37116200E3C0D4 /* ImageButton.swift */; };
 		3E4ABE3B2D16E5B400AA3DE3 /* AstralWildsApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E7B722D2D16E48600937F1E /* AstralWildsApp.swift */; };
@@ -53,7 +52,6 @@
 /* Begin PBXFileReference section */
 		3E0636742BF0BAA400F7ED6E /* RealityKitContent */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = RealityKitContent; sourceTree = "<group>"; };
 		3E254D932D404D97005CE58C /* RealityViewContent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealityViewContent.swift; sourceTree = "<group>"; };
-		3E428A5F2D6F285D002EBECD /* ParticleController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParticleController.swift; sourceTree = "<group>"; };
 		3E4A62182D32A84500E3C0D4 /* ImmersiveTravelController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImmersiveTravelController.swift; sourceTree = "<group>"; };
 		3E4A621E2D37116200E3C0D4 /* ImageButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageButton.swift; sourceTree = "<group>"; };
 		3E4ABE552D16F45400AA3DE3 /* studio.skybox */ = {isa = PBXFileReference; lastKnownFileType = file.skybox; path = studio.skybox; sourceTree = "<group>"; };
@@ -167,7 +165,6 @@
 				3E7B72132D16E48600937F1E /* PlanetController.swift */,
 				3E4A62182D32A84500E3C0D4 /* ImmersiveTravelController.swift */,
 				3ECFA3C72D76044F0068D262 /* AudioPlayer.swift */,
-				3E428A5F2D6F285D002EBECD /* ParticleController.swift */,
 				3E7B72142D16E48600937F1E /* TextArray.swift */,
 				3E8FFFCA2D633F0D00061A8F /* Protocols */,
 			);
@@ -412,7 +409,6 @@
 				3E4A621F2D37116200E3C0D4 /* ImageButton.swift in Sources */,
 				3E4ABE492D16E5B400AA3DE3 /* ImmersiveTravel.swift in Sources */,
 				3E4ABE4A2D16E5B400AA3DE3 /* MovingPlanets.swift in Sources */,
-				3E428A602D6F285D002EBECD /* ParticleController.swift in Sources */,
 				3E254D942D404D97005CE58C /* RealityViewContent.swift in Sources */,
 				3E6EAA652D3FE7FD002A7BBF /* Documentation.docc in Sources */,
 				3E4ABE4B2D16E5B400AA3DE3 /* MovePlanetsYouChoose.swift in Sources */,

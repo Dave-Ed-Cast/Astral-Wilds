@@ -26,18 +26,22 @@ final class ImmersiveTravelController {
         }
     }
     
+    /// The duration variable holds the information from the user to allow the
+    /// particle emitter to be properly adjusted.
     var duration: Int = 0 {
         didSet {
             selectedDuration = (duration == 0 ? 38 : 120)
         }
     }
     
-    var particleHolder: Entity?
-    var ended: Bool = false
+    /// Holds the scene in which to find the particles
+    var sceneHolder: Entity?
+    
+    /// Detects when the travel experience will must end
+    private var ended: Bool = false
     
     private var textEntity: Entity
     
-    private var particleController: ParticleController
     private var textController: TextController
     
     /// Everything depends on the step of the travel
@@ -46,32 +50,8 @@ final class ImmersiveTravelController {
     
     /// Initializes the classes `ParticleController` and `TextController`
     init() {
-        self.particleController = .init()
         self.textController = .init()
         self.textEntity = .init()
-    }
-    
-    /// Starts the creation of the particles for the immersive travel experience.
-    ///
-    /// This function executes a task that creates a particle every 0.2 seconds,
-    /// then, adds it to the reality view.
-    /// - Parameter view: The Reality View to add the anchor
-    func startParticles(view: RealityViewContent) {
-        
-        Task {
-            while textController.currentStep <= maxStepCounter - 3 {
-                try await Task.sleep(for: .seconds(0.2))
-                let particle = await particleController.start()
-                view.add(particle)
-            }
-        }
-    }
-    
-    /// Moves each and every particle created to simulate the travel
-    ///
-    /// Calls the `startMovement` function in `ParticleController`.
-    func moveParticles() {
-        particleController.startMovement()
     }
     
     /// Handles the update of 3D text during the immersive travel
@@ -108,9 +88,17 @@ final class ImmersiveTravelController {
         }
     }
     
+    
+    /// Activates and lighlty modifies the particle emitter in the scene.
+    ///
+    /// The function updates the settings of the existing particle emitter
+    /// and triggers the emission for a duration specified by `selectedDuration`.
+    ///
+    /// The emitter is configured through reality composer pro.
+    /// - Note: The emission duration is dynamically set to `selectedDuration`.
     func particleEmitter() {
         Task {
-            guard let particleEntity = particleHolder?.findEntity(named: "ParticleEmitter") else { return }
+            guard let particleEntity = sceneHolder?.findEntity(named: "ParticleEmitter") else { return }
             particleEntity.isEnabled = false
                 
             guard var particles = particleEntity.components[ParticleEmitterComponent.self] else { return }
