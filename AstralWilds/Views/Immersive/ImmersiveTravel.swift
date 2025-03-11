@@ -69,7 +69,7 @@ struct ImmersiveTravel: View {
             if let scene = try? await Entity(named: selectedMode, in: realityKitContentBundle) {
                 
                 player.entityHolder = scene
-                travel.particleHolder = scene
+                travel.sceneHolder = scene
                 let environment = try? await EnvironmentResource(named: "studio")
                 scene.configureLighting(resource: environment!, withShadow: true, for: scene)
                 await startTravel(view: view, entity: scene)
