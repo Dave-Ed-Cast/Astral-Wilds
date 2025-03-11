@@ -13,6 +13,8 @@ import VisionTextArc
 ///
 /// This class acts as a caller to all the other classes and functionalities involved.
 /// See `ParticleController` or `TextController` for more information.
+///
+/// In an `Observable` model, the public vars are automatically observed
 @MainActor @Observable
 final class ImmersiveTravelController {
     
@@ -23,9 +25,16 @@ final class ImmersiveTravelController {
             maxStepCounter = textArray.count
         }
     }
-        
+    
+    var duration: Int = 0 {
+        didSet {
+            selectedDuration = (duration == 0 ? 38 : 120)
+        }
+    }
+    
     var particleHolder: Entity?
     var ended: Bool = false
+    
     private var textEntity: Entity
     
     private var particleController: ParticleController
@@ -33,6 +42,7 @@ final class ImmersiveTravelController {
     
     /// Everything depends on the step of the travel
     private var maxStepCounter: Int = 0
+    private var selectedDuration: Int = 0
     
     /// Initializes the classes `ParticleController` and `TextController`
     init() {
@@ -99,23 +109,19 @@ final class ImmersiveTravelController {
     }
     
     func particleEmitter() {
-        let particleEntity = particleHolder!.findEntity(named: "ParticleEmitter")
-        guard var particles = particleEntity?.components[ParticleEmitterComponent.self] else { return }
-        
-        print("Do not emit!")
-        particles.isEmitting = false
         Task {
-            do {
-                try await Task.sleep(for: .seconds(7.5))
-            } catch {
-                print("Error")
-            }
-            print("Now emit!")
+            guard let particleEntity = particleHolder?.findEntity(named: "ParticleEmitter") else { return }
+            particleEntity.isEnabled = false
+                
+            guard var particles = particleEntity.components[ParticleEmitterComponent.self] else { return }
+
+            print(selectedDuration)
+            particles.timing = .once(warmUp: 0.2, emit: .init(duration: TimeInterval(selectedDuration)))
             particles.isEmitting = true
-        }
-        while ended {
-            print("I stop!")
-            particles.isEmitting = false
+            particleEntity.components[ParticleEmitterComponent.self] = particles
+
+            try? await Task.sleep(for: .seconds(7.5))
+            particleEntity.isEnabled = true
         }
     }
 }

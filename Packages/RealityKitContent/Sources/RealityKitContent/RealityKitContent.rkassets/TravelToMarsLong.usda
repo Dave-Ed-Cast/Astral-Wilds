@@ -320,5 +320,71 @@ def Xform "Root"
             int ui:nodegraph:node:stackingOrder = 23
         }
     }
+
+    def Cube "ParticlesHolder" (
+        active = true
+        prepend apiSchemas = ["MaterialBindingAPI"]
+    )
+    {
+        reorder nameChildren = ["RCP_BehaviorsContainer", "OnAddedToScene", "Particles", "DefaultMaterial"]
+        rel material:binding = </Root/ParticlesHolder/DefaultMaterial>
+        double size = 0.2
+        float2 ui:nodegraph:node:pos = (20, 20)
+        int ui:nodegraph:node:stackingOrder = 1
+        quatf xformOp:orient = (1, 0, 0, 0)
+        float3 xformOp:scale = (1, 1, 1)
+        float3 xformOp:translate = (0, 1.55, -1.5)
+        uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+
+        def "Particles" (
+            active = true
+            prepend apiSchemas = ["MaterialBindingAPI"]
+            references = @Particles.usda@
+        )
+        {
+            rel material:binding = </Root/ParticlesHolder/DefaultMaterial> (
+                bindMaterialAs = "weakerThanDescendants"
+            )
+            float3 xformOp:scale = (1, 1, 1)
+            float3 xformOp:translate = (0, 0, 0)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+
+            over "ParticleEmitter" (
+                prepend apiSchemas = ["MaterialBindingAPI"]
+            )
+            {
+                rel material:binding = </Root/ParticlesHolder/DefaultMaterial> (
+                    bindMaterialAs = "weakerThanDescendants"
+                )
+            }
+        }
+
+        def Material "DefaultMaterial"
+        {
+            token outputs:mtlx:surface.connect = </Root/ParticlesHolder/DefaultMaterial/UnlitSurface.outputs:out>
+            token outputs:realitykit:vertex
+            token outputs:surface.connect = None
+            float2 ui:nodegraph:realitykit:subgraphOutputs:pos = (0, 110.5)
+
+            def Shader "DefaultSurfaceShader" (
+                active = false
+            )
+            {
+                uniform token info:id = "UsdPreviewSurface"
+                color3f inputs:diffuseColor = (1, 1, 1)
+                float inputs:roughness = 0.75
+                token outputs:surface
+            }
+
+            def Shader "UnlitSurface"
+            {
+                uniform token info:id = "ND_realitykit_unlit_surfaceshader"
+                float inputs:opacity = 0
+                token outputs:out
+                float2 ui:nodegraph:node:pos = (-210.4379, 79.572685)
+                int ui:nodegraph:node:stackingOrder = 6
+            }
+        }
+    }
 }
 

@@ -326,7 +326,7 @@ def Xform "Root"
         double size = 0.2
         quatf xformOp:orient = (1, 0, 0, 0)
         float3 xformOp:scale = (1, 1, 1)
-        float3 xformOp:translate = (0, 1.75, -1.5)
+        float3 xformOp:translate = (0, 1.55, -1.5)
         uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
 
         def "Particles" (
@@ -377,11 +377,6 @@ def Xform "Root"
                 float2 ui:nodegraph:node:pos = (-210.4379, 79.572685)
                 int ui:nodegraph:node:stackingOrder = 6
             }
-        }
-
-        def RealityKitComponent "RCP_BehaviorsContainer"
-        {
-            uniform token info:id = "RCP.BehaviorsContainer"
         }
     }
 }

@@ -34,9 +34,10 @@ def Xform "Root"
                 bool isLocal = 0
                 bool isLocalFields = 0
                 bool isSpawningEnabled = 0
+                bool loops = 0
                 float particleSpeed = 0.35
                 float radialAmount = 6.2831855
-                float3 shapeSize = (0.2, 0.2, 0.2)
+                float3 shapeSize = (0.45, 0.45, 0.45)
                 bool spawnInheritParentColor = 0
                 float torusInnerRadius = 50
                 double warmupDuration = 0.2
@@ -44,7 +45,7 @@ def Xform "Root"
                 def RealityKitStruct "mainEmitter"
                 {
                     token billboardMode = "Billboard"
-                    float birthRate = 300
+                    float birthRate = 2000
                     token blendMode = "Additive"
                     float colorEvolutionPower = 0
                     float4 endColorA = (0.8039216, 0.81960785, 0.89411765, 1)

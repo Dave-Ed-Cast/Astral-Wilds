@@ -28,7 +28,7 @@ struct ImmersiveTravel: View {
     @State private var enableGestures = false
     
     let fixedZPosition: Float = -1.5
-        
+    
     private var selectedMode: String {
         return duration == 0 ? "TravelToMarsShort" : "TravelToMarsLong"
     }
@@ -79,7 +79,7 @@ struct ImmersiveTravel: View {
         } placeholder: {
             Text("Opening immersive space...")
             ProgressView()
-                .font(.largeTitle)
+                .font(.title3)
                 .position(x: 150, y: 150)
         }
         // MARK: To be fixed
@@ -101,6 +101,7 @@ struct ImmersiveTravel: View {
         }
 #endif
         .onAppear { travel.textArray = textArray }
+        .onAppear { travel.duration = duration }
     }
     
     private func startTravel(view: RealityViewContent, entity: Entity) async {
