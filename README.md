@@ -68,4 +68,7 @@ The project adheres to clean coding principles:
 ---
 
 Thank you for exploring **AstralWilds**! 🚀  
+
+Check it on the App Store! https://apps.apple.com/it/app/astral-wilds/id6504463149?l=en-GB
+
 Stay tuned for future updates that will take your VR space journey to new heights. 🌌  
