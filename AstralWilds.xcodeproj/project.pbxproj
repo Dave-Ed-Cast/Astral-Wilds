@@ -85,6 +85,19 @@
 		3ECFA3C72D76044F0068D262 /* AudioPlayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioPlayer.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
+/* Begin PBXFileSystemSynchronizedRootGroup section */
+		3E99D8542DE8712900B52DE4 /* Extensions */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = Extensions;
+			sourceTree = "<group>";
+		};
+		3E99D85F2DE8713400B52DE4 /* HandComponents */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = HandComponents;
+			sourceTree = "<group>";
+		};
+/* End PBXFileSystemSynchronizedRootGroup section */
+
 /* Begin PBXFrameworksBuildPhase section */
 		3E06366D2BF0BAA400F7ED6E /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
@@ -220,6 +233,8 @@
 		3E7B72302D16E48600937F1E /* AstralWilds */ = {
 			isa = PBXGroup;
 			children = (
+				3E99D85F2DE8713400B52DE4 /* HandComponents */,
+				3E99D8542DE8712900B52DE4 /* Extensions */,
 				3E6EAA642D3FE7FD002A7BBF /* Documentation.docc */,
 				3E7B722D2D16E48600937F1E /* AstralWildsApp.swift */,
 				3E7B72152D16E48600937F1E /* Models */,
@@ -272,6 +287,10 @@
 			buildRules = (
 			);
 			dependencies = (
+			);
+			fileSystemSynchronizedGroups = (
+				3E99D8542DE8712900B52DE4 /* Extensions */,
+				3E99D85F2DE8713400B52DE4 /* HandComponents */,
 			);
 			name = AstralWilds;
 			packageProductDependencies = (

@@ -17,7 +17,6 @@ struct AstralWildsApp: App {
     
     /// Current mode of the app, which determines which window is active.
     @State private var mode: Mode = .welcome
-    @State private var immersionMode: ImmersionStyle = .progressive(0...100.0, initialAmount: 100.0)
     /// Duration selected for immersive travel.
     @State private var selectedDuration: Int = 0
     /// Indicates whether the user is sitting.
@@ -26,8 +25,9 @@ struct AstralWildsApp: App {
     @State private var immersiveSpacePresented: Bool = false
     /// Indicates whether the "Choose Time" window is visible.
     @State private var chooseTimeIsPresent: Bool = false
-    /// Model used for handling gesture interactions within immersive spaces.
-    @State private var gestureModel = GestureModel()
+    @State private var immersionStyle: ImmersionStyle = .progressive(0.0...1.0, initialAmount: 1.0)
+    
+    @State private var gestureRecognizer = GestureRecognizer.shared
     
     // Usually, I put environment variables first; but due to immersionMode dependencies they must go here or Xcode complains.
     @Environment(\.openWindow) private var openWindow
@@ -45,7 +45,7 @@ struct AstralWildsApp: App {
     
     /// Represents the different states of the application.
     /// Each mode corresponds to a specific window ID and determines whether an immersive space is needed.
-    @MainActor enum Mode: Equatable {
+    enum Mode: Equatable {
         case welcome
         case mainScreen
         case movingPlanets
@@ -65,7 +65,7 @@ struct AstralWildsApp: App {
         }
         
         /// Returns the associated window identifier for the mode.
-        fileprivate var windowId: String {
+        @MainActor fileprivate var windowId: String {
             switch self {
             case .welcome: return welcomeWindowID
             case .mainScreen: return mainScreenWindowID
@@ -78,10 +78,8 @@ struct AstralWildsApp: App {
     }
     
     /// Initializes the AstralWilds app by registering the RealityKit gesture component.
-    init() {
-        RealityKitContent.GestureComponent.registerComponent()
-    }
-        
+    init() { RealityKitContent.GestureComponent.registerComponent() }
+    
     var body: some Scene {
         Group {
             WindowGroup(id: Self.welcomeWindowID) {
@@ -159,8 +157,8 @@ struct AstralWildsApp: App {
                     ImmersiveTravel(duration: $selectedDuration, sitting: $sitting)
                 }
             }
-            .environment(gestureModel)
-            .immersionStyle(selection: $immersionMode, in: .mixed, .progressive, .full)
+            .environment(gestureRecognizer)
+            .immersionStyle(selection: $immersionStyle, in: .mixed, .progressive, .full)
         }
         .environment(\.setMode, setMode)
     }
@@ -197,7 +195,7 @@ struct AstralWildsApp: App {
             print("immersive -> window operation")
             dismissWindow(id: Self.buttonWindowID)
             print("dismissing button window")
-
+            
             await dismissImmersiveSpace()
             immersiveSpacePresented = false
             print("dismissing immersive space")
@@ -223,7 +221,7 @@ struct AstralWildsApp: App {
         }
         
         if newMode.needsImmersiveSpace {
-
+            
             print("window(s) -> immersive")
             if newMode == .immersiveTravel {
                 dismissWindow(id: Self.mainScreenWindowID)

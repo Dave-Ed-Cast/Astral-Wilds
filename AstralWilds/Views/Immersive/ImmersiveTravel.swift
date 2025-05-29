@@ -15,7 +15,6 @@ import AVFAudio
 /// Then, we need to load the associated scene with the lights.
 struct ImmersiveTravel: View {
     
-    @Environment(GestureModel.self) private var gestureModel
     @Environment(\.setMode) private var setMode
     @Environment(\.openWindow) private var openWindow
     @Environment(\.dismissWindow) private var dismissWindow
@@ -59,10 +58,7 @@ struct ImmersiveTravel: View {
             
 #if !targetEnvironment(simulator)
             //Without task it cannot load the view because it will keep waiting for t
-            Task.detached(priority: .low) {
-                await gestureModel.startTrackingSession()
-                await gestureModel.updateTracking()
-            }
+            
 #endif
             
             //This is safe to unwrap, it's for readability to write like this
@@ -82,26 +78,23 @@ struct ImmersiveTravel: View {
                 .font(.title3)
                 .position(x: 150, y: 150)
         }
-        // MARK: To be fixed
-//        .installGestures()
-//        .disabled(!enableGestures)
-//        .onAppear {
-//            Task {
-//                let sleepDuration = duration == 0 ? 55 : 175
-//                try? await Task.sleep(for: .seconds(sleepDuration))
-//                enableGestures = true
-//            }
-//        }
-        
-#if !targetEnvironment(simulator)
-        .onChange(of: gestureModel.didThanosSnap) { _, isActivated in
-            if isActivated {
-                Task { await setMode(.mainScreen) }
-            }
-        }
-#endif
         .onAppear { travel.textArray = textArray }
         .onAppear { travel.duration = duration }
+        // MARK: To be fixed
+        //        .installGestures()
+        //        .disabled(!enableGestures)
+        //        .onAppear {
+        //            Task {
+        //                let sleepDuration = duration == 0 ? 55 : 175
+        //                try? await Task.sleep(for: .seconds(sleepDuration))
+        //                enableGestures = true
+        //            }
+        //        }
+        
+#if !targetEnvironment(simulator)
+        
+#endif
+        
     }
     
     private func startTravel(view: RealityViewContent, entity: Entity) async {
