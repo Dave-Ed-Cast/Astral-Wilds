@@ -2,7 +2,7 @@
 
 ![Swift](https://img.shields.io/badge/Swift-6-blue) ![Platform](https://img.shields.io/badge/Platform-visionOS-red) ![License](https://img.shields.io/badge/License-GNU-green)
 
-**AstralWilds** is an immersive **visionOS** application that brings the solar system to life in your living room. Developed as part of the **ARTE project** at the Apple Developer Academy, this prototype offers a captivating and interactive journey through space.  
+**AstralWilds** is an immersive **visionOS** application that brings the solar system to life in your living room. Developed at the Apple Developer Academy, this app offers a captivating and interactive journey through space. It is a project sent to allow my participation at the Advanced Research Track experience, ARTE, program.
 
 ---
 
