@@ -14,7 +14,6 @@ import RealityKitContent
 /// Then, we need to load the associated scene with the lights.
 struct MovingPlanets: View {
     
-    @Environment(GestureModel.self) private var gestureModel
     @Environment(\.setMode) private var setMode
     
     @State private var player: AudioPlayer = .init()
@@ -23,10 +22,7 @@ struct MovingPlanets: View {
         
         RealityView { content in
 #if !targetEnvironment(simulator)
-            Task.detached(priority: .low) {
-                await gestureModel.startTrackingSession()
-                await gestureModel.updateTracking()
-            }
+           addHands(in: content)
 #endif
             //This is safe to unwrap, it's for readability to write like this
             if let planets = try? await Entity(named: "MovingPlanets", in: realityKitContentBundle) {
@@ -36,11 +32,27 @@ struct MovingPlanets: View {
             }
         }
 #if !targetEnvironment(simulator)
-        .onChange(of: gestureModel.didThanosSnap) { _, isActivated in
+        .onChange(of: GestureRecognizer.shared.didThanosSnap) { _, isActivated in
             if isActivated {
-                Task { await setMode(.mainScreen) }
+                await MainActor.run {
+                    await setMode(.mainScreen)
+                    GestureRecognizer.shared.resetSnapState()
+                }
             }
         }
 #endif
+    }
+    
+    @MainActor
+    func addHands(in content: any RealityViewContentProtocol) {
+        // Add the left hand.
+        let leftHand = Entity()
+        leftHand.components.set(HandTrackingComponent(chirality: .left))
+        content.add(leftHand)
+        
+        // Add the right hand.
+        let rightHand = Entity()
+        rightHand.components.set(HandTrackingComponent(chirality: .right))
+        content.add(rightHand)
     }
 }

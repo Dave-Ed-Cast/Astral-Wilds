@@ -9,8 +9,7 @@ import SwiftUI
 import RealityKit
 
 /// Protocol that handles only one type of lighting: single
-///
-/// Used for entities that need lighting. This avoids redundant code
+/// Used for `VisionTextArc`
 protocol LightConfigurable {
     func configureLighting(
         resource environment: EnvironmentResource,
@@ -21,8 +20,7 @@ protocol LightConfigurable {
 
 extension Entity: LightConfigurable {
     
-    //Protection level must be the same as the protocol
-    internal func configureLighting(
+    func configureLighting(
         resource environment: EnvironmentResource,
         withShadow castShadow: Bool,
         for entity: Entity? = nil

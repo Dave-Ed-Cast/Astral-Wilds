@@ -11,11 +11,12 @@ import SwiftUI
 struct ExitImmersiveSpaceButton: View {
     
     @Environment(\.setMode) private var setMode
+    @Environment(\.pushWindow) private var pushWindow
     
     @Binding var mode: AstralWildsApp.Mode
     
     var body: some View {
-        VStack(spacing: 15) {
+        VStack(spacing: 10) {
             let snapText = Text("snap").fontWeight(.bold)
             VStack {
                 Text("Feeling overwhelmed?").font(.title3)
@@ -37,6 +38,7 @@ struct ExitImmersiveSpaceButton: View {
                 Text("Back").font(.headline)
             }
         }
+        .onAppear { pushWindow(id: ModeIDs.buttonWindowID) }
         .font(.subheadline)
         .multilineTextAlignment(.center)
         .padding()

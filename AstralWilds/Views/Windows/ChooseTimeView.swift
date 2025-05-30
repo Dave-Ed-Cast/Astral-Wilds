@@ -50,13 +50,7 @@ struct ChooseTimeView: View {
             .padding()
             .pickerStyle(.palette)
             
-            
-            Button {
-                Task { await setMode(.immersiveTravel) }
-            } label: {
-                Text("Launch immersive view")
-            }
-            
+            Button("Start Travel") { Task { await setMode(.immersiveTravel) }}
         }
         .frame(width: 350, height: 350)
         .multilineTextAlignment(.center)

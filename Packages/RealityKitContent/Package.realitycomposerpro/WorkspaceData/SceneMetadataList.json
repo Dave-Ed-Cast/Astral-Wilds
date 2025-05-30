@@ -4,8 +4,8 @@
       [
         "0196B789-84DD-4FED-9E18-A59CFDAEADA7",
         "Root",
-        "SkysphereTravel",
-        "Track"
+        "AudioHolder",
+        "SpaceMusic"
       ],
       {
         "isExpanded" : true,
@@ -14,8 +14,8 @@
       [
         "0196B789-84DD-4FED-9E18-A59CFDAEADA7",
         "Root",
-        "TravelToUser",
-        "Track2"
+        "AudioHolder",
+        "DefaultMaterial"
       ],
       {
         "isExpanded" : true,
@@ -24,43 +24,8 @@
       [
         "0196B789-84DD-4FED-9E18-A59CFDAEADA7",
         "Root",
-        "SkySphere"
-      ],
-      {
-        "isExpanded" : true,
-        "isLocked" : false
-      },
-      [
-        "0196B789-84DD-4FED-9E18-A59CFDAEADA7",
-        "Root",
-        "AudioHolder"
-      ],
-      {
-        "isExpanded" : true,
-        "isLocked" : false
-      },
-      [
-        "0196B789-84DD-4FED-9E18-A59CFDAEADA7",
-        "Root",
-        "ParticlesHolder"
-      ],
-      {
-        "isExpanded" : true,
-        "isLocked" : false
-      },
-      [
-        "0196B789-84DD-4FED-9E18-A59CFDAEADA7",
-        "Root",
-        "SpaceMaterial"
-      ],
-      {
-        "isExpanded" : true,
-        "isLocked" : false
-      },
-      [
-        "0196B789-84DD-4FED-9E18-A59CFDAEADA7",
-        "Root",
-        "TravelToUser"
+        "ParticlesHolder",
+        "Particles"
       ],
       {
         "isExpanded" : true,
@@ -88,7 +53,16 @@
       [
         "0196B789-84DD-4FED-9E18-A59CFDAEADA7",
         "Root",
-        "TravelToUser",
+        "AudioHolder"
+      ],
+      {
+        "isExpanded" : true,
+        "isLocked" : false
+      },
+      [
+        "0196B789-84DD-4FED-9E18-A59CFDAEADA7",
+        "Root",
+        "SkysphereTravel",
         "Track"
       ],
       {
@@ -98,7 +72,8 @@
       [
         "0196B789-84DD-4FED-9E18-A59CFDAEADA7",
         "Root",
-        "SkysphereTravel"
+        "TravelToUser",
+        "Track2"
       ],
       {
         "isExpanded" : true,
@@ -107,8 +82,8 @@
       [
         "0196B789-84DD-4FED-9E18-A59CFDAEADA7",
         "Root",
-        "ParticlesHolder",
-        "Particles"
+        "TravelToUser",
+        "Track"
       ],
       {
         "isExpanded" : true,
@@ -126,6 +101,42 @@
       },
       [
         "0196B789-84DD-4FED-9E18-A59CFDAEADA7",
+        "Root",
+        "SkySphere"
+      ],
+      {
+        "isExpanded" : true,
+        "isLocked" : false
+      },
+      [
+        "0196B789-84DD-4FED-9E18-A59CFDAEADA7",
+        "Root",
+        "TravelToUser"
+      ],
+      {
+        "isExpanded" : true,
+        "isLocked" : false
+      },
+      [
+        "0196B789-84DD-4FED-9E18-A59CFDAEADA7",
+        "Root",
+        "ParticlesHolder"
+      ],
+      {
+        "isExpanded" : true,
+        "isLocked" : false
+      },
+      [
+        "0196B789-84DD-4FED-9E18-A59CFDAEADA7",
+        "Root",
+        "SpaceMaterial"
+      ],
+      {
+        "isExpanded" : true,
+        "isLocked" : false
+      },
+      [
+        "0196B789-84DD-4FED-9E18-A59CFDAEADA7",
         "Root"
       ],
       {
@@ -135,18 +146,7 @@
       [
         "0196B789-84DD-4FED-9E18-A59CFDAEADA7",
         "Root",
-        "AudioHolder",
-        "SpaceMusic"
-      ],
-      {
-        "isExpanded" : true,
-        "isLocked" : false
-      },
-      [
-        "0196B789-84DD-4FED-9E18-A59CFDAEADA7",
-        "Root",
-        "AudioHolder",
-        "DefaultMaterial"
+        "SkysphereTravel"
       ],
       {
         "isExpanded" : true,
@@ -164,15 +164,6 @@
       [
         "0A9B4653-B11E-4D6A-850E-C6FCB621626C",
         "Root",
-        "Sphere"
-      ],
-      {
-        "isExpanded" : true,
-        "isLocked" : false
-      },
-      [
-        "0A9B4653-B11E-4D6A-850E-C6FCB621626C",
-        "Root",
         "GridMaterial"
       ],
       {
@@ -182,6 +173,15 @@
       [
         "0A9B4653-B11E-4D6A-850E-C6FCB621626C",
         "Root"
+      ],
+      {
+        "isExpanded" : true,
+        "isLocked" : false
+      },
+      [
+        "0A9B4653-B11E-4D6A-850E-C6FCB621626C",
+        "Root",
+        "Sphere"
       ],
       {
         "isExpanded" : true,
@@ -216,93 +216,7 @@
       [
         "3BF575E3-1271-4EDD-8BCE-B73EF17A1712",
         "Root",
-        "NeptuneOrbit"
-      ],
-      {
-        "isExpanded" : true,
-        "isLocked" : false
-      },
-      [
-        "3BF575E3-1271-4EDD-8BCE-B73EF17A1712",
-        "Root",
-        "MarsOrbit"
-      ],
-      {
-        "isExpanded" : true,
-        "isLocked" : false
-      },
-      [
-        "3BF575E3-1271-4EDD-8BCE-B73EF17A1712",
-        "Root",
-        "SaturnOrbit",
-        "Track"
-      ],
-      {
-        "isExpanded" : true,
-        "isLocked" : false
-      },
-      [
-        "3BF575E3-1271-4EDD-8BCE-B73EF17A1712",
-        "Root",
-        "JupiterOrbit",
-        "Track2"
-      ],
-      {
-        "isExpanded" : true,
-        "isLocked" : false
-      },
-      [
-        "3BF575E3-1271-4EDD-8BCE-B73EF17A1712",
-        "Root",
-        "MercuryOrbit"
-      ],
-      {
-        "isExpanded" : true,
-        "isLocked" : false
-      },
-      [
-        "3BF575E3-1271-4EDD-8BCE-B73EF17A1712",
-        "Root",
-        "VenusOrbit",
-        "Track2"
-      ],
-      {
-        "isExpanded" : true,
-        "isLocked" : false
-      },
-      [
-        "3BF575E3-1271-4EDD-8BCE-B73EF17A1712",
-        "Root",
-        "AudioHolder",
-        "SpaceMusic"
-      ],
-      {
-        "isExpanded" : false,
-        "isLocked" : false
-      },
-      [
-        "3BF575E3-1271-4EDD-8BCE-B73EF17A1712",
-        "Root",
-        "SaturnOrbit"
-      ],
-      {
-        "isExpanded" : true,
-        "isLocked" : false
-      },
-      [
-        "3BF575E3-1271-4EDD-8BCE-B73EF17A1712",
-        "Root",
-        "JupiterOrbit"
-      ],
-      {
-        "isExpanded" : true,
-        "isLocked" : false
-      },
-      [
-        "3BF575E3-1271-4EDD-8BCE-B73EF17A1712",
-        "Root",
-        "MercuryOrbit",
-        "Track4"
+        "SpaceMaterial"
       ],
       {
         "isExpanded" : true,
@@ -321,17 +235,7 @@
       [
         "3BF575E3-1271-4EDD-8BCE-B73EF17A1712",
         "Root",
-        "UranusOrbit"
-      ],
-      {
-        "isExpanded" : true,
-        "isLocked" : false
-      },
-      [
-        "3BF575E3-1271-4EDD-8BCE-B73EF17A1712",
-        "Root",
-        "MercuryOrbit",
-        "Track"
+        "JupiterOrbit"
       ],
       {
         "isExpanded" : true,
@@ -341,26 +245,7 @@
         "3BF575E3-1271-4EDD-8BCE-B73EF17A1712",
         "Root",
         "SaturnOrbit",
-        "Track2"
-      ],
-      {
-        "isExpanded" : true,
-        "isLocked" : false
-      },
-      [
-        "3BF575E3-1271-4EDD-8BCE-B73EF17A1712",
-        "Root",
-        "SkySphere"
-      ],
-      {
-        "isExpanded" : true,
-        "isLocked" : false
-      },
-      [
-        "3BF575E3-1271-4EDD-8BCE-B73EF17A1712",
-        "Root",
-        "NeptuneOrbit",
-        "Track2"
+        "Track"
       ],
       {
         "isExpanded" : true,
@@ -378,65 +263,7 @@
       [
         "3BF575E3-1271-4EDD-8BCE-B73EF17A1712",
         "Root",
-        "JupiterOrbit",
-        "Track"
-      ],
-      {
-        "isExpanded" : true,
-        "isLocked" : false
-      },
-      [
-        "3BF575E3-1271-4EDD-8BCE-B73EF17A1712",
-        "Root",
-        "MercuryOrbit",
-        "Track2"
-      ],
-      {
-        "isExpanded" : true,
-        "isLocked" : false
-      },
-      [
-        "3BF575E3-1271-4EDD-8BCE-B73EF17A1712",
-        "Root",
-        "EarthOrbit",
-        "Track"
-      ],
-      {
-        "isExpanded" : true,
-        "isLocked" : false
-      },
-      [
-        "3BF575E3-1271-4EDD-8BCE-B73EF17A1712",
-        "Root",
-        "MarsOrbit",
-        "Track"
-      ],
-      {
-        "isExpanded" : true,
-        "isLocked" : false
-      },
-      [
-        "3BF575E3-1271-4EDD-8BCE-B73EF17A1712",
-        "Root"
-      ],
-      {
-        "isExpanded" : true,
-        "isLocked" : false
-      },
-      [
-        "3BF575E3-1271-4EDD-8BCE-B73EF17A1712",
-        "Root",
         "VenusOrbit",
-        "Track"
-      ],
-      {
-        "isExpanded" : true,
-        "isLocked" : false
-      },
-      [
-        "3BF575E3-1271-4EDD-8BCE-B73EF17A1712",
-        "Root",
-        "NeptuneOrbit",
         "Track"
       ],
       {
@@ -455,6 +282,46 @@
       [
         "3BF575E3-1271-4EDD-8BCE-B73EF17A1712",
         "Root",
+        "NeptuneOrbit",
+        "Track2"
+      ],
+      {
+        "isExpanded" : true,
+        "isLocked" : false
+      },
+      [
+        "3BF575E3-1271-4EDD-8BCE-B73EF17A1712",
+        "Root",
+        "MarsOrbit",
+        "Track"
+      ],
+      {
+        "isExpanded" : true,
+        "isLocked" : false
+      },
+      [
+        "3BF575E3-1271-4EDD-8BCE-B73EF17A1712",
+        "Root",
+        "VenusOrbit",
+        "Track2"
+      ],
+      {
+        "isExpanded" : true,
+        "isLocked" : false
+      },
+      [
+        "3BF575E3-1271-4EDD-8BCE-B73EF17A1712",
+        "Root",
+        "NeptuneOrbit",
+        "Track"
+      ],
+      {
+        "isExpanded" : true,
+        "isLocked" : false
+      },
+      [
+        "3BF575E3-1271-4EDD-8BCE-B73EF17A1712",
+        "Root",
         "VenusOrbit"
       ],
       {
@@ -464,7 +331,8 @@
       [
         "3BF575E3-1271-4EDD-8BCE-B73EF17A1712",
         "Root",
-        "SpaceMaterial"
+        "UranusOrbit",
+        "Track"
       ],
       {
         "isExpanded" : true,
@@ -473,7 +341,64 @@
       [
         "3BF575E3-1271-4EDD-8BCE-B73EF17A1712",
         "Root",
-        "UranusOrbit",
+        "MercuryOrbit",
+        "Track"
+      ],
+      {
+        "isExpanded" : true,
+        "isLocked" : false
+      },
+      [
+        "3BF575E3-1271-4EDD-8BCE-B73EF17A1712",
+        "Root",
+        "JupiterOrbit",
+        "Track"
+      ],
+      {
+        "isExpanded" : true,
+        "isLocked" : false
+      },
+      [
+        "3BF575E3-1271-4EDD-8BCE-B73EF17A1712",
+        "Root",
+        "SaturnOrbit",
+        "Track2"
+      ],
+      {
+        "isExpanded" : true,
+        "isLocked" : false
+      },
+      [
+        "3BF575E3-1271-4EDD-8BCE-B73EF17A1712",
+        "Root"
+      ],
+      {
+        "isExpanded" : true,
+        "isLocked" : false
+      },
+      [
+        "3BF575E3-1271-4EDD-8BCE-B73EF17A1712",
+        "Root",
+        "MercuryOrbit",
+        "Track2"
+      ],
+      {
+        "isExpanded" : true,
+        "isLocked" : false
+      },
+      [
+        "3BF575E3-1271-4EDD-8BCE-B73EF17A1712",
+        "Root",
+        "UranusOrbit"
+      ],
+      {
+        "isExpanded" : true,
+        "isLocked" : false
+      },
+      [
+        "3BF575E3-1271-4EDD-8BCE-B73EF17A1712",
+        "Root",
+        "EarthOrbit",
         "Track"
       ],
       {
@@ -493,8 +418,83 @@
       [
         "3BF575E3-1271-4EDD-8BCE-B73EF17A1712",
         "Root",
+        "MercuryOrbit"
+      ],
+      {
+        "isExpanded" : true,
+        "isLocked" : false
+      },
+      [
+        "3BF575E3-1271-4EDD-8BCE-B73EF17A1712",
+        "Root",
+        "MarsOrbit"
+      ],
+      {
+        "isExpanded" : true,
+        "isLocked" : false
+      },
+      [
+        "3BF575E3-1271-4EDD-8BCE-B73EF17A1712",
+        "Root",
+        "JupiterOrbit",
+        "Track2"
+      ],
+      {
+        "isExpanded" : true,
+        "isLocked" : false
+      },
+      [
+        "3BF575E3-1271-4EDD-8BCE-B73EF17A1712",
+        "Root",
+        "SaturnOrbit"
+      ],
+      {
+        "isExpanded" : true,
+        "isLocked" : false
+      },
+      [
+        "3BF575E3-1271-4EDD-8BCE-B73EF17A1712",
+        "Root",
+        "SkySphere"
+      ],
+      {
+        "isExpanded" : true,
+        "isLocked" : false
+      },
+      [
+        "3BF575E3-1271-4EDD-8BCE-B73EF17A1712",
+        "Root",
+        "AudioHolder",
+        "SpaceMusic"
+      ],
+      {
+        "isExpanded" : false,
+        "isLocked" : false
+      },
+      [
+        "3BF575E3-1271-4EDD-8BCE-B73EF17A1712",
+        "Root",
         "MarsOrbit",
         "Track2"
+      ],
+      {
+        "isExpanded" : true,
+        "isLocked" : false
+      },
+      [
+        "3BF575E3-1271-4EDD-8BCE-B73EF17A1712",
+        "Root",
+        "MercuryOrbit",
+        "Track4"
+      ],
+      {
+        "isExpanded" : true,
+        "isLocked" : false
+      },
+      [
+        "3BF575E3-1271-4EDD-8BCE-B73EF17A1712",
+        "Root",
+        "NeptuneOrbit"
       ],
       {
         "isExpanded" : true,
@@ -531,7 +531,7 @@
       [
         "654A1BA5-90D3-4635-ADC4-8083566F93AB",
         "Root",
-        "TravelToUser"
+        "SpaceMaterial"
       ],
       {
         "isExpanded" : true,
@@ -540,8 +540,35 @@
       [
         "654A1BA5-90D3-4635-ADC4-8083566F93AB",
         "Root",
-        "TravelToUser",
+        "Timeline",
         "Track"
+      ],
+      {
+        "isExpanded" : true,
+        "isLocked" : false
+      },
+      [
+        "654A1BA5-90D3-4635-ADC4-8083566F93AB",
+        "Root",
+        "SkySphere"
+      ],
+      {
+        "disallowsFraming" : true,
+        "isExpanded" : true,
+        "isLocked" : false
+      },
+      [
+        "654A1BA5-90D3-4635-ADC4-8083566F93AB",
+        "Root"
+      ],
+      {
+        "isExpanded" : true,
+        "isLocked" : false
+      },
+      [
+        "654A1BA5-90D3-4635-ADC4-8083566F93AB",
+        "Root",
+        "TravelToUser"
       ],
       {
         "isExpanded" : true,
@@ -560,34 +587,7 @@
       [
         "654A1BA5-90D3-4635-ADC4-8083566F93AB",
         "Root",
-        "SkySphere"
-      ],
-      {
-        "disallowsFraming" : true,
-        "isExpanded" : true,
-        "isLocked" : false
-      },
-      [
-        "654A1BA5-90D3-4635-ADC4-8083566F93AB",
-        "Root",
-        "SpaceMaterial"
-      ],
-      {
-        "isExpanded" : true,
-        "isLocked" : false
-      },
-      [
-        "654A1BA5-90D3-4635-ADC4-8083566F93AB",
-        "Root"
-      ],
-      {
-        "isExpanded" : true,
-        "isLocked" : false
-      },
-      [
-        "654A1BA5-90D3-4635-ADC4-8083566F93AB",
-        "Root",
-        "Timeline",
+        "TravelToUser",
         "Track"
       ],
       {
@@ -637,17 +637,7 @@
       [
         "D4588DAC-986B-442B-97D8-3E8ADFC2BC2A",
         "Root",
-        "ReplaceMercuryBehaviour",
-        "Track"
-      ],
-      {
-        "isExpanded" : true,
-        "isLocked" : false
-      },
-      [
-        "D4588DAC-986B-442B-97D8-3E8ADFC2BC2A",
-        "Root",
-        "Saturn_1",
+        "MercuryOrbit_1",
         "Track"
       ],
       {
@@ -658,163 +648,7 @@
         "D4588DAC-986B-442B-97D8-3E8ADFC2BC2A",
         "Root",
         "VenusOrbit",
-        "Track"
-      ],
-      {
-        "isExpanded" : true,
-        "isLocked" : false
-      },
-      [
-        "D4588DAC-986B-442B-97D8-3E8ADFC2BC2A",
-        "Root",
-        "MarsOrbit",
-        "Track"
-      ],
-      {
-        "isExpanded" : true,
-        "isLocked" : false
-      },
-      [
-        "D4588DAC-986B-442B-97D8-3E8ADFC2BC2A",
-        "Root",
-        "MercuryOrbit_1",
-        "Track"
-      ],
-      {
-        "isExpanded" : true,
-        "isLocked" : false
-      },
-      [
-        "D4588DAC-986B-442B-97D8-3E8ADFC2BC2A",
-        "Root",
-        "AudioHolder"
-      ],
-      {
-        "isExpanded" : true,
-        "isLocked" : false
-      },
-      [
-        "D4588DAC-986B-442B-97D8-3E8ADFC2BC2A",
-        "Root"
-      ],
-      {
-        "isExpanded" : true,
-        "isLocked" : false
-      },
-      [
-        "D4588DAC-986B-442B-97D8-3E8ADFC2BC2A",
-        "Root",
-        "NeptuneOrbit",
         "Track2"
-      ],
-      {
-        "isExpanded" : true,
-        "isLocked" : false
-      },
-      [
-        "D4588DAC-986B-442B-97D8-3E8ADFC2BC2A",
-        "Root",
-        "JupiterOrbit",
-        "Track"
-      ],
-      {
-        "isExpanded" : true,
-        "isLocked" : false
-      },
-      [
-        "D4588DAC-986B-442B-97D8-3E8ADFC2BC2A",
-        "Root",
-        "Timeline",
-        "Track"
-      ],
-      {
-        "isExpanded" : true,
-        "isLocked" : false
-      },
-      [
-        "D4588DAC-986B-442B-97D8-3E8ADFC2BC2A",
-        "Root",
-        "ReplaceMercuryBehavior",
-        "Track"
-      ],
-      {
-        "isExpanded" : true,
-        "isLocked" : false
-      },
-      [
-        "D4588DAC-986B-442B-97D8-3E8ADFC2BC2A",
-        "Root",
-        "EarthOrbit",
-        "Track"
-      ],
-      {
-        "isExpanded" : true,
-        "isLocked" : false
-      },
-      [
-        "D4588DAC-986B-442B-97D8-3E8ADFC2BC2A",
-        "Root",
-        "MercuryOrbit_1",
-        "Track2"
-      ],
-      {
-        "isExpanded" : true,
-        "isLocked" : false
-      },
-      [
-        "D4588DAC-986B-442B-97D8-3E8ADFC2BC2A",
-        "Root",
-        "SkySphere",
-        "SkySphere_mat"
-      ],
-      {
-        "isExpanded" : true,
-        "isLocked" : false
-      },
-      [
-        "D4588DAC-986B-442B-97D8-3E8ADFC2BC2A",
-        "Root",
-        "EarthOrbit",
-        "Track2"
-      ],
-      {
-        "isExpanded" : true,
-        "isLocked" : false
-      },
-      [
-        "D4588DAC-986B-442B-97D8-3E8ADFC2BC2A",
-        "Root",
-        "JupiterOrbit",
-        "Track2"
-      ],
-      {
-        "isExpanded" : true,
-        "isLocked" : false
-      },
-      [
-        "D4588DAC-986B-442B-97D8-3E8ADFC2BC2A",
-        "Root",
-        "SpaceMaterial"
-      ],
-      {
-        "isExpanded" : true,
-        "isLocked" : false
-      },
-      [
-        "D4588DAC-986B-442B-97D8-3E8ADFC2BC2A",
-        "Root",
-        "NeptuneOrbit",
-        "Track"
-      ],
-      {
-        "isExpanded" : true,
-        "isLocked" : false
-      },
-      [
-        "D4588DAC-986B-442B-97D8-3E8ADFC2BC2A",
-        "Root",
-        "MercuryOrbit",
-        "Track5"
       ],
       {
         "isExpanded" : true,
@@ -836,8 +670,18 @@
       [
         "D4588DAC-986B-442B-97D8-3E8ADFC2BC2A",
         "Root",
-        "Earthorbit",
-        "Track"
+        "SaturnOrbit",
+        "Track2"
+      ],
+      {
+        "isExpanded" : true,
+        "isLocked" : false
+      },
+      [
+        "D4588DAC-986B-442B-97D8-3E8ADFC2BC2A",
+        "Root",
+        "NeptuneOrbit",
+        "Track2"
       ],
       {
         "isExpanded" : true,
@@ -856,37 +700,7 @@
       [
         "D4588DAC-986B-442B-97D8-3E8ADFC2BC2A",
         "Root",
-        "UranusOrbit",
-        "Track2"
-      ],
-      {
-        "isExpanded" : true,
-        "isLocked" : false
-      },
-      [
-        "D4588DAC-986B-442B-97D8-3E8ADFC2BC2A",
-        "Root",
         "SaturnOrbit",
-        "Track2"
-      ],
-      {
-        "isExpanded" : true,
-        "isLocked" : false
-      },
-      [
-        "D4588DAC-986B-442B-97D8-3E8ADFC2BC2A",
-        "Root",
-        "MarsOrbit",
-        "Track2"
-      ],
-      {
-        "isExpanded" : true,
-        "isLocked" : false
-      },
-      [
-        "D4588DAC-986B-442B-97D8-3E8ADFC2BC2A",
-        "Root",
-        "UranusOrbit",
         "Track"
       ],
       {
@@ -896,8 +710,18 @@
       [
         "D4588DAC-986B-442B-97D8-3E8ADFC2BC2A",
         "Root",
-        "MercuryOrbit",
-        "Track2"
+        "ReplaceMercuryBehaviour",
+        "Track"
+      ],
+      {
+        "isExpanded" : true,
+        "isLocked" : false
+      },
+      [
+        "D4588DAC-986B-442B-97D8-3E8ADFC2BC2A",
+        "Root",
+        "Earthorbit",
+        "Track"
       ],
       {
         "isExpanded" : true,
@@ -916,17 +740,66 @@
       [
         "D4588DAC-986B-442B-97D8-3E8ADFC2BC2A",
         "Root",
-        "SkySphere"
+        "MercuryOrbit",
+        "Track5"
       ],
       {
-        "disallowsFraming" : false,
         "isExpanded" : true,
         "isLocked" : false
       },
       [
         "D4588DAC-986B-442B-97D8-3E8ADFC2BC2A",
         "Root",
-        "SaturnOrbit",
+        "AudioHolder"
+      ],
+      {
+        "isExpanded" : true,
+        "isLocked" : false
+      },
+      [
+        "D4588DAC-986B-442B-97D8-3E8ADFC2BC2A",
+        "Root",
+        "EarthOrbit",
+        "Track2"
+      ],
+      {
+        "isExpanded" : true,
+        "isLocked" : false
+      },
+      [
+        "D4588DAC-986B-442B-97D8-3E8ADFC2BC2A",
+        "Root",
+        "JupiterOrbit",
+        "Track"
+      ],
+      {
+        "isExpanded" : true,
+        "isLocked" : false
+      },
+      [
+        "D4588DAC-986B-442B-97D8-3E8ADFC2BC2A",
+        "Root",
+        "MarsOrbit",
+        "Track"
+      ],
+      {
+        "isExpanded" : true,
+        "isLocked" : false
+      },
+      [
+        "D4588DAC-986B-442B-97D8-3E8ADFC2BC2A",
+        "Root",
+        "MarsOrbit",
+        "Track2"
+      ],
+      {
+        "isExpanded" : true,
+        "isLocked" : false
+      },
+      [
+        "D4588DAC-986B-442B-97D8-3E8ADFC2BC2A",
+        "Root",
+        "EarthOrbit",
         "Track"
       ],
       {
@@ -937,6 +810,133 @@
         "D4588DAC-986B-442B-97D8-3E8ADFC2BC2A",
         "Root",
         "VenusOrbit",
+        "Track"
+      ],
+      {
+        "isExpanded" : true,
+        "isLocked" : false
+      },
+      [
+        "D4588DAC-986B-442B-97D8-3E8ADFC2BC2A",
+        "Root",
+        "Timeline",
+        "Track"
+      ],
+      {
+        "isExpanded" : true,
+        "isLocked" : false
+      },
+      [
+        "D4588DAC-986B-442B-97D8-3E8ADFC2BC2A",
+        "Root",
+        "NeptuneOrbit",
+        "Track"
+      ],
+      {
+        "isExpanded" : true,
+        "isLocked" : false
+      },
+      [
+        "D4588DAC-986B-442B-97D8-3E8ADFC2BC2A",
+        "Root"
+      ],
+      {
+        "isExpanded" : true,
+        "isLocked" : false
+      },
+      [
+        "D4588DAC-986B-442B-97D8-3E8ADFC2BC2A",
+        "Root",
+        "JupiterOrbit",
+        "Track2"
+      ],
+      {
+        "isExpanded" : true,
+        "isLocked" : false
+      },
+      [
+        "D4588DAC-986B-442B-97D8-3E8ADFC2BC2A",
+        "Root",
+        "Saturn_1",
+        "Track"
+      ],
+      {
+        "isExpanded" : true,
+        "isLocked" : false
+      },
+      [
+        "D4588DAC-986B-442B-97D8-3E8ADFC2BC2A",
+        "Root",
+        "SpaceMaterial"
+      ],
+      {
+        "isExpanded" : true,
+        "isLocked" : false
+      },
+      [
+        "D4588DAC-986B-442B-97D8-3E8ADFC2BC2A",
+        "Root",
+        "SkySphere",
+        "SkySphere_mat"
+      ],
+      {
+        "isExpanded" : true,
+        "isLocked" : false
+      },
+      [
+        "D4588DAC-986B-442B-97D8-3E8ADFC2BC2A",
+        "Root",
+        "ReplaceMercuryBehavior",
+        "Track"
+      ],
+      {
+        "isExpanded" : true,
+        "isLocked" : false
+      },
+      [
+        "D4588DAC-986B-442B-97D8-3E8ADFC2BC2A",
+        "Root",
+        "UranusOrbit",
+        "Track2"
+      ],
+      {
+        "isExpanded" : true,
+        "isLocked" : false
+      },
+      [
+        "D4588DAC-986B-442B-97D8-3E8ADFC2BC2A",
+        "Root",
+        "UranusOrbit",
+        "Track"
+      ],
+      {
+        "isExpanded" : true,
+        "isLocked" : false
+      },
+      [
+        "D4588DAC-986B-442B-97D8-3E8ADFC2BC2A",
+        "Root",
+        "SkySphere"
+      ],
+      {
+        "disallowsFraming" : false,
+        "isExpanded" : true,
+        "isLocked" : false
+      },
+      [
+        "D4588DAC-986B-442B-97D8-3E8ADFC2BC2A",
+        "Root",
+        "MercuryOrbit_1",
+        "Track2"
+      ],
+      {
+        "isExpanded" : true,
+        "isLocked" : false
+      },
+      [
+        "D4588DAC-986B-442B-97D8-3E8ADFC2BC2A",
+        "Root",
+        "MercuryOrbit",
         "Track2"
       ],
       {
@@ -974,29 +974,8 @@
       [
         "EB08777C-F2E4-4731-965E-D19D29053AA3",
         "Root",
-        "SpaceMaterial"
-      ],
-      {
-        "isExpanded" : true,
-        "isLocked" : false
-      },
-      [
-        "EB08777C-F2E4-4731-965E-D19D29053AA3",
-        "Root",
-        "AmbientAudio"
-      ],
-      {
-        "isExpanded" : false,
-        "isLocked" : false,
-        "selectedAudioFilePrim" : {
-          "string" : "\/Root\/SpaceAmbient"
-        }
-      },
-      [
-        "EB08777C-F2E4-4731-965E-D19D29053AA3",
-        "Root",
-        "AudioPlayer",
-        "Track"
+        "TravelToUser",
+        "Track2"
       ],
       {
         "isExpanded" : true,
@@ -1006,7 +985,15 @@
         "EB08777C-F2E4-4731-965E-D19D29053AA3",
         "Root",
         "ParticlesHolder",
-        "Particles"
+        "DefaultMaterial"
+      ],
+      {
+        "isExpanded" : true,
+        "isLocked" : false
+      },
+      [
+        "EB08777C-F2E4-4731-965E-D19D29053AA3",
+        "Root"
       ],
       {
         "isExpanded" : true,
@@ -1015,46 +1002,7 @@
       [
         "EB08777C-F2E4-4731-965E-D19D29053AA3",
         "Root",
-        "SkysphereTravel",
-        "Track"
-      ],
-      {
-        "isExpanded" : true,
-        "isLocked" : false
-      },
-      [
-        "EB08777C-F2E4-4731-965E-D19D29053AA3",
-        "Root",
-        "SkySphere"
-      ],
-      {
-        "isExpanded" : true,
-        "isLocked" : false
-      },
-      [
-        "EB08777C-F2E4-4731-965E-D19D29053AA3",
-        "Root",
-        "Audio",
-        "Track"
-      ],
-      {
-        "isExpanded" : true,
-        "isLocked" : false
-      },
-      [
-        "EB08777C-F2E4-4731-965E-D19D29053AA3",
-        "Root",
-        "AudioHolder"
-      ],
-      {
-        "isExpanded" : true,
-        "isLocked" : false
-      },
-      [
-        "EB08777C-F2E4-4731-965E-D19D29053AA3",
-        "Root",
-        "Timeline",
-        "Track"
+        "TravelToUser"
       ],
       {
         "isExpanded" : true,
@@ -1082,15 +1030,7 @@
       [
         "EB08777C-F2E4-4731-965E-D19D29053AA3",
         "Root",
-        "SkysphereTravel"
-      ],
-      {
-        "isExpanded" : true,
-        "isLocked" : false
-      },
-      [
-        "EB08777C-F2E4-4731-965E-D19D29053AA3",
-        "Root"
+        "SkySphere"
       ],
       {
         "isExpanded" : true,
@@ -1099,8 +1039,46 @@
       [
         "EB08777C-F2E4-4731-965E-D19D29053AA3",
         "Root",
-        "TravelToUser",
-        "Track2"
+        "AudioHolder"
+      ],
+      {
+        "isExpanded" : true,
+        "isLocked" : false
+      },
+      [
+        "EB08777C-F2E4-4731-965E-D19D29053AA3",
+        "Root",
+        "AudioPlayer",
+        "Track"
+      ],
+      {
+        "isExpanded" : true,
+        "isLocked" : false
+      },
+      [
+        "EB08777C-F2E4-4731-965E-D19D29053AA3",
+        "Root",
+        "SkysphereTravel"
+      ],
+      {
+        "isExpanded" : true,
+        "isLocked" : false
+      },
+      [
+        "EB08777C-F2E4-4731-965E-D19D29053AA3",
+        "Root",
+        "Audio",
+        "Track"
+      ],
+      {
+        "isExpanded" : true,
+        "isLocked" : false
+      },
+      [
+        "EB08777C-F2E4-4731-965E-D19D29053AA3",
+        "Root",
+        "SkysphereTravel",
+        "Track"
       ],
       {
         "isExpanded" : true,
@@ -1110,7 +1088,7 @@
         "EB08777C-F2E4-4731-965E-D19D29053AA3",
         "Root",
         "ParticlesHolder",
-        "DefaultMaterial"
+        "Particles"
       ],
       {
         "isExpanded" : true,
@@ -1119,11 +1097,33 @@
       [
         "EB08777C-F2E4-4731-965E-D19D29053AA3",
         "Root",
-        "TravelToUser"
+        "SpaceMaterial"
       ],
       {
         "isExpanded" : true,
         "isLocked" : false
+      },
+      [
+        "EB08777C-F2E4-4731-965E-D19D29053AA3",
+        "Root",
+        "Timeline",
+        "Track"
+      ],
+      {
+        "isExpanded" : true,
+        "isLocked" : false
+      },
+      [
+        "EB08777C-F2E4-4731-965E-D19D29053AA3",
+        "Root",
+        "AmbientAudio"
+      ],
+      {
+        "isExpanded" : false,
+        "isLocked" : false,
+        "selectedAudioFilePrim" : {
+          "string" : "\/Root\/SpaceAmbient"
+        }
       }
     ]
   },

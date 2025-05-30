@@ -6,7 +6,7 @@
 //
 
 import Foundation
-import RealityKit
+import RealityFoundation
 import RealityKitContent
 
 @MainActor @Observable

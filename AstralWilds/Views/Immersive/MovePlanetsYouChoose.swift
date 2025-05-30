@@ -13,9 +13,8 @@ import RealityKitContent
 /// Then, we need to load the associated scene with the lights.
 struct MovePlanetsYouChoose: View {
     
-    @Environment(GestureModel.self) private var gestureModel
     @Environment(\.setMode) private var setMode
-        
+    
     @State private var player: AudioPlayer = .init()
     @State private var timers: [String: Timer] = [:]
     @State private var selectedPlanetEntity: Entity? = nil
@@ -23,13 +22,10 @@ struct MovePlanetsYouChoose: View {
     let planetController = PlanetController.shared
     
     var body: some View {
-                
+        
         RealityView { content in
 #if !targetEnvironment(simulator)
-            Task.detached(priority: .low) {
-                await gestureModel.startTrackingSession()
-                await gestureModel.updateTracking()
-            }
+            addHands(in: content)
 #endif
             //This is safe to unwrap, it's for readability to write like this
             if let scene = try? await Entity(named: "Planets", in: realityKitContentBundle) {
@@ -52,11 +48,28 @@ struct MovePlanetsYouChoose: View {
         )
         
 #if !targetEnvironment(simulator)
-        .onChange(of: gestureModel.didThanosSnap) { _, isActivated in
+        .onChange(of: GestureRecognizer.shared.didThanosSnap) { _, isActivated in
             if isActivated {
-                Task { await setMode(.mainScreen) }
+                await MainActor.run {
+                    await setMode(.mainScreen)
+                    GestureRecognizer.shared.resetSnapState()
+                }
             }
         }
-#endif        
+#endif
     }
+    
+    @MainActor
+    private func addHands(in content: any RealityViewContentProtocol) {
+        // Add the left hand.
+        let leftHand = Entity()
+        leftHand.components.set(HandTrackingComponent(chirality: .left))
+        content.add(leftHand)
+        
+        // Add the right hand.
+        let rightHand = Entity()
+        rightHand.components.set(HandTrackingComponent(chirality: .right))
+        content.add(rightHand)
+    }
+    
 }

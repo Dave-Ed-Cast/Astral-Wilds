@@ -11,6 +11,7 @@ import SwiftUI
 struct ExitImmersiveSpaceGesture: View {
     
     @Environment(\.setMode) private var setMode
+    @Environment(\.pushWindow) private var pushWindow
         
     let boldSnap = Text("snap").fontWeight(.bold)
     
@@ -29,6 +30,7 @@ struct ExitImmersiveSpaceGesture: View {
                 .frame(width: 44, height: 44)
                 .colorInvert()
         }
+        .onAppear { pushWindow(id: ModeIDs.buttonWindowID) }
         .padding()
     }
 }

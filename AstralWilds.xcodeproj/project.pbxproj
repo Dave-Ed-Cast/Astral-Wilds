@@ -8,16 +8,13 @@
 
 /* Begin PBXBuildFile section */
 		3E0636762BF0BAA400F7ED6E /* RealityKitContent in Frameworks */ = {isa = PBXBuildFile; productRef = 3E0636752BF0BAA400F7ED6E /* RealityKitContent */; };
-		3E254D942D404D97005CE58C /* RealityViewContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E254D932D404D97005CE58C /* RealityViewContent.swift */; };
 		3E31ADE82D27085A00E48C15 /* VisionTextArc in Frameworks */ = {isa = PBXBuildFile; productRef = 3E31ADE72D27085A00E48C15 /* VisionTextArc */; };
 		3E4A62192D32A84500E3C0D4 /* ImmersiveTravelController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E4A62182D32A84500E3C0D4 /* ImmersiveTravelController.swift */; };
 		3E4A621F2D37116200E3C0D4 /* ImageButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E4A621E2D37116200E3C0D4 /* ImageButton.swift */; };
 		3E4ABE3B2D16E5B400AA3DE3 /* AstralWildsApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E7B722D2D16E48600937F1E /* AstralWildsApp.swift */; };
-		3E4ABE3C2D16E5B400AA3DE3 /* SIMD4.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E7B720E2D16E48600937F1E /* SIMD4.swift */; };
-		3E4ABE3E2D16E5B400AA3DE3 /* GestureModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E7B72112D16E48600937F1E /* GestureModel.swift */; };
+		3E4ABE3E2D16E5B400AA3DE3 /* GestureRecognizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E7B72112D16E48600937F1E /* GestureRecognizer.swift */; };
 		3E4ABE402D16E5B400AA3DE3 /* PlanetController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E7B72132D16E48600937F1E /* PlanetController.swift */; };
 		3E4ABE412D16E5B400AA3DE3 /* TextArray.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E7B72142D16E48600937F1E /* TextArray.swift */; };
-		3E4ABE462D16E5B400AA3DE3 /* ViewExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E7B721F2D16E48600937F1E /* ViewExtension.swift */; };
 		3E4ABE472D16E5B400AA3DE3 /* ExitImmersiveSpaceGesture.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E7B72212D16E48600937F1E /* ExitImmersiveSpaceGesture.swift */; };
 		3E4ABE492D16E5B400AA3DE3 /* ImmersiveTravel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E7B72242D16E48600937F1E /* ImmersiveTravel.swift */; };
 		3E4ABE4A2D16E5B400AA3DE3 /* MovingPlanets.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E7B72252D16E48600937F1E /* MovingPlanets.swift */; };
@@ -26,15 +23,15 @@
 		3E4ABE4F2D16E66400AA3DE3 /* Assets.xcassets in Sources */ = {isa = PBXBuildFile; fileRef = 3E7B722B2D16E48600937F1E /* Assets.xcassets */; };
 		3E4ABE562D16F45400AA3DE3 /* studio.skybox in Resources */ = {isa = PBXBuildFile; fileRef = 3E4ABE552D16F45400AA3DE3 /* studio.skybox */; };
 		3E4ABE5F2D1F5D2700AA3DE3 /* Test.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E4ABE5E2D1F5D2700AA3DE3 /* Test.swift */; };
-		3E4ABE652D2099F500AA3DE3 /* SetModeKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E4ABE642D2099F500AA3DE3 /* SetModeKey.swift */; };
 		3E52A3942D611E2500D67E4B /* space.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 3E52A3932D611E2500D67E4B /* space.mp3 */; };
 		3E52A3962D61DA9D00D67E4B /* ExitImmersiveSpaceButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E52A3952D61DA9D00D67E4B /* ExitImmersiveSpaceButton.swift */; };
 		3E6EAA652D3FE7FD002A7BBF /* Documentation.docc in Sources */ = {isa = PBXBuildFile; fileRef = 3E6EAA642D3FE7FD002A7BBF /* Documentation.docc */; };
+		3E736D952DE8BA0C00C572B1 /* LightingConfigurable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E736D932DE8BA0C00C572B1 /* LightingConfigurable.swift */; };
+		3E736D992DE99DD500C572B1 /* ModeIDs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E736D982DE99DD500C572B1 /* ModeIDs.swift */; };
 		3E8FFFC22D633EB700061A8F /* ChooseTimeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E8FFFBE2D633EB700061A8F /* ChooseTimeView.swift */; };
 		3E8FFFC32D633EB700061A8F /* TutorialView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E8FFFC02D633EB700061A8F /* TutorialView.swift */; };
 		3E8FFFC42D633EB700061A8F /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E8FFFBF2D633EB700061A8F /* MainView.swift */; };
 		3E8FFFC52D633EB700061A8F /* WelcomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E8FFFC12D633EB700061A8F /* WelcomeView.swift */; };
-		3E8FFFCB2D633F0D00061A8F /* LightingConfigurable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E8FFFC92D633F0D00061A8F /* LightingConfigurable.swift */; };
 		3ECFA3C82D76044F0068D262 /* AudioPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3ECFA3C72D76044F0068D262 /* AudioPlayer.swift */; };
 		3ED4A6B22CFB1BE600A899A3 /* VisionTextArc in Frameworks */ = {isa = PBXBuildFile; productRef = 3ED4A6B12CFB1BE600A899A3 /* VisionTextArc */; };
 /* End PBXBuildFile section */
@@ -51,23 +48,21 @@
 
 /* Begin PBXFileReference section */
 		3E0636742BF0BAA400F7ED6E /* RealityKitContent */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = RealityKitContent; sourceTree = "<group>"; };
-		3E254D932D404D97005CE58C /* RealityViewContent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealityViewContent.swift; sourceTree = "<group>"; };
 		3E4A62182D32A84500E3C0D4 /* ImmersiveTravelController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImmersiveTravelController.swift; sourceTree = "<group>"; };
 		3E4A621E2D37116200E3C0D4 /* ImageButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageButton.swift; sourceTree = "<group>"; };
 		3E4ABE552D16F45400AA3DE3 /* studio.skybox */ = {isa = PBXFileReference; lastKnownFileType = file.skybox; path = studio.skybox; sourceTree = "<group>"; };
 		3E4ABE5D2D1F5D2600AA3DE3 /* AstralWildsTests-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "AstralWildsTests-Bridging-Header.h"; sourceTree = "<group>"; };
 		3E4ABE5E2D1F5D2700AA3DE3 /* Test.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Test.swift; sourceTree = "<group>"; };
-		3E4ABE642D2099F500AA3DE3 /* SetModeKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetModeKey.swift; sourceTree = "<group>"; };
 		3E52A3932D611E2500D67E4B /* space.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = space.mp3; sourceTree = "<group>"; };
 		3E52A3952D61DA9D00D67E4B /* ExitImmersiveSpaceButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExitImmersiveSpaceButton.swift; sourceTree = "<group>"; };
 		3E5C216F2BF6BD010015AC20 /* AstralWilds.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AstralWilds.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3E6EAA642D3FE7FD002A7BBF /* Documentation.docc */ = {isa = PBXFileReference; lastKnownFileType = folder.documentationcatalog; path = Documentation.docc; sourceTree = "<group>"; };
-		3E7B720E2D16E48600937F1E /* SIMD4.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SIMD4.swift; sourceTree = "<group>"; };
-		3E7B72112D16E48600937F1E /* GestureModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GestureModel.swift; sourceTree = "<group>"; };
+		3E736D932DE8BA0C00C572B1 /* LightingConfigurable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LightingConfigurable.swift; sourceTree = "<group>"; };
+		3E736D982DE99DD500C572B1 /* ModeIDs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModeIDs.swift; sourceTree = "<group>"; };
+		3E7B72112D16E48600937F1E /* GestureRecognizer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GestureRecognizer.swift; sourceTree = "<group>"; };
 		3E7B72132D16E48600937F1E /* PlanetController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlanetController.swift; sourceTree = "<group>"; };
 		3E7B72142D16E48600937F1E /* TextArray.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextArray.swift; sourceTree = "<group>"; };
 		3E7B72162D16E48600937F1E /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
-		3E7B721F2D16E48600937F1E /* ViewExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewExtension.swift; sourceTree = "<group>"; };
 		3E7B72212D16E48600937F1E /* ExitImmersiveSpaceGesture.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExitImmersiveSpaceGesture.swift; sourceTree = "<group>"; };
 		3E7B72242D16E48600937F1E /* ImmersiveTravel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImmersiveTravel.swift; sourceTree = "<group>"; };
 		3E7B72252D16E48600937F1E /* MovingPlanets.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovingPlanets.swift; sourceTree = "<group>"; };
@@ -79,11 +74,23 @@
 		3E8FFFBF2D633EB700061A8F /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = MainView.swift; path = AstralWilds/Views/Windows/MainView.swift; sourceTree = SOURCE_ROOT; };
 		3E8FFFC02D633EB700061A8F /* TutorialView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = TutorialView.swift; path = AstralWilds/Views/Windows/TutorialView.swift; sourceTree = SOURCE_ROOT; };
 		3E8FFFC12D633EB700061A8F /* WelcomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = WelcomeView.swift; path = AstralWilds/Views/Windows/WelcomeView.swift; sourceTree = SOURCE_ROOT; };
-		3E8FFFC92D633F0D00061A8F /* LightingConfigurable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LightingConfigurable.swift; sourceTree = "<group>"; };
 		3EA475602BF6BA75005A3573 /* RealityKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RealityKit.framework; path = System/Library/Frameworks/RealityKit.framework; sourceTree = SDKROOT; };
 		3EBF553A2CE4F49E00216442 /* AstralWildsTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AstralWildsTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		3ECFA3C72D76044F0068D262 /* AudioPlayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioPlayer.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
+
+/* Begin PBXFileSystemSynchronizedRootGroup section */
+		3E99D8542DE8712900B52DE4 /* Extensions */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = Extensions;
+			sourceTree = "<group>";
+		};
+		3E99D85F2DE8713400B52DE4 /* HandComponents */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = HandComponents;
+			sourceTree = "<group>";
+		};
+/* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
 		3E06366D2BF0BAA400F7ED6E /* Frameworks */ = {
@@ -146,27 +153,23 @@
 			path = AstralWildsTests;
 			sourceTree = "<group>";
 		};
-		3E7B720F2D16E48600937F1E /* Extensions */ = {
+		3E736D942DE8BA0C00C572B1 /* Protocols */ = {
 			isa = PBXGroup;
 			children = (
-				3E7B720E2D16E48600937F1E /* SIMD4.swift */,
-				3E4ABE642D2099F500AA3DE3 /* SetModeKey.swift */,
-				3E7B721F2D16E48600937F1E /* ViewExtension.swift */,
-				3E254D932D404D97005CE58C /* RealityViewContent.swift */,
+				3E736D932DE8BA0C00C572B1 /* LightingConfigurable.swift */,
 			);
-			path = Extensions;
+			path = Protocols;
 			sourceTree = "<group>";
 		};
 		3E7B72152D16E48600937F1E /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				3E7B720F2D16E48600937F1E /* Extensions */,
-				3E7B72112D16E48600937F1E /* GestureModel.swift */,
+				3E7B72112D16E48600937F1E /* GestureRecognizer.swift */,
 				3E7B72132D16E48600937F1E /* PlanetController.swift */,
 				3E4A62182D32A84500E3C0D4 /* ImmersiveTravelController.swift */,
 				3ECFA3C72D76044F0068D262 /* AudioPlayer.swift */,
 				3E7B72142D16E48600937F1E /* TextArray.swift */,
-				3E8FFFCA2D633F0D00061A8F /* Protocols */,
+				3E736D982DE99DD500C572B1 /* ModeIDs.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -222,6 +225,9 @@
 			children = (
 				3E6EAA642D3FE7FD002A7BBF /* Documentation.docc */,
 				3E7B722D2D16E48600937F1E /* AstralWildsApp.swift */,
+				3E736D942DE8BA0C00C572B1 /* Protocols */,
+				3E99D85F2DE8713400B52DE4 /* HandComponents */,
+				3E99D8542DE8712900B52DE4 /* Extensions */,
 				3E7B72152D16E48600937F1E /* Models */,
 				3E7B722A2D16E48600937F1E /* Views */,
 				3E8CBBE52D4BBAB4006E7E45 /* Resources */,
@@ -239,14 +245,6 @@
 				3E7B722C2D16E48600937F1E /* Info.plist */,
 			);
 			path = Resources;
-			sourceTree = "<group>";
-		};
-		3E8FFFCA2D633F0D00061A8F /* Protocols */ = {
-			isa = PBXGroup;
-			children = (
-				3E8FFFC92D633F0D00061A8F /* LightingConfigurable.swift */,
-			);
-			path = Protocols;
 			sourceTree = "<group>";
 		};
 		3EA4755F2BF6BA75005A3573 /* Frameworks */ = {
@@ -272,6 +270,10 @@
 			buildRules = (
 			);
 			dependencies = (
+			);
+			fileSystemSynchronizedGroups = (
+				3E99D8542DE8712900B52DE4 /* Extensions */,
+				3E99D85F2DE8713400B52DE4 /* HandComponents */,
 			);
 			name = AstralWilds;
 			packageProductDependencies = (
@@ -392,27 +394,24 @@
 				3E4ABE4E2D16E66400AA3DE3 /* Preview Assets.xcassets in Sources */,
 				3E4ABE4F2D16E66400AA3DE3 /* Assets.xcassets in Sources */,
 				3E4ABE3B2D16E5B400AA3DE3 /* AstralWildsApp.swift in Sources */,
+				3E736D992DE99DD500C572B1 /* ModeIDs.swift in Sources */,
 				3E8FFFC22D633EB700061A8F /* ChooseTimeView.swift in Sources */,
-				3E8FFFCB2D633F0D00061A8F /* LightingConfigurable.swift in Sources */,
 				3E8FFFC32D633EB700061A8F /* TutorialView.swift in Sources */,
 				3E8FFFC42D633EB700061A8F /* MainView.swift in Sources */,
 				3E8FFFC52D633EB700061A8F /* WelcomeView.swift in Sources */,
-				3E4ABE3C2D16E5B400AA3DE3 /* SIMD4.swift in Sources */,
-				3E4ABE3E2D16E5B400AA3DE3 /* GestureModel.swift in Sources */,
+				3E4ABE3E2D16E5B400AA3DE3 /* GestureRecognizer.swift in Sources */,
 				3E52A3962D61DA9D00D67E4B /* ExitImmersiveSpaceButton.swift in Sources */,
 				3E4ABE402D16E5B400AA3DE3 /* PlanetController.swift in Sources */,
 				3ECFA3C82D76044F0068D262 /* AudioPlayer.swift in Sources */,
 				3E4A62192D32A84500E3C0D4 /* ImmersiveTravelController.swift in Sources */,
 				3E4ABE412D16E5B400AA3DE3 /* TextArray.swift in Sources */,
-				3E4ABE462D16E5B400AA3DE3 /* ViewExtension.swift in Sources */,
 				3E4ABE472D16E5B400AA3DE3 /* ExitImmersiveSpaceGesture.swift in Sources */,
 				3E4A621F2D37116200E3C0D4 /* ImageButton.swift in Sources */,
 				3E4ABE492D16E5B400AA3DE3 /* ImmersiveTravel.swift in Sources */,
+				3E736D952DE8BA0C00C572B1 /* LightingConfigurable.swift in Sources */,
 				3E4ABE4A2D16E5B400AA3DE3 /* MovingPlanets.swift in Sources */,
-				3E254D942D404D97005CE58C /* RealityViewContent.swift in Sources */,
 				3E6EAA652D3FE7FD002A7BBF /* Documentation.docc in Sources */,
 				3E4ABE4B2D16E5B400AA3DE3 /* MovePlanetsYouChoose.swift in Sources */,
-				3E4ABE652D2099F500AA3DE3 /* SetModeKey.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

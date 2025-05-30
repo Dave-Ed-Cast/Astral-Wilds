@@ -11,8 +11,6 @@ import SwiftUI
 struct MainView: View {
     
     @Environment(\.setMode) private var setMode
-    @Environment(\.openWindow) private var openWindow
-    @Environment(\.dismissWindow) private var dismissWindow
     
     @State private var showTutorial: Bool = false
     var body: some View {
