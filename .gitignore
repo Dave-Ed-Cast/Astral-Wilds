@@ -9,8 +9,7 @@ xcuserdata/
 *.xcscmblueprint
 *.xccheckout
 
-## macos
-.DS_Store
+**/.DS_Store
 
 ## VSCode
 .vscode
