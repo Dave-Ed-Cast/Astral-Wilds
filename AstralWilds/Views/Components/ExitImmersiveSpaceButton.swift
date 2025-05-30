@@ -42,5 +42,8 @@ struct ExitImmersiveSpaceButton: View {
         .font(.subheadline)
         .multilineTextAlignment(.center)
         .padding()
+        .frame(width: 350, height: 180)
+        .background(.black.opacity(0.4))
+        .fixedSize()
     }
 }

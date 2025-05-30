@@ -57,8 +57,14 @@ struct MainView: View {
             .padding()
         }
         .opacity(showTutorial ? 0.65 : 1)
-        .padding()
         .fontWeight(.bold)
+        .frame(
+            minWidth: 700, maxWidth: 1000,
+            minHeight: 550, maxHeight: 900
+        )
+        .padding()
+        .background(.black.opacity(0.4))
+        .fixedSize()
     }
 }
 
