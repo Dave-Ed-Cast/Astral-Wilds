@@ -1,4 +1,5 @@
 {
+  "originHash" : "22ef1c6fd241a02aca159352c4bef67ec13d918e0a5687560775bbe16895f904",
   "pins" : [
     {
       "identity" : "visiontextarc",
@@ -10,5 +11,5 @@
       }
     }
   ],
-  "version" : 2
+  "version" : 3
 }

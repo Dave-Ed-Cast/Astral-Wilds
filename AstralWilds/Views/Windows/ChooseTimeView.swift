@@ -55,7 +55,8 @@ struct ChooseTimeView: View {
         .frame(width: 350, height: 350)
         .multilineTextAlignment(.center)
         .padding()
-        
+        .fixedSize()
+        .background(.black.opacity(0.4))
     }
 }
 
