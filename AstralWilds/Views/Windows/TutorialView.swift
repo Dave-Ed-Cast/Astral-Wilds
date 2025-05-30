@@ -6,7 +6,6 @@
 //
 
 import SwiftUI
-import RealityKit
 
 struct TutorialView: View {
     

@@ -40,9 +40,7 @@ struct WelcomeView: View {
             }
             .padding()
             .frame(maxWidth: .infinity, maxHeight: .infinity)
-            .onAppear {
-                scale = calculateScale(for: geometry.size)
-            }
+            .onAppear { scale = calculateScale(for: geometry.size) }
             .onChange(of: geometry.size) { _, newSize in
                 scale = calculateScale(for: newSize)
             }

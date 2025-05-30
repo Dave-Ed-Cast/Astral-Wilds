@@ -16,8 +16,6 @@ import AVFAudio
 struct ImmersiveTravel: View {
     
     @Environment(\.setMode) private var setMode
-    @Environment(\.openWindow) private var openWindow
-    @Environment(\.dismissWindow) private var dismissWindow
     
     @Binding var duration: Int
     @Binding var sitting: Bool
@@ -42,25 +40,10 @@ struct ImmersiveTravel: View {
     
     var body: some View {
         
-        /// `This is not good practice!`
-        /// It was implemented at some point because I didn't understand how to factor inside my functions the `inout` parameter that is the reality view.
-        ///
-        /// Creating a copy of the reality view, only if truly needed, demands to be done at the start, so it is almost empty.
-        /// In a way, it is like creating another reality view on top of the original one, which is not recommended overall.
-        ///
-        /// However, there are some cases where this could be useful, for example if the reality view doesn't load any scenes, or light ones.
-        ///
-        /// It is imperative, generally, to avoid using copies of the reality views, especially if they are heavy! They impact performance!
-        ///
-        /// `let localContent = view` <- is the copy
-        
         RealityView { view in
-            
 #if !targetEnvironment(simulator)
-            //Without task it cannot load the view because it will keep waiting for t
-            
+            addHands(in: content)
 #endif
-            
             //This is safe to unwrap, it's for readability to write like this
             if let scene = try? await Entity(named: selectedMode, in: realityKitContentBundle) {
                 
@@ -92,7 +75,14 @@ struct ImmersiveTravel: View {
         //        }
         
 #if !targetEnvironment(simulator)
-        
+        .onChange(of: GestureRecognizer.shared.didThanosSnap) { _, isActivated in
+            if isActivated {
+                await MainActor.run {
+                    await setMode(.mainScreen)
+                    GestureRecognizer.shared.resetSnapState()
+                }
+            }
+        }
 #endif
         
     }
@@ -108,6 +98,19 @@ struct ImmersiveTravel: View {
         travel.createText(textArray, config: configuration, view: view)
         travel.particleEmitter()
         player.playAudio("SpaceMusic")
+    }
+    
+    @MainActor
+    private func addHands(in content: any RealityViewContentProtocol) {
+        // Add the left hand.
+        let leftHand = Entity()
+        leftHand.components.set(HandTrackingComponent(chirality: .left))
+        content.add(leftHand)
+        
+        // Add the right hand.
+        let rightHand = Entity()
+        rightHand.components.set(HandTrackingComponent(chirality: .right))
+        content.add(rightHand)
     }
 }
 

@@ -14,7 +14,7 @@ import RealityKitContent
 struct MovePlanetsYouChoose: View {
     
     @Environment(\.setMode) private var setMode
-        
+    
     @State private var player: AudioPlayer = .init()
     @State private var timers: [String: Timer] = [:]
     @State private var selectedPlanetEntity: Entity? = nil
@@ -22,7 +22,7 @@ struct MovePlanetsYouChoose: View {
     let planetController = PlanetController.shared
     
     var body: some View {
-                
+        
         RealityView { content in
 #if !targetEnvironment(simulator)
             addHands(in: content)
@@ -50,18 +50,17 @@ struct MovePlanetsYouChoose: View {
 #if !targetEnvironment(simulator)
         .onChange(of: GestureRecognizer.shared.didThanosSnap) { _, isActivated in
             if isActivated {
-                Task {
+                await MainActor.run {
                     await setMode(.mainScreen)
-                    await MainActor.run { GestureRecognizer.shared.resetSnapState() }
+                    GestureRecognizer.shared.resetSnapState()
                 }
             }
-            
         }
-#endif        
+#endif
     }
     
     @MainActor
-    func addHands(in content: any RealityViewContentProtocol) {
+    private func addHands(in content: any RealityViewContentProtocol) {
         // Add the left hand.
         let leftHand = Entity()
         leftHand.components.set(HandTrackingComponent(chirality: .left))
@@ -72,5 +71,5 @@ struct MovePlanetsYouChoose: View {
         rightHand.components.set(HandTrackingComponent(chirality: .right))
         content.add(rightHand)
     }
-
+    
 }

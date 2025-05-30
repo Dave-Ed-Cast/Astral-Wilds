@@ -5,7 +5,7 @@
 //  Created by Davide Castaldi on 26/10/24.
 //
 
-import SwiftUI
+import Foundation
 import RealityFoundation
 
 /// Contains all the parameters and functions related to planets chracteristic and their movement.
@@ -14,7 +14,7 @@ import RealityFoundation
 /// To note that only certain items are `MainActor` because it is not needed for the entire class to be so.
 final class PlanetController {
     
-    /// Holds a shared value for the interaction with the selected planet
+    /// Holds a shared value for the interaction with the planets
     @MainActor static let shared = PlanetController()
     
     /// The parameters that define the planet
@@ -73,12 +73,10 @@ final class PlanetController {
     /// - Parameters:
     ///   - entity: The entity to reposition
     ///   - parameters: The parameters to follow
-    private func resetEntity(_ entity: Entity, with parameters: Descriptor) {
+    @MainActor private func resetEntity(_ entity: Entity, with parameters: Descriptor) {
         
-        Task { @MainActor in
-            if entity.position != SIMD3(0, 0.9, parameters.radius) {
-                entity.position = SIMD3(0, 0.9, parameters.radius)
-            }
+        if entity.position != SIMD3(0, 0.9, parameters.radius) {
+            entity.position = SIMD3(0, 0.9, parameters.radius)
         }
     }
     

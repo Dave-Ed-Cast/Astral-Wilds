@@ -1,14 +1,14 @@
 //
 //  HandTrackingSystem.swift
-//  DomainExpansion
+//  AstralWilds
 //
-//  Created by Davide Castaldi on 09/05/25.
+//  Created by Davide Castaldi on 29/05/25.
 //
 
 import RealityKit
 import ARKit
 
-/// A system that updates entities that have hand-tracking components, now visualizing each joint with a 3D axis.
+/// A system that updates entities that have hand-tracking components
 struct HandTrackingSystem: System {
     
     static let arSession = ARKitSession()

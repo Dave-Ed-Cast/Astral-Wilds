@@ -1,8 +1,8 @@
 //
 //  Bone.swift
-//  DomainExpansion
+//  AstralWilds
 //
-//  Created by Davide Castaldi on 09/05/25.
+//  Created by Davide Castaldi on 29/05/25.
 //
 
 /// Enum defining the hand bones
