@@ -24,8 +24,8 @@ struct TutorialView: View {
                 .frame(width: 64, height: 64)
                 .colorInvert()
         }
-        .frame(width: 220, height: 100)
-        .padding()
+        .frame(width: 300, height: 150)
+        .standardModifiers()
     }
 }
 

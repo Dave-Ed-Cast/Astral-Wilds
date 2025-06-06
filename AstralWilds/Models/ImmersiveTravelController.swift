@@ -10,12 +10,7 @@ import RealityKit
 import VisionTextArc
 
 /// The controller for the immersive travel experience.
-///
-/// This class acts as a caller to all the other classes and functionalities involved.
-/// See `ParticleController` or `TextController` for more information.
-///
-/// In an `Observable` model, the public vars are automatically observed
-@MainActor @Observable
+@Observable
 final class ImmersiveTravelController {
     
     /// The duration of the travel, therefore, the text length chosen by the user.
@@ -42,14 +37,13 @@ final class ImmersiveTravelController {
     
     private var textEntity: Entity
     
-    private var textController: TextController
-    
     /// Everything depends on the step of the travel
     private var maxStepCounter: Int = 0
     private var selectedDuration: Int = 0
     
-    /// Initializes the classes `ParticleController` and `TextController`
-    init() {
+    private let textController: TextController
+    
+    @MainActor init() {
         self.textController = .init()
         self.textEntity = .init()
     }
@@ -58,21 +52,18 @@ final class ImmersiveTravelController {
     ///
     /// This function executes a Task in which handles the removal and addition of the text.
     /// Leveraging the package `VisionTextArc`, it is possible to create curved text.
-    /// It is later added in the reality view.
     /// - Parameters:
     ///   - textArray: The array of text to make it 3D
     ///   - config: The configuration for the 3D text, provided by `VisionTextArc.Configuration`
     ///   - view: The reality view to add it in
-    func createText(
+    @MainActor func createText(
         _ textArray: [String],
         config: TextCurver.Configuration,
         view: RealityViewContent
     ) {
-        
         Task {
             try await Task.sleep(for: .seconds(2.5))
             while !ended {
-                
                 textEntity = await textController.create(config: config, textArray: textArray)
                 view.add(textEntity)
                 
@@ -81,13 +72,10 @@ final class ImmersiveTravelController {
                     ended = true
                     break
                 }
-                withAnimation {
-                    textEntity.removeFromParent()
-                }
+                textEntity.removeFromParent()
             }
         }
     }
-    
     
     /// Activates and lighlty modifies the particle emitter in the scene.
     ///
@@ -96,17 +84,21 @@ final class ImmersiveTravelController {
     ///
     /// The emitter is configured through reality composer pro.
     /// - Note: The emission duration is dynamically set to `selectedDuration`.
-    func particleEmitter() {
+    @MainActor func particleEmitter() {
         Task {
-            guard let particleEntity = sceneHolder?.findEntity(named: "ParticleEmitter") else { return }
+            guard let particleHolder = sceneHolder?.findEntity(named: "ParticlesHolder"),
+                  let particles = particleHolder.findEntity(named: "Particles"),
+                  let particleEntity = particles.children.first
+            else { return }
+            print("got it")
             particleEntity.isEnabled = false
                 
-            guard var particles = particleEntity.components[ParticleEmitterComponent.self] else { return }
+            guard var emitter = particleEntity.components[ParticleEmitterComponent.self] else { return }
 
             print(selectedDuration)
-            particles.timing = .once(warmUp: 0.2, emit: .init(duration: TimeInterval(selectedDuration)))
-            particles.isEmitting = true
-            particleEntity.components[ParticleEmitterComponent.self] = particles
+            emitter.timing = .once(warmUp: 0.2, emit: .init(duration: TimeInterval(selectedDuration)))
+            emitter.isEmitting = true
+            particleEntity.components.set(emitter)
 
             try? await Task.sleep(for: .seconds(7.5))
             particleEntity.isEnabled = true

@@ -38,7 +38,6 @@ struct WelcomeView: View {
                 }
                 .padding(20)
             }
-            .padding()
             .frame(maxWidth: .infinity, maxHeight: .infinity)
             .onAppear { scale = calculateScale(for: geometry.size) }
             .onChange(of: geometry.size) { _, newSize in
@@ -49,7 +48,6 @@ struct WelcomeView: View {
             minWidth: 520, maxWidth: 1000,
             minHeight: 450, maxHeight: 930
         )
-        .background(.black.opacity(0.4))
-        .fixedSize()
+        .standardModifiers()
     }
 }

@@ -30,10 +30,8 @@ struct ExitImmersiveSpaceGesture: View {
                 .frame(width: 44, height: 44)
                 .colorInvert()
         }
-        .padding()
-        .frame(width: 350, height: 180)
-        .background(.black.opacity(0.4))
-        .fixedSize()
+        .standardModifiers()
+        .frame(width: 300, height: 150)
         .onAppear { pushWindow(id: ModeIDs.buttonWindowID) }
     }
 }

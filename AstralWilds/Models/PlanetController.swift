@@ -26,11 +26,11 @@ final class PlanetController {
     ///   - revolving: If it is revolving or not
     private struct Descriptor {
         
-        let planet: String
-        let radius: Float
-        let period: Float
+        fileprivate let planet: String
+        fileprivate let radius: Float
+        fileprivate let period: Float
         
-        var revolving: Bool
+        fileprivate var revolving: Bool
         
         init(planet: String, radius: Float, period: Float) {
             self.planet = planet
@@ -52,7 +52,7 @@ final class PlanetController {
         self.time = time
         self.posValue = posValue
         
-        self.list = [
+        list = [
             Descriptor(planet: "Mercury", radius: posValue * 1, period: time * 1),
             Descriptor(planet: "Venus", radius: posValue * 2, period: time * 2),
             Descriptor(planet: "Earth", radius: posValue * 3, period: time * 3),
@@ -114,7 +114,7 @@ final class PlanetController {
         var angle = initialAngle
         
         let task = Task {
-            while self.list.first(where: { $0.planet == entity.name })?.revolving == true {
+            while list.first(where: { $0.planet == entity.name })?.revolving == true {
                 let x = radius * cos(angle)
                 let z = radius * sin(angle)
                 let newPosition = SIMD3(x, entity.position.y, z)
@@ -142,9 +142,9 @@ final class PlanetController {
         }
     }
     
-    /// Allows to move the planet which the user interacts with
+    /// Allows to either move or stop the planet which the user taps on.
     /// - Parameter entity: The planet to move
-    @MainActor func moveThisPlanet(_ entity: Entity) {
+    @MainActor func toggleMovement(_ entity: Entity) {
         guard let parameters = getPlanetParameters(for: entity.name) else {
             return
         }

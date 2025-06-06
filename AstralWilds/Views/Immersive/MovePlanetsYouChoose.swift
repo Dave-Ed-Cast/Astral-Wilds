@@ -40,9 +40,9 @@ struct MovePlanetsYouChoose: View {
             SpatialTapGesture(coordinateSpace: .local)
                 .targetedToAnyEntity()
                 .onEnded { value in
-                    if let planet = planetName(for: value.entity, in: value.entity.name) {
+                    if let planet = findPlanetEntity(for: value.entity, in: value.entity.name) {
                         selectedPlanetEntity = planet
-                        planetController.moveThisPlanet(planet)
+                        planetController.toggleMovement(planet)
                     }
                 }
         )

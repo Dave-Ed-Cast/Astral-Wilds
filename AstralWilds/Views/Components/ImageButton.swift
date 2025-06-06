@@ -37,13 +37,10 @@ struct ImageButton: View {
                     Text(text)
                         .font(.headline)
                 }
-                
             }
             .background(.clear)
             .buttonStyle(.borderless)
         }
-        
-    
         .hoverEffect(.lift)
         .padding()
         .frame(maxWidth: .infinity, maxHeight: .infinity)

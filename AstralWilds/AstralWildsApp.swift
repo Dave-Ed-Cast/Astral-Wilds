@@ -85,10 +85,7 @@ struct AstralWildsApp: App {
             }
             .windowResizability(.contentSize)
             .defaultWindowPlacement { content, _ in
-                WindowPlacement(
-                    .utilityPanel,
-                    size: content.sizeThatFits(.unspecified)
-                )
+                WindowPlacement(.utilityPanel, size: content.sizeThatFits(.unspecified))
             }
             
             WindowGroup(id: ModeIDs.buttonWindowID) {
@@ -125,19 +122,7 @@ struct AstralWildsApp: App {
     ///
     /// Each transition incorporates a brief pause to mitigate potential race conditions and concurrency issues on visionOS.
     /// The function adheres to the following guidelines:
-    /// ```
-    /// When opening a new window, follow this sequence:
-    /// 1. Open the window.
-    /// 2. Pause briefly to mitigate race conditions.
-    /// 3. Optionally, dismiss any window if necessary.
-    ///
-    /// When opening an immersive space, use the same sequence:
-    /// 1. Open the immersive space.
-    /// 2. Pause briefly.
-    /// 3. Optionally, dismiss the previously active immersive space.
-    ///
-    /// Whenever an immersive space must be closed, the flow can be whatever.
-    /// ```
+    /// 
     /// - Parameter newMode: The new mode to transition to.
     @MainActor private func setMode(_ newMode: Mode) async {
         let oldMode = mode

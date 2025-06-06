@@ -48,9 +48,7 @@ struct MainView: View {
             }
             .popover(isPresented: $showTutorial, attachmentAnchor: .point(.init(x: -3, y: 1.5)) ) {
                 TutorialView()
-                    .frame(width: 360, height: 200)
-                    .background(.black.opacity(0.4)).ignoresSafeArea(.all)
-                    .fixedSize()
+                    
             }
             
             .buttonStyle(.borderless)
@@ -62,9 +60,7 @@ struct MainView: View {
             minWidth: 700, maxWidth: 1000,
             minHeight: 550, maxHeight: 900
         )
-        .padding()
-        .background(.black.opacity(0.4))
-        .fixedSize()
+        .standardModifiers()
     }
 }
 

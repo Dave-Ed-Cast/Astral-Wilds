@@ -23,13 +23,13 @@ extension View {
         if condition { transform(self) } else { self }
     }
     
-    /// Finds the planet name through Depth First Search method
+    /// Performs a depth-first search on the given entity hierarchy to find a child entity with the specified name.
     ///
     /// - Parameters:
-    ///   - entity: the particular entity
-    ///   - name: associated name in the dictionary
-    /// - Returns: return that entity with the associated name in the dictionary
-    func planetName(for entity: Entity, in name: String) -> Entity? {
+    ///   - name: The name of the entity to search for.
+    ///   - entity: The root entity from which to begin the search.
+    /// - Returns: The entity matching the specified name, or `nil` if not found.
+    func findPlanetEntity(for entity: Entity, in name: String) -> Entity? {
         var tempEntityArray = [entity]
         
         while !tempEntityArray.isEmpty {
@@ -62,5 +62,16 @@ extension View {
         let heightScale = size.height / baseHeight
         
         return min(max(min(widthScale, heightScale), 1.0), scale)
+    }
+    
+    /// Standard modifiers that are always used in Astral Wilds.
+    ///
+    /// Avoids having to rewrite three everytime.
+    /// - Returns: Simple modifiers to app consistency design.
+    func standardModifiers() -> some View {
+        self
+            .padding()
+            .fixedSize()
+            .background(.black.opacity(0.4))
     }
 }
